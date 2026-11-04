@@ -104,14 +104,16 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .chip .n { font-variant-numeric: tabular-nums; opacity: 0.7; margin-left: 4px; }
 #q { font: inherit; padding: 8px 12px; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); color: var(--ink); width: 100%; max-width: 360px; }
 .count { font-size: 13px; color: var(--muted); }
-.roster { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
-@media (max-width: 1000px) { .roster { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 680px) { .roster { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 440px) { .roster { grid-template-columns: 1fr; } }
+.roster { display: flex; flex-direction: column; gap: 22px; }
+.roster-sec { display: flex; flex-direction: column; gap: 10px; }
+.roster-h { align-self: flex-start; font-size: 14px; padding: 3px 12px; border-radius: 999px; }
+.roster-h .n { font-variant-numeric: tabular-nums; opacity: 0.75; margin-left: 4px; }
+.roster-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
+@media (max-width: 1000px) { .roster-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 680px) { .roster-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .roster-grid { grid-template-columns: 1fr; } }
 .card { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; min-width: 0; font-size: 13px; }
 .card h3 { font-size: 14px; line-height: 1.25; }
-.card-meta { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
-.card .pill { font-size: 11px; padding: 1px 7px; }
 .card .key { display: flex; flex-direction: column; gap: 2px; }
 .card .key p { font-size: 13px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 .card details.more { margin-top: auto; border-top: 1px solid var(--rule); padding-top: 6px; }
@@ -121,7 +123,7 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .card details.more[open] summary::after { content: " −"; }
 .card details.more[open] { display: flex; flex-direction: column; gap: 8px; }
 .card .block ul { font-size: 13px; }
-.card-top { min-width: 0; overflow-wrap: anywhere; }
+.card-top { min-width: 0; overflow-wrap: anywhere; display: flex; flex-direction: column; gap: 2px; }
 .sector { font-size: 12px; color: var(--muted); }
 .who { font-size: 13px; color: var(--muted); }
 .block { display: flex; flex-direction: column; gap: 3px; }
@@ -133,7 +135,7 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .sources { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; border-top: 1px solid var(--rule); padding-top: 8px; }
 .tag-mi { font-family: var(--font-mono); font-size: 11px; color: var(--accent); border: 1px solid var(--accent); border-radius: 3px; padding: 0 4px; margin-left: 6px; vertical-align: 2px; }
 .empty { color: var(--muted); padding: 20px 0; }
-.more-btn { align-self: center; font-weight: 700; padding: 8px 18px; }
+.more-btn { align-self: flex-start; font-weight: 700; padding: 8px 18px; }
 
 /* Fixes */
 .fixes { display: flex; flex-direction: column; gap: 10px; }
@@ -445,13 +447,11 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
       <h2>Stakeholders</h2>
     </div>
     <div class="controls">
-      <div class="chips" id="stanceChips" role="group" aria-label="Filter by position"></div>
       <div class="chips" id="sectorChips" role="group" aria-label="Filter by sector"></div>
       <input id="q" type="search" placeholder="Search groups, people, sections (e.g. 1402)" aria-label="Search stakeholders">
       <span class="count" id="count"></span>
     </div>
     <div class="roster" id="roster"></div>
-    <button class="chip more-btn" id="rosterMore" type="button" hidden></button>
   </section>
 
   <section id="officials" data-view="groups">
@@ -1145,8 +1145,6 @@ function chip(group, value, label, n) {
 }
 
 function renderChips() {
-  const st = document.getElementById("stanceChips");
-  st.innerHTML = chip("stance", "all", "All", PEOPLE.length) + Object.entries(STANCES).map(([k, v]) => chip("stance", k, v.label, PEOPLE.filter(p => p.stance === k).length)).join("");
   const sectors = [...new Set(PEOPLE.map(p => p.sector))];
   document.getElementById("sectorChips").innerHTML = chip("sector", "all", "All sectors") + sectors.map(s => chip("sector", s, s)).join("");
 }
@@ -1166,42 +1164,53 @@ function list(label, cls, items) {
   return `<div class="block"><span class="label ${cls}">${label}</span><ul>${items.map(i => `<li>${i}</li>`).join("")}</ul></div>`;
 }
 
-// Shown by default: the groups in the provision chart. Everything else sits behind "Show all".
+// Each position gets its own section. One row of five shows by default (groups in the provision chart first); the rest sit behind that section's "Show all" button.
 const FEATURED = new Set(["Sierra Club", "Earthjustice", "NRDC", "Center for Biological Diversity", "NAACP", "National Trust for Historic Preservation", "NCAI, NARF, NATHPO and the 106 Strong coalition", "Clean energy trade groups", "American Petroleum Institute and oil and gas groups", "Business and manufacturing groups"]);
+const SECTIONS = [["support", "Supports"], ["oppose", "Opposes"], ["changes", "Wants changes or has conditions"], ["silent", "No public position yet"]];
+const ROW = 5;
+const expanded = {};
+function card(p) {
+  const likes = p.stance === "oppose" && !p.likes.length ? `<div class="block"><span class="label likes">What they like</span><ul><li style="color:var(--muted)">Nothing stated publicly</li></ul></div>` : list(p.stance === "support" ? "Why they back it" : "What they like", "likes", p.likes);
+  const [keyLbl, keyCls, keyTxt] = p.stance === "support" && p.likes.length ? ["Why they back it", "likes", p.likes[0]]
+    : p.obj.length ? ["Main objection", "obj", p.obj[0]]
+    : p.likes.length ? ["What they like", "likes", p.likes[0]]
+    : ["", "", p.who || p.note || ""];
+  return `<article class="card">
+    <div class="card-top"><h3>${esc(p.name)}${p.mi ? '<span class="tag-mi">MI</span>' : ""}</h3><span class="sector">${esc(p.sector)}</span></div>
+    ${keyTxt ? `<div class="key">${keyLbl ? `<span class="label ${keyCls}">${keyLbl}</span>` : ""}<p>${keyTxt}</p></div>` : ""}
+    <details class="more"><summary>Details</summary>
+      ${p.who ? `<p class="who">${p.who}</p>` : ""}
+      ${list("Objects to", "obj", p.obj)}
+      ${likes}
+      ${list("Fixes they want", "fix", p.fix)}
+      ${p.note ? `<p class="who">${p.note}</p>` : ""}
+      <div class="sources">${p.src.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join("")}</div>
+    </details>
+  </article>`;
+}
 function renderRoster() {
-  const order = { oppose: 0, changes: 1, silent: 2, support: 3 };
-  const filtering = state.stance !== "all" || state.sector !== "all" || state.q;
-  const all = PEOPLE.filter(matches).sort((a, b) => order[a.stance] - order[b.stance]);
-  const rows = filtering || state.all ? all : all.filter(p => FEATURED.has(p.name));
-  const more = document.getElementById("rosterMore");
-  more.hidden = filtering || all.length === rows.length && !state.all;
-  more.textContent = state.all ? "Show fewer" : `Show all ${PEOPLE.length} groups`;
-  document.getElementById("count").textContent = filtering || state.all ? `Showing ${rows.length} of ${PEOPLE.length}` : `Showing the groups in the chart above (${rows.length} of ${PEOPLE.length})`;
+  const filtering = state.sector !== "all" || state.q;
+  const all = PEOPLE.filter(matches);
+  document.getElementById("count").textContent = filtering ? `${all.length} of ${PEOPLE.length} match` : `${PEOPLE.length} groups`;
   const el = document.getElementById("roster");
-  if (!rows.length) { el.innerHTML = `<p class="empty">No stakeholders match. Clear the search or pick another filter.</p>`; return; }
-  el.innerHTML = rows.map(p => {
-    const st = STANCES[p.stance];
-    const likesLabel = p.stance === "support" ? "Why they back it" : "What they like";
-    const likes = p.stance === "oppose" && !p.likes.length ? `<div class="block"><span class="label likes">What they like</span><ul><li style="color:var(--muted)">Nothing stated publicly</li></ul></div>` : list(likesLabel, "likes", p.likes);
-    const [keyLbl, keyCls, keyTxt] = p.stance === "support" && p.likes.length ? ["Why they back it", "likes", p.likes[0]]
-      : p.obj.length ? ["Main objection", "obj", p.obj[0]]
-      : p.likes.length ? ["What they like", "likes", p.likes[0]]
-      : ["", "", p.who || p.note || ""];
-    return `<article class="card">
-      <div class="card-top"><h3>${esc(p.name)}${p.mi ? '<span class="tag-mi">MI</span>' : ""}</h3></div>
-      <div class="card-meta"><span class="pill ${st.cls}">${st.label}</span><span class="sector">${esc(p.sector)}</span></div>
-      ${keyTxt ? `<div class="key">${keyLbl ? `<span class="label ${keyCls}">${keyLbl}</span>` : ""}<p>${keyTxt}</p></div>` : ""}
-      <details class="more"><summary>Details</summary>
-        ${p.who ? `<p class="who">${p.who}</p>` : ""}
-        ${list("Objects to", "obj", p.obj)}
-        ${likes}
-        ${list("Fixes they want", "fix", p.fix)}
-        ${p.note ? `<p class="who">${p.note}</p>` : ""}
-        <div class="sources">${p.src.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join("")}</div>
-      </details>
-    </article>`;
+  if (!all.length) { el.innerHTML = `<p class="empty">No stakeholders match. Clear the search or pick another filter.</p>`; return; }
+  el.innerHTML = SECTIONS.map(([k, label]) => {
+    const items = all.filter(p => p.stance === k).sort((a, b) => FEATURED.has(b.name) - FEATURED.has(a.name));
+    if (!items.length) return "";
+    const open = filtering || expanded[k] || items.length <= ROW;
+    const shown = open ? items : items.slice(0, ROW);
+    const btn = items.length > ROW && !filtering ? `<button class="chip more-btn" type="button" data-expand="${k}">${expanded[k] ? "Show fewer" : `Show all ${items.length}`}</button>` : "";
+    return `<div class="roster-sec" id="sec-${k}"><h3 class="roster-h ${STANCES[k].cls}">${label} <span class="n">${items.length}</span></h3>
+      <div class="roster-grid">${shown.map(card).join("")}</div>${btn}</div>`;
   }).join("");
 }
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-expand]");
+  if (!b) return;
+  const k = b.dataset.expand;
+  expanded[k] = !expanded[k]; renderRoster();
+  if (!expanded[k]) document.getElementById("sec-" + k).scrollIntoView({ block: "nearest" });
+});
 
 function renderFixes() {
   document.getElementById("fixList").innerHTML = FIXES.map(f => `<article class="fix">
@@ -1218,10 +1227,6 @@ document.addEventListener("click", (e) => {
   renderChips(); renderRoster();
 });
 document.getElementById("q").addEventListener("input", (e) => { state.q = e.target.value.trim(); renderRoster(); });
-document.getElementById("rosterMore").addEventListener("click", () => {
-  state.all = !state.all; renderRoster();
-  if (!state.all) document.getElementById("stakeholders").scrollIntoView();
-});
 
 // ---------- Congress charts ----------
 const POS_FILL = { sponsor: "var(--support)", support: "var(--support)", lean: "var(--lean)", conditional: "var(--changes)", oppose: "var(--oppose)", none: "var(--silent-bg)" };
