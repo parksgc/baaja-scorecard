@@ -1,0 +1,101 @@
+x,y,Senator,Party,State,Position,What they said
+-120.0,0.0,Sen. Alsobrooks,Democrat,MD,No statement found,No statement found.
+-152.0,0.0,Sen. Baldwin,Democrat,WI,No statement found,"No BAAJA statement in her releases or X posts (Sept. 29 to Oct. 29). On Sept. 30 she voted against Husted's Ratepayer Protection Act, a separate data…"
+-184.0,0.0,Sen. Bennet,Democrat,CO,No statement found,No statement found.
+-216.0,0.0,Sen. Blumenthal,Democrat,CT,No statement found,No statement found.
+-248.0,0.0,Sen. Blunt Rochester,Democrat,DE,No statement found,"Data center transparency bills with Curtis (Oct. 1), not tied to BAAJA."
+-280.0,0.0,Sen. Booker,Democrat,NJ,No statement found,No statement found.
+-277.2,39.8,Sen. Cantwell,Democrat,WA,No statement found,No statement found.
+-244.9,38.8,Sen. Coons,Democrat,DE,No statement found,No statement found.
+-212.3,39.7,Sen. Cortez Masto,Democrat,NV,No statement found,No statement found.
+-179.4,40.9,Sen. Durbin,Democrat,IL,No statement found,No statement found.
+-146.8,39.3,Sen. Fetterman,Democrat,PA,No statement found,No statement found.
+-268.7,78.9,Sen. Gallego,Democrat,AZ,No statement found,No statement found.
+-235.9,76.6,Sen. Gillibrand,Democrat,NY,No statement found,No statement found.
+-112.8,41.0,Sen. Hassan,Democrat,NH,No statement found,Voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.
+-201.4,78.0,Sen. Hickenlooper,Democrat,CO,No statement found,No statement found.
+-254.7,116.3,Sen. Kaine,Democrat,VA,No statement found,No statement found.
+-165.8,79.8,Sen. Kelly,Democrat,AZ,No statement found,No statement found.
+-221.0,112.6,Sen. Kim,Democrat,NJ,No statement found,No statement found.
+-131.6,76.0,Sen. Klobuchar,Democrat,MN,No statement found,Voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.
+-183.6,113.7,Sen. Luján,Democrat,NM,No statement found,No statement found.
+-235.6,151.4,Sen. Murphy,Democrat,CT,No statement found,No statement found.
+-200.6,145.8,Sen. Murray,Democrat,WA,No statement found,No statement found.
+-143.9,114.7,Sen. Ossoff,Democrat,GA,No statement found,Voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.
+-91.9,77.1,Sen. Padilla,Democrat,CA,No statement found,Joined Wyden and Merkley's Oct. 29 letter to Interior on data centers on public lands (not about BAAJA). The Karuk Tribe is urging him and Schiff to…
+-211.6,183.4,Sen. Peters,Democrat,MI,No statement found,No statement found.
+-159.6,145.5,Sen. Reed,Democrat,RI,No statement found,No statement found.
+-107.5,107.5,Sen. Rosen,Democrat,NV,No statement found,No statement found.
+-175.4,175.4,Sen. Schiff,Democrat,CA,No statement found,The Karuk Tribe is urging him and Padilla to oppose. No statement found.
+-183.4,211.6,Sen. Schumer,Democrat,NY,No statement found,"Called Husted's separate data center bill ""a fraud, plain and simple."" He is an addressee of both the opposition and support letters, but has stated…"
+-114.7,143.9,Sen. Shaheen,Democrat,NH,No statement found,No statement found.
+-130.2,172.4,Sen. Slotkin,Democrat,MI,No statement found,No statement found.
+-145.8,200.6,Sen. Smith,Democrat,MN,No statement found,No statement found.
+-151.4,235.6,Sen. Van Hollen,Democrat,MD,No statement found,No statement found.
+-60.0,103.9,Sen. Warner,Democrat,VA,No statement found,No statement found.
+-76.0,131.6,Sen. Warnock,Democrat,GA,No statement found,One of four Democrats who voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.
+-112.6,221.0,Sen. Warren,Democrat,MA,No statement found,No statement found.
+-96.3,193.4,Sen. Welch,Democrat,VT,No statement found,No statement found.
+-79.8,165.8,Sen. Duckworth,Democrat,IL,Conditions / concerns,"Led the letter. The Oct. 27 letter says the signers are still deciding ""whether to vote in favor of the motion to proceed."" It says they ""share the…"
+-116.3,254.7,Sen. Hirono,Democrat,HI,Conditions / concerns,Same Politico Pro report as Schatz: concern about effects on tribal and local communities. No direct quote found.
+-76.6,235.9,Sen. Markey,Democrat,MA,Conditions / concerns,"Signed the Duckworth letter. His Oct. 1 statement: ""I'm still reviewing text of this proposal."" He adds: ""Building transmission is important. It's…"
+-78.9,268.7,Sen. Merkley,Democrat,OR,Conditions / concerns,"Signed the Duckworth letter. The Oct. 27 letter says the signers are still deciding ""whether to vote in favor of the motion to proceed."" It says they…"
+-59.1,207.8,Sen. Schatz,Democrat,HI,Conditions / concerns,"Politico Pro reports he and Hirono ""have also expressed concern"" about the bill's effects on tribal and local communities. No direct quote found."
+-39.3,146.8,Sen. Wyden,Democrat,OR,Conditions / concerns,"Signed the Duckworth letter (same conditions). ""Strong reservations,"" per Oil Change International. Also wrote, with Merkley and Padilla, to Interior…"
+-40.9,179.4,Sen. Heinrich,Democrat,NM,Sponsor,"""Data center owners should pay for their electricity and any grid upgrades, not you. Our new permitting reform bill makes that mandatory."" His office…"
+-20.8,118.2,Sen. Whitehouse,Democrat,RI,Sponsor,"Sponsor, but sets a condition for his own caucus: ""regulatory misbehavior against clean energy does need to be resolved before Democrats will vote…"
+-38.8,244.9,Sen. King,Independent,ME,No statement found,In May 2026 he told Interior there would be no votes for permitting reform without assurances on stalled renewable permits.
+-39.8,277.2,Sen. Sanders,Independent,VT,No statement found,No statement found.
+-19.9,215.1,Sen. Capito,Republican,WV,Sponsor,"Lead sponsor. Posts almost daily: ""We need to pass this bill to get our country back to building."" Promotes CEA and McKinsey savings estimates."
+-0.0,280.0,Sen. Lee,Republican,UT,Sponsor,"""We want to make it easier in America to build things."" On X: ""There is no negotiating with the anti-growth Left."" Cites the White House CEA estimate…"
+0.0,152.0,Sen. Armstrong,Republican,OK,Supports,"""Really, really meaningful permitting reform, all the way across the board."" Agencies can't walk back permits ""without being liable for the damages."""
+0.0,184.0,Sen. Boozman,Republican,AR,Supports,"""The bipartisan permitting bill will unlock critical infrastructure projects – from roads & bridges to energy."" Commends Capito's leadership (EPW…"
+0.0,248.0,Sen. Husted,Republican,OH,Supports,"""To help make life more affordable, we need permitting reform... EPW's bipartisan bill cuts through the bureaucracy."" Held a permitting roundtable…"
+19.9,215.1,Sen. Cornyn,Republican,TX,Leans support,"Attacked Podesta for trying ""to poison a bipartisan permitting reform""; amplified the NAM-led business push for lame-duck passage."
+39.8,277.2,Sen. Curtis,Republican,UT,Leans support,"""I'm glad to see my bill to bring environmental reviews into the digital age be included"" in BAAJA. Separately, data center transparency bills with…"
+38.8,244.9,Sen. McCormick,Republican,PA,Leans support,"Oct. 1, the day after introduction: ""We need clear approval timelines and legal certainty for approved projects. We must pass"" permitting reform. He…"
+20.8,118.2,Sen. Risch,Republican,ID,Leans support,"Sept. 30: ""Senate Democrats just blocked another chance"" to pass permitting reform, alongside the Ratepayer Protection Act. That is about the…"
+40.9,179.4,Sen. Thune,Republican,SD,Leans support,"Majority Leader. ""We need permitting reform... I think we can get the bill across the finish line."" Calls state jurisdiction the hurdle and says the…"
+39.3,146.8,Sen. Banks,Republican,IN,No statement found,No statement found.
+59.1,207.8,Sen. Barrasso,Republican,WY,No statement found,No statement found.
+78.9,268.7,Sen. Blackburn,Republican,TN,No statement found,No statement found.
+76.6,235.9,Sen. Britt,Republican,AL,No statement found,No statement found.
+116.3,254.7,Sen. Budd,Republican,NC,No statement found,No statement found.
+79.8,165.8,Sen. Cassidy,Republican,LA,No statement found,No statement found.
+96.3,193.4,Sen. Collins,Republican,ME,No statement found,No statement found.
+112.6,221.0,Sen. Cotton,Republican,AR,No statement found,No statement found.
+60.0,103.9,Sen. Cramer,Republican,ND,No statement found,"Sept. 29 (before the text): ""time for Congress to pass a new highway bill and permitting reform."" In 2024 he attacked EPRA's transmission provisions…"
+76.0,131.6,Sen. Crapo,Republican,ID,No statement found,No statement found.
+151.4,235.6,Sen. Cruz,Republican,TX,No statement found,No statement found.
+145.8,200.6,Sen. Daines,Republican,MT,No statement found,No statement found.
+130.2,172.4,Sen. Ernst,Republican,IA,No statement found,No statement found.
+114.7,143.9,Sen. Fischer,Republican,NE,No statement found,No statement found.
+183.4,211.6,Sen. Graham,Republican,SC,No statement found,No statement found.
+107.5,107.5,Sen. Grassley,Republican,IA,No statement found,No statement found.
+175.4,175.4,Sen. Hagerty,Republican,TN,No statement found,No statement found.
+159.6,145.5,Sen. Hawley,Republican,MO,No statement found,"The lone ENR Republican to vote against EPRA in 2024, over FERC transmission siting and landowners. Nothing on BAAJA yet."
+211.6,183.4,Sen. Hoeven,Republican,ND,No statement found,No statement found.
+91.9,77.1,Sen. Hyde-Smith,Republican,MS,No statement found,No statement found.
+143.9,114.7,Sen. Johnson,Republican,WI,No statement found,No statement found.
+200.6,145.8,Sen. Justice,Republican,WV,No statement found,No statement found.
+235.6,151.4,Sen. Kennedy,Republican,LA,No statement found,No statement found.
+183.6,113.7,Sen. Lankford,Republican,OK,No statement found,No statement found.
+131.6,76.0,Sen. Lummis,Republican,WY,No statement found,No statement found.
+221.0,112.6,Sen. Marshall,Republican,KS,No statement found,No statement found.
+165.8,79.8,Sen. McConnell,Republican,KY,No statement found,No statement found.
+254.7,116.3,Sen. Moody,Republican,FL,No statement found,No statement found.
+201.4,78.0,Sen. Moran,Republican,KS,No statement found,No statement found.
+112.8,41.0,Sen. Moreno,Republican,OH,No statement found,No statement found.
+235.9,76.6,Sen. Murkowski,Republican,AK,No statement found,Her FLOWS Act hydropower language is in the bill; no statement of her own found.
+268.7,78.9,Sen. Paul,Republican,KY,No statement found,No statement found.
+146.8,39.3,Sen. Ricketts,Republican,NE,No statement found,No statement found.
+179.4,40.9,Sen. Rounds,Republican,SD,No statement found,South Dakota PUC commissioners urged him and Thune to oppose the FERC transmission siting provisions. No statement found.
+212.3,39.7,Sen. Schmitt,Republican,MO,No statement found,No statement found.
+244.9,38.8,Sen. Scott,Republican,FL,No statement found,No statement found.
+277.2,39.8,Sen. Scott,Republican,SC,No statement found,No statement found.
+280.0,0.0,Sen. Sheehy,Republican,MT,No statement found,No statement found.
+120.0,0.0,Sen. Sullivan,Republican,AK,No statement found,No statement found.
+152.0,0.0,Sen. Tillis,Republican,NC,No statement found,No statement found.
+184.0,0.0,Sen. Tuberville,Republican,AL,No statement found,No statement found.
+216.0,0.0,Sen. Wicker,Republican,MS,No statement found,No statement found.
+248.0,0.0,Sen. Young,Republican,IN,No statement found,No statement found.

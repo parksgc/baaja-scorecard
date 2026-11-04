@@ -1287,10 +1287,13 @@ function renderHemi() {
   const D = rows.filter(r => r.party === "D"), I = rows.filter(r => r.party === "I"), R = rows.filter(r => r.party === "R");
   const plainNone = (arr) => arr.filter(r => r.pos === "none").sort(byName);
   const pos = (arr, p) => arr.filter(r => r.pos === p).sort(byName);
+  // Left to right: Democrats (silent, opposed, conditions, lean, support, sponsors), independents, then Republicans in mirror order.
+  // Every position appears for every party so no senator can drop off the chart.
+  const L = ["none", "oppose", "conditional", "lean", "support", "sponsor"];
   const ordered = [
-    ...plainNone(D), ...pos(D, "conditional"), ...pos(D, "lean"), ...pos(D, "support"), ...pos(D, "sponsor"),
-    ...plainNone(I),
-    ...pos(R, "sponsor"), ...pos(R, "support"), ...pos(R, "lean"), ...plainNone(R)
+    ...L.flatMap(p => p === "none" ? plainNone(D) : pos(D, p)),
+    ...L.flatMap(p => p === "none" ? plainNone(I) : pos(I, p)),
+    ...[...L].reverse().flatMap(p => p === "none" ? plainNone(R) : pos(R, p))
   ];
   const cx = 300, cy = 312, counts = [10, 13, 15, 18, 21, 23], radii = [120, 152, 184, 216, 248, 280];
   const seats = [];

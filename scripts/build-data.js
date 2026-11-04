@@ -53,7 +53,30 @@ const table = [["Senator", "Party", "State", "Position", "On the record"]];
 senators.filter((s) => s.pos !== "none").sort((a, b) => rank[a.pos] - rank[b.pos] || a.key.localeCompare(b.key))
   .forEach((s) => table.push([s.key, s.party, s.state, label(s), s.note]));
 
+// 4. Seat chart: one row per senator with x/y seat coordinates (same layout and order as the page's chart)
+const byName = (a, b) => a.key.localeCompare(b.key);
+const L = ["none", "oppose", "conditional", "lean", "support", "sponsor"];
+const grab = (party, p) => senators.filter((s) => s.party === party && s.pos === p).sort(byName);
+const ordered = [
+  ...L.flatMap((p) => grab("D", p)),
+  ...L.flatMap((p) => grab("I", p)),
+  ...[...L].reverse().flatMap((p) => grab("R", p)),
+];
+if (ordered.length !== 100) throw new Error(`Seat chart has ${ordered.length} senators, expected 100`);
+const counts = [10, 13, 15, 18, 21, 23], radii = [120, 152, 184, 216, 248, 280];
+const seats = [];
+counts.forEach((n, i) => { for (let j = 0; j < n; j++) { const a = Math.PI - (Math.PI * j) / (n - 1); seats.push({ a, r: radii[i] }); } });
+seats.sort((p, q) => q.a - p.a || p.r - q.r);
+const PARTY = { D: "Democrat", R: "Republican", I: "Independent" };
+const short = (t) => { if (!t) return "No statement found."; if (t.length <= 150) return t; const cut = t.slice(0, 150); return cut.slice(0, cut.lastIndexOf(" ")) + "…"; };
+const seatRows = [["x", "y", "Senator", "Party", "State", "Position", "What they said"]];
+ordered.forEach((s, k) => {
+  const { a, r } = seats[k];
+  seatRows.push([(r * Math.cos(a)).toFixed(1), (r * Math.sin(a)).toFixed(1), `Sen. ${s.key}`, PARTY[s.party], s.state, label(s), short(s.note)]);
+});
+
 fs.mkdirSync(path.join(root, "data"), { recursive: true });
+fs.writeFileSync(path.join(root, "data", "senate-seats.csv"), csv(seatRows));
 fs.writeFileSync(path.join(root, "data", "path-to-60.csv"), csv(bar));
 fs.writeFileSync(path.join(root, "data", "senate-by-state.csv"), csv(map));
 fs.writeFileSync(path.join(root, "data", "senators-on-record.csv"), csv(table));
