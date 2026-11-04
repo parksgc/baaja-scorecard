@@ -1,0 +1,1383 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<title>The BAAJA Scorecard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@600;800&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<meta name="description" content="Where every senator and House member stands on S. 5653, the Bipartisan American Affordability and Jobs Act, plus the outside groups for and against it.">
+<meta property="og:title" content="The BAAJA Scorecard">
+<meta property="og:description" content="Where Congress and outside groups stand on S. 5653, the bipartisan permitting bill, with sources.">
+<meta property="og:type" content="website">
+</head><body>
+<style>
+/* Layout: a legislative tracker. Summary bar, then provision matrix, then filterable stakeholder roster, then the supporters' fix list. */
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --ink: #17202e;
+  --muted: #5a6578;
+  --rule: #dfe3ea;
+  --accent: #1f4e8c;
+  --oppose: #b4372b;
+  --oppose-bg: #fbeceb;
+  --changes: #a0660a;
+  --changes-bg: #fbf2e1;
+  --support: #1d7a5c;
+  --support-bg: #e5f4ee;
+  --lean: #8cc7ae;
+  --silent: #6b7280;
+  --silent-bg: #eef0f3;
+  --font-display: "Libre Franklin", "Franklin Gothic Medium", "Arial Narrow", sans-serif;
+  --font-body: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --lean: #3f8f6f;
+    --bg: #11161f; --surface: #19202c; --ink: #e6eaf1; --muted: #9aa5b8; --rule: #2b3443; --accent: #8fb4ec;
+    --oppose: #f08a7e; --oppose-bg: #3a1f1d; --changes: #e8b45a; --changes-bg: #372b15;
+    --support: #6fd0aa; --support-bg: #163129; --silent: #a3abb8; --silent-bg: #262d39;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --lean: #3f8f6f;
+  --bg: #11161f; --surface: #19202c; --ink: #e6eaf1; --muted: #9aa5b8; --rule: #2b3443; --accent: #8fb4ec;
+  --oppose: #f08a7e; --oppose-bg: #3a1f1d; --changes: #e8b45a; --changes-bg: #372b15;
+  --support: #6fd0aa; --support-bg: #163129; --silent: #a3abb8; --silent-bg: #262d39;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 40px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: 22px; font-weight: 800; }
+h3 { font-size: 16px; font-weight: 600; }
+p { margin: 0; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.sec { font-family: var(--font-mono); font-size: 12px; background: var(--silent-bg); color: var(--ink); padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
+header { display: flex; flex-direction: column; gap: 10px; }
+.lede { color: var(--muted); max-width: 68ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--muted); }
+.meta strong { color: var(--ink); }
+
+/* Summary bar */
+.summary { display: flex; flex-direction: column; gap: 10px; }
+.bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--rule); }
+.bar span { display: block; height: 100%; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; }
+.legend b { font-variant-numeric: tabular-nums; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+
+/* Pills */
+.pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+.s-oppose { color: var(--oppose); background: var(--oppose-bg); }
+.s-changes { color: var(--changes); background: var(--changes-bg); }
+.s-support { color: var(--support); background: var(--support-bg); }
+.s-silent { color: var(--silent); background: var(--silent-bg); }
+
+/* Matrix */
+section { display: flex; flex-direction: column; gap: 14px; }
+.section-head { display: flex; flex-direction: column; gap: 6px; }
+.section-head p { color: var(--muted); max-width: 70ch; }
+.table-scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 13px; }
+th, td { padding: 9px 10px; text-align: center; border-bottom: 1px solid var(--rule); }
+thead th { font-weight: 700; font-size: 12px; color: var(--muted); vertical-align: bottom; }
+tbody th { text-align: left; font-weight: 600; min-width: 190px; }
+tbody th .sec { margin-left: 4px; }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+.cell { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 22px; border-radius: 4px; font-weight: 800; font-size: 14px; }
+.c-plus { color: var(--support); background: var(--support-bg); }
+.c-minus { color: var(--oppose); background: var(--oppose-bg); }
+.c-mixed { color: var(--changes); background: var(--changes-bg); }
+.c-none { color: var(--muted); }
+.matrix-key { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--muted); align-items: center; }
+
+/* Roster */
+.controls { display: flex; flex-direction: column; gap: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: inherit; font-size: 13px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip .n { font-variant-numeric: tabular-nums; opacity: 0.7; margin-left: 4px; }
+#q { font: inherit; padding: 8px 12px; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); color: var(--ink); width: 100%; max-width: 360px; }
+.count { font-size: 13px; color: var(--muted); }
+.roster { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 12px; align-items: start; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.card-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.card-top h3 { min-width: 0; }
+.sector { font-size: 12px; color: var(--muted); }
+.who { font-size: 13px; color: var(--muted); }
+.block { display: flex; flex-direction: column; gap: 3px; }
+.block .label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.label.obj { color: var(--oppose); }
+.label.likes { color: var(--support); }
+.label.fix { color: var(--changes); }
+.block ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 2px; font-size: 14px; }
+.sources { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; border-top: 1px solid var(--rule); padding-top: 8px; }
+.tag-mi { font-family: var(--font-mono); font-size: 11px; color: var(--accent); border: 1px solid var(--accent); border-radius: 3px; padding: 0 4px; margin-left: 6px; vertical-align: 2px; }
+.empty { color: var(--muted); padding: 20px 0; }
+
+/* Fixes */
+.fixes { display: flex; flex-direction: column; gap: 10px; }
+.fix { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 8px 24px; }
+.fix h3 { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+.fix .what, .fix .who-says { font-size: 14px; display: flex; flex-direction: column; gap: 4px; }
+.fix .k { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.consensus { font-size: 12px; font-weight: 700; padding: 1px 8px; border-radius: 999px; }
+.k-high { color: var(--support); background: var(--support-bg); }
+.k-med { color: var(--changes); background: var(--changes-bg); }
+.k-low { color: var(--silent); background: var(--silent-bg); }
+@media (max-width: 640px) { .fix { grid-template-columns: 1fr; } }
+[data-view][hidden] { display: none !important; }
+.views { display: flex; gap: 4px; border-bottom: 1px solid var(--rule); margin-top: 6px; }
+.view-tab { padding: 8px 14px; font-weight: 700; font-size: 14px; color: var(--muted); text-decoration: none; border-bottom: 3px solid transparent; margin-bottom: -1px; }
+.view-tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.chamber { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 760px) { .chamber { grid-template-columns: 1fr; } }
+.chamber-chart, .panel, .seat-panel, .votebar-wrap { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+#hemi { width: 100%; height: auto; display: block; }
+#hemi .seat { cursor: pointer; }
+#hemi .seat:focus { outline: none; }
+#hemi .seat:focus-visible, #hemi .seat.sel { stroke: var(--ink); stroke-width: 3; }
+#hemi text { fill: var(--ink); font-family: var(--font-display); }
+#hemi text.sub { fill: var(--muted); font-family: var(--font-body); font-size: 12px; font-weight: 400; }
+.seat-key { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; align-items: center; }
+.sw { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.sw-none { background: var(--silent-bg); border: 1.5px solid var(--silent); }
+.sw-watch { background: var(--silent-bg); border: 2px dashed var(--muted); }
+#hemi .p-D { stroke: #2f5fb3; } #hemi .p-R { stroke: #b43a3a; } #hemi .p-I { stroke: #6b7280; }
+:root[data-theme="dark"] #hemi .p-D { stroke: #8fb4ec; } :root[data-theme="dark"] #hemi .p-R { stroke: #f08a7e; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #hemi .p-D { stroke: #8fb4ec; } :root:not([data-theme="light"]) #hemi .p-R { stroke: #f08a7e; } }
+.seat-panel h4 { margin: 0; font-family: var(--font-display); font-size: 18px; }
+.seat-panel .said a { font-size: 12px; margin-right: 6px; }
+.votebar { position: relative; display: flex; height: 26px; border-radius: 4px; overflow: visible; background: var(--silent-bg); }
+.votebar .seg { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--surface); white-space: nowrap; overflow: hidden; }
+.votebar .mark { position: absolute; top: -6px; bottom: -6px; width: 0; border-left: 2px solid var(--ink); }
+.votebar .mark.target { border-left-style: dashed; }
+.votebar-axis { position: relative; height: 18px; font-size: 12px; color: var(--muted); }
+.votebar-axis span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 16px; align-items: start; }
+.waffle { display: grid; grid-template-columns: repeat(29, 1fr); gap: 2px; }
+.waffle i { aspect-ratio: 1; border-radius: 2px; background: var(--silent-bg); display: block; }
+.house-groups { display: flex; flex-direction: column; gap: 8px; }
+.house-groups .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.house-groups .row > b { font-size: 12px; width: 100%; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.mchip { font-size: 12px; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--rule); background: var(--bg); }
+.mi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 6px; }
+.mi-cell { border: 1px solid var(--rule); border-radius: 6px; padding: 6px 8px; font-size: 13px; display: flex; flex-direction: column; gap: 2px; background: var(--bg); }
+.mi-cell small { color: var(--muted); font-size: 11px; }
+.mi-cell.oppose { border-color: var(--oppose); background: var(--oppose-bg); }
+.venn { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr); gap: 0; align-items: stretch; }
+@media (max-width: 760px) { .venn { grid-template-columns: 1fr; gap: 10px; } }
+.venn-col { padding: 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.venn-col h4 { margin: 0; font-family: var(--font-display); font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; }
+.venn-ind { background: var(--changes-bg); border-radius: 10px 0 0 10px; }
+.venn-ind h4 { color: var(--changes); }
+.venn-grn { background: var(--support-bg); border-radius: 0 10px 10px 0; }
+.venn-grn h4 { color: var(--support); }
+.venn-both { background: var(--surface); border: 2px solid var(--accent); border-radius: 10px; margin: -6px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.08); z-index: 1; }
+.venn-both h4 { color: var(--accent); }
+@media (max-width: 760px) { .venn-ind, .venn-grn { border-radius: 10px; } .venn-both { margin: 0; } }
+.venn-item { display: flex; flex-direction: column; gap: 2px; }
+.venn-item b { font-size: 14px; }
+.venn-both .venn-item b { font-size: 15px; }
+.venn-item span { font-size: 12px; color: var(--muted); }
+.venn-item .who-line { font-size: 11px; color: var(--muted); }
+.fix-band { border-color: var(--accent); }
+.fixband-list { display: flex; flex-direction: column; gap: 12px; }
+.fb { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr); gap: 8px 16px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+.fb:last-child { border-bottom: 0; padding-bottom: 0; }
+@media (max-width: 760px) { .fb { grid-template-columns: 1fr; } }
+.fb h4 { margin: 0; font-family: var(--font-display); font-size: 15px; display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; }
+.fb p { font-size: 13px; }
+.fb .side-lbl { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.fb .crit .side-lbl { color: var(--oppose); } .fb .supp .side-lbl { color: var(--support); }
+.fb .crit, .fb .supp { display: flex; flex-direction: column; gap: 2px; font-size: 13px; }
+.fight-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 10px; }
+.fight { border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; background: var(--bg); }
+.fight h4 { margin: 0; font-size: 14px; font-family: var(--font-display); display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; }
+.fight p { font-size: 13px; }
+.glance-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 820px) { .glance-grid { grid-template-columns: 1fr; } }
+.div-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-left: 0; }
+.div-head span:first-child { text-align: right; padding-right: 10px; color: var(--oppose); }
+.div-head span:last-child { padding-left: 10px; color: var(--support); }
+.div-chart { display: flex; flex-direction: column; gap: 10px; }
+.div-row { display: flex; flex-direction: column; gap: 4px; }
+.div-label { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; font-size: 13px; font-weight: 600; }
+.div-bars { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.div-bars .side { display: flex; align-items: center; height: 20px; }
+.div-bars .side.l { justify-content: flex-end; border-right: 2px solid var(--ink); padding-right: 0; }
+.div-bars .bar-seg { height: 16px; border-radius: 3px; display: flex; align-items: center; font-size: 11px; font-weight: 700; color: var(--surface); padding: 0 5px; min-width: 18px; cursor: help; }
+.div-bars .l .bar-seg { background: var(--oppose); justify-content: flex-start; border-radius: 3px 0 0 3px; }
+.div-bars .r .bar-seg { background: var(--support); justify-content: flex-end; border-radius: 0 3px 3px 0; }
+.div-bars .zero { font-size: 11px; color: var(--muted); padding: 0 6px; }
+.tag { font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 999px; white-space: nowrap; }
+.t-agree { color: var(--support); background: var(--support-bg); }
+.t-fight { color: var(--changes); background: var(--changes-bg); }
+.t-lone { color: var(--oppose); background: var(--oppose-bg); }
+.glance-key { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 8px; }
+.consensus-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.consensus-list li { display: flex; flex-direction: column; gap: 3px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+.consensus-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+.consensus-list b { font-size: 14px; }
+.consensus-list span { font-size: 13px; color: var(--muted); }
+.args-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px; }
+.args-h { margin: 0 0 8px; font-family: var(--font-display); font-size: 14px; }
+.args-h.sup { color: var(--support); } .args-h.det { color: var(--oppose); }
+.args { display: flex; flex-direction: column; gap: 9px; }
+.arg { display: flex; flex-direction: column; gap: 3px; }
+.arg-top { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; font-weight: 600; }
+.arg-top b { font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 700; }
+.arg-track { height: 8px; background: var(--silent-bg); border-radius: 4px; overflow: hidden; }
+.arg-fill { height: 100%; border-radius: 4px; }
+.arg-who { font-size: 11px; color: var(--muted); }
+.jump { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; font-weight: 600; }
+.jump a { text-decoration: none; }
+.jump a:hover { text-decoration: underline; }
+.list-table { min-width: 720px; }
+.list-table th, .list-table td { text-align: left; vertical-align: top; }
+.list-table thead th { white-space: nowrap; }
+.list-table td:nth-child(2), .list-table td:nth-child(3) { white-space: nowrap; }
+.list-table tbody th { min-width: 150px; }
+.list-table td.said { font-size: 13px; color: var(--ink); min-width: 280px; }
+.list-table td.said a { margin-left: 4px; font-size: 12px; }
+.list-table tr.grp th { background: var(--silent-bg); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.party-D { color: #2f5fb3; } .party-R { color: #b43a3a; } .party-I { color: var(--muted); }
+:root[data-theme="dark"] .party-D { color: #8fb4ec; } :root[data-theme="dark"] .party-R { color: #f08a7e; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .party-D { color: #8fb4ec; } :root:not([data-theme="light"]) .party-R { color: #f08a7e; } }
+.watch { color: var(--muted); }
+.tally { display: flex; flex-wrap: wrap; gap: 8px; }
+.tally .t { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; min-width: 120px; }
+.tally .t b { font-family: var(--font-display); font-size: 22px; font-variant-numeric: tabular-nums; }
+.tally .t span { font-size: 12px; color: var(--muted); }
+.latest-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+.latest-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.latest-list li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 4px 12px; padding: 10px 0; border-top: 1px solid var(--rule); }
+.latest-list li:first-child { border-top: 0; }
+.latest-list .when { font-family: var(--font-mono); font-size: 12px; color: var(--muted); padding-top: 2px; }
+.latest-list .l-head { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; }
+.latest-list .l-head b { font-size: 14px; }
+.latest-list .l-kind { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.latest-list p { margin: 3px 0 0; font-size: 13px; }
+.latest-list p a { font-size: 12px; margin-right: 8px; }
+@media (max-width: 520px) { .latest-list li { grid-template-columns: 1fr; } }
+.hlr { font-size: 14px; font-weight: 600; }
+.hlr a { text-decoration: none; }
+.hlr a:hover { text-decoration: underline; }
+footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">S. 5653 · Bipartisan American Affordability and Jobs Act of 2026</span>
+    <h1>The BAAJA Scorecard</h1>
+    <p class="lede">Most of the people fighting over BAAJA agree on more than they admit. This page tracks where Congress and the major stakeholders stand, which sections they praise or attack, and the fixes even the bill's supporters say it needs.</p>
+    <p class="hlr" id="hlr" hidden>Analysis and updates at <a id="hlrHome" href="#">Hard Look Review</a><span aria-hidden="true"> · </span><a id="hlrSub" href="#">Subscribe</a></p>
+    <div class="meta"><span>Updated <strong>Nov. 3, 2026</strong></span><span>Senate motion to proceed <strong>Nov. 9</strong></span><span>Introduced <strong>Sept. 30</strong></span></div>
+    <div class="views" role="tablist" aria-label="Views">
+      <a role="tab" href="#congress" id="tab-congress" class="view-tab">Whip tracker</a>
+      <a role="tab" href="#groups" id="tab-groups" class="view-tab">Stakeholders</a>
+    </div>
+    <nav class="jump" aria-label="Sections" data-view="groups"><a href="#glance">At a glance</a><a href="#provisions">Provisions</a><a href="#stakeholders">Groups</a><a href="#officials">Former officials</a><a href="#fixes">Fixes</a></nav>
+  </header>
+
+  <section id="congress" data-view="congress">
+    <div class="section-head">
+      <span class="eyebrow">Vote watch</span>
+      <h2>Congress</h2>
+      <p>Cloture on the motion to proceed takes 60 votes. Backers are aiming for about 70 to pressure the House (Politico, Oct. 29), and are courting more than a dozen Senate Democrats (Inside EPA). Most members have said nothing in public since introduction, so "No statement found" is the default, not a position.</p>
+    </div>
+
+    <div class="chamber">
+      <div class="chamber-chart">
+        <h3>Senate, by seat</h3>
+        <svg id="hemi" viewBox="0 0 600 330" role="img" aria-labelledby="hemiTitle"><title id="hemiTitle">Senate seat chart colored by public position on BAAJA</title></svg>
+        <div class="seat-key">
+          <span><i class="sw" style="background:var(--support)"></i>Sponsor / supports</span>
+          <span><i class="sw" style="background:var(--lean)"></i>Leans support</span>
+          <span><i class="sw" style="background:var(--changes)"></i>Conditions</span>
+          <span><i class="sw" style="background:var(--oppose)"></i>Opposes</span>
+          <span><i class="sw sw-none"></i>No statement found</span>
+          <span><i class="sw sw-watch"></i>On the watch list</span>
+          <span class="watch">Democrats left, independents center, Republicans right. Ring shows party.</span>
+        </div>
+      </div>
+      <aside class="seat-panel" id="seatPanel" aria-live="polite"></aside>
+    </div>
+
+    <div class="votebar-wrap">
+      <h3>Path to 60</h3>
+      <div class="votebar" id="votebar"></div>
+      <div class="votebar-axis" id="voteaxis"></div>
+      <p class="who" id="votecap"></p>
+    </div>
+
+    <div class="panel latest" id="latest">
+      <div class="latest-head">
+        <h3>Latest statements added</h3>
+        <div class="chips" id="latestChips" role="group" aria-label="Filter latest statements"></div>
+      </div>
+      <ol class="latest-list" id="latestList"></ol>
+      <button class="chip" id="latestMore" type="button" hidden></button>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <h3 id="houseHead">House members on record</h3>
+        <div class="waffle" id="waffle" role="img" aria-label="435 squares, 11 colored for members with a public position"></div>
+        <div class="house-groups" id="houseGroups"></div>
+      </div>
+      <div class="panel">
+        <h3>Michigan delegation</h3>
+        <p class="who">2 senators and 13 House members. Only Tlaib has taken a public position.</p>
+        <div class="mi-grid" id="miGrid"></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:8px">Senate detail</h3>
+    <div class="tally" id="senTally"></div>
+    <div class="controls">
+      <div class="chips" id="senChips" role="group" aria-label="Filter senators"></div>
+    </div>
+    <div class="table-scroll">
+      <table class="list-table">
+        <thead><tr><th scope="col">Senator</th><th scope="col">Party-State</th><th scope="col">Position</th><th scope="col">On the record / what to watch</th></tr></thead>
+        <tbody id="senBody"></tbody>
+      </table>
+    </div>
+    <p class="who">Senate and House tables were last swept in full on Oct. 30; statements since then are added as they are found (see the box above). All 100 senators were checked by name in press releases and news. Every senator's X account was searched for "permitting" or "BAAJA" since Sept. 29. Whip coverage came from Politico, Inside Climate News, Semafor, Hill Heat, and Roll Call, plus Extracted Daily's excerpts of paywalled Politico Pro and Inside EPA pieces. "No statement found" means a member said nothing we could find, not that we didn't look. Reporters say backers want 15 to 20 Democrats and expect "some losses on the Republican side," but no one has named those Republicans.</p>
+    <h3 style="margin-top:12px">House members on record</h3>
+    <p class="who">The House has its own process. Speaker Johnson backs the bill's thrust; Energy and Commerce chair Guthrie wants changes before a House vote. This lists every member found with a public statement, plus the full Michigan delegation.</p>
+    <div class="table-scroll">
+      <table class="list-table">
+        <thead><tr><th scope="col">Member</th><th scope="col">Party-District</th><th scope="col">Position</th><th scope="col">What they said</th></tr></thead>
+        <tbody id="houseBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="summary" aria-label="Count by position" data-view="groups">
+    <div class="bar" id="bar"></div>
+    <div class="legend" id="legend"></div>
+  </div>
+
+  <section id="glance" data-view="groups">
+    <div class="section-head">
+      <span class="eyebrow">At a glance</span>
+      <h2>Where they agree, and where they fight</h2>
+      <p>Industry and the big green groups agree on more than either side lets on. Here's what they share, the fixes both say are easy, and where the fight actually is.</p>
+    </div>
+    <div class="panel">
+      <h3>Common ground: what industry and the big green groups both like</h3>
+      <p class="who">Industry means the clean energy trades, API and oil and gas groups, business groups, building trades unions, and supportive utilities. Green groups means NRDC, the Sierra Club, and Earthjustice: the three heaviest hitters seeking changes, none of which has endorsed the bill.</p>
+      <div class="venn" id="venn"></div>
+    </div>
+    <div class="panel fix-band">
+      <h3>Fixes both sides say are easy</h3>
+      <div id="fixBand" class="fixband-list"></div>
+    </div>
+    <div class="panel">
+      <h3>Where the real fight is</h3>
+      <div id="fightList" class="fight-list"></div>
+    </div>
+    <div class="panel">
+      <h3>The most common arguments on each side</h3>
+      <div class="args-grid">
+        <div><h4 class="args-h sup">What supporters say</h4><div id="argsSup" class="args"></div></div>
+        <div><h4 class="args-h det">What detractors say</h4><div id="argsDet" class="args"></div></div>
+      </div>
+      <p class="who">A group counts once per argument. Supporters here include critics who praise a specific provision, such as the Sierra Club on the data center rule.</p>
+    </div>
+  </section>
+
+  <section id="provisions" data-view="groups">
+    <div class="section-head">
+      <span class="eyebrow">Where the fight is</span>
+      <h2>Provisions by stakeholder</h2>
+      <p>The groups most critical of the bill praise the transmission title and the data center cost rule. The fight is over Titles I and IV. Blank cells mean the group hasn't taken a public position on that provision that we've found.</p>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col" style="text-align:left">Provision</th>
+            <th scope="col">Sierra Club</th>
+            <th scope="col">Earthjustice</th>
+            <th scope="col">NRDC</th>
+            <th scope="col">CBD</th>
+            <th scope="col">NAACP</th>
+            <th scope="col">Natl. Trust / tribes</th>
+            <th scope="col">Clean energy trades</th>
+            <th scope="col">API / business</th>
+          </tr>
+        </thead>
+        <tbody id="matrix"></tbody>
+      </table>
+    </div>
+    <div class="matrix-key">
+      <span><span class="cell c-plus">+</span> praises</span>
+      <span><span class="cell c-minus">−</span> objects</span>
+      <span><span class="cell c-none">·</span> no stated position</span>
+    </div>
+  </section>
+
+  <section id="stakeholders" data-view="groups">
+    <div class="section-head">
+      <span class="eyebrow">Roster</span>
+      <h2>Stakeholders</h2>
+    </div>
+    <div class="controls">
+      <div class="chips" id="stanceChips" role="group" aria-label="Filter by position"></div>
+      <div class="chips" id="sectorChips" role="group" aria-label="Filter by sector"></div>
+      <input id="q" type="search" placeholder="Search groups, people, sections (e.g. 1402)" aria-label="Search stakeholders">
+      <span class="count" id="count"></span>
+    </div>
+    <div class="roster" id="roster"></div>
+  </section>
+
+  <section id="officials" data-view="groups">
+    <div class="section-head">
+      <span class="eyebrow">Former administration officials</span>
+      <h2>Former officials, by name</h2>
+      <p>Most of the support comes from one letter organized by the Institute for Progress. It was signed by 19 former cabinet members and White House principals from seven administrations, from George H.W. Bush through Trump's second term. The critics are mostly Biden-era environmental lawyers.</p>
+    </div>
+    <div class="chips" id="offChips" role="group" aria-label="Filter former officials"></div>
+    <div class="table-scroll">
+      <table class="list-table">
+        <thead><tr><th scope="col">Name</th><th scope="col">Former role</th><th scope="col">Admin.</th><th scope="col">Position</th><th scope="col">What they said</th></tr></thead>
+        <tbody id="offBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="fixes" data-view="groups">
+    <div class="section-head">
+      <span class="eyebrow">Inside the tent</span>
+      <h2>Fixes supporters say it needs</h2>
+      <p>Problems flagged by people who back the bill or are neutral on it. The label shows how widely each fix is accepted on the pro-bill side. Reports say Hill fixes to Title IV are underway before the Nov. 9 vote.</p>
+    </div>
+    <div class="fixes" id="fixList"></div>
+  </section>
+
+  <footer>
+    <p>Positions are moving. NRDC has promised a position before the floor vote, and a managers' amendment is in the works. Trade groups and advocacy groups are interested parties. Section numbers are checked against the introduced text (BILLS-119s5653is).</p>
+    <p>Compiled by Collin Parks<span id="hlrFoot" hidden> for <a id="hlrFootLink" href="#">Hard Look Review</a></span>.</p>
+  </footer>
+</div>
+
+<script>
+// Set to the Substack home page (e.g. "https://example.substack.com") to show the Hard Look Review links.
+const SUBSTACK_URL = "";
+if (SUBSTACK_URL) {
+  const home = SUBSTACK_URL.replace(/\/$/, "");
+  document.getElementById("hlrHome").href = home;
+  document.getElementById("hlrSub").href = home + "/subscribe";
+  document.getElementById("hlrFootLink").href = home;
+  document.getElementById("hlr").hidden = false;
+  document.getElementById("hlrFoot").hidden = false;
+}
+const STANCES = {
+  oppose: { label: "Opposes", cls: "s-oppose", color: "var(--oppose)" },
+  changes: { label: "Seeking changes", cls: "s-changes", color: "var(--changes)" },
+  support: { label: "Supports", cls: "s-support", color: "var(--support)" },
+  silent: { label: "Silent / undecided", cls: "s-silent", color: "var(--silent)" }
+};
+
+const S = (n) => `<span class="sec">§ ${n}</span>`;
+
+const PEOPLE = [
+  // ---------- OPPOSE ----------
+  { name: "Center for Biological Diversity", sector: "Environmental", stance: "oppose",
+    who: "Lead organizer of the opposition letters; Brett Hartl",
+    obj: [`ESA: "best available science" redefinition ${S(1301)} and state Sec. 7 consultation ${S(1304)}`,
+          `Project certainty: undefined bar on actions that "interfere" with full-capacity operation ${S(1401)}`,
+          `Disparate-treatment lookback would make future fossil denials near impossible ${S(1402)}`,
+          `Hartl calls project certainty a "Death Star" for EPA`],
+    likes: [],
+    note: `On the leaked Oct. 1 call, Hartl described the goal as "to stop this bill not to make it better."`,
+    src: [["Oct. 6 letter (200+ groups)", "https://biologicaldiversity.org/w/news/press-releases/hundreds-of-organizations-oppose-endangered-species-attacks-in-permitting-legislation-2026-10-06/"],
+          ["Oct. 28 letter (140+ groups)", "https://biologicaldiversity.org/w/news/press-releases/140-groups-urge-congress-to-reject-project-certainty-in-permitting-bill-2026-10-28/"],
+          ["Leaked call (Punchbowl)", "https://punchbowl.news/engo-nepa-coalition-call-2/"]] },
+
+  { name: "NAACP", sector: "Civil rights / EJ", stance: "oppose",
+    who: "Center for Environmental and Climate Justice; resource page published Oct. 28",
+    obj: [`Speeds oil and gas buildout "without guardrails" and likely encourages behind-the-meter gas`,
+          `NEPA exclusions ${S(1102)}: loan-only projects, repair and maintenance, grid work in existing corridors, in-state gas pipelines, Corps projects with a small federal share`,
+          `Codifies NEPA as "an informational document" ${S(1101)}`,
+          `Harder to show harm and sue; faster court clocks and narrower remedies`,
+          `Lets polluters sue the government for moving too slowly ${S(1402)}`,
+          `CWA, NHPA, and ESA changes; states and tribes less able to monitor water quality`],
+    likes: [],
+    note: `No provision praised. Its demands include cumulative-impact review before new permits, prioritizing clean and renewable energy, reaffirming NEPA, a Title VI fix, and fewer exclusions. It counts the grid-corridor exclusion as a harm even while asking Congress to prioritize clean energy.`,
+    src: [["NAACP, Community Vision for Permitting Reform", "https://naacp.org/resources/community-vision-permitting-reform"],
+          ["Ben Geman (Axios) on X", "https://x.com/Ben_Geman/status/2115485230039474180"],
+          ["FoE amplifying", "https://x.com/foe_us/status/2115816715770851680"]] },
+
+  { name: "Friends of the Earth", sector: "Environmental", stance: "oppose",
+    who: "Opposed from day one",
+    obj: [`"Another attack" framed as permitting reform`, `No reason to sacrifice endangered species for "a half-measure on renewables"`, `Puts polluters ahead of people`],
+    likes: [],
+    src: [["@foe_us, Oct. 8", "https://x.com/foe_us/status/2108209973331202309"], ["@foe_us, Sept. 30", "https://x.com/foe_us/status/2105387455771799823"]] },
+
+  { name: "Union of Concerned Scientists", sector: "Environmental", stance: "oppose",
+    who: "David Watkins, Oct. 27",
+    obj: [`Tilted toward fossil fuels; could be worse than the status quo without major fixes`, `Potentially the largest environmental rollback in decades`],
+    likes: [`Transmission goals, though it argues most transmission provisions are achievable under existing FERC authority`],
+    src: [["UCS blog", "https://blog.ucs.org/?p=98737"]] },
+
+  { name: "Climate Justice Alliance and EJ coalition", sector: "Civil rights / EJ", stance: "oppose",
+    who: "GreenLatinos, Indigenous Environmental Network, WE ACT, Western Environmental Law Center; 100+ groups on the Oct. 28 letter",
+    obj: [`Frames the bill as a data center and billionaire giveaway`, `Polluter-driven; cuts community input on siting`],
+    likes: [],
+    src: [["CJA BAAJA page", "https://climatejusticealliance.org/baaja/"], ["Oct. 28 letter", "https://climatejusticealliance.org/100ej-groups-letter-opposing-baaja/"]] },
+
+  { name: "Food & Water Watch", sector: "Environmental", stance: "oppose",
+    who: "Jim Walsh",
+    obj: [`Big Tech and data center power grab; the energy buildout would serve data centers`, `Joined a 185-group letter against "back-door permitting deals"`],
+    likes: [],
+    note: `HuffPost notes the bill doesn't speed permitting for data centers themselves, which sit mostly on private land.`,
+    src: [["HuffPost", "https://www.huffpost.com/entry/permitting-reform-baaja-data-centers-martin-heinrich_n_6ad6336ae4b05354557e05b7"], ["@foodandwater, Oct. 23", "https://x.com/foodandwater/status/2113676849599353273"]] },
+
+  { name: "Indigenous Environmental Network and tribal groups", sector: "Tribal / preservation", stance: "oppose",
+    who: "Jordan Harmon (Muscogee (Creek) Nation, IEN); NATHPO; Karuk Tribe",
+    obj: [`NHPA rewrite ${S(2301)} would shut tribal voices out of decisions about sacred and cultural sites`],
+    likes: [],
+    src: [["Washington Examiner, Oct. 28", "https://www.washingtonexaminer.com/?p=4783176"]] },
+
+  { name: "Coalition of Large Tribes (COLT)", sector: "Tribal / preservation", stance: "changes",
+    who: "Executive director OJ Semans Sr. (Rosebud Sioux); COLT represents large land base tribes",
+    obj: [`Pushing negotiators for targeted technical fixes to the NHPA section ${S(2301)}; circulated a discussion paper with proposed amendments to Hill offices (Punchbowl obtained it)`],
+    likes: [`Semans expects the bill to pass the Senate, so COLT is trying to improve it; leaders met last week with more than a dozen Democratic and Republican offices, including EPW and Energy Committee staff`, `\"Working to make BAAJA better for large land base tribes\" is more productive than telling drafters to scrap it, he said (Punchbowl)`],
+    note: `A marked break from NCAI, NARF, NATHPO and other tribes. Source is Punchbowl's report, seen via a post quoting it. The discussion paper and its specific amendments have not been seen, and COLT's website has no BAAJA statement.`,
+    src: [["Adam Jentleson quoting Punchbowl, Nov. 3", "https://x.com/AJentleson/status/2117752551227400260"]] },
+
+  { name: "NCAI, NARF, NATHPO and the 106 Strong coalition", sector: "Tribal / preservation", stance: "oppose",
+    who: "National Congress of American Indians, Native American Rights Fund, National Association of Tribal Historic Preservation Officers, the 106 Strong coalition; Standing Rock Sioux Tribe (Chairman Steve Sitting Bear, statement Oct. 30, posted Nov. 3)",
+    obj: [`Oct. 9 coalition letter asks Senate leaders to withdraw the Section 106 provisions (Title III of Division B)`, `NATHPO: statutory definitions of "undertaking," "adverse effect" and area of potential effects could keep projects and harms out of review; agencies control key determinations; judicial review limited (150-day filing deadline, restricted injunctions); a tribe that misses the 30-day window cannot force reconsideration; underfunding "answered with oversight, penalties, and potential federal takeover"`, `NATHPO says the NHPA language cannot be fixed by amendment and asks senators before Nov. 9 not to amend Section 106 without government-to-government consultation`, `Standing Rock: BAAJA would "all but eliminate" U.S. treaty and trust responsibilities and weaken NHPA, CWA, NEPA and ESA`],
+    likes: [],
+    note: `106 Strong planned a Capitol rally for Nov. 9, when votes start (Siegel, Oct. 19). They have directly targeted Sen. Heinrich, whose state has 23 federally recognized tribes. Rep. Tom Cole (R-OK) also raised tribal concerns.`,
+    src: [["Turtle Talk, Oct. 13", "https://turtletalk.blog/2026/10/13/a-broad-tribal-coalition-urges-congress-to-withdraw-baajas-section-106-rewrite/"], ["NATHPO", "https://www.nathpo.org/permitting-reform-baaja-tribal-historic-preservation/"], ["Standing Rock Sioux Tribe", "https://standingrock.org/2026/11/03/the-standing-rock-sioux-tribe-opposes-the-bipartisan-american-affordability-and-jobs-act-baaja"], ["Siegel (Punchbowl), Oct. 19", "https://x.com/SiegelScribe/status/2112162140526104855"]] },
+
+  { name: "The Wilderness Society", sector: "Environmental", stance: "oppose",
+    who: "Tracy Stone-Manning, president (BLM director under Biden); statement reported Nov. 2",
+    obj: [`The bill puts the Arctic, the Boundary Waters, Bears Ears and "millions of acres of other public lands" on "a one-way path to industrial development, from oil and gas to data centers"`, `A clean energy future is possible "but not at the expense of" conservation heritage, clean water from public lands, and sacred sites and cultural histories`, `Cites tribal sovereignty; says the attempt "fails" and "our elected officials should reject it"`],
+    likes: [],
+    note: `Statement seen as an image in Siegel's post; no public URL for the full text found yet. Siegel noted it "continues trend of former Biden officials splitting hard on BAAJA."`,
+    src: [["Joshua Siegel (Punchbowl), Nov. 2", "https://x.com/SiegelScribe/status/2117264866100838871"]] },
+
+  { name: "Public Citizen", sector: "Environmental", stance: "oppose",
+    who: "Tyson Slocum, Energy Program director",
+    obj: [`Would "guarantee increased domestic oil and gas fracking" to feed fossil fuel exports`],
+    likes: [],
+    src: [["Quoted in Breakthrough, Oct. 30", "https://www.breakthroughjournal.org/p/the-faulty-logic-at-the-heart-of"]] },
+
+  { name: "Access-to-courts coalition letter", sector: "Civil rights / EJ", stance: "oppose",
+    who: "Oct. 29 letter to Congress: Alliance for Justice, American Association for Justice (trial lawyers), Center for Justice & Democracy, Earthjustice Action, NAACP, National Women's Law Center Action Fund, Public Citizen, Public Justice. Source: copy of the letter; no public URL found yet",
+    obj: [`Strike the judicial review provisions: they "limit the public's access to the courts and benefit polluting industries"`, `Sec. 1401 locks in permits "no matter how legally flawed, unless a court orders it" ${S(1401)}`, `No injunctions or vacatur for NEPA and NHPA claims, only remand; no APA workaround ${S(1110)} ${S(2301)}`, `Expedited consideration for permitting suits ahead of voting-rights and civil-rights cases; developer-only deadline suits ${S(2201)} ${S(1106)} ${S(1403)}`, `NEPA and NHPA claims start in the court of appeals and ESA claims in the D.C. Circuit, while developers get district court ${S(1305)}`, `Statute of limitations cut from about 6 years to 150 days ${S(1110)} ${S(1205)} ${S(1305)} ${S(2301)} ${S(2201)}`],
+    likes: [],
+    note: `The letter does not attack Sec. 1402. Checked against the text: remand "without vacatur or issuance of an injunction" and court-of-appeals "original and exclusive jurisdiction" for NEPA claims are accurate, as is Sec. 2201(d)'s expedited-consideration rule. It overstates by implying courts can't stop flawed permits at all: preliminary injunctions and vacatur stay available for violations of other federal laws.`,
+    src: [] },
+
+  { name: "Center for Energy and Environmental Analysis", sector: "Environmental", stance: "oppose",
+    who: "Jeremy Symons, president",
+    obj: [`Permanence provisions could "permanently block future administrations" from undoing Trump-era rollbacks ${S(1401)}`, `On the leaked call: permits for data centers on public lands, made permanent`],
+    likes: [],
+    note: `Author of the 2024 LNG emissions estimate for EPRA. Breakthrough says five of his eight "EPRA-enabled" terminals were approved without EPRA.`,
+    src: [["Leaked call (Punchbowl)", "https://punchbowl.news/engo-nepa-coalition-call-2/"], ["Breakthrough rebuttal", "https://www.breakthroughjournal.org/p/the-faulty-logic-at-the-heart-of"]] },
+
+  { name: "Environment America", sector: "Environmental", stance: "oppose",
+    who: "Lisa Frank, executive director; wants the package scrapped and restarted",
+    obj: [`NEPA, Clean Water Act, and ESA changes: shorter deadlines to sue, less state power to block projects, more state control over endangered species decisions`, `Says permit certainty could "actually increase the risk of extinction"`, `"It's a bad bargain"`],
+    likes: [],
+    src: [["Washington Examiner, Oct. 13", "https://www.washingtonexaminer.com/?p=4764639"]] },
+
+  { name: "Karuk Tribe", sector: "Tribal / preservation", stance: "oppose",
+    who: "Chairman Russell Attebery; statement Oct. 28",
+    obj: [`NHPA Sec. 106: fewer places and projects reviewed, limited tribal participation, and officials can proceed despite harm ${S(2301)}`, `Federal takeover or defunding of THPO programs that fail undefined criteria`, `Courts barred from halting projects over NHPA violations`, `Narrower CWA 401 certification threatens river flows and fish; says it could have undermined Klamath dam removal ${S(1202)}`, `"Our sovereignty should not be sacrificed to fast-track energy development"`],
+    likes: [],
+    fix: [`Asks Heinrich and Whitehouse to withdraw support, and Schiff and Padilla to oppose`],
+    src: [["Karuk Tribe statement", "https://www.karuk.us/posts/karuk-tribe-condemns-senates-assault-on-tribal-sovereignty-and-sacred-places"]] },
+
+  { name: "Southern Environmental Law Center", sector: "Environmental", stance: "oppose",
+    who: "Liz Zeleda, federal regulatory director",
+    obj: [`"Operation at full capacity" language could block future pollution or modernization requirements on existing facilities ${S(1401)}`],
+    likes: [],
+    src: [["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]] },
+
+  { name: "People's Environmental Justice Caucus", sector: "Elected officials", stance: "oppose", mi: true,
+    who: "Reps. Rashida Tlaib (MI-12), Summer Lee, Adelita Grijalva; statement Oct. 23",
+    obj: [`Fossil and Big Tech giveaway; says ratepayers get "pennies in relief" on data centers`],
+    likes: [],
+    src: [["Tlaib's House site", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"]] },
+
+  { name: "Rep. Jared Huffman", sector: "Elected officials", stance: "oppose",
+    who: "Ranking member, House Natural Resources",
+    obj: [`Administration's wind assurances are "cheap window dressing"; the bill doesn't protect renewables from the White House`, `Democrats can get a better deal by waiting: "Folding our hand now or in the lame duck makes no sense"`, `Nov. 3: promotes Purdue's Kevin Kircher model as "independent, science-based analysis" that BAAJA raises GHGs and air-pollution deaths. The model assumes fossil production rises 2% to 8%; Jane Flegal and Alex Trembath (Breakthrough) dispute that assumption, and Richard Meyer notes the model lumps all fossil fuels and cannot capture coal-to-gas switching`],
+    likes: [],
+    note: `Next in line to chair House Natural Resources if Democrats win the House. Says a Democratic Senate would remove Lee's ability to demand "poison pills."`,
+    src: [["Roll Call, Oct. 22", "https://rollcall.com/2026/10/22/permitting-bill-writers-seek-industry-aid-ahead-of-senate-vote/"], ["Politico, Nov. 3", "https://www.politico.com/news/2026/11/03/renewable-energy-environmentalists-permitting-split-01143886"], ["Huffman on X, Oct. 30", "https://x.com/JaredHuffman/status/2116324336659521845"], ["Huffman on X, Nov. 3 (Kircher)", "https://x.com/JaredHuffman/status/2117658347327635718"], ["Kircher study", "https://kevinjkircher.com/baaja/"]] },
+
+  { name: "Third Act", sector: "Environmental", stance: "oppose",
+    who: "Bill McKibben",
+    obj: [`Building lots of both clean and dirty energy gets nowhere on climate`],
+    likes: [],
+    src: [["Grist", "https://grist.org/politics/permitting-reform-baaja-climate-debate-clean-energy-fossil-fuels/"]] },
+
+  // ---------- SEEKING CHANGES ----------
+  { name: "NRDC", sector: "Environmental", stance: "changes",
+    who: "CEO Manish Bapna; Christy Goldfuss. Position promised before the floor vote",
+    obj: [`CWA 401: states barred from considering construction effects and operational impacts ${S(1202)}`, `Corps general permits look only at fill harm`, `NHPA changes curtail tribal rights ${S(2301)}`, `Hardening on project certainty: Goldfuss says NRDC litigators agree with Podesta ${S(1401)}`],
+    likes: [`"Encouraged" by the transmission provisions`, `Goldfuss earlier: could be very good for clean energy`],
+    fix: [`Require credible evidence of intentional targeting and full-record review in disparate-treatment suits ${S(1402)}`, `Change the 5-year baseline; cut "disproportionate" awards`],
+    src: [["NRDC press release, Oct. 19", "https://www.nrdc.org/press-releases/nrdc-releases-permitting-reform-bill-analysis"], ["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]] },
+
+  { name: "Sierra Club", sector: "Environmental", stance: "changes",
+    who: "Holly Bender, Chief Program Officer",
+    obj: [`Courts can't stop projects approved on unlawful NEPA or CWA reviews ${S(1110)}`, `Shifts the CWA 401 burden onto states ${S(1202)}`, `Hands ESA Sec. 7 consultation to states ${S(1304)}`, `Certainty and disparate-treatment baselines start from a Trump-era record; taxpayer damages exposure ${S("1401–1402")}`, `Can't guarantee wind and solar get built while the administration blocks them`],
+    likes: [`Mandatory joint regional planning ${S(2103)}`, `FERC backstop siting after a one-year state stall ${S(2101)}`, `Data centers pay full interconnection cost plus their share of the existing grid ${S(2107)}`, `Concedes some procedural changes would deliver needed speed and certainty`],
+    src: [["Sierra Club, \"A Hard Look\"", "https://www.sierraclub.org/articles/2026/10/hard-look-what-s-400-page-permitting-reform-bill"], ["Sept. 30 statement", "https://www.sierraclub.org/press-releases/2026/09/sierra-club-reaction-permitting-bill-introduction"]] },
+
+  { name: "Earthjustice", sector: "Environmental", stance: "changes",
+    who: "Impact guide; Abigail Dillen; Sam Sankar. Tone closest to opposition in this camp",
+    obj: [`Bar on revoking permits in effect on or after Sept. 16, 2026 ${S(1401)}`, `Disparate-treatment suits with 50–100% damages on a 5-year lookback ${S(1402)}`, `NEPA remedies limited to remand; 150-day clock ${S(1110)}`, `"Clear and convincing" standard for state 401 denials ${S(1202)}`, `Two-acre fill presumption; codified nationwide permits ${S(1204)}`, `ESA state delegation ${S(1304)}; NHPA rewrite ${S(2301)}; mill sites ${S(2215)}`],
+    likes: [`FERC backstop ${S(2101)}, interregional planning ${S(2103)}, local-planning oversight ${S(2104)}, no federal ROFR ${S(2105)}, consolidated interconnection ${S(2106)}`, `Data centers pay embedded plus incremental costs, with financial assurance ${S(2107)}`, `Advanced transmission tech ${S(2109)}; automated interconnection studies ${S(2110)}`, `Dillen calls the transmission package "genuinely excellent"`],
+    src: [["Earthjustice impact guide", "https://earthjustice.org/feature/bipartisan-american-affordability-and-jobs-act-2026-impact-guide"], ["Dillen essay", "https://earthjustice.org/experts/abigail-dillen/what-will-baaja-do-whatever-the-trump-administration-wants"]] },
+
+  { name: "National Trust for Historic Preservation", sector: "Tribal / preservation", stance: "changes",
+    who: "Statement Oct. 1; \"rejects key provisions\"",
+    obj: [`Narrows Section 106 review, mainly by excluding federally assisted projects ${S(2301)}`, `Agencies can end consultation on their own balancing, or when a party misses a deadline`, `Redefines "adverse effect"; drops visual, atmospheric, audible effects without a higher showing`, `Deferential review, remand-only remedies, 150-day deadline`, `Impacts on Tribal Nations and THPOs`],
+    likes: [`$200M a year for the Historic Preservation Fund (FY2027–2036)`, `$20M a year for THPO records grants (FY2027–2030)`, `Supports clearer 106 timelines, early coordination, lead agencies, NEPA integration`],
+    src: [["National Trust press release", "https://savingplaces.org/press-center/media-resources/national-trust-rejects-key-provisions-of-permitting-reform-bill"], ["Principal objections", "https://savingplaces.org/section106/updates/principal-objections-historic-preservation-baaja-s5653"]] },
+
+  { name: "National Parks Conservation Association", sector: "Tribal / preservation", stance: "changes",
+    who: "",
+    obj: [`NHPA rewrite is its biggest concern ${S(2301)}`],
+    likes: [`Shares the goal of faster clean energy and transmission`],
+    src: [["NPCA position", "https://www.npca.org/articles/11533-position-on-s-5653-bipartisan-american-affordability-and-jobs-act"]] },
+
+  { name: "Theodore Roosevelt Conservation Partnership", sector: "Environmental", stance: "changes",
+    who: "Hunters and anglers",
+    obj: [`Project certainty blocks adaptive management and response to new information ${S("1401–1402")}`],
+    likes: [],
+    fix: [`Revise Secs. 1401–1402 to preserve adaptive management`],
+    src: [["TRCP, Oct. 23", "https://www.trcp.org/2026/10/23/what-the-senates-permitting-bill-could-mean-for-hunters-and-anglers/"]] },
+
+  { name: "Defenders of Wildlife", sector: "Wildlife", stance: "changes",
+    who: "Andrew Bowman, president; did not sign CBD's letter",
+    obj: [`ESA title would "bulldoze America's most important wildlife law" ${S("1301–1305")}`, `Shorter Sec. 7 clocks plus new applicant deadline suits ${S(1302)}`, `State takeover of consultation; Bowman says it "will gut the consultation requirement" ${S(1304)}`, `Rewritten "best scientific and commercial data" ${S(1301)}; right-of-way exemption ${S(1303)}; narrower review and injunctions ${S(1305)}`, `Notes the median formal consultation already takes about 2 months`],
+    likes: [`Backs the efficiency goal: "Efficiency and conservation are not opposing goals"`],
+    fix: [`"Leave the Endangered Species Act out of it"`],
+    src: [["Defenders statement, Sept. 30", "https://defenders.org/newsroom/senate-permitting-deal-threatens-bedrock-endangered-species-protections"], ["Bowman op-ed, Oct. 8", "https://defenders.org/blog/2026/10/opinion-we-can-build-more-without-sacrificing-americas-natural-heritage"]] },
+
+  { name: "National Audubon Society", sector: "Wildlife", stance: "changes",
+    who: "Felice Stadler; no endorsement. 11 local Audubon chapters signed CBD's ESA letter",
+    obj: [`Flags "changes to laws critical to protecting wildlife, communities, and the environment" without naming sections`],
+    likes: [`Clear permitting rules and faster transmission and grid buildout`, `Data center transparency and accountability`, `Calls it "both an exciting and complicated legislative opportunity"`],
+    src: [["Audubon, Oct. 6", "https://www.audubon.org/news/congress-still-has-time-deliver-conservation-wins"]] },
+
+  { name: "Animal Welfare Institute", sector: "Wildlife", stance: "oppose",
+    who: "Kate Dylewsky",
+    obj: [`State Sec. 7 takeover means "up to 50 different state processes" ${S(1304)}`, `Best-available-science redefinition ${S(1301)}; D.C. Circuit venue and 150-day limit ${S(1305)}`, `"Congress should not trade away the survival of imperiled wildlife"`],
+    likes: [],
+    src: [["AWI, Oct. 1", "https://awionline.org/news/awi-strongly-opposes-permitting-bill-that-would-stab-heart-of-endangered-species-act/"]] },
+
+  { name: "Western wildlife groups on CBD's ESA letter", sector: "Wildlife", stance: "oppose",
+    who: "WildEarth Guardians, Western Watersheds Project, Southern Utah Wilderness Alliance, Wilderness Watch, IFAW, Born Free USA, Sea Turtle Conservancy, Wolf Conservation Center; Great Lakes Wildlife Alliance and Save Lake Superior Association",
+    obj: [`Best-available-science definition ${S(1301)}, state Sec. 7 assumption ${S(1304)}, D.C. Circuit plus 150-day review ${S(1305)}`],
+    likes: [],
+    note: `215 signers in all, addressed to Whitehouse, Heinrich, and Schumer.`,
+    src: [["CBD ESA letter (PDF)", "https://biologicaldiversity.org/programs/government-affairs/pdfs/Oppose-ESA-attacks-in-permitting-deal.pdf"]] },
+
+  { name: "Environmental Protection Network", sector: "Environmental", stance: "changes",
+    who: "800+ former EPA staff",
+    obj: [`Revocation bar and uncapped financial exposure ${S(1401)}`],
+    likes: [],
+    fix: [`Add a revocation exception for agency actions alleging a violation of federal law`, `Savings clause for the CWA, CAA, and similar statutes`, `Limit relief to actual damages and court costs`],
+    src: [["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]] },
+
+  { name: "Sens. Duckworth, Markey, Wyden (and Merkley)", sector: "Elected officials", stance: "changes",
+    who: "Senate Democrats seeking conditions",
+    obj: [`Could help the administration fast-track fossil projects while it attacks renewables`, `Wyden and Merkley: "strong reservations" (Pacific Northwest groups oppose)`],
+    likes: [],
+    fix: [`DOE should reinstate $8B in cut clean energy grants and commit in writing not to block awards on political grounds`, `Duckworth, Markey, Merkley and Wyden say they will oppose the Nov. 9 motion to proceed if DOE does not comply`],
+    src: [["Inside Climate News, Oct. 29", "https://insideclimatenews.org/news/29102026/senate-debate-on-bipartisan-permitting-bill-approaches/"], ["Energy Central, Oct. 27","https://www.energycentral.com/energy-management/post/news-before-prominent-senate-dems-make-their-next-permitting-bill-moves-Ed50fQhBmqWS9Mk"], ["Oil Change Intl.", "https://oilchange.org/news/oregon-washington-opposition-baaja/"]] },
+
+  { name: "Electric utilities", sector: "Utilities", stance: "changes",
+    who: "EEI: \"encouraged\" by the permitting provisions but still \"reviewing\" the transmission title. Oklahoma Gas & Electric is lobbying for \"substantial revisions.\" Duke and Southern have taken no position this year",
+    obj: [`Provisions that make it easier to move renewable power across regions`, `OG&E: backstop siting, state referral of local planning ${S(2104)}, and mandatory advanced transmission tech ${S(2109)} expand federal power at the states' expense`, `OG&E \"strongly opposes\" ending federal or state ROFR protections ${S(2105)}`],
+    likes: [],
+    fix: [`OG&E: expressly preserve state ROFR laws (the bill does not preempt them) and restore a federal ROFR for regionally planned lines`, `OG&E: \"permitting reform should not expand federal authority at the expense of the states\"`],
+    note: `AEP and Berkshire Hathaway Energy support the bill (see Supports). Co-ops and public power are now reported in strong support (separate card). Duke and Southern helped defeat the 2024 package; Southern has lobbied FERC for a federal ROFR.`,
+    src: [["Energy and Policy Institute, Oct. 20", "https://energyandpolicy.org/oge-baaja-transmission-reforms-lobbying/"], ["Roll Call, Oct. 27", "https://rollcall.com/2026/10/27/transmission-overhaul-threads-careful-needle-in-permitting-bill/"], ["Heatmap on IBEW", "https://heatmap.news/politics/baaja-ibew-unions"], ["Roll Call, Oct. 22", "https://rollcall.com/2026/10/22/permitting-bill-writers-seek-industry-aid-ahead-of-senate-vote/"], ["Eno tracker, Oct. 23", "https://enotrans.org/article/tracking-the-evolution-of-responses-to-baaja-permitting-bill/"], ["APPA/NRECA on EPRA (2024)", "https://www.publicpower.org/periodical/article/appa-nreca-voice-concerns-about-provisions-permitting-reform-bill"]] },
+
+  // ---------- SILENT ----------
+  { name: "EDF, The Nature Conservancy, LCV", sector: "Environmental", stance: "silent",
+    who: "No public position; none signed the opposition letters. LCV says it is still analyzing",
+    obj: [], likes: [],
+    src: [["HuffPost", "https://www.huffpost.com/entry/permitting-reform-baaja-data-centers-martin-heinrich_n_6ad6336ae4b05354557e05b7"]] },
+
+  { name: "Big wildlife and sportsmen's groups", sector: "Wildlife", stance: "silent",
+    who: "National Wildlife Federation, World Wildlife Fund, Trout Unlimited, Ducks Unlimited, Backcountry Hunters & Anglers, American Bird Conservancy, Endangered Species Coalition, Wildlife Conservation Society, Assn. of Fish & Wildlife Agencies",
+    obj: [], likes: [],
+    note: `No BAAJA statement found as of Oct. 30, and none signed CBD's ESA letter. Ducks Unlimited instead praised a separate restoration-permitting bill. American Bird Conservancy opposed the House SPEED Act in January. Treat this as "none found," not confirmed silence.`,
+    src: [["NWF press releases", "https://www.nwf.org/Latest-News/Press-Releases"], ["Ducks Unlimited, Oct. 9", "https://www.ducks.org/newsroom/ducks-unlimited-applauds-the-introduction-of-the-ecological-restoration-project-permitting-act-"]] },
+
+  // ---------- SUPPORT ----------
+  { name: "Clean energy trade groups", sector: "Clean energy industry", stance: "support",
+    who: "ACP (Jason Grumet), SEIA (Tim Pawlenty), ACORE (Ray Long), Advanced Energy United, Clean Energy Buyers Association",
+    obj: [],
+    likes: [`Technology-neutral reform plus an administration commitment to approve wind projects`, `Certainty for approved projects ${S(1401)}, enforceable deadlines, remedies for disparate treatment ${S(1402)}`, `Transmission and cost allocation for independent developers`, `ACP: 350+ GW of clean energy ready to build (industry figure)`],
+    fix: [`ACORE: technical fixes are "fine" only if they don't delay a vote this year; otherwise pass a corrections bill later`],
+    note: `Politico (Nov. 3): the industry is united on the bill and lobbying alongside fossil groups. ACP counts solar, wind and storage at more than 93% of planned utility-scale additions this year (1,742 GW in interconnection queues vs. 253 GW of gas). Developers concede the tradeoff: CleanCapital's Jon Powers, \"I think we will see more fossils built, but I think this will streamline us building clean energy faster.\"`,
+    src: [["Politico, Nov. 3", "https://www.politico.com/news/2026/11/03/renewable-energy-environmentalists-permitting-split-01143886"], ["ACP statement", "https://cleanpower.org/news/acp-statement-on-bipartisan-american-affordability-and-jobs-act-of-2026/"], ["SEIA statement", "https://seia.org/news/seia-statement-on-senate-permitting-reform-deal/"], ["ACORE statement", "https://acore.org/news/acore-statement-supporting-the-bipartisan-american-affordability-and-jobs-act-of-2026/"], ["Joint trades (X)", "https://x.com/USCleanPower/status/2112962713995595980"]] },
+
+  { name: "American Petroleum Institute and oil and gas groups", sector: "Oil and gas", stance: "support",
+    who: "API led a 137-group letter (Oct. 22); IPAA, AXPC, U.S. Oil & Gas Association",
+    obj: [],
+    likes: [`Modernizes NEPA; fewer duplicative reviews and less litigation`, `Clean Water Act permitting and judicial review changes`, `Clear timelines and investment certainty`],
+    src: [["API, Sept. 30", "https://www.api.org/news-policy-and-issues/news/2026/09/30/api-welcomes-bipartisan-american-affordability-and-jobs-act-to-modernize-permitt"], ["API coalition, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
+
+  { name: "Business and manufacturing groups", sector: "Business", stance: "support",
+    who: "U.S. Chamber, Business Roundtable, NAM, American Chemistry Council, Steel Manufacturers, National Mining Association, NAHB, BCSE, Ceres",
+    obj: [],
+    likes: [`Faster, more predictable approvals; NAM puts delays at $8B a year for manufacturers`, `NAHB: Clean Water Act permit changes and longer permit terms`, `Ceres and BCSE: durable reform that speeds clean infrastructure`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["Chamber letter", "https://www.uschamber.com/assets/documents/261013_Hill_Support-for-American-Affordability-and-Jobs-Act-of-2026_EPW-ENR_Clean.pdf"]] },
+
+  { name: "Building trades unions", sector: "Labor", stance: "support",
+    who: "LIUNA, United Association (plumbers and pipefitters), Operating Engineers; Nov. 3 letter adds the Teamsters, Iron Workers, Boilermakers and SMART",
+    obj: [],
+    likes: [`Union jobs, prevailing wages, apprenticeships`, `Project certainty and faster federal reviews`, `Faster transmission buildout`],
+    note: `Nov. 3: the Teamsters, Iron Workers, Boilermakers, SMART and at least one more union (list cut off) urged the four lead negotiators to \"swiftly pass\" S. 5653, per a letter shared with Politico's James Bikales; letter text not seen. AFL-CIO not found taking a position. IBEW has not endorsed: a spokesperson says it is \"reviewing the language\" (Heatmap, Oct. 29); its members span utilities, transmission and construction.`,
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["Politico via Nico Portuondo, Nov. 3", "https://x.com/nicoportuondo/status/2117644196152758749"]] },
+
+  { name: "Electric co-ops and public power (NRECA, APPA)", sector: "Utilities", stance: "changes",
+    who: "NRECA (CEO Jim Matheson, 900+ co-ops) and APPA (CEO Scott Corwin, 2,000+ public power utilities); joint letter to Lee, Heinrich, Capito and Whitehouse, reported Nov. 3",
+    obj: [`Their continued support depends on a \"technical change included in the manager's amendment\" recognizing local governance in not-for-profit utilities and avoiding \"new, burdensome\" FERC regulation of co-ops and public power`],
+    likes: [`\"Strong support\": greater certainty in NEPA, Clean Water Act, ESA consultation and NHPA reviews, with clearer timelines and interagency coordination`, `A notable reversal: these groups fought the 2024 deal (EPRA) over expanded federal transmission authority`],
+    fix: [`A manager's amendment change on FERC jurisdiction over non-jurisdictional utilities. The letter names no section. The bill already creates an \"exempt transmitting utility\" category (states, political subdivisions, and co-ops selling under 4 million MWh a year) that stays out of the new planning and backstop siting authorities unless it opts in, but FERC can still require an exempt utility that owns facilities built under those provisions to provide open access service and allocate costs (new FPA 216(f)(2), 224(g)(2)). Sec. 2115 also extends FPA 225 to 233, including 228, to non-jurisdictional entities.`],
+    note: `The letter does not say which provision the \"technical change\" targets; the FPA sections above are a reading of the bill text. Xiao Wang calls it a loophole and asks why investor-owned utilities would not want the same.`,
+    src: [["Joshua Siegel (Punchbowl), Nov. 3", "https://x.com/siegelscribe/status/2117589170038460442"], ["NRECA/APPA letter (PDF)", "https://punchbowl.news/wp-content/uploads/NRECA-APPA-Joint-Letter-Permitting-FINAL.pdf"], ["Xiao Wang, Nov. 3", "https://x.com/xiaowang1984/status/2117594374959767746"]] },
+
+  { name: "AEP and Berkshire Hathaway Energy", sector: "Utilities", stance: "support",
+    who: "The utility exceptions",
+    obj: [],
+    likes: [`Faster approval of generation and transmission`, `Grid modernization and private investment`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+
+  { name: "Governors and counties", sector: "State and local", stance: "support",
+    who: "National Governors Association; 21 governors (joint statement); National Association of Counties",
+    obj: [],
+    likes: [`Greater certainty and accountability in permitting`, `NACo: counties recognized as cooperating agencies`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+
+  { name: "Citizens' Climate Lobby", sector: "Climate / abundance", stance: "support",
+    who: "Unequivocal endorsement; call-your-senator campaign",
+    obj: [],
+    likes: [`Connects more clean energy to the grid`],
+    src: [["CCL endorsement", "https://citizensclimatelobby.org/blog/policy/ccl-endorses-bipartisan-american-affordability-and-jobs-act/"]] },
+
+  { name: "Searchlight Institute", sector: "Climate / abundance", stance: "support",
+    who: "Jane Flegal, senior fellow",
+    obj: [],
+    likes: [`"Really important for climate"`, `Sec. 1402 is a deterrent, not a lawsuit magnet; critics wrongly assume it freezes current rates ${S(1402)}`, `Courts can still vacate permits that violate FLPMA, NFMA, the Wilderness Act, or a monument proclamation`],
+    fix: [`Calls the full-capacity freeze "a pretty clear technical fix" and expects negotiators to make it ${S(1401)}`],
+    src: [["Flegal thread, Oct. 21", "https://x.com/JaneAFlegal/status/2112881718592180646"], ["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]] },
+
+  { name: "Institute for Progress", sector: "Climate / abundance", stance: "support",
+    who: "Ben Schifman, former DOJ lawyer",
+    obj: [],
+    likes: [`Harmed parties can still win APA vacatur of illegal permits; only a NEPA- or NHPA-only case is cut off`, `Data center provisions make large loads pay their way ${S(2107)}`],
+    fix: [`Whether an agency can sue the holder to undo a bad permit is "an ambiguity" and "a good candidate for a few-word technical amendment" ${S(1401)}`],
+    src: [["Schifman on Podesta", "https://x.com/BenSchifman/status/2115598576889839663"], ["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]] },
+
+  { name: "Center for Public Enterprise", sector: "Climate / abundance", stance: "support",
+    who: "Chirag Lala",
+    obj: [],
+    likes: [`Most significant grid-governance reform in decades; a legal framework for interregional transmission ${S("2101–2109")}`, `State referral of utility planning to FERC, with ROE cuts and fines ${S(2104)}`, `Geothermal parity with oil and gas`],
+    fix: [`Self-flagged weaknesses: no forcing function for interregional planning, no required project selection, TFF funding rescinded, state ROFR laws untouched`],
+    src: [["CPE transmission post", "https://publicenterprise.org/the-bipartisan-permitting-bill-gets-transmission-right-2/"], ["Lala thread", "https://x.com/CtheLala/status/2115464493010710976"]] },
+
+  { name: "Breakthrough Institute", sector: "Climate / abundance", stance: "support",
+    who: "Seaver Wang, Ryan Alimento, Alex Trembath",
+    obj: [],
+    likes: [`Emissions case against the bill depends on pessimistic LNG assumptions; transmission benefits dominate`, `Interconnection, wind protection, geothermal, DER market access`],
+    fix: [`Green groups "should be fighting to strengthen the bill, not to kill it"`],
+    src: [["Breakthrough, Oct. 30", "https://www.breakthroughjournal.org/p/the-faulty-logic-at-the-heart-of"]] },
+
+  { name: "Third Way, Niskanen, BPC Action, C2ES, PPI", sector: "Climate / abundance", stance: "support",
+    who: "Josh Freed (Third Way), Xan Fishman (BPC Action), Nat Keohane (C2ES)",
+    obj: [],
+    likes: [`Third Way cites C2ES/Greenline: 71 Mt (9%) less CO2 by 2035`, `Niskanen: four ways the bill gets transmission right`, `Fishman: status quo is bad for the environment, economy, and affordability`, `BPC's Nov. 3 explainer (Adam Cowie-Haskell): requiring data centers to pay embedded plus incremental transmission cost raises about $6B a year (early estimate), directed to lowering other customers' bills; most provisions depend on FERC rules and state action, so benefits take years`, `Fishman, Nov. 3, on a post-midterm wait: "One BAAJA bird in the hand is worth 2000 fictitious 'perfect' permitting bills in the bush"`],
+    fix: [`Fishman: small fixes in the managers' amendment`, `Keohane: "legitimate legal readings" that weren't intended can get technical fixes`],
+    src: [["Third Way", "https://www.thirdway.org/talking-points/on-permitting-reform-how-to-talk-about-baaja"], ["Niskanen", "https://www.niskanencenter.org/the-bipartisan-american-affordability-and-jobs-act-of-2026-4-ways-the-new-permitting-package-gets-transmission-policy-right/"], ["Heatmap (Keohane)", "https://heatmap.news/politics/baaja-permitting-certainty"], ["BPC: Affordability explainer, Nov. 3", "https://bipartisanpolicy.org/explainer/explaining-the-affordability-in-the-bipartisan-american-affordability-and-jobs-act/"], ["Fishman on X, Nov. 3", "https://x.com/XanFishman/status/2117711015559197050"]] },
+
+  { name: "Trump White House", sector: "Elected officials", stance: "support",
+    who: "Unnamed White House spokesperson, per Inside Climate News (Oct. 29)",
+    obj: [],
+    likes: [`Backs the bill for jobs and investment; spokesperson: "all that is left to do is vote"`],
+    src: [["Inside Climate News, Oct. 29", "https://insideclimatenews.org/news/29102026/senate-debate-on-bipartisan-permitting-bill-approaches/"]] },
+  { name: "Conservative and libertarian groups", sector: "Business", stance: "support",
+    who: "Club for Growth, Americans for Prosperity, Pacific Legal Foundation; PLF led a 35+ group letter (Oct. 28) with ClearPath Action, C3 Solutions, Goldwater Institute, National Taxpayers Union",
+    obj: [],
+    likes: [`Deregulation and lower energy costs`, `PLF: "Giving people the freedom to build will help lower costs"`],
+    src: [["PLF coalition, Oct. 28", "https://pacificlegal.org/press-release/pacific-legal-foundation-leads-more-than-35-coalition-partners-urging-congress-to-advance-permitting-deal/"],["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+
+  { name: "Tom Steyer", sector: "Climate / abundance", stance: "support",
+    who: "Climate investor; endorsement amplified by Searchlight (Oct. 27)",
+    obj: [], likes: [`Endorsed passage`],
+    src: [["@SearchlightInst on X", "https://x.com/SearchlightInst"]] },
+
+  { name: "Sponsors", sector: "Elected officials", stance: "support",
+    who: "Sens. Capito, Lee, Whitehouse, Heinrich",
+    obj: [],
+    likes: [`Bipartisan compromise; limits on revoking permits attract investment`, `Heinrich pushed the rule that data center hyperscalers bear their own power costs ${S(2107)}`, `Whitehouse (Nov. 2) says the data center rule \"saves ratepayers $55 BILLION.\" Grid Strategies' paper: $55B in transmission charges to data centers over ten years, $35B more than they pay now (Sec. 2107(a))`],
+    note: `Whitehouse and Heinrich argue the post-midterm period is the time to vote, while still pressing the administration to show it will not discriminate against renewables (Politico, Nov. 3). At a Rhode Island event on Nov. 2, Whitehouse told Democrats who want to wait until next year not to: waiting risks losing the votes or a president \"so grumpy that he won't sign it.\" His summary: \"a bird in the hand.\" (Punchbowl, from a transcript it obtained; seen via screenshot.)`,
+    src: [["Politico, Nov. 3", "https://www.politico.com/news/2026/11/03/renewable-energy-environmentalists-permitting-split-01143886"], ["Whitehouse on X, Nov. 2", "https://x.com/SenWhitehouse/status/2117321463925465131"], ["Introduction release", "https://www.heinrich.senate.gov/newsroom/press-releases/heinrich-lee-capito-and-whitehouse-introduce-bipartisan-american-affordability-and-jobs-act-of-2026"], ["Roll Call, Oct. 22", "https://rollcall.com/2026/10/22/permitting-bill-writers-seek-industry-aid-ahead-of-senate-vote/"]] }
+];
+
+// Provision matrix: + praise, - object, ~ mixed, "" none stated
+const MATRIX = [
+  ["Transmission title", "2101–2109", ["+", "+", "+", "", "-", "", "+", ""]],
+  ["Data center cost rule", "2107 / FPA 228", ["+", "+", "", "", "", "", "", ""]],
+  ["Project certainty", "1401", ["-", "-", "-", "-", "", "", "+", ""]],
+  ["Disparate treatment", "1402", ["-", "-", "-", "-", "-", "", "+", ""]],
+  ["NEPA exclusions", "1102", ["", "", "", "", "-", "", "", ""]],
+  ["NEPA judicial review", "1110", ["-", "-", "", "", "-", "", "", "+"]],
+  ["Clean Water Act 401 / 404", "1202–1205", ["-", "-", "-", "", "-", "", "", "+"]],
+  ["Endangered Species Act", "1301–1305", ["-", "-", "", "-", "-", "", "", ""]],
+  ["Historic preservation (NHPA)", "2301", ["", "-", "-", "", "-", "-", "", ""]]
+];
+
+const CELL = { "+": ["c-plus", "+", "praises"], "-": ["c-minus", "−", "objects"], "~": ["c-mixed", "±", "mixed"], "": ["c-none", "·", "no stated position"] };
+
+const FIXES = [
+  { title: "Drop the regulatory freeze on existing facilities", sec: "1401(b)(1)", level: ["k-high", "Near-consensus"],
+    what: `The bar reaches "any other action to interfere with or prevent the construction or operation at full capacity" of a fully permitted project, and any action to "amend, or alter" a permit. Read literally, that could block new pollution or safety rules for plants already running.`,
+    who: `Eric Levitz (Vox) names this as the bill's "one part... that needs work": vague certainty language that "could theoretically undermine the EPA's future rule-making authority," which "appears to be accidental and can be fixed." Flegal calls it "a pretty clear technical fix" nobody intended. Keohane (C2ES) supports technical fixes for unintended readings. Critics (SELC, CBD) raised it first. EPN proposes a savings clause for the CWA and CAA.` },
+  { title: "Make clear an agency can go to court to undo an unlawful permit", sec: "1401(b)(1)(A)", level: ["k-med", "Supporters split"],
+    what: `The court-order exception lets an agency act when a court requires it, but the bill doesn't say who can ask. Third parties can still sue under the APA; the gap is a permit nobody challenges in time.`,
+    who: `Schifman calls it "an ambiguity" and "a good candidate for a few-word technical amendment." EPN would add an exception for agency enforcement actions. Podesta wants broader changes before he'll back the bill.` },
+  { title: "Tighten the disparate-treatment claim", sec: "1402", level: ["k-med", "Supporters split"],
+    what: `Plaintiffs win on a statistical pattern over a 5-year lookback. Review is limited to the sponsor's evidence, the project record, and raw approval and denial counts, and awards run 50–100% of project costs. Littleton reads it to require no showing of bad faith, and notes a sponsor keeps its award only if it completes the project.`,
+    who: `CGEP scholars: limit claims to delays, drop denials, tie awards to actual losses. NRDC: require credible evidence of intentional targeting and full-record review. Flegal defends the provision as a deterrent and says critics misread the baseline. Pidot and Littleton want a deeper rethink.` },
+  { title: "Fix the transmission title's soft spots", sec: "2103 / 2101", level: ["k-low", "Flagged, no push yet"],
+    what: `No forcing function if a region never files an interregional process (only a six-month extension). Planners aren't required to select any projects. Transmission Facilitation Program money was rescinded and needs reappropriation. State ROFR laws are untouched, and the backstop waits on a one-year state clock.`,
+    who: `The Center for Public Enterprise lists these weaknesses in its own pro-bill brief. Rylander and UCS use the same gaps to argue utilities won't build.` },
+  { title: "Rework state assumption of ESA consultation", sec: "1304", level: ["k-low", "A few supporters"],
+    what: `States could take over Sec. 7 consultation for in-state projects based on "current or future personnel capability," with no federal backstop. Critics warn of up to 50 different state processes.`,
+    who: `David Hayes (pro-bill; former Interior deputy secretary) says it "raises a dust storm of potential problems." R Street, which leans right, warns of uneven application and lag. Wildlife groups (Defenders, AWI, CBD) want the ESA title dropped entirely.` },
+  { title: "Pass now, correct later", sec: "Process", level: ["k-high", "Industry position"],
+    what: `Accept small fixes only if they ride in the managers' amendment and don't push the vote past this Congress. Anything bigger goes in a corrections bill.`,
+    who: `Ray Long (ACORE): "stop trying to make this bill perfect." Xan Fishman (BPC Action): small fixes in the managers' amendment. Rep. Scott Peters says it "still needs some adjustments and clarifications," and Rep. Casten sees "modest changes we could make."` }
+];
+
+// ---------- At a glance: argument tallies ----------
+const ARGS_SUP = [
+  ["Builds faster and cuts red tape", ["Clean energy trades", "API and oil and gas", "Business groups", "Building trades unions", "Governors and counties", "Sponsors", "AEP / Berkshire Hathaway", "Conservative groups", "Third Way, Niskanen, BPC, C2ES"]],
+  ["Speeds clean energy and transmission", ["Clean energy trades", "Citizens' Climate Lobby", "Searchlight", "Center for Public Enterprise", "Breakthrough", "Third Way, Niskanen, BPC, C2ES", "Tom Steyer"]],
+  ["Lowers energy costs", ["Clean energy trades", "Business groups", "Conservative groups", "Sponsors", "Third Way, Niskanen, BPC, C2ES", "Searchlight"]],
+  ["Protects permits from political interference", ["Clean energy trades", "Building trades unions", "API and oil and gas", "Business groups", "Sponsors", "Governors and counties"]],
+  ["Makes data centers pay their own way", ["Sponsors", "Institute for Progress", "Sierra Club (critic)", "Earthjustice (critic)"]],
+  ["Creates jobs", ["Building trades unions", "Sponsors", "Business groups"]]
+];
+
+const ARGS_DET = [
+  ["Locks in permits and ties future presidents' hands", ["CBD", "Sierra Club", "Earthjustice", "NRDC", "SELC", "TRCP", "Environmental Protection Network", "Symons (CEEA)", "Access-to-courts letter", "Environment America"]],
+  ["Weakens the Endangered Species Act", ["CBD", "Sierra Club", "Earthjustice", "Friends of the Earth", "Defenders of Wildlife", "Animal Welfare Institute", "Western wildlife groups", "Environment America", "NAACP"]],
+  ["Closes the courthouse door", ["Sierra Club", "Earthjustice", "NAACP", "Access-to-courts letter", "National Trust", "Karuk Tribe", "Environment America"]],
+  ["Shuts tribes out of consultation", ["Earthjustice", "NRDC", "NAACP", "IEN and tribal groups", "National Trust", "NPCA", "Karuk Tribe"]],
+  ["A giveaway to fossil fuels", ["Sierra Club", "UCS", "NAACP", "Public Citizen", "Third Act", "Food & Water Watch", "CJA and EJ coalition"]],
+  ["Weakens state control over water quality", ["NRDC", "Sierra Club", "Earthjustice", "NAACP", "Karuk Tribe", "Environment America"]],
+  ["A giveaway to Big Tech and data centers", ["Food & Water Watch", "CJA and EJ coalition", "People's EJ Caucus", "NAACP"]],
+  ["Trump can't be trusted to implement it", ["Sierra Club", "Rep. Huffman", "Duckworth, Markey, Merkley, Wyden"]]
+];
+
+const VENN = {
+  ind: [
+    ["Project certainty", "1401", "Permits that hold up when administrations change", "Clean energy trades, API, business, building trades, sponsors"],
+    ["NEPA streamlining and litigation limits", "1102, 1110", "Fewer duplicative reviews, shorter windows to sue", "API, business, conservative groups"],
+    ["Clean Water Act permit changes", "1202–1205", "Fewer state vetoes; longer permit terms", "API, NAHB"],
+    ["Disparate-treatment remedies", "1402", "Damages if an agency targets a project type", "Clean energy trades, Special Initiative on Offshore Wind"]
+  ],
+  both: [
+    ["The transmission title", "2101–2109", "FERC backstop siting, mandatory interregional planning, cost allocation", "Industry: ACP, ACORE, AEP, Operating Engineers. Green groups: NRDC is \"encouraged,\" Sierra lists it as a \"green flag,\" Earthjustice's Dillen calls it \"genuinely excellent\""],
+    ["Faster interconnection", "2106, 2110", "Consolidated planning, cluster studies, automated studies", "Industry: SEIA, ACP (queue backlog). Green groups: Earthjustice praises both sections"],
+    ["Permitting is too slow", "", "Agreement on the goal, if not the means", "Industry: every supporter. Green groups: NRDC says transmission and permitting need to speed up; Sierra concedes some procedural changes would deliver needed speed and certainty"]
+  ],
+  grn: [
+    ["Data centers pay their own way", "2107", "Full incremental cost, stranded-cost protection, upfront financial assurance", "Sierra, Earthjustice (plus sponsors and IFP). No data center or tech group has endorsed the bill"],
+    ["No federal right of first refusal", "2105", "Incumbent utilities lose the first claim on new lines", "Earthjustice"],
+    ["Advanced transmission technologies", "2109", "Required when benefits exceed costs", "Earthjustice"],
+    ["State referral of utility planning", "2104", "States can send foot-dragging utilities to FERC", "Earthjustice"]
+  ]
+};
+
+const FIXBAND = [
+  ["Drop the \"full capacity\" freeze", "1401(b)(1)", "Read literally, the bar on actions that interfere with \"operation at full capacity\" could block new pollution rules for existing plants.",
+    "SELC raised it; CBD's 140-group letter targets the same language; EPN wants a savings clause for the CWA and CAA.",
+    "Flegal: \"a pretty clear technical fix.\" Keohane (C2ES): unintended readings can get technical fixes. Levitz: \"appears to be accidental and can be fixed.\" Rep. Scott Peters: needs \"adjustments and clarifications.\" ACORE: tweaks are \"fine\" if they don't delay the vote."],
+  ["Say plainly that agencies can go to court", "1401(b)(1)(A)", "The court-order exception doesn't say who may ask for the order, which leaves a gap for unlawful permits nobody challenges in time.",
+    "Sankar and Podesta raise the gap (and want broader changes); EPN would add an exception for agency enforcement actions.",
+    "Schifman (IFP): \"an ambiguity\" and \"a good candidate for a few-word technical amendment.\""]
+];
+
+const FIGHTS = [
+  ["Project certainty, beyond the freeze", "1401", "Industry and labor call it the bill's core protection. Ten critics say it locks in Trump-era permits; Podesta calls it a \"poison pill.\""],
+  ["Disparate-treatment suits", "1402", "The clean energy trades want the remedy; critics attack the 5-year lookback and the 50–100% damages. Fixes on offer range from CGEP's \"delays only\" to NRDC's intent requirement."],
+  ["NEPA remedies and the courts", "1110, 2201", "Industry wants shorter windows to sue and less litigation. The access-to-courts coalition (NAACP, Public Citizen, trial lawyers) wants the provisions struck."],
+  ["The ESA title", "1301–1305", "Nine critics attack it, and no group in the tracker defends it in public. David Hayes, who backs the bill, flags the state takeover of consultation."],
+  ["Tribal consultation (NHPA)", "2301", "Seven critics, including tribes, the National Trust, and Haaland. A Democratic aide calls it the \"number one challenging issue\" for votes, and says it is too much of a priority for Lee to drop."]
+];
+
+function renderCommonGround() {
+  const col = (cls, title, items) => `<div class="venn-col ${cls}"><h4>${title}</h4>${items.map(([h, sec, d, who]) =>
+    `<div class="venn-item"><b>${h}${sec ? ` <span class="sec">§ ${sec}</span>` : ""}</b><span>${d}</span><span class="who-line">${who}</span></div>`).join("")}</div>`;
+  document.getElementById("venn").innerHTML =
+    col("venn-ind", "Only industry likes", VENN.ind) +
+    col("venn-both", "Both like", VENN.both) +
+    col("venn-grn", "Only the green groups like", VENN.grn);
+  document.getElementById("fixBand").innerHTML = FIXBAND.map(([h, sec, what, crit, supp]) =>
+    `<div class="fb"><div><h4>${h} <span class="sec">§ ${sec}</span></h4><p>${what}</p></div>
+      <div class="crit"><span class="side-lbl">Critics</span>${crit}</div>
+      <div class="supp"><span class="side-lbl">Supporters</span>${supp}</div></div>`).join("");
+  document.getElementById("fightList").innerHTML = FIGHTS.map(([h, sec, d]) =>
+    `<div class="fight"><h4>${h} <span class="sec">§ ${sec}</span></h4><p>${d}</p></div>`).join("");
+}
+
+function renderGlance() {
+  renderCommonGround();
+  const argHtml = (arr, color) => {
+    const m = Math.max(...arr.map(a => a[1].length));
+    return [...arr].sort((a, b) => b[1].length - a[1].length).map(([label, who]) =>
+      `<div class="arg"><div class="arg-top"><span>${label}</span><b>${who.length}</b></div>
+        <div class="arg-track"><div class="arg-fill" style="width:${(who.length / m * 100).toFixed(1)}%;background:${color}"></div></div>
+        <span class="arg-who">${who.join(", ")}</span></div>`).join("");
+  };
+  document.getElementById("argsSup").innerHTML = argHtml(ARGS_SUP, "var(--support)");
+  document.getElementById("argsDet").innerHTML = argHtml(ARGS_DET, "var(--oppose)");
+}
+
+// ---------- Former administration officials ----------
+const IFP_LETTER = ["IFP letter (PDF)", "https://ifp.org/wp-content/uploads/econ-policy-national-security-officials-endorse-baaja.pdf"];
+const LETTER_NOTE = `Signed the Oct. 20 letter calling BAAJA essential to U.S. competitiveness.`;
+const OFFICIALS = [
+  ["Janet Yellen", "Treasury Secretary; Fed Chair; CEA Chair", "Biden; Obama/Trump; Clinton", "support", LETTER_NOTE, [IFP_LETTER, ["Alec Stapp thread", "https://x.com/AlecStapp/status/2112535120338972833"]]],
+  ["Jennifer Granholm", "Energy Secretary; Michigan governor", "Biden", "support", `Imperfect, but "I think we should pass it." "Who's to say we're going to get a better deal?"`, [["Washington Examiner, Oct. 28", "https://www.washingtonexaminer.com/?p=4783176"]], true],
+  ["Mike Pompeo", "Secretary of State; CIA Director", "Trump (1st)", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Steven Mnuchin", "Treasury Secretary", "Trump (1st)", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Leon Panetta", "Defense Secretary; CIA Director; WH Chief of Staff", "Obama; Clinton", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Timothy Geithner", "Treasury Secretary", "Obama", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Henry Paulson", "Treasury Secretary", "G.W. Bush", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Robert Rubin", "Treasury Secretary", "Clinton", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Jeff Zients", "WH Chief of Staff; NEC Director", "Biden; Obama", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Jake Sullivan", "National Security Adviser", "Biden", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Brian Deese", "NEC Director", "Biden", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Larry Kudlow", "NEC Director", "Trump (1st)", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Allan Hubbard", "NEC Director", "G.W. Bush", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Jason Furman", "CEA Chair", "Obama", "support", `Signed the letter; "probably the broadest letter I've ever signed."`, [IFP_LETTER, ["Furman on X", "https://x.com/jasonfurman/status/2112560678007677425"]]],
+  ["Jared Bernstein", "CEA Chair", "Biden", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Stephen Miran", "CEA Chair", "Trump (2nd)", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Tyler Goodspeed", "Acting CEA Chair", "Trump (1st)", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Glenn Hubbard", "CEA Chair", "G.W. Bush", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Laura D'Andrea Tyson", "CEA Chair; NEC Director", "Clinton", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Michael Boskin", "CEA Chair", "G.H.W. Bush", "support", LETTER_NOTE, [IFP_LETTER]],
+  ["Jane Flegal", "Senior director, WH Office of Domestic Climate Policy", "Biden", "support", `"Really important for climate"; green groups risk "making themselves irrelevant." Calls the full-capacity freeze a clear technical fix.`, [["Washington Examiner, Oct. 28", "https://www.washingtonexaminer.com/?p=4783176"], ["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]]],
+  ["Stephanie Pollack", "Senior USDOT official", "Biden", "support", `BAAJA would unlock cheaper, faster transportation projects; NEPA mostly delayed repairs, safety, and transit, not highway expansions.`, [["Eno Center, Oct. 23", "https://enotrans.org/article/baaja-will-unlock-cheaper-and-faster-transportation-projects"]]],
+  ["David J. Hayes", "Climate adviser; Interior Deputy Secretary", "Biden; Obama; Clinton", "support", `Congress should "push hard to get the legislation enacted." But state ESA consultation "raises a dust storm of potential problems"; also objects to the NEPA standing and remedy changes.`, [["Stanford Law, Oct. 9", "https://law.stanford.edu/2026/10/09/pressure-testing-proposed-infrastructure-permitting-reforms-part-ii/"]]],
+  ["John Podesta", "WH Chief of Staff; senior climate adviser", "Clinton; Biden", "changes", `Project certainty is a "poison pill" to remove or revise; if fixed, "I would say go ahead." Calls the transmission title "pretty strong."`, [["Heatmap, Oct. 27", "https://heatmap.news/politics/john-podesta-bipartisan-american-affordability-jobs-act"], ["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]]],
+  ["Justin Pidot", "CEQ General Counsel", "Biden", "changes", `Sec. 1402 means "putting handcuffs on the government" and creates "perverse incentives" to engineer delays.`, [["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"], ["Common Dreams, Oct. 22", "https://www.commondreams.org/news/senate-permitting-bill"]]],
+  ["Matthew Littleton", "Deputy Asst. AG, DOJ ENRD", "Biden", "changes", `The bill "spares everything the Trump administration has done" to clean energy permits; Sec. 1402 needs rethinking, not tweaks.`, [["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"], ["Common Dreams, Oct. 22", "https://www.commondreams.org/news/senate-permitting-bill"]]],
+  ["Tracy Stone-Manning", "BLM Director; now president of The Wilderness Society", "Biden", "oppose", `Her organization says the bill puts iconic public lands on "a one-way path to industrial development" and that "our elected officials should reject it" (statement reported Nov. 2).`, [["Joshua Siegel (Punchbowl), Nov. 2", "https://x.com/SiegelScribe/status/2117264866100838871"]]],
+  ["Deb Haaland", "Interior Secretary", "Biden", "oppose", `"I do not support S.5653 as currently written," over tribal consultation: tribes warn it "excludes Tribes from consultation," and "I agree with them." Now a New Mexico gubernatorial candidate. Quote from Politico Pro via a clip roundup; original link not found.`, [["Politico via Extracted clips, Oct. 29", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-103026"]]]
+];
+const OFF_LABEL = { support: "Supports", changes: "Conditional / critic", oppose: "Opposes as written" };
+const offState = { f: "all" };
+
+// ---------- Senate ----------
+const SENATE = "Alsobrooks D MD|Armstrong R OK|Baldwin D WI|Banks R IN|Barrasso R WY|Bennet D CO|Blackburn R TN|Blumenthal D CT|Blunt Rochester D DE|Booker D NJ|Boozman R AR|Britt R AL|Budd R NC|Cantwell D WA|Capito R WV|Cassidy R LA|Collins R ME|Coons D DE|Cornyn R TX|Cortez Masto D NV|Cotton R AR|Cramer R ND|Crapo R ID|Cruz R TX|Curtis R UT|Daines R MT|Duckworth D IL|Durbin D IL|Ernst R IA|Fetterman D PA|Fischer R NE|Gallego D AZ|Gillibrand D NY|Graham R SC|Grassley R IA|Hagerty R TN|Hassan D NH|Hawley R MO|Heinrich D NM|Hickenlooper D CO|Hirono D HI|Hoeven R ND|Husted R OH|Hyde-Smith R MS|Johnson R WI|Justice R WV|Kaine D VA|Kelly D AZ|Kennedy R LA|Kim D NJ|King I ME|Klobuchar D MN|Lankford R OK|Lee R UT|Luján D NM|Lummis R WY|Markey D MA|Marshall R KS|McConnell R KY|McCormick R PA|Merkley D OR|Moody R FL|Moran R KS|Moreno R OH|Murkowski R AK|Murphy D CT|Murray D WA|Ossoff D GA|Padilla D CA|Paul R KY|Peters D MI|Reed D RI|Ricketts R NE|Risch R ID|Rosen D NV|Rounds R SD|Sanders I VT|Schatz D HI|Schiff D CA|Schmitt R MO|Schumer D NY|Scott (FL) R FL|Scott (SC) R SC|Shaheen D NH|Sheehy R MT|Slotkin D MI|Smith D MN|Sullivan R AK|Thune R SD|Tillis R NC|Tuberville R AL|Van Hollen D MD|Warner D VA|Warnock D GA|Warren D MA|Welch D VT|Whitehouse D RI|Wicker R MS|Wyden D OR|Young R IN"
+  .split("|").map(s => { const parts = s.split(" "); const st = parts.pop(); const p = parts.pop(); return { name: parts.join(" "), party: p, state: st }; });
+
+const DUCK_LETTER2 = [["Letter (DocumentCloud)", "https://www.documentcloud.org/documents/28835990-duckworth-wyden-merkley-markey-baaja/"], ["Inside Climate News, Oct. 29", "https://insideclimatenews.org/news/29102026/senate-debate-on-bipartisan-permitting-bill-approaches/"]];
+const LETTER_TXT = `The Oct. 27 letter says the signers are still deciding "whether to vote in favor of the motion to proceed." It says they "share the goals" of faster permitting and grid reform, but that BAAJA "will only succeed if President Trump takes care that it is faithfully executed." It asks for written confirmation, before the vote, that DOE is reinstating the canceled awards. It never says they will vote no.`;
+const SEN_NOTES = {
+  "Armstrong": ["support", `"Really, really meaningful permitting reform, all the way across the board." Agencies can't walk back permits "without being liable for the damages."`, [["News 9, Sept. 30", "https://www.news9.com/national-politics-oklahoma/senate-taking-important-step-toward-making-permitting-reform-a-reality"]]],
+  "Hawley": ["none", `Watch: the lone ENR Republican to vote against EPRA in 2024, over FERC transmission siting and landowners. Nothing on BAAJA yet.`, [["E&E News (2024)", "https://www.eenews.net/articles/whats-next-for-the-permitting-bill/"]]],
+  "King": ["none", `Watch: in May 2026 he told Interior there would be no votes for permitting reform without assurances on stalled renewable permits.`, [["Development Today, May 2026", "https://developmentstoday.com/energy/renewables-permit-fight-threatens-bipartisan-reform-push"]]],
+  "Murkowski": ["none", `Her FLOWS Act hydropower language is in the bill; no statement of her own found.`, []],
+  "Blunt Rochester": ["none", `Data center transparency bills with Curtis (Oct. 1), not tied to BAAJA.`, []],
+  "Baldwin": ["none", `Watch: no BAAJA statement in her releases or X posts (Sept. 29 to Oct. 29). On Sept. 30 she voted against Husted's Ratepayer Protection Act, a separate data center bill, because it only asks states to "consider" making data centers pay. She wants "a mandate, under law." BAAJA's Sec. 228 is that kind of mandate.`, [["Baldwin, Sept. 30", "https://www.baldwin.senate.gov/news/press-releases/baldwin-votes-against-voluntary-approach-to-data-centers-vows-to-push-real-reform-to-protect-wisconsin-ratepayers"]]],
+  "Peters": ["none", `No statement found in his releases or Michigan press through Oct. 28.`, [], true],
+  "Slotkin": ["none", `No statement found in her releases or Michigan press through Oct. 26.`, [], true],
+  "Capito": ["sponsor", `Lead sponsor. Posts almost daily: "We need to pass this bill to get our country back to building." Promotes CEA and McKinsey savings estimates.`, [["Introduction release", "https://www.capito.senate.gov/news/press-releases/capito-lee-whitehouse-and-heinrich-introduce-bipartisan-american-affordability-and-jobs-act-of-2026"], ["@SenCapito, Oct. 23", "https://x.com/SenCapito/status/2113701126977835109"]]],
+  "Lee": ["sponsor", `"We want to make it easier in America to build things." On X: "There is no negotiating with the anti-growth Left." Cites the White House CEA estimate of $250 a year in bill savings.`, [["Heatmap, Sept. 30", "https://heatmap.news/politics/bipartisan-permitting-reform"], ["@SenMikeLee, Oct. 29", "https://x.com/SenMikeLee/status/2115885495733379218"]]],
+  "Whitehouse": ["sponsor", `Sponsor, but sets a condition for his own caucus: "regulatory misbehavior against clean energy does need to be resolved before Democrats will vote for this bill" (Oct. 19). On Oct. 29: "We await real signs of regulatory good faith." Also: "BAAJA is our best bet to lower people's electricity costs." Nov. 2, at a Rhode Island event: Democrats should not wait, because "a bird in the hand" may not be there next year (Punchbowl, Nov. 3).`, [["@SenWhitehouse, Oct. 19", "https://x.com/SenWhitehouse/status/2112239757837172958"], ["@SenWhitehouse, Oct. 29", "https://x.com/SenWhitehouse/status/2115827001005068551"], ["AP, Oct. 21", "https://www.click2houston.com/news/politics/2026/10/21/trump-again-targets-offshore-wind-risking-deal-to-speed-approvals-of-new-energy-projects/"]]],
+  "Heinrich": ["sponsor", `"Data center owners should pay for their electricity and any grid upgrades, not you. Our new permitting reform bill makes that mandatory." His office says "negotiations continue" on the NHPA tribal consultation language. Facing home-state pressure from Rep. Stansbury, Deb Haaland, and tribes.`, [["@SenatorHeinrich, Oct. 8", "https://x.com/SenatorHeinrich/status/2107992552083210637"], ["Politico via Yahoo, Oct. 29", "https://www.yahoo.com/news/politics/articles/permitting-backers-want-senate-rack-210540461.html"]]],
+  "Duckworth": ["conditional", `Led the letter. ${LETTER_TXT} On X: "Bipartisan permitting reform won't work if Trump ignores the law."`, [...DUCK_LETTER2, ["@SenDuckworth, Oct. 27", "https://x.com/SenDuckworth/status/2115107904810340473"]]],
+  "Markey": ["conditional", `Signed the Duckworth letter. His Oct. 1 statement: "I'm still reviewing text of this proposal." He adds: "Building transmission is important. It's also important not to lock in more fossil fuels and lock out communities."`, [...DUCK_LETTER2, ["@SenMarkey statement, Oct. 1", "https://x.com/SenMarkey/status/2105677921838829654"]]],
+  "Merkley": ["conditional", `Signed the Duckworth letter. ${LETTER_TXT} Oil Change International also reports "strong reservations" from him and Wyden.`, [...DUCK_LETTER2, ["Oil Change Intl.", "https://oilchange.org/news/oregon-washington-opposition-baaja/"]]],
+  "Wyden": ["conditional", `Signed the Duckworth letter (same conditions). "Strong reservations," per Oil Change International. Also wrote, with Merkley and Padilla, to Interior about data centers on public lands (Oct. 29), and has a separate bill to ban them there.`, [...DUCK_LETTER2, ["Washington Sun, Oct. 29", "https://www.washingtonsun.com/congress/senate-democrats-demand-answers-public-land-use-data-centers"]]],
+  "Thune": ["lean", `Majority Leader. "We need permitting reform... I think we can get the bill across the finish line." Calls state jurisdiction the hurdle and says the midterms have "some bearing." South Dakota PUC commissioners urged him and Rounds to oppose the transmission siting provisions.`, [["SDPB, Oct. 25", "https://www.sdpb.org/politics/2026-10-25/congressional-permitting-reform-bill-faces-jurisdictional-concerns-potential-midterm-election-hoops-thune-says"], ["Dakota Free Press, Oct. 29", "https://dakotafreepress.com/2026/10/29/kloucek-warns-senate-permitting-reform-bill-threatens-sd-rights-nelson-kinda-agrees/"]]],
+  "Boozman": ["support", `"The bipartisan permitting bill will unlock critical infrastructure projects – from roads & bridges to energy." Commends Capito's leadership (EPW member).`, [["@JohnBoozman, Oct. 22", "https://x.com/JohnBoozman/status/2113355095714807933"]]],
+  "Husted": ["support", `"To help make life more affordable, we need permitting reform... EPW's bipartisan bill cuts through the bureaucracy." Held a permitting roundtable with Barrasso. He also sponsored the separate Ratepayer Protection Act, which failed 57-43.`, [["@SenJonHusted, Oct. 1", "https://x.com/SenJonHusted/status/2105804374664417696"], ["@SenJonHusted, Oct. 13", "https://x.com/SenJonHusted/status/2110149677815652727"]]],
+  "Cornyn": ["lean", `Attacked Podesta for trying "to poison a bipartisan permitting reform"; amplified the NAM-led business push for lame-duck passage.`, [["@JohnCornyn, Oct. 29", "https://x.com/JohnCornyn/status/2115786466903146536"], ["@JohnCornyn, Oct. 14", "https://x.com/JohnCornyn/status/2110445905560150369"]]],
+  "Curtis": ["lean", `"I'm glad to see my bill to bring environmental reviews into the digital age be included" in BAAJA. Separately, data center transparency bills with Blunt Rochester.`, [["@SenJohnCurtis, Oct. 6", "https://x.com/SenJohnCurtis/status/2107561775017156622"]]],
+  "McCormick": ["lean", `Oct. 1, the day after introduction: "We need clear approval timelines and legal certainty for approved projects. We must pass" permitting reform. He introduced his own permitting bill in May.`, [["@SenMcCormickPA, Oct. 1", "https://x.com/SenMcCormickPA/status/2105756141410295868"]]],
+  "Risch": ["lean", `Sept. 30: "Senate Democrats just blocked another chance" to pass permitting reform, alongside the Ratepayer Protection Act. That is about the pre-deal floor fight, not the BAAJA text.`, [["@SenatorRisch, Sept. 30", "https://x.com/SenatorRisch/status/2105411282220241043"]]],
+  "Schatz": ["conditional", `Politico Pro reports he and Hirono "have also expressed concern" about the bill's effects on tribal and local communities. No direct quote found.`, [["Politico Pro, Oct. 23 (via Extracted)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-102626"]]],
+  "Hirono": ["conditional", `Same Politico Pro report as Schatz: concern about effects on tribal and local communities. No direct quote found.`, [["Politico Pro, Oct. 23 (via Extracted)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-102626"]]],
+  "Padilla": ["none", `Watch: joined Wyden and Merkley's Oct. 29 letter to Interior on data centers on public lands (not about BAAJA). The Karuk Tribe is urging him and Schiff to oppose.`, [["Washington Sun, Oct. 29", "https://www.washingtonsun.com/congress/senate-democrats-demand-answers-public-land-use-data-centers"], ["Karuk Tribe, Oct. 28", "https://www.karuk.us/posts/karuk-tribe-condemns-senates-assault-on-tribal-sovereignty-and-sacred-places"]]],
+  "Schiff": ["none", `Watch: the Karuk Tribe is urging him and Padilla to oppose. No statement found.`, [["Karuk Tribe, Oct. 28", "https://www.karuk.us/posts/karuk-tribe-condemns-senates-assault-on-tribal-sovereignty-and-sacred-places"]]],
+  "Schumer": ["none", `Watch: called Husted's separate data center bill "a fraud, plain and simple." He is an addressee of both the opposition and support letters, but has stated no BAAJA position.`, [["AP via KSAT, Sept. 30", "https://www.ksat.com/news/politics/2026/09/30/data-center-bill-falls-short-in-senate-as-lawmakers-take-final-votes-before-the-midterms/"]]],
+  "Warnock": ["none", `Watch: one of four Democrats who voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
+  "Ossoff": ["none", `Watch: voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
+  "Hassan": ["none", `Watch: voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
+  "Klobuchar": ["none", `Watch: voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
+  "Rounds": ["none", `Watch: South Dakota PUC commissioners urged him and Thune to oppose the FERC transmission siting provisions. No statement found.`, [["Dakota Free Press, Oct. 29", "https://dakotafreepress.com/2026/10/29/kloucek-warns-senate-permitting-reform-bill-threatens-sd-rights-nelson-kinda-agrees/"]]],
+  "Cramer": ["none", `Watch: Sept. 29 (before the text): "time for Congress to pass a new highway bill and permitting reform." In 2024 he attacked EPRA's transmission provisions for "perverse incentives to overbuild."`, [["@SenKevinCramer, Sept. 29", "https://x.com/SenKevinCramer/status/2105044319384097177"]]]
+};
+const SEN_LABEL = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-support"], lean: ["Leans support", "s-support"], conditional: ["Conditions / concerns", "s-changes"], oppose: ["Opposes", "s-oppose"], none: ["No statement found", "s-silent"] };
+const senState = { f: "record" };
+
+// ---------- House ----------
+const HOUSE = [
+  ["Mike Johnson", "R-LA-4 (Speaker)", "support", `Gave an enthusiastic "yes" on backing the bipartisan permitting bill; Roll Call says he endorsed its "overall thrust."`, [["Roll Call, Oct. 27", "https://rollcall.com/2026/10/27/transmission-overhaul-threads-careful-needle-in-permitting-bill/"]]],
+  ["Bruce Westerman", "R-AR-4 (Natural Resources chair)", "support", `"An encouraging step toward fixing our nation's permitting challenges."`, [["Westerman, Sept. 30", "https://naturalresources.house.gov/news/documentsingle.aspx?DocumentID=419084"]]],
+  ["Scott Peters", "D-CA-50", "support", `Transmission provisions "are as good as anything we could ever get"; it "ought to be voted on this Congress," though it "still needs some adjustments and clarifications."`, [["Peters, Oct. 22", "https://scottpeters.house.gov/press-releases/rep-peters-labor-clean-energy-leaders-urge-action-on-permitting-reform"]]],
+  ["Adam Gray", "D-CA-13", "support", `An "important and long-overdue first step"; Congress should take it up "immediately."`, [["Gray, Sept. 30", "https://gray.house.gov/media/press-releases/gray-issues-statement-federal-permitting-reform-agreement"]]],
+  ["Gabe Evans", "R-CO-8 (vulnerable moderate; Problem Solvers permitting co-lead)", "support", `Held a district event with the National Association of Manufacturers on Nov. 2 to tout the Senate's bipartisan permitting bill (Punchbowl preview; full text paywalled).`, [["Punchbowl, Nov. 2", "https://punchbowl.news/article/energy/senate-permitting-bill-2/"]]],
+  ["Tom Cole", "R-OK-4 (senior Republican; Chickasaw citizen)", "conditional", `Joining Democrats on tribal concerns: "That's going to be an issue for me." Says he will push for changes to the NHPA provisions in the Senate and House if the bill passes.`, [["James Bikales, Oct. 30", "https://x.com/jamepdx/status/2116258382051160078"]]],
+  ["Brett Guthrie", "R-KY-2 (Energy & Commerce chair)", "conditional", `Wants changes before a House vote (unspecified); Grist reports he opposes forcing new transmission lines. No statement in his own words found.`, [["Roll Call, Oct. 27", "https://rollcall.com/2026/10/27/transmission-overhaul-threads-careful-needle-in-permitting-bill/"]]],
+  ["Sean Casten", "D-IL-6", "conditional", `Not backing it yet: "I think there are modest changes we could make to it to make sure it works." Axios's headline frames his worry as a "gold rush for gas." Negotiating with Senate Democrats.`, [["Axios, Oct. 30", "https://www.axios.com/2026/10/30/key-house-democrat-permitting-bill-gold-rush-gas"], ["Extracted clips, Oct. 30", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-103026"]]],
+  ["Josh Harder", "D-CA-9", "support", `As Build America Caucus co-chair: "make passing this deal priority number one in November."`, [["Build America Caucus, Sept. 30", "https://buildamericacaucus-harder.house.gov/media/press-releases/permitting-build-america-caucus-chairs-call-on-congress-to-pass-senate-permitting-deal"]]],
+  ["Celeste Maloy", "R-UT-2", "support", `Build America Caucus co-chair; joint statement urging Congress to "quickly pass the reforms into law."`, [["Build America Caucus, Sept. 30", "https://buildamericacaucus-harder.house.gov/media/press-releases/permitting-build-america-caucus-chairs-call-on-congress-to-pass-senate-permitting-deal"]]],
+  ["Melanie Stansbury", "D-NM-1", "oppose", `"Adamantly opposed to this bill" and won't vote for it "for now," citing tribal sovereignty and consultation, sacred sites, public lands, and community input. Heinrich's home-state colleague.`, [["NM Political Report, Oct. 28", "https://nmpoliticalreport.com/2026/10/28/stansbury-adamantly-opposed-to-heinrichs-signature-permit-reform-bill/"]]],
+  ["New Democrat Coalition", "House caucus (Peters, Schneider, Budzinski)", "support", `Leans support: "encouraged by the good-faith bipartisan negotiations." Still reviewing, with no endorsement yet. Wants "permit certainty and parity" for all energy.`, [["New Dems, Sept. 30", "https://newdemocratcoalition.house.gov/media-center/press-releases/new-democrat-coalition-statement-on-senate-permitting-reform-deal"]]],
+  ["Build America Caucus", "Bipartisan caucus (43 members)", "support", `Co-chairs Harder and Maloy urge passage in November.`, [["Build America Caucus, Sept. 30", "https://buildamericacaucus-harder.house.gov/media/press-releases/permitting-build-america-caucus-chairs-call-on-congress-to-pass-senate-permitting-deal"]]],
+  ["Jared Huffman", "D-CA-2 (Natural Resources ranking)", "oppose", `A "Trojan horse" with fossil giveaways; wind assurances are "cheap window dressing." Says Democrats should wait for a better deal after the midterms.`, [["Huffman, Sept. 30", "https://democrats-naturalresources.house.gov/media/press-releases/ranking-member-huffman-statement-on-senate-permitting-deal"], ["Heatmap interview", "https://heatmap.news/politics/jared-huffman-baaja"]]],
+  ["Ro Khanna", "D-CA-17", "oppose", `Reported (paraphrase) as urging Democrats to wait until after the midterms for a better bill.`, [["Latitude Media", "https://www.latitudemedia.com/news/why-green-groups-wont-endorse-the-senate-permitting-deal/"]]],
+  ["Rashida Tlaib", "D-MI-12", "oppose", `Co-founded the People's EJ Caucus, which calls it "a gift to Big Oil and Big Tech." At Oil Change International's Oct. 28 briefing she was the only member of Congress: "We know the bill is 417 pages of empty promises" (National Review, via Extracted clips).`, [["Caucus statement", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"], ["Oil Change briefing", "https://oilchange.org/news/virtual-press-conference-baaja/"]], true],
+  ["Summer Lee", "D-PA-12", "oppose", `People's EJ Caucus statement.`, [["Caucus statement", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"]]],
+  ["Adelita Grijalva", "D-AZ-7", "oppose", `People's EJ Caucus statement.`, [["Caucus statement", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"]]],
+  ["Problem Solvers Caucus", "Bipartisan caucus", "conditional", `No position yet; expects to announce one in the lame duck. Peters and Rep. Gabe Evans lead its permitting working group.`, [["Bloomberg Law, Oct. 27", "https://news.bloomberglaw.com/health-law-and-business/bipartisan-house-caucus-weighs-senate-permitting-bill-support"]]]
+];
+const MI_HOUSE = [["Jack Bergman", "R-MI-1"], ["John Moolenaar", "R-MI-2"], ["Hillary Scholten", "D-MI-3"], ["Bill Huizenga", "R-MI-4"], ["Tim Walberg", "R-MI-5"], ["Debbie Dingell", "D-MI-6"], ["Tom Barrett", "R-MI-7"], ["Kristen McDonald Rivet", "D-MI-8"], ["Lisa McClain", "R-MI-9"], ["John James", "R-MI-10"], ["Haley Stevens", "D-MI-11"], ["Shri Thanedar", "D-MI-13"]];
+
+function srcLinks(arr) { return (arr || []).map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join(" "); }
+
+function renderOfficials() {
+  const counts = { all: OFFICIALS.length };
+  OFFICIALS.forEach(o => counts[o[3]] = (counts[o[3]] || 0) + 1);
+  const ch = (v, l) => `<button class="chip" type="button" data-off="${v}" aria-pressed="${offState.f === v}">${l}<span class="n">${counts[v] || 0}</span></button>`;
+  document.getElementById("offChips").innerHTML = ch("all", "All") + ch("support", "Supports") + ch("changes", "Conditional / critic") + ch("oppose", "Opposes as written");
+  const order = { support: 0, changes: 1, oppose: 2 };
+  document.getElementById("offBody").innerHTML = OFFICIALS.filter(o => offState.f === "all" || o[3] === offState.f)
+    .sort((a, b) => order[a[3]] - order[b[3]])
+    .map(([n, role, adm, st, said, src, mi]) => {
+      const cls = st === "support" ? "s-support" : st === "changes" ? "s-changes" : "s-oppose";
+      return `<tr><th scope="row">${n}${mi ? '<span class="tag-mi">MI</span>' : ""}</th><td class="said" style="min-width:180px">${role}</td><td>${adm}</td><td><span class="pill ${cls}">${OFF_LABEL[st]}</span></td><td class="said">${said} ${srcLinks(src)}</td></tr>`;
+    }).join("");
+}
+
+function senRows() {
+  return SENATE.map(s => {
+    const n = SEN_NOTES[s.name.replace(/ \(..\)$/, "")] || SEN_NOTES[s.name];
+    return { ...s, pos: n ? n[0] : "none", note: n ? n[1] : "", src: n ? n[2] : [], mi: n && n[3], watch: n && n[0] === "none" };
+  });
+}
+
+function renderSenate() {
+  const rows = senRows();
+  const c = (k) => rows.filter(r => r.pos === k).length;
+  const onRecord = rows.filter(r => r.pos !== "none").length;
+  document.getElementById("senTally").innerHTML =
+    `<div class="t"><b>${c("sponsor")}</b><span>Sponsors</span></div>` +
+    `<div class="t"><b>${c("support")}</b><span>Other public supporters</span></div>` +
+    `<div class="t"><b>${c("lean")}</b><span>Lean support</span></div>` +
+    `<div class="t"><b>${c("conditional")}</b><span>Conditions / concerns</span></div>` +
+    `<div class="t"><b>${c("oppose")}</b><span>Opposed</span></div>` +
+    `<div class="t"><b>${100 - onRecord}</b><span>No statement found</span></div>` +
+    `<div class="t"><b>60</b><span>Needed for cloture</span></div>`;
+  const ch = (v, l) => `<button class="chip" type="button" data-sen="${v}" aria-pressed="${senState.f === v}">${l}</button>`;
+  document.getElementById("senChips").innerHTML = ch("record", "On record + watch list") + ch("all", "All 100") + ch("D", "Democrats + Independents") + ch("R", "Republicans") + ch("MI", "Michigan");
+  let shown = rows;
+  if (senState.f === "record") shown = rows.filter(r => r.pos !== "none" || r.note);
+  if (senState.f === "D") shown = rows.filter(r => r.party !== "R");
+  if (senState.f === "R") shown = rows.filter(r => r.party === "R");
+  if (senState.f === "MI") shown = rows.filter(r => r.state === "MI");
+  const order = { sponsor: 0, support: 1, lean: 2, conditional: 3, oppose: 4, none: 5 };
+  shown =[...shown].sort((a, b) => order[a.pos] - order[b.pos] || (b.note ? 1 : 0) - (a.note ? 1 : 0) || a.name.localeCompare(b.name));
+  document.getElementById("senBody").innerHTML = shown.map(r => {
+    const [lbl, cls] = SEN_LABEL[r.pos];
+    const note = r.note ? `<span class="${r.watch ? "watch" : ""}">${r.note}</span> ${srcLinks(r.src)}` : `<span class="watch">Nothing found since Sept. 30.</span>`;
+    return `<tr><th scope="row">${r.name}${r.mi ? '<span class="tag-mi">MI</span>' : ""}</th><td><span class="party-${r.party}">${r.party}</span>-${r.state}</td><td><span class="pill ${cls}">${lbl}</span></td><td class="said">${note}</td></tr>`;
+  }).join("");
+}
+
+function renderHouse() {
+  const order = { support: 0, conditional: 1, oppose: 2 };
+  const lab = { support: ["Supports", "s-support"], conditional: ["Conditions / undecided", "s-changes"], oppose: ["Opposes", "s-oppose"] };
+  const rows = [...HOUSE].sort((a, b) => order[a[2]] - order[b[2]]).map(([n, d, st, said, src, mi]) =>
+    `<tr><th scope="row">${n}${mi ? '<span class="tag-mi">MI</span>' : ""}</th><td>${d}</td><td><span class="pill ${lab[st][1]}">${lab[st][0]}</span></td><td class="said">${said} ${srcLinks(src)}</td></tr>`).join("");
+  const mi = `<tr class="grp"><th colspan="4">Rest of the Michigan delegation</th></tr>` + MI_HOUSE.map(([n, d]) =>
+    `<tr><th scope="row">${n}<span class="tag-mi">MI</span></th><td>${d}</td><td><span class="pill s-silent">No statement found</span></td><td class="said"><span class="watch">Nothing in releases or Michigan press through late Oct.</span></td></tr>`).join("");
+  document.getElementById("houseBody").innerHTML = rows + mi;
+}
+
+document.addEventListener("click", (e) => {
+  const o = e.target.closest("[data-off]"); if (o) { offState.f = o.dataset.off; renderOfficials(); }
+  const s = e.target.closest("[data-sen]"); if (s) { senState.f = s.dataset.sen; renderSenate(); }
+});
+
+const state = { stance: "all", sector: "all", q: "" };
+const esc = (s) => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function renderSummary() {
+  const counts = {};
+  Object.keys(STANCES).forEach(k => counts[k] = PEOPLE.filter(p => p.stance === k).length);
+  const total = PEOPLE.length;
+  const order = ["oppose", "changes", "silent", "support"];
+  document.getElementById("bar").innerHTML = order.map(k => `<span style="width:${(counts[k] / total * 100).toFixed(2)}%;background:${STANCES[k].color}" title="${STANCES[k].label}: ${counts[k]}"></span>`).join("");
+  document.getElementById("legend").innerHTML = order.map(k => `<span><span class="dot" style="background:${STANCES[k].color}"></span>${STANCES[k].label} <b>${counts[k]}</b></span>`).join("") + `<span style="color:var(--muted)">Entries, not member counts. Coalition letters carry 100 to 200+ signers.</span>`;
+}
+
+function renderMatrix() {
+  document.getElementById("matrix").innerHTML = MATRIX.map(([name, sec, cells]) =>
+    `<tr><th scope="row">${name}<span class="sec">§ ${sec}</span></th>${cells.map(c => { const [cls, sym, lbl] = CELL[c]; return `<td><span class="cell ${cls}" aria-label="${lbl}" title="${lbl}">${sym}</span></td>`; }).join("")}</tr>`
+  ).join("");
+}
+
+function chip(group, value, label, n) {
+  const pressed = state[group] === value;
+  return `<button class="chip" type="button" data-group="${group}" data-value="${value}" aria-pressed="${pressed}">${label}${n !== undefined ? `<span class="n">${n}</span>` : ""}</button>`;
+}
+
+function renderChips() {
+  const st = document.getElementById("stanceChips");
+  st.innerHTML = chip("stance", "all", "All", PEOPLE.length) + Object.entries(STANCES).map(([k, v]) => chip("stance", k, v.label, PEOPLE.filter(p => p.stance === k).length)).join("");
+  const sectors = [...new Set(PEOPLE.map(p => p.sector))];
+  document.getElementById("sectorChips").innerHTML = chip("sector", "all", "All sectors") + sectors.map(s => chip("sector", s, s)).join("");
+}
+
+function matches(p) {
+  if (state.stance !== "all" && p.stance !== state.stance) return false;
+  if (state.sector !== "all" && p.sector !== state.sector) return false;
+  if (state.q) {
+    const hay = [p.name, p.who, p.sector, ...(p.obj || []), ...(p.likes || []), ...(p.fix || []), p.note || ""].join(" ").toLowerCase().replace(/<[^>]+>/g, "");
+    if (!hay.includes(state.q.toLowerCase())) return false;
+  }
+  return true;
+}
+
+function list(label, cls, items) {
+  if (!items || !items.length) return "";
+  return `<div class="block"><span class="label ${cls}">${label}</span><ul>${items.map(i => `<li>${i}</li>`).join("")}</ul></div>`;
+}
+
+function renderRoster() {
+  const order = { oppose: 0, changes: 1, silent: 2, support: 3 };
+  const rows = PEOPLE.filter(matches).sort((a, b) => order[a.stance] - order[b.stance]);
+  document.getElementById("count").textContent = `Showing ${rows.length} of ${PEOPLE.length}`;
+  const el = document.getElementById("roster");
+  if (!rows.length) { el.innerHTML = `<p class="empty">No stakeholders match. Clear the search or pick another filter.</p>`; return; }
+  el.innerHTML = rows.map(p => {
+    const st = STANCES[p.stance];
+    const likesLabel = p.stance === "support" ? "Why they back it" : "What they like";
+    const likes = p.stance === "oppose" && !p.likes.length ? `<div class="block"><span class="label likes">What they like</span><ul><li style="color:var(--muted)">Nothing stated publicly</li></ul></div>` : list(likesLabel, "likes", p.likes);
+    return `<article class="card">
+      <div class="card-top"><div><h3>${esc(p.name)}${p.mi ? '<span class="tag-mi">MI</span>' : ""}</h3><span class="sector">${esc(p.sector)}</span></div><span class="pill ${st.cls}">${st.label}</span></div>
+      ${p.who ? `<p class="who">${p.who}</p>` : ""}
+      ${list("Objects to", "obj", p.obj)}
+      ${likes}
+      ${list("Fixes they want", "fix", p.fix)}
+      ${p.note ? `<p class="who">${p.note}</p>` : ""}
+      <div class="sources">${p.src.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join("")}</div>
+    </article>`;
+  }).join("");
+}
+
+function renderFixes() {
+  document.getElementById("fixList").innerHTML = FIXES.map(f => `<article class="fix">
+    <h3>${f.title} <span class="sec">§ ${f.sec}</span> <span class="consensus ${f.level[0]}">${f.level[1]}</span></h3>
+    <div class="what"><span class="k">The problem</span><p>${f.what}</p></div>
+    <div class="who-says"><span class="k">Who says so</span><p>${f.who}</p></div>
+  </article>`).join("");
+}
+
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".chip[data-group]");
+  if (!b) return;
+  state[b.dataset.group] = b.dataset.value;
+  renderChips(); renderRoster();
+});
+document.getElementById("q").addEventListener("input", (e) => { state.q = e.target.value.trim(); renderRoster(); });
+
+// ---------- Congress charts ----------
+const POS_FILL = { sponsor: "var(--support)", support: "var(--support)", lean: "var(--lean)", conditional: "var(--changes)", oppose: "var(--oppose)", none: "var(--silent-bg)" };
+let selSeat = null;
+
+function seatPanelDefault() {
+  const rows = senRows();
+  const n = (p) => rows.filter(r => r.pos === p).length;
+  const rec = 100 - n("none");
+  document.getElementById("seatPanel").innerHTML = `<span class="eyebrow">Select a seat</span>
+    <h4>${rec} of 100 senators on record</h4>
+    <p class="who">${n("sponsor")} sponsors and ${n("support")} other senators back the bill publicly, and ${n("lean")} more lean toward it, including Majority Leader Thune. ${n("conditional")} Democrats have conditions or concerns. Duckworth, Markey, Merkley, and Wyden tied their motion-to-proceed vote to DOE restoring canceled grants; Schatz and Hirono raised tribal concerns. No senator has come out against it.</p>
+    <p class="who">Tap or hover a seat for what that senator has said. Dashed rings mark senators to watch because of related votes or past positions.</p>`;
+}
+
+function showSeat(r) {
+  const [lbl, cls] = SEN_LABEL[r.pos];
+  const note = r.note ? `${r.note}` : `Nothing found since Sept. 30.`;
+  document.getElementById("seatPanel").innerHTML = `<span class="eyebrow">${r.party === "D" ? "Democrat" : r.party === "R" ? "Republican" : "Independent"} · ${r.state}</span>
+    <h4>Sen. ${r.name.replace(/ \(..\)$/, "")}${r.mi ? '<span class="tag-mi">MI</span>' : ""}</h4>
+    <span><span class="pill ${cls}">${lbl}</span>${r.watch ? ' <span class="pill s-silent">Watch list</span>' : ""}</span>
+    <p class="said">${note}</p>
+    <p class="said">${srcLinks(r.src)}</p>`;
+}
+
+function renderHemi() {
+  const rows = senRows();
+  const byName = (a, b) => a.name.localeCompare(b.name);
+  const D = rows.filter(r => r.party === "D"), I = rows.filter(r => r.party === "I"), R = rows.filter(r => r.party === "R");
+  const plainNone = (arr) => arr.filter(r => r.pos === "none" && !r.note).sort(byName);
+  const watchNone = (arr) => arr.filter(r => r.pos === "none" && r.note).sort(byName);
+  const pos = (arr, p) => arr.filter(r => r.pos === p).sort(byName);
+  const ordered = [
+    ...plainNone(D), ...watchNone(D), ...pos(D, "conditional"), ...pos(D, "lean"), ...pos(D, "support"), ...pos(D, "sponsor"),
+    ...plainNone(I), ...watchNone(I),
+    ...pos(R, "sponsor"), ...pos(R, "support"), ...pos(R, "lean"), ...watchNone(R), ...plainNone(R)
+  ];
+  const cx = 300, cy = 312, counts = [10, 13, 15, 18, 21, 23], radii = [120, 152, 184, 216, 248, 280];
+  const seats = [];
+  counts.forEach((n, i) => { for (let j = 0; j < n; j++) { const a = Math.PI - Math.PI * j / (n - 1); seats.push({ a, r: radii[i], x: cx + radii[i] * Math.cos(a), y: cy - radii[i] * Math.sin(a) }); } });
+  seats.sort((p, q) => q.a - p.a || p.r - q.r);
+  const svg = document.getElementById("hemi");
+  const circles = seats.map((s, k) => {
+    const m = ordered[k];
+    const dash = m.watch ? ' stroke-dasharray="3 2"' : "";
+    return `<circle class="seat p-${m.party}" data-k="${k}" tabindex="0" role="button" aria-label="${m.name}, ${m.party}-${m.state}: ${SEN_LABEL[m.pos][0]}" cx="${s.x.toFixed(1)}" cy="${s.y.toFixed(1)}" r="10.5" fill="${POS_FILL[m.pos]}" stroke-width="${m.watch ? 2.5 : 2}"${dash}></circle>`;
+  }).join("");
+  const yes = rows.filter(r => r.pos === "sponsor" || r.pos === "support").length;
+  svg.innerHTML = `<title id="hemiTitle">Senate seat chart colored by public position on BAAJA</title>${circles}
+    <text x="${cx}" y="${cy - 46}" text-anchor="middle" font-size="44" font-weight="800">${yes}</text>
+    <text class="sub" x="${cx}" y="${cy - 24}" text-anchor="middle">public yes votes</text>
+    <text class="sub" x="${cx}" y="${cy - 6}" text-anchor="middle">60 needed for cloture</text>`;
+  svg.querySelectorAll(".seat").forEach(c => {
+    const m = ordered[+c.dataset.k];
+    const pick = () => { svg.querySelectorAll(".seat.sel").forEach(x => x.classList.remove("sel")); c.classList.add("sel"); selSeat = m; showSeat(m); };
+    c.addEventListener("mouseenter", () => showSeat(m));
+    c.addEventListener("mouseleave", () => { selSeat ? showSeat(selSeat) : seatPanelDefault(); });
+    c.addEventListener("click", pick);
+    c.addEventListener("focus", pick);
+    c.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+  });
+  seatPanelDefault();
+}
+
+function renderVotebar() {
+  const rows = senRows();
+  const yes = rows.filter(r => r.pos === "sponsor" || r.pos === "support").length;
+  const lean = rows.filter(r => r.pos === "lean").length;
+  const cond = rows.filter(r => r.pos === "conditional").length;
+  const opp = rows.filter(r => r.pos === "oppose").length;
+  const none = 100 - yes - lean - cond - opp;
+  const seg = (n, bg, label, dark) => n ? `<div class="seg" style="width:${n}%;background:${bg};${dark ? "color:var(--muted)" : ""}" title="${label}: ${n}">${n >= 3 ? n : ""}</div>` : "";
+  document.getElementById("votebar").innerHTML =
+    seg(yes, "var(--support)", "Public yes") + seg(lean, "var(--lean)", "Leans support") + seg(cond, "var(--changes)", "Conditions") + seg(opp, "var(--oppose)", "Opposed") +
+    seg(none, "transparent", "No statement found", true) +
+    `<span class="mark" style="left:60%" title="60 votes for cloture"></span><span class="mark target" style="left:70%" title="Backers' target of about 70"></span>`;
+  document.getElementById("voteaxis").innerHTML = `<span style="left:60%;transform:translateX(calc(-100% - 6px))">60 cloture</span><span style="left:70%;transform:translateX(6px)">~70 target</span>`;
+  document.getElementById("votecap").textContent = `${yes} public yes votes, ${lean} leaning yes, ${cond} with conditions, ${opp} opposed, ${none} with no statement found. Solid line: 60 votes for cloture. Dashed: backers' target of about 70.`;
+}
+
+function renderHouseViz() {
+  const members = HOUSE.filter(h => !/caucus/i.test(h[1]));
+  document.getElementById("houseHead").textContent = `House: ${members.length} of 435 on record`;
+  document.getElementById("waffle").setAttribute("aria-label", `435 squares, ${members.length} colored for members with a public position`);
+  const order = { support: 0, conditional: 1, oppose: 2 };
+  const sorted = [...members].sort((a, b) => order[a[2]] - order[b[2]]);
+  const col = { support: "var(--support)", conditional: "var(--changes)", oppose: "var(--oppose)" };
+  let cells = sorted.map(m => `<i style="background:${col[m[2]]}" title="${m[0]} (${m[1]})"></i>`).join("");
+  cells += "<i></i>".repeat(435 - sorted.length);
+  document.getElementById("waffle").innerHTML = cells;
+  const lab = { support: "Supports", conditional: "Conditions / undecided", oppose: "Opposes" };
+  document.getElementById("houseGroups").innerHTML = ["support", "conditional", "oppose"].map(k => {
+    const ms = HOUSE.filter(h => h[2] === k);
+    return `<div class="row"><b>${lab[k]} (${ms.filter(m => !/caucus/i.test(m[1])).length})</b>${ms.map(m => `<span class="mchip" style="border-color:${col[k]}">${m[0]} <span class="watch">${m[1].replace(/ \(.+\)/, "")}</span></span>`).join("")}</div>`;
+  }).join("");
+}
+
+function renderMI() {
+  const cells = [
+    ["Gary Peters", "Senate (D)", "none"], ["Elissa Slotkin", "Senate (D)", "none"],
+    ...MI_HOUSE.slice(0, 11).map(([n, d]) => [n, d, "none"]),
+    ["Rashida Tlaib", "D-MI-12", "oppose"],
+    ...MI_HOUSE.slice(11).map(([n, d]) => [n, d, "none"])
+  ];
+  document.getElementById("miGrid").innerHTML = cells.map(([n, d, p]) =>
+    `<div class="mi-cell ${p}"><span>${n}</span><small>${d} · ${p === "oppose" ? "Opposes" : "No statement found"}</small></div>`).join("");
+}
+
+// ---------- Latest statements ----------
+// Newest first. d = date the statement was made or reported; k = Senate | House | Group.
+const LATEST = [
+  { d: "2026-11-03", k: "Group", who: "Coalition of Large Tribes (COLT)", pos: "changes", text: `Punchbowl reports COLT has been quietly pushing negotiators for targeted technical fixes to the NHPA section (Sec. 2301) and circulating a discussion paper with proposed amendments. Its executive director expects the bill to pass the Senate, so the group is working on the text rather than against the bill. The amendments themselves were not visible.`, src: [["Punchbowl via Jentleson, Nov. 3", "https://x.com/AJentleson/status/2117752551227400260"]] },
+  { d: "2026-11-03", k: "Group", who: "NATHPO and Standing Rock Sioux Tribe", pos: "oppose", text: `NATHPO opposes the bill as written and argues the NHPA provisions "cannot be fixed through amendment," the opposite of COLT's approach. Standing Rock's statement (Chairman Sitting Bear, Oct. 30, posted Nov. 3) says the bill would weaken laws protecting treaty rights, trust resources and cultural resources.`, src: [["NATHPO", "https://www.nathpo.org/permitting-reform-baaja-tribal-historic-preservation/"], ["Standing Rock", "https://standingrock.org/2026/11/03/the-standing-rock-sioux-tribe-opposes-the-bipartisan-american-affordability-and-jobs-act-baaja"]] },
+  { d: "2026-11-03", k: "Group", who: "NRECA and APPA (electric co-ops and public power)", pos: "changes", text: `Joint letter "strongly support[s]" the bill but makes continued support contingent on a "technical change" in the manager's amendment that avoids new, burdensome FERC regulation of cooperatives and public power. The letter cites no section. Notable because these groups opposed the 2024 deal over federal transmission siting.`, src: [["Letter (PDF)", "https://punchbowl.news/wp-content/uploads/NRECA-APPA-Joint-Letter-Permitting-FINAL.pdf"], ["Siegel (Punchbowl), Nov. 3", "https://x.com/siegelscribe/status/2117589170038460442"]] },
+  { d: "2026-11-03", k: "Group", who: "Teamsters, Iron Workers, Boilermakers, SMART and other unions", pos: "support", text: `Letter shared with Politico urges the four lead negotiators to "swiftly pass" S. 5653, framed around clean energy built by union members. The visible signer list is cut off, so the full roster is not confirmed.`, src: [["Politico Energy via Portuondo, Nov. 3", "https://x.com/nicoportuondo/status/2117644196152758749"]] },
+  { d: "2026-11-03", k: "Senate", who: "Sheldon Whitehouse (D-RI)", pos: "sponsor", text: `Sponsor and lead negotiator. At a Rhode Island event on Nov. 2 he urged Democrats not to wait for next year ("a bird in the hand"), warning the bill may not pass later or the president may refuse to sign it, per a transcript Punchbowl obtained. Politico reports he and Heinrich argue the post-midterm window is the time to vote while still pressing the administration on renewables.`, src: [["Politico, Nov. 3", "https://www.politico.com/news/2026/11/03/renewable-energy-environmentalists-permitting-split-01143886"], ["Whitehouse on X, Nov. 2", "https://x.com/SenWhitehouse/status/2117321463925465131"]] },
+  { d: "2026-11-03", k: "House", who: "Jared Huffman (D-CA-2)", pos: "oppose", text: `Natural Resources ranking member, on the other side of the timing split: "Folding our hand now or in the lame duck makes no sense when we can keep working on this and, in a few more months, have a much better deal." Also promoted a Purdue analysis as the "independent, science-based" read of the bill.`, src: [["Politico, Nov. 3", "https://www.politico.com/news/2026/11/03/renewable-energy-environmentalists-permitting-split-01143886"]] },
+  { d: "2026-11-02", k: "House", who: "Gabe Evans (R-CO-8)", pos: "support", text: `Held a district event with the National Association of Manufacturers to promote the Senate's bipartisan permitting bill. Vulnerable moderate and Problem Solvers permitting co-lead.`, src: [["Punchbowl, Nov. 2", "https://punchbowl.news/article/energy/senate-permitting-bill-2/"]] },
+  { d: "2026-11-02", k: "Group", who: "The Wilderness Society", pos: "oppose", text: `President Tracy Stone-Manning (BLM director under Biden) says the bill puts public lands on "a one-way path to industrial development" and that elected officials "should reject it."`, src: [["Siegel (Punchbowl), Nov. 2", "https://x.com/SiegelScribe/status/2117264866100838871"]] },
+  { d: "2026-10-30", k: "House", who: "Tom Cole (R-OK-4)", pos: "changes", text: `Senior Republican and Chickasaw citizen, on the tribal consultation changes: "That's going to be an issue for me." Says he will push to change the NHPA provisions in both chambers if the bill passes.`, src: [["Bikales, Oct. 30", "https://x.com/jamepdx/status/2116258382051160078"]] },
+  { d: "2026-10-30", k: "House", who: "Sean Casten (D-IL-6)", pos: "changes", text: `Not backing it yet: "I think there are modest changes we could make to it to make sure it works." Axios frames his worry as a "gold rush for gas." Negotiating with Senate Democrats.`, src: [["Axios, Oct. 30", "https://www.axios.com/2026/10/30/key-house-democrat-permitting-bill-gold-rush-gas"]] },
+  { d: "2026-10-27", k: "Senate", who: "Duckworth, Markey, Merkley, Wyden", pos: "conditional", text: `Letter says they are still deciding "whether to vote in favor of the motion to proceed" and asks for written confirmation, before the vote, that DOE is reinstating canceled grant awards.`, src: [["Inside Climate News, Oct. 29", "https://insideclimatenews.org/news/29102026/senate-debate-on-bipartisan-permitting-bill-approaches/"], ["Letter", "https://www.documentcloud.org/documents/28835990-duckworth-wyden-merkley-markey-baaja/"]] }
+];
+const LATEST_POS = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-support"], lean: ["Leans support", "s-support"], changes: ["Conditions", "s-changes"], conditional: ["Conditions", "s-changes"], oppose: ["Opposes", "s-oppose"] };
+const latestState = { f: "All", all: false };
+const LATEST_SHOW = 6;
+const MONTHS = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+function fmtDay(d) { const [, m, dd] = d.split("-"); return `${MONTHS[+m - 1]} ${+dd}`; }
+function renderLatest() {
+  const kinds = ["All", "Senate", "House", "Group"];
+  const lab = { All: "All", Senate: "Senate", House: "House", Group: "Groups" };
+  document.getElementById("latestChips").innerHTML = kinds.map(k => {
+    const n = k === "All" ? LATEST.length : LATEST.filter(x => x.k === k).length;
+    return `<button class="chip" type="button" data-lf="${k}" aria-pressed="${latestState.f === k}">${lab[k]} (${n})</button>`;
+  }).join("");
+  const rows = LATEST.filter(x => latestState.f === "All" || x.k === latestState.f);
+  const shown = latestState.all ? rows : rows.slice(0, LATEST_SHOW);
+  document.getElementById("latestList").innerHTML = shown.map(x => {
+    const [pl, pc] = LATEST_POS[x.pos];
+    return `<li><span class="when">${fmtDay(x.d)}</span><div><div class="l-head"><span class="l-kind">${x.k === "Group" ? "Group" : x.k}</span><b>${x.who}</b><span class="pill ${pc}">${pl}</span></div><p>${x.text}</p><p>${srcLinks(x.src)}</p></div></li>`;
+  }).join("");
+  const more = document.getElementById("latestMore");
+  more.hidden = rows.length <= LATEST_SHOW;
+  more.textContent = latestState.all ? "Show fewer" : `Show ${rows.length - LATEST_SHOW} older`;
+}
+document.addEventListener("click", (e) => {
+  const c = e.target.closest(".chip[data-lf]");
+  if (c) { latestState.f = c.dataset.lf; latestState.all = false; renderLatest(); return; }
+  if (e.target.id === "latestMore") { latestState.all = !latestState.all; renderLatest(); }
+});
+
+const GROUP_IDS = ["groups", "glance", "provisions", "stakeholders", "officials", "fixes"];
+function showView() {
+  const h = location.hash.slice(1);
+  const view = GROUP_IDS.includes(h) ? "groups" : "congress";
+  document.querySelectorAll("[data-view]").forEach(el => { el.hidden = el.dataset.view !== view; });
+  document.getElementById("tab-groups").setAttribute("aria-selected", view === "groups");
+  document.getElementById("tab-congress").setAttribute("aria-selected", view === "congress");
+  if (h && h !== "groups" && h !== "congress") { const t = document.getElementById(h); if (t) t.scrollIntoView(); }
+}
+window.addEventListener("hashchange", showView);
+
+renderSummary(); renderMatrix(); renderChips(); renderRoster(); renderFixes(); renderOfficials(); renderSenate(); renderHouse();
+renderHemi(); renderVotebar(); renderHouseViz(); renderMI(); renderGlance(); renderLatest(); showView();
+</script>
+
+</body></html>
