@@ -133,7 +133,6 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .label.fix { color: var(--changes); }
 .block ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 2px; font-size: 14px; }
 .sources { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; border-top: 1px solid var(--rule); padding-top: 8px; }
-.tag-mi { font-family: var(--font-mono); font-size: 11px; color: var(--accent); border: 1px solid var(--accent); border-radius: 3px; padding: 0 4px; margin-left: 6px; vertical-align: 2px; }
 .empty { color: var(--muted); padding: 20px 0; }
 .more-btn { align-self: flex-start; font-weight: 700; padding: 8px 18px; }
 
@@ -183,10 +182,6 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .house-groups .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .house-groups .row > b { font-size: 12px; width: 100%; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
 .mchip { font-size: 12px; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--rule); background: var(--bg); }
-.mi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 6px; }
-.mi-cell { border: 1px solid var(--rule); border-radius: 6px; padding: 6px 8px; font-size: 13px; display: flex; flex-direction: column; gap: 2px; background: var(--bg); }
-.mi-cell small { color: var(--muted); font-size: 11px; }
-.mi-cell.oppose { border-color: var(--oppose); background: var(--oppose-bg); }
 .venn { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr); gap: 0; align-items: stretch; }
 @media (max-width: 760px) { .venn { grid-template-columns: 1fr; gap: 10px; } }
 .venn-col { padding: 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
@@ -392,7 +387,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     </div>
     <p class="who">Senate and House tables were last swept in full on Oct. 30; statements since then are added as they are found (see "Latest from Congress" above). All 100 senators were checked by name in press releases and news. Every senator's X account was searched for "permitting" or "BAAJA" since Sept. 29. Whip coverage came from Politico, Inside Climate News, Semafor, Hill Heat, and Roll Call, plus Extracted Daily's excerpts of paywalled Politico Pro and Inside EPA pieces. "No statement found" means a member said nothing we could find, not that we didn't look. Reporters say backers want 15 to 20 Democrats and expect "some losses on the Republican side," but no one has named those Republicans.</p>
     <h3 style="margin-top:12px">House members on record</h3>
-    <p class="who">The House has its own process. Speaker Johnson backs the bill's thrust; Energy and Commerce chair Guthrie wants changes before a House vote. This lists every member found with a public statement, plus the full Michigan delegation.</p>
+    <p class="who">The House has its own process. Speaker Johnson backs the bill's thrust; Energy and Commerce chair Guthrie wants changes before a House vote. This lists every member found with a public statement.</p>
     <div class="table-scroll">
       <table class="list-table">
         <thead><tr><th scope="col">Member</th><th scope="col">Party-District</th><th scope="col">Position</th><th scope="col">What they said</th></tr></thead>
@@ -989,7 +984,7 @@ const IFP_LETTER = ["IFP letter (PDF)", "https://ifp.org/wp-content/uploads/econ
 const LETTER_NOTE = `Signed the Oct. 20 letter calling BAAJA essential to U.S. competitiveness.`;
 const OFFICIALS = [
   ["Janet Yellen", "Treasury Secretary; Fed Chair; CEA Chair", "Biden; Obama/Trump; Clinton", "support", LETTER_NOTE, [IFP_LETTER, ["Alec Stapp thread", "https://x.com/AlecStapp/status/2112535120338972833"]]],
-  ["Jennifer Granholm", "Energy Secretary; Michigan governor", "Biden", "support", `Imperfect, but "I think we should pass it." "Who's to say we're going to get a better deal?"`, [["Washington Examiner, Oct. 28", "https://www.washingtonexaminer.com/?p=4783176"]], true],
+  ["Jennifer Granholm", "Energy Secretary; Michigan governor", "Biden", "support", `Imperfect, but "I think we should pass it." "Who's to say we're going to get a better deal?"`, [["Washington Examiner, Oct. 28", "https://www.washingtonexaminer.com/?p=4783176"]]],
   ["Mike Pompeo", "Secretary of State; CIA Director", "Trump (1st)", "support", LETTER_NOTE, [IFP_LETTER]],
   ["Steven Mnuchin", "Treasury Secretary", "Trump (1st)", "support", LETTER_NOTE, [IFP_LETTER]],
   ["Leon Panetta", "Defense Secretary; CIA Director; WH Chief of Staff", "Obama; Clinton", "support", LETTER_NOTE, [IFP_LETTER]],
@@ -1033,8 +1028,6 @@ const SEN_NOTES = {
   "Murkowski": ["none", `Her FLOWS Act hydropower language is in the bill; no statement of her own found.`, []],
   "Blunt Rochester": ["none", `Data center transparency bills with Curtis (Oct. 1), not tied to BAAJA.`, []],
   "Baldwin": ["none", `Watch: no BAAJA statement in her releases or X posts (Sept. 29 to Oct. 29). On Sept. 30 she voted against Husted's Ratepayer Protection Act, a separate data center bill, because it only asks states to "consider" making data centers pay. She wants "a mandate, under law." BAAJA's Sec. 228 is that kind of mandate.`, [["Baldwin, Sept. 30", "https://www.baldwin.senate.gov/news/press-releases/baldwin-votes-against-voluntary-approach-to-data-centers-vows-to-push-real-reform-to-protect-wisconsin-ratepayers"]]],
-  "Peters": ["none", `No statement found in his releases or Michigan press through Oct. 28.`, [], true],
-  "Slotkin": ["none", `No statement found in her releases or Michigan press through Oct. 26.`, [], true],
   "Capito": ["sponsor", `Lead sponsor. Posts almost daily: "We need to pass this bill to get our country back to building." Promotes CEA and McKinsey savings estimates.`, [["Introduction release", "https://www.capito.senate.gov/news/press-releases/capito-lee-whitehouse-and-heinrich-introduce-bipartisan-american-affordability-and-jobs-act-of-2026"], ["@SenCapito, Oct. 23", "https://x.com/SenCapito/status/2113701126977835109"]]],
   "Lee": ["sponsor", `"We want to make it easier in America to build things." On X: "There is no negotiating with the anti-growth Left." Cites the White House CEA estimate of $250 a year in bill savings.`, [["Heatmap, Sept. 30", "https://heatmap.news/politics/bipartisan-permitting-reform"], ["@SenMikeLee, Oct. 29", "https://x.com/SenMikeLee/status/2115885495733379218"]]],
   "Whitehouse": ["sponsor", `Sponsor, but sets a condition for his own caucus: "regulatory misbehavior against clean energy does need to be resolved before Democrats will vote for this bill" (Oct. 19). On Oct. 29: "We await real signs of regulatory good faith." Also: "BAAJA is our best bet to lower people's electricity costs." Nov. 2, at a Rhode Island event: Democrats should not wait, because "a bird in the hand" may not be there next year (Punchbowl, Nov. 3).`, [["@SenWhitehouse, Oct. 19", "https://x.com/SenWhitehouse/status/2112239757837172958"], ["@SenWhitehouse, Oct. 29", "https://x.com/SenWhitehouse/status/2115827001005068551"], ["AP, Oct. 21", "https://www.click2houston.com/news/politics/2026/10/21/trump-again-targets-offshore-wind-risking-deal-to-speed-approvals-of-new-energy-projects/"]]],
@@ -1082,12 +1075,11 @@ const HOUSE = [
   ["Build America Caucus", "Bipartisan caucus (43 members)", "support", `Co-chairs Harder and Maloy urge passage in November.`, [["Build America Caucus, Sept. 30", "https://buildamericacaucus-harder.house.gov/media/press-releases/permitting-build-america-caucus-chairs-call-on-congress-to-pass-senate-permitting-deal"]]],
   ["Jared Huffman", "D-CA-2 (Natural Resources ranking)", "oppose", `A "Trojan horse" with fossil giveaways; wind assurances are "cheap window dressing." Says Democrats should wait for a better deal after the midterms.`, [["Huffman, Sept. 30", "https://democrats-naturalresources.house.gov/media/press-releases/ranking-member-huffman-statement-on-senate-permitting-deal"], ["Heatmap interview", "https://heatmap.news/politics/jared-huffman-baaja"]]],
   ["Ro Khanna", "D-CA-17", "oppose", `Reported (paraphrase) as urging Democrats to wait until after the midterms for a better bill.`, [["Latitude Media", "https://www.latitudemedia.com/news/why-green-groups-wont-endorse-the-senate-permitting-deal/"]]],
-  ["Rashida Tlaib", "D-MI-12", "oppose", `Co-founded the People's EJ Caucus, which calls it "a gift to Big Oil and Big Tech." At Oil Change International's Oct. 28 briefing she was the only member of Congress: "We know the bill is 417 pages of empty promises" (National Review, via Extracted clips).`, [["Caucus statement", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"], ["Oil Change briefing", "https://oilchange.org/news/virtual-press-conference-baaja/"]], true],
+  ["Rashida Tlaib", "D-MI-12", "oppose", `Co-founded the People's EJ Caucus, which calls it "a gift to Big Oil and Big Tech." At Oil Change International's Oct. 28 briefing she was the only member of Congress: "We know the bill is 417 pages of empty promises" (National Review, via Extracted clips).`, [["Caucus statement", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"], ["Oil Change briefing", "https://oilchange.org/news/virtual-press-conference-baaja/"]]],
   ["Summer Lee", "D-PA-12", "oppose", `People's EJ Caucus statement.`, [["Caucus statement", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"]]],
   ["Adelita Grijalva", "D-AZ-7", "oppose", `People's EJ Caucus statement.`, [["Caucus statement", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"]]],
   ["Problem Solvers Caucus", "Bipartisan caucus", "conditional", `No position yet; expects to announce one in the lame duck. Peters and Rep. Gabe Evans lead its permitting working group.`, [["Bloomberg Law, Oct. 27", "https://news.bloomberglaw.com/health-law-and-business/bipartisan-house-caucus-weighs-senate-permitting-bill-support"]]]
 ];
-const MI_HOUSE = [["Jack Bergman", "R-MI-1"], ["John Moolenaar", "R-MI-2"], ["Hillary Scholten", "D-MI-3"], ["Bill Huizenga", "R-MI-4"], ["Tim Walberg", "R-MI-5"], ["Debbie Dingell", "D-MI-6"], ["Tom Barrett", "R-MI-7"], ["Kristen McDonald Rivet", "D-MI-8"], ["Lisa McClain", "R-MI-9"], ["John James", "R-MI-10"], ["Haley Stevens", "D-MI-11"], ["Shri Thanedar", "D-MI-13"]];
 
 function srcLinks(arr) { return (arr || []).map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join(" "); }
 
@@ -1099,16 +1091,16 @@ function renderOfficials() {
   const order = { support: 0, changes: 1, oppose: 2 };
   document.getElementById("offBody").innerHTML = OFFICIALS.filter(o => offState.f === "all" || o[3] === offState.f)
     .sort((a, b) => order[a[3]] - order[b[3]])
-    .map(([n, role, adm, st, said, src, mi]) => {
+    .map(([n, role, adm, st, said, src]) => {
       const cls = st === "support" ? "s-support" : st === "changes" ? "s-changes" : "s-oppose";
-      return `<tr><th scope="row">${n}${mi ? '<span class="tag-mi">MI</span>' : ""}</th><td class="said" style="min-width:180px">${role}</td><td>${adm}</td><td><span class="pill ${cls}">${OFF_LABEL[st]}</span></td><td class="said">${said} ${srcLinks(src)}</td></tr>`;
+      return `<tr><th scope="row">${n}</th><td class="said" style="min-width:180px">${role}</td><td>${adm}</td><td><span class="pill ${cls}">${OFF_LABEL[st]}</span></td><td class="said">${said} ${srcLinks(src)}</td></tr>`;
     }).join("");
 }
 
 function senRows() {
   return SENATE.map(s => {
     const n = SEN_NOTES[s.name.replace(/ \(..\)$/, "")] || SEN_NOTES[s.name];
-    return { ...s, pos: n ? n[0] : "none", note: n ? n[1] : "", src: n ? n[2] : [], mi: n && n[3], watch: n && n[0] === "none" };
+    return { ...s, pos: n ? n[0] : "none", note: n ? n[1] : "", src: n ? n[2] : [], watch: n && n[0] === "none" };
   });
 }
 
@@ -1125,29 +1117,26 @@ function renderSenate() {
     `<div class="t"><b>${100 - onRecord}</b><span>No statement found</span></div>` +
     `<div class="t"><b>60</b><span>Needed for cloture</span></div>`;
   const ch = (v, l) => `<button class="chip" type="button" data-sen="${v}" aria-pressed="${senState.f === v}">${l}</button>`;
-  document.getElementById("senChips").innerHTML = ch("record", "On record + watch list") + ch("all", "All 100") + ch("D", "Democrats + Independents") + ch("R", "Republicans") + ch("MI", "Michigan");
+  document.getElementById("senChips").innerHTML = ch("record", "On record + watch list") + ch("all", "All 100") + ch("D", "Democrats + Independents") + ch("R", "Republicans");
   let shown = rows;
   if (senState.f === "record") shown = rows.filter(r => r.pos !== "none" || r.note);
   if (senState.f === "D") shown = rows.filter(r => r.party !== "R");
   if (senState.f === "R") shown = rows.filter(r => r.party === "R");
-  if (senState.f === "MI") shown = rows.filter(r => r.state === "MI");
   const order = { sponsor: 0, support: 1, lean: 2, conditional: 3, oppose: 4, none: 5 };
   shown =[...shown].sort((a, b) => order[a.pos] - order[b.pos] || (b.note ? 1 : 0) - (a.note ? 1 : 0) || a.name.localeCompare(b.name));
   document.getElementById("senBody").innerHTML = shown.map(r => {
     const [lbl, cls] = SEN_LABEL[r.pos];
     const note = r.note ? `<span class="${r.watch ? "watch" : ""}">${r.note}</span> ${srcLinks(r.src)}` : `<span class="watch">Nothing found since Sept. 30.</span>`;
-    return `<tr><th scope="row">${r.name}${r.mi ? '<span class="tag-mi">MI</span>' : ""}</th><td><span class="party-${r.party}">${r.party}</span>-${r.state}</td><td><span class="pill ${cls}">${lbl}</span></td><td class="said">${note}</td></tr>`;
+    return `<tr><th scope="row">${r.name}</th><td><span class="party-${r.party}">${r.party}</span>-${r.state}</td><td><span class="pill ${cls}">${lbl}</span></td><td class="said">${note}</td></tr>`;
   }).join("");
 }
 
 function renderHouse() {
   const order = { support: 0, conditional: 1, oppose: 2 };
   const lab = { support: ["Supports", "s-support"], conditional: ["Conditions / undecided", "s-changes"], oppose: ["Opposes", "s-oppose"] };
-  const rows = [...HOUSE].sort((a, b) => order[a[2]] - order[b[2]]).map(([n, d, st, said, src, mi]) =>
-    `<tr><th scope="row">${n}${mi ? '<span class="tag-mi">MI</span>' : ""}</th><td>${d}</td><td><span class="pill ${lab[st][1]}">${lab[st][0]}</span></td><td class="said">${said} ${srcLinks(src)}</td></tr>`).join("");
-  const mi = `<tr class="grp"><th colspan="4">Rest of the Michigan delegation</th></tr>` + MI_HOUSE.map(([n, d]) =>
-    `<tr><th scope="row">${n}<span class="tag-mi">MI</span></th><td>${d}</td><td><span class="pill s-silent">No statement found</span></td><td class="said"><span class="watch">Nothing in releases or Michigan press through late Oct.</span></td></tr>`).join("");
-  document.getElementById("houseBody").innerHTML = rows + mi;
+  const rows = [...HOUSE].sort((a, b) => order[a[2]] - order[b[2]]).map(([n, d, st, said, src]) =>
+    `<tr><th scope="row">${n}</th><td>${d}</td><td><span class="pill ${lab[st][1]}">${lab[st][0]}</span></td><td class="said">${said} ${srcLinks(src)}</td></tr>`).join("");
+  document.getElementById("houseBody").innerHTML = rows;
 }
 
 document.addEventListener("click", (e) => {
@@ -1210,7 +1199,7 @@ function card(p) {
     : p.likes.length ? ["What they like", "likes", p.likes[0]]
     : ["", "", p.who || p.note || ""];
   return `<article class="card">
-    <div class="card-top"><h3>${esc(p.name)}${p.mi ? '<span class="tag-mi">MI</span>' : ""}</h3><span class="sector">${esc(p.sector)}</span></div>
+    <div class="card-top"><h3>${esc(p.name)}</h3><span class="sector">${esc(p.sector)}</span></div>
     ${keyTxt ? `<div class="key">${keyLbl ? `<span class="label ${keyCls}">${keyLbl}</span>` : ""}<p>${keyTxt}</p></div>` : ""}
     <details class="more"><summary>Details</summary>
       ${p.who ? `<p class="who">${p.who}</p>` : ""}
@@ -1280,7 +1269,7 @@ function showSeat(r) {
   const [lbl, cls] = SEN_LABEL[r.pos];
   const note = r.note ? `${r.note}` : `Nothing found since Sept. 30.`;
   document.getElementById("seatPanel").innerHTML = `<span class="eyebrow">${r.party === "D" ? "Democrat" : r.party === "R" ? "Republican" : "Independent"} · ${r.state}</span>
-    <h4>Sen. ${r.name.replace(/ \(..\)$/, "")}${r.mi ? '<span class="tag-mi">MI</span>' : ""}</h4>
+    <h4>Sen. ${r.name.replace(/ \(..\)$/, "")}</h4>
     <span><span class="pill ${cls}">${lbl}</span>${r.watch ? ' <span class="pill s-silent">Watch list</span>' : ""}</span>
     <p class="said">${note}</p>
     <p class="said">${srcLinks(r.src)}</p>`;
@@ -1410,9 +1399,7 @@ function showState() {
   }).join("");
   const rest = seats - mem.length;
   let restHtml = "";
-  if (st === "MI") {
-    restHtml = `<p class="who">No statement found:</p><div class="house-groups"><div class="row">${MI_HOUSE.map(([n, d]) => `<span class="mchip">${n} <span class="watch">${d}</span></span>`).join("")}</div></div>`;
-  } else if (rest > 0) {
+  if (rest > 0) {
     restHtml = `<p class="who">${mem.length ? `The other ${rest} House member${rest === 1 ? "" : "s"} from ${STATE_NAME[st]}: no statement found.` : `${seats === 1 ? "The state's one House member has" : `All ${seats} House members have`} no statement found.`}</p>`;
   }
   document.getElementById("statePanel").innerHTML = `<span class="eyebrow">${seats} House seat${seats === 1 ? "" : "s"} · ${sens.length} senators</span>
