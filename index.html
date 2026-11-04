@@ -270,6 +270,22 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .tally .t { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; min-width: 120px; }
 .tally .t b { font-family: var(--font-display); font-size: 22px; font-variant-numeric: tabular-nums; }
 .tally .t span { font-size: 12px; color: var(--muted); }
+#tmap { width: 100%; height: auto; display: block; }
+#tmap .tile { cursor: pointer; }
+#tmap .tile rect.bg { fill: var(--surface); stroke: var(--rule); stroke-width: 1.5; }
+#tmap .tile:hover rect.bg { stroke: var(--muted); }
+#tmap .tile:focus { outline: none; }
+#tmap .tile:focus-visible rect.bg, #tmap .tile.sel rect.bg { stroke: var(--ink); stroke-width: 2.5; }
+#tmap .tile text { fill: var(--ink); font-family: var(--font-body); font-size: 12px; font-weight: 700; pointer-events: none; }
+#tmap .p-D { stroke: #2f5fb3; stroke-width: 2; } #tmap .p-R { stroke: #b43a3a; stroke-width: 2; } #tmap .p-I { stroke: #6b7280; stroke-width: 2; }
+:root[data-theme="dark"] #tmap .p-D { stroke: #8fb4ec; } :root[data-theme="dark"] #tmap .p-R { stroke: #f08a7e; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #tmap .p-D { stroke: #8fb4ec; } :root:not([data-theme="light"]) #tmap .p-R { stroke: #f08a7e; } }
+.st-sec { display: flex; flex-direction: column; gap: 6px; padding-top: 8px; border-top: 1px solid var(--rule); }
+.st-sec:first-of-type { border-top: 0; padding-top: 0; }
+.st-sec h5 { margin: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.st-sec .who-row { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; font-size: 14px; }
+.st-sec p { margin: 0; font-size: 13px; }
+.st-sec p a { font-size: 12px; margin-right: 6px; }
 .latest-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
 .latest-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 .latest-list li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 4px 12px; padding: 10px 0; border-top: 1px solid var(--rule); }
@@ -332,26 +348,35 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
       <p class="who" id="votecap"></p>
     </div>
 
-    <div class="panel latest" id="latest">
+    <div class="panel latest" id="latestW">
       <div class="latest-head">
-        <h3>Latest statements added</h3>
-        <div class="chips" id="latestChips" role="group" aria-label="Filter latest statements"></div>
+        <h3>Latest from Congress</h3>
+        <div class="chips" id="latestWChips" role="group" aria-label="Filter latest statements from Congress"></div>
       </div>
-      <ol class="latest-list" id="latestList"></ol>
-      <button class="chip" id="latestMore" type="button" hidden></button>
+      <ol class="latest-list" id="latestWList"></ol>
+      <button class="chip" id="latestWMore" type="button" hidden></button>
     </div>
 
-    <div class="two-col">
-      <div class="panel">
-        <h3 id="houseHead">House members on record</h3>
-        <div class="waffle" id="waffle" role="img" aria-label="435 squares, 11 colored for members with a public position"></div>
-        <div class="house-groups" id="houseGroups"></div>
+    <div class="chamber" id="delegations">
+      <div class="chamber-chart">
+        <h3>Delegations by state</h3>
+        <svg id="tmap" viewBox="0 0 616 448" role="group" aria-label="Tile map of the 50 states. Select a state to see its senators and House members."><title>Tile map of the 50 states colored by each senator's public position on BAAJA</title></svg>
+        <div class="seat-key">
+          <span><i class="sw" style="background:var(--support)"></i>Supports</span>
+          <span><i class="sw" style="background:var(--lean)"></i>Leans support</span>
+          <span><i class="sw" style="background:var(--changes)"></i>Conditions</span>
+          <span><i class="sw" style="background:var(--oppose)"></i>Opposes</span>
+          <span><i class="sw sw-none"></i>No statement found</span>
+          <span class="watch">Two circles = the state's senators (ring shows party). Small squares = House members on record.</span>
+        </div>
       </div>
-      <div class="panel">
-        <h3>Michigan delegation</h3>
-        <p class="who">2 senators and 13 House members. Only Tlaib has taken a public position.</p>
-        <div class="mi-grid" id="miGrid"></div>
-      </div>
+      <aside class="seat-panel" id="statePanel" aria-live="polite"></aside>
+    </div>
+
+    <div class="panel">
+      <h3 id="houseHead">House members on record</h3>
+      <div class="waffle" id="waffle" role="img" aria-label="435 squares, 11 colored for members with a public position"></div>
+      <div class="house-groups" id="houseGroups"></div>
     </div>
 
     <h3 style="margin-top:8px">Senate detail</h3>
@@ -365,7 +390,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
         <tbody id="senBody"></tbody>
       </table>
     </div>
-    <p class="who">Senate and House tables were last swept in full on Oct. 30; statements since then are added as they are found (see the box above). All 100 senators were checked by name in press releases and news. Every senator's X account was searched for "permitting" or "BAAJA" since Sept. 29. Whip coverage came from Politico, Inside Climate News, Semafor, Hill Heat, and Roll Call, plus Extracted Daily's excerpts of paywalled Politico Pro and Inside EPA pieces. "No statement found" means a member said nothing we could find, not that we didn't look. Reporters say backers want 15 to 20 Democrats and expect "some losses on the Republican side," but no one has named those Republicans.</p>
+    <p class="who">Senate and House tables were last swept in full on Oct. 30; statements since then are added as they are found (see "Latest from Congress" above). All 100 senators were checked by name in press releases and news. Every senator's X account was searched for "permitting" or "BAAJA" since Sept. 29. Whip coverage came from Politico, Inside Climate News, Semafor, Hill Heat, and Roll Call, plus Extracted Daily's excerpts of paywalled Politico Pro and Inside EPA pieces. "No statement found" means a member said nothing we could find, not that we didn't look. Reporters say backers want 15 to 20 Democrats and expect "some losses on the Republican side," but no one has named those Republicans.</p>
     <h3 style="margin-top:12px">House members on record</h3>
     <p class="who">The House has its own process. Speaker Johnson backs the bill's thrust; Energy and Commerce chair Guthrie wants changes before a House vote. This lists every member found with a public statement, plus the full Michigan delegation.</p>
     <div class="table-scroll">
@@ -375,6 +400,15 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
       </table>
     </div>
   </section>
+
+  <div class="panel latest" id="latestG" data-view="groups">
+    <div class="latest-head">
+      <h3>Latest statements added</h3>
+      <div class="chips" id="latestGChips" role="group" aria-label="Filter latest statements"></div>
+    </div>
+    <ol class="latest-list" id="latestGList"></ol>
+    <button class="chip" id="latestGMore" type="button" hidden></button>
+  </div>
 
   <div class="summary" aria-label="Count by position" data-view="groups">
     <div class="bar" id="bar"></div>
@@ -1324,15 +1358,67 @@ function renderHouseViz() {
   }).join("");
 }
 
-function renderMI() {
-  const cells = [
-    ["Gary Peters", "Senate (D)", "none"], ["Elissa Slotkin", "Senate (D)", "none"],
-    ...MI_HOUSE.slice(0, 11).map(([n, d]) => [n, d, "none"]),
-    ["Rashida Tlaib", "D-MI-12", "oppose"],
-    ...MI_HOUSE.slice(11).map(([n, d]) => [n, d, "none"])
-  ];
-  document.getElementById("miGrid").innerHTML = cells.map(([n, d, p]) =>
-    `<div class="mi-cell ${p}"><span>${n}</span><small>${d} · ${p === "oppose" ? "Opposes" : "No statement found"}</small></div>`).join("");
+// ---------- Delegation tile map ----------
+const TILES = "AK 0 0|ME 10 0|VT 9 1|NH 10 1|WA 0 2|ID 1 2|MT 2 2|ND 3 2|MN 4 2|IL 5 2|WI 6 2|MI 7 2|NY 8 2|RI 9 2|MA 10 2|OR 0 3|NV 1 3|WY 2 3|SD 3 3|IA 4 3|IN 5 3|OH 6 3|PA 7 3|NJ 8 3|CT 9 3|CA 0 4|UT 1 4|CO 2 4|NE 3 4|MO 4 4|KY 5 4|WV 6 4|VA 7 4|MD 8 4|DE 9 4|AZ 1 5|NM 2 5|KS 3 5|AR 4 5|TN 5 5|NC 6 5|SC 7 5|OK 3 6|LA 4 6|MS 5 6|AL 6 6|GA 7 6|HI 0 7|TX 3 7|FL 8 7".split("|").map(t => { const [st, c, r] = t.split(" "); return { st, c: +c, r: +r }; });
+const STATE_NAME = { AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware", FL: "Florida", GA: "Georgia", HI: "Hawaii", ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming" };
+const HOUSE_SEATS = { AL: 7, AK: 1, AZ: 9, AR: 4, CA: 52, CO: 8, CT: 5, DE: 1, FL: 28, GA: 14, HI: 2, ID: 2, IL: 17, IN: 9, IA: 4, KS: 4, KY: 6, LA: 6, ME: 2, MD: 8, MA: 9, MI: 13, MN: 8, MS: 4, MO: 8, MT: 2, NE: 3, NV: 4, NH: 2, NJ: 12, NM: 3, NY: 26, NC: 14, ND: 1, OH: 15, OK: 5, OR: 6, PA: 17, RI: 2, SC: 7, SD: 1, TN: 9, TX: 38, UT: 4, VT: 1, VA: 11, WA: 10, WV: 2, WI: 8, WY: 1 };
+const HOUSE_POS = { support: ["Supports", "s-support", "var(--support)"], conditional: ["Conditions", "s-changes", "var(--changes)"], oppose: ["Opposes", "s-oppose", "var(--oppose)"] };
+let selState = "MI";
+
+function houseByState() {
+  const out = {};
+  HOUSE.forEach(h => { const m = /^[RDI]-([A-Z]{2})-/.exec(h[1]); if (m) (out[m[1]] = out[m[1]] || []).push(h); });
+  return out;
+}
+
+function renderStateMap() {
+  const rows = senRows(), hs = houseByState();
+  const step = 56, size = 52;
+  const g = TILES.map(t => {
+    const sens = rows.filter(r => r.state === t.st).sort((a, b) => a.name.localeCompare(b.name));
+    const x = t.c * step, y = t.r * step;
+    const circles = sens.map((r, i) => `<circle class="p-${r.party}" cx="${x + 17 + i * 18}" cy="${y + 15}" r="7" fill="${POS_FILL[r.pos]}"></circle>`).join("");
+    const sq = (hs[t.st] || []).map((h, i) => `<rect x="${x + 7 + i * 7}" y="${y + 41}" width="5" height="5" rx="1" fill="${HOUSE_POS[h[2]][2]}"></rect>`).join("");
+    const label = `${STATE_NAME[t.st]}: ${sens.map(r => `${r.name}, ${SEN_LABEL[r.pos][0]}`).join("; ")}; ${(hs[t.st] || []).length} House members on record`;
+    return `<g class="tile" data-st="${t.st}" tabindex="0" role="button" aria-label="${label}"><rect class="bg" x="${x}" y="${y}" width="${size}" height="${size}" rx="6"></rect>${circles}<text x="${x + size / 2}" y="${y + 35}" text-anchor="middle">${t.st}</text>${sq}</g>`;
+  }).join("");
+  const svg = document.getElementById("tmap");
+  svg.innerHTML = `<title>Tile map of the 50 states colored by each senator's public position on BAAJA</title>${g}`;
+  svg.querySelectorAll(".tile").forEach(el => {
+    const pick = () => { selState = el.dataset.st; showState(); };
+    el.addEventListener("click", pick);
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+  });
+  showState();
+}
+
+function showState() {
+  const st = selState, rows = senRows();
+  document.querySelectorAll("#tmap .tile").forEach(el => el.classList.toggle("sel", el.dataset.st === st));
+  const sens = rows.filter(r => r.state === st).sort((a, b) => a.name.localeCompare(b.name));
+  const mem = (houseByState()[st] || []);
+  const seats = HOUSE_SEATS[st];
+  const senHtml = sens.map(r => {
+    const [lbl, cls] = SEN_LABEL[r.pos];
+    return `<div class="who-row"><b>Sen. ${r.name}</b><span class="said">(${r.party})</span><span class="pill ${cls}">${lbl}</span></div>
+      <p>${r.note || "Nothing found since Sept. 30."}</p><p>${srcLinks(r.src)}</p>`;
+  }).join("");
+  const memHtml = mem.map(h => {
+    const [lbl, cls] = HOUSE_POS[h[2]];
+    return `<div class="who-row"><b>Rep. ${h[0]}</b><span class="said">(${h[1].replace(/ \(.+\)/, "")})</span><span class="pill ${cls}">${lbl}</span></div>
+      <p>${h[3]}</p><p>${srcLinks(h[4])}</p>`;
+  }).join("");
+  const rest = seats - mem.length;
+  let restHtml = "";
+  if (st === "MI") {
+    restHtml = `<p class="who">No statement found:</p><div class="house-groups"><div class="row">${MI_HOUSE.map(([n, d]) => `<span class="mchip">${n} <span class="watch">${d}</span></span>`).join("")}</div></div>`;
+  } else if (rest > 0) {
+    restHtml = `<p class="who">${mem.length ? `The other ${rest} House member${rest === 1 ? "" : "s"} from ${STATE_NAME[st]}: no statement found.` : `${seats === 1 ? "The state's one House member has" : `All ${seats} House members have`} no statement found.`}</p>`;
+  }
+  document.getElementById("statePanel").innerHTML = `<span class="eyebrow">${seats} House seat${seats === 1 ? "" : "s"} · ${sens.length} senators</span>
+    <h4>${STATE_NAME[st]}</h4>
+    <div class="st-sec"><h5>Senators</h5>${senHtml}</div>
+    <div class="st-sec"><h5>House: ${mem.length} of ${seats} on record</h5>${memHtml}${restHtml}</div>`;
 }
 
 // ---------- Latest statements ----------
@@ -1348,34 +1434,44 @@ const LATEST = [
   { d: "2026-11-02", k: "Group", who: "The Wilderness Society", pos: "oppose", text: `President Tracy Stone-Manning (BLM director under Biden) says the bill puts public lands on "a one-way path to industrial development" and that elected officials "should reject it."`, src: [["Siegel (Punchbowl), Nov. 2", "https://x.com/SiegelScribe/status/2117264866100838871"]] },
   { d: "2026-10-30", k: "House", who: "Tom Cole (R-OK-4)", pos: "changes", text: `Senior Republican and Chickasaw citizen, on the tribal consultation changes: "That's going to be an issue for me." Says he will push to change the NHPA provisions in both chambers if the bill passes.`, src: [["Bikales, Oct. 30", "https://x.com/jamepdx/status/2116258382051160078"]] },
   { d: "2026-10-30", k: "House", who: "Sean Casten (D-IL-6)", pos: "changes", text: `Not backing it yet: "I think there are modest changes we could make to it to make sure it works." Axios frames his worry as a "gold rush for gas." Negotiating with Senate Democrats.`, src: [["Axios, Oct. 30", "https://www.axios.com/2026/10/30/key-house-democrat-permitting-bill-gold-rush-gas"]] },
-  { d: "2026-10-27", k: "Senate", who: "Duckworth, Markey, Merkley, Wyden", pos: "conditional", text: `Letter says they are still deciding "whether to vote in favor of the motion to proceed" and asks for written confirmation, before the vote, that DOE is reinstating canceled grant awards.`, src: [["Inside Climate News, Oct. 29", "https://insideclimatenews.org/news/29102026/senate-debate-on-bipartisan-permitting-bill-approaches/"], ["Letter", "https://www.documentcloud.org/documents/28835990-duckworth-wyden-merkley-markey-baaja/"]] }
+  { d: "2026-10-29", k: "Senate", who: "Mike Lee (R-UT)", pos: "sponsor", text: `Lead sponsor, on X: "There is no negotiating with the anti-growth Left." Cites the White House CEA estimate of $250 a year in bill savings.`, src: [["@SenMikeLee, Oct. 29", "https://x.com/SenMikeLee/status/2115885495733379218"]] },
+  { d: "2026-10-29", k: "Senate", who: "John Cornyn (R-TX)", pos: "lean", text: `Attacked Podesta for trying "to poison a bipartisan permitting reform" and amplified the NAM-led business push for lame-duck passage.`, src: [["@JohnCornyn, Oct. 29", "https://x.com/JohnCornyn/status/2115786466903146536"]] },
+  { d: "2026-10-27", k: "Senate", who: "Duckworth, Markey, Merkley, Wyden", pos: "conditional", text: `Letter says they are still deciding "whether to vote in favor of the motion to proceed" and asks for written confirmation, before the vote, that DOE is reinstating canceled grant awards.`, src: [["Inside Climate News, Oct. 29", "https://insideclimatenews.org/news/29102026/senate-debate-on-bipartisan-permitting-bill-approaches/"], ["Letter", "https://www.documentcloud.org/documents/28835990-duckworth-wyden-merkley-markey-baaja/"]] },
+  { d: "2026-10-25", k: "Senate", who: "John Thune (R-SD)", pos: "lean", text: `Majority Leader: "We need permitting reform... I think we can get the bill across the finish line." Calls state jurisdiction over transmission the hurdle and says the midterms have "some bearing."`, src: [["SDPB, Oct. 25", "https://www.sdpb.org/politics/2026-10-25/congressional-permitting-reform-bill-faces-jurisdictional-concerns-potential-midterm-election-hoops-thune-says"]] },
+  { d: "2026-10-22", k: "House", who: "Scott Peters (D-CA-50)", pos: "support", text: `Transmission provisions "are as good as anything we could ever get"; the bill "ought to be voted on this Congress," though it "still needs some adjustments and clarifications."`, src: [["Peters, Oct. 22", "https://scottpeters.house.gov/press-releases/rep-peters-labor-clean-energy-leaders-urge-action-on-permitting-reform"]] }
 ];
 const LATEST_POS = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-support"], lean: ["Leans support", "s-support"], changes: ["Conditions", "s-changes"], conditional: ["Conditions", "s-changes"], oppose: ["Opposes", "s-oppose"] };
-const latestState = { f: "All", all: false };
 const LATEST_SHOW = 6;
 const MONTHS = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
 function fmtDay(d) { const [, m, dd] = d.split("-"); return `${MONTHS[+m - 1]} ${+dd}`; }
-function renderLatest() {
-  const kinds = ["All", "Senate", "House", "Group"];
+const LATEST_BOXES = {
+  W: { kinds: ["All", "Senate", "House"], state: { f: "All", all: false }, pick: x => x.k !== "Group" },
+  G: { kinds: ["All", "Senate", "House", "Group"], state: { f: "All", all: false }, pick: () => true }
+};
+function renderLatest(id) {
+  const box = LATEST_BOXES[id], st = box.state;
   const lab = { All: "All", Senate: "Senate", House: "House", Group: "Groups" };
-  document.getElementById("latestChips").innerHTML = kinds.map(k => {
-    const n = k === "All" ? LATEST.length : LATEST.filter(x => x.k === k).length;
-    return `<button class="chip" type="button" data-lf="${k}" aria-pressed="${latestState.f === k}">${lab[k]} (${n})</button>`;
+  const pool = LATEST.filter(box.pick);
+  document.getElementById(`latest${id}Chips`).innerHTML = box.kinds.map(k => {
+    const n = k === "All" ? pool.length : pool.filter(x => x.k === k).length;
+    return `<button class="chip" type="button" data-lb="${id}" data-lf="${k}" aria-pressed="${st.f === k}">${lab[k]} (${n})</button>`;
   }).join("");
-  const rows = LATEST.filter(x => latestState.f === "All" || x.k === latestState.f);
-  const shown = latestState.all ? rows : rows.slice(0, LATEST_SHOW);
-  document.getElementById("latestList").innerHTML = shown.map(x => {
+  const rows = pool.filter(x => st.f === "All" || x.k === st.f);
+  const shown = st.all ? rows : rows.slice(0, LATEST_SHOW);
+  document.getElementById(`latest${id}List`).innerHTML = shown.map(x => {
     const [pl, pc] = LATEST_POS[x.pos];
-    return `<li><span class="when">${fmtDay(x.d)}</span><div><div class="l-head"><span class="l-kind">${x.k === "Group" ? "Group" : x.k}</span><b>${x.who}</b><span class="pill ${pc}">${pl}</span></div><p>${x.text}</p><p>${srcLinks(x.src)}</p></div></li>`;
+    return `<li><span class="when">${fmtDay(x.d)}</span><div><div class="l-head"><span class="l-kind">${x.k}</span><b>${x.who}</b><span class="pill ${pc}">${pl}</span></div><p>${x.text}</p><p>${srcLinks(x.src)}</p></div></li>`;
   }).join("");
-  const more = document.getElementById("latestMore");
+  const more = document.getElementById(`latest${id}More`);
+  more.dataset.lb = id;
   more.hidden = rows.length <= LATEST_SHOW;
-  more.textContent = latestState.all ? "Show fewer" : `Show ${rows.length - LATEST_SHOW} older`;
+  more.textContent = st.all ? "Show fewer" : `Show ${rows.length - LATEST_SHOW} older`;
 }
 document.addEventListener("click", (e) => {
   const c = e.target.closest(".chip[data-lf]");
-  if (c) { latestState.f = c.dataset.lf; latestState.all = false; renderLatest(); return; }
-  if (e.target.id === "latestMore") { latestState.all = !latestState.all; renderLatest(); }
+  if (c) { const b = LATEST_BOXES[c.dataset.lb]; b.state.f = c.dataset.lf; b.state.all = false; renderLatest(c.dataset.lb); return; }
+  const m = e.target.closest("button[id^='latest'][id$='More']");
+  if (m) { const b = LATEST_BOXES[m.dataset.lb]; b.state.all = !b.state.all; renderLatest(m.dataset.lb); }
 });
 
 const GROUP_IDS = ["groups", "glance", "provisions", "stakeholders", "officials", "fixes"];
@@ -1390,7 +1486,7 @@ function showView() {
 window.addEventListener("hashchange", showView);
 
 renderSummary(); renderMatrix(); renderChips(); renderRoster(); renderFixes(); renderOfficials(); renderSenate(); renderHouse();
-renderHemi(); renderVotebar(); renderHouseViz(); renderMI(); renderGlance(); renderLatest(); showView();
+renderHemi(); renderVotebar(); renderHouseViz(); renderStateMap(); renderGlance(); renderLatest("W"); renderLatest("G"); showView();
 </script>
 
 </body></html>
