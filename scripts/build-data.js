@@ -83,7 +83,20 @@ placed.forEach(({ s, a, r }) => {
   seatRows.push([(r * Math.cos(a)).toFixed(1), (r * Math.sin(a)).toFixed(1), `Sen. ${s.key}`, PARTY[s.party], s.state, label(s), short(s.note)]);
 });
 
+// 5. Latest stakeholder statements (outside groups only), newest first, for the Datawrapper table.
+const latestSrc = js.slice(js.indexOf("const LATEST = ["), js.indexOf("\n];", js.indexOf("const LATEST = [")) + 3);
+vm.runInContext(latestSrc.replace("const LATEST", "this.LATEST"), ctx);
+const GROUP_POS = { support: ["Supports", "#3a9a74"], oppose: ["Opposes", "#b0452a"], changes: ["Wants changes", "#d9923a"], conditional: ["Wants changes", "#d9923a"] };
+const MONTHS = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+const day = (d) => { const [, m, dd] = d.split("-"); return `${MONTHS[+m - 1]} ${+dd}`; };
+const latestRows = [["Date", "Group", "Position", "What they said", "Source"]];
+ctx.LATEST.filter((x) => x.k === "Group").sort((a, b) => b.d.localeCompare(a.d)).slice(0, 10).forEach((x) => {
+  const [lab, col] = GROUP_POS[x.pos] || ["See page", "#5a6578"];
+  latestRows.push([day(x.d), x.who, `<b style="color:${col}">${lab}</b>`, plain(x.text), (x.src || []).map(([t, u]) => `<a href="${u}" target="_blank">${t}</a>`).join("<br>")]);
+});
+
 fs.mkdirSync(path.join(root, "data"), { recursive: true });
+fs.writeFileSync(path.join(root, "data", "latest-statements.csv"), csv(latestRows));
 fs.writeFileSync(path.join(root, "data", "senate-seats.csv"), csv(seatRows));
 fs.writeFileSync(path.join(root, "data", "path-to-60.csv"), csv(bar));
 fs.writeFileSync(path.join(root, "data", "senate-by-state.csv"), csv(map));
