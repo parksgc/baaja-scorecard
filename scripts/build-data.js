@@ -89,10 +89,17 @@ vm.runInContext(latestSrc.replace("const LATEST", "this.LATEST"), ctx);
 const GROUP_POS = { support: ["Supports", "#3a9a74"], oppose: ["Opposes", "#b0452a"], changes: ["Wants changes", "#d9923a"], conditional: ["Wants changes", "#d9923a"] };
 const MONTHS = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
 const day = (d) => { const [, m, dd] = d.split("-"); return `${MONTHS[+m - 1]} ${+dd}`; };
-const latestRows = [["Date", "Group", "Position", "What they said", "Source"]];
+// First sentence only: the table is a pointer to the page, which has the full entry.
+const firstSentence = (t) => { const m = t.match(/^.*?[a-z0-9)\]][.!?]["\u201d]?(?=\s+[A-Z])/); return m ? m[0] : t; };
+const latestRows = [["Date", "Group", "What they said"]];
 ctx.LATEST.filter((x) => x.k === "Group").sort((a, b) => b.d.localeCompare(a.d)).slice(0, 10).forEach((x) => {
   const [lab, col] = GROUP_POS[x.pos] || ["See page", "#5a6578"];
-  latestRows.push([day(x.d), x.who, `<b style="color:${col}">${lab}</b>`, plain(x.text), (x.src || []).map(([t, u]) => `<a href="${u}" target="_blank">${t}</a>`).join("<br>")]);
+  const src = (x.src || []).map(([t, u]) => `<a href="${u}" target="_blank">${t}</a>`).join(" · ");
+  latestRows.push([
+    day(x.d),
+    `<b>${x.who}</b><br><span style="color:${col};font-weight:600">● ${lab}</span>`,
+    `${firstSentence(plain(x.text))}<br><span style="color:#5a6578;font-size:12px">${src}</span>`,
+  ]);
 });
 
 fs.mkdirSync(path.join(root, "data"), { recursive: true });
