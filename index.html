@@ -119,6 +119,7 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .sources { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; border-top: 1px solid var(--rule); padding-top: 8px; }
 .tag-mi { font-family: var(--font-mono); font-size: 11px; color: var(--accent); border: 1px solid var(--accent); border-radius: 3px; padding: 0 4px; margin-left: 6px; vertical-align: 2px; }
 .empty { color: var(--muted); padding: 20px 0; }
+.more-btn { align-self: center; font-weight: 700; padding: 8px 18px; }
 
 /* Fixes */
 .fixes { display: flex; flex-direction: column; gap: 10px; }
@@ -437,6 +438,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
       <span class="count" id="count"></span>
     </div>
     <div class="roster" id="roster"></div>
+    <button class="chip more-btn" id="rosterMore" type="button" hidden></button>
   </section>
 
   <section id="officials" data-view="groups">
@@ -1132,7 +1134,7 @@ document.addEventListener("click", (e) => {
   const s = e.target.closest("[data-sen]"); if (s) { senState.f = s.dataset.sen; renderSenate(); }
 });
 
-const state = { stance: "all", sector: "all", q: "" };
+const state = { stance: "all", sector: "all", q: "", all: false };
 const esc = (s) => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 function renderSummary() {
@@ -1177,10 +1179,18 @@ function list(label, cls, items) {
   return `<div class="block"><span class="label ${cls}">${label}</span><ul>${items.map(i => `<li>${i}</li>`).join("")}</ul></div>`;
 }
 
+// Shown by default: elected officials plus the groups in the provision chart. Everything else sits behind "Show all".
+const FEATURED = new Set(["Sierra Club", "Earthjustice", "NRDC", "Center for Biological Diversity", "NAACP", "National Trust for Historic Preservation", "NCAI, NARF, NATHPO and the 106 Strong coalition", "Clean energy trade groups", "American Petroleum Institute and oil and gas groups", "Business and manufacturing groups"]);
+const isElected = (p) => p.sector === "Elected officials";
 function renderRoster() {
   const order = { oppose: 0, changes: 1, silent: 2, support: 3 };
-  const rows = PEOPLE.filter(matches).sort((a, b) => order[a.stance] - order[b.stance]);
-  document.getElementById("count").textContent = `Showing ${rows.length} of ${PEOPLE.length}`;
+  const filtering = state.stance !== "all" || state.sector !== "all" || state.q;
+  const all = PEOPLE.filter(matches).sort((a, b) => (isElected(b) - isElected(a)) || order[a.stance] - order[b.stance]);
+  const rows = filtering || state.all ? all : all.filter(p => isElected(p) || FEATURED.has(p.name));
+  const more = document.getElementById("rosterMore");
+  more.hidden = filtering || all.length === rows.length && !state.all;
+  more.textContent = state.all ? "Show fewer" : `Show all ${PEOPLE.length} groups and officials`;
+  document.getElementById("count").textContent = filtering || state.all ? `Showing ${rows.length} of ${PEOPLE.length}` : `Showing elected officials and the groups in the chart above (${rows.length} of ${PEOPLE.length})`;
   const el = document.getElementById("roster");
   if (!rows.length) { el.innerHTML = `<p class="empty">No stakeholders match. Clear the search or pick another filter.</p>`; return; }
   el.innerHTML = rows.map(p => {
@@ -1214,6 +1224,10 @@ document.addEventListener("click", (e) => {
   renderChips(); renderRoster();
 });
 document.getElementById("q").addEventListener("input", (e) => { state.q = e.target.value.trim(); renderRoster(); });
+document.getElementById("rosterMore").addEventListener("click", () => {
+  state.all = !state.all; renderRoster();
+  if (!state.all) document.getElementById("stakeholders").scrollIntoView();
+});
 
 // ---------- Congress charts ----------
 const POS_FILL = { sponsor: "var(--support)", support: "var(--support)", lean: "var(--lean)", conditional: "var(--changes)", oppose: "var(--oppose)", none: "var(--silent-bg)" };
