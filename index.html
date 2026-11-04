@@ -58,6 +58,8 @@ a { color: var(--accent); }
 a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .sec { font-family: var(--font-mono); font-size: 12px; background: var(--silent-bg); color: var(--ink); padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
+a.sec { text-decoration: none; }
+a.sec:hover, a.sec:focus-visible { text-decoration: underline; outline: none; box-shadow: 0 0 0 1px var(--ink); }
 header { display: flex; flex-direction: column; gap: 10px; }
 .lede { color: var(--muted); max-width: 68ch; }
 .meta { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--muted); }
@@ -303,7 +305,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     <h1>The BAAJA Scorecard</h1>
     <p class="lede">Most of the people fighting over BAAJA agree on more than they admit. This page tracks where Congress and the major stakeholders stand, which sections they praise or attack, and the fixes even the bill's supporters say it needs.</p>
     <p class="hlr" id="hlr" hidden>Analysis and updates at <a id="hlrHome" href="#">Hard Look Review</a><span aria-hidden="true"> · </span><a id="hlrSub" href="#">Subscribe</a></p>
-    <div class="meta"><span>Updated <strong>Nov. 4, 2026</strong></span><span>Senate motion to proceed <strong>Nov. 9</strong></span><span>Introduced <strong>Sept. 30</strong></span></div>
+    <div class="meta"><span>Updated <strong>Nov. 4, 2026</strong></span><span>Senate motion to proceed <strong>Nov. 9</strong></span><span>Introduced <strong>Sept. 30</strong></span><span><a href="https://bipartisanpolicy.org/explainer/bipartisan-american-affordability-and-jobs-act-baaja-resource-hub/" target="_blank" rel="noopener">Guide to the bill (BPC)</a></span></div>
     <div class="views" role="tablist" aria-label="Views">
       <a role="tab" href="#congress" id="tab-congress" class="view-tab">Whip tracker</a>
       <a role="tab" href="#groups" id="tab-groups" class="view-tab">Stakeholders</a>
@@ -443,6 +445,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
       <span class="eyebrow">Where the fight is</span>
       <h2>Provisions by stakeholder</h2>
       <p>The groups most critical of the bill praise the transmission title and the data center cost rule. The fight is over Titles I and IV. Blank cells mean the group hasn't taken a public position on that provision that we've found.</p>
+      <p>Section numbers (§) throughout the Scorecard link to that part of the Bipartisan Policy Center's <a href="https://bipartisanpolicy.org/explainer/explaining-the-senate-permitting-bill-the-bipartisan-american-affordability-and-jobs-act/" target="_blank" rel="noopener">section-by-section explainer</a>. BPC's <a href="https://bipartisanpolicy.org/explainer/bipartisan-american-affordability-and-jobs-act-baaja-resource-hub/" target="_blank" rel="noopener">BAAJA Resource Hub</a> also has a full-bill walkthrough webinar and analyses sorted by topic.</p>
     </div>
     <div class="table-scroll">
       <table>
@@ -530,7 +533,32 @@ const STANCES = {
   silent: { label: "Silent / undecided", cls: "s-silent", color: "var(--silent)" }
 };
 
-const S = (n) => `<span class="sec">§ ${n}</span>`;
+// Section tags link to the matching part of BPC's section-by-section explainer.
+const BPC_HUB = "https://bipartisanpolicy.org/explainer/bipartisan-american-affordability-and-jobs-act-baaja-resource-hub/";
+const BPC_SXS = "https://bipartisanpolicy.org/explainer/explaining-the-senate-permitting-bill-the-bipartisan-american-affordability-and-jobs-act/";
+const BPC_ANCHOR = {};
+[[[1101, 1103, 1104, 1105, 1106], "scope-of-review-sections-1101-1106"], [[1102, 1107], "what-gets-reviewed-sections-1102-1107"],
+ [[1108, 1109], "timelines-and-certainty-sections-1102-1109"], [[1110], "nepa-judicial-review"], [[1121], "e-permitting-section-1121"],
+ [[1202], "reforms-to-section-401-section-1202"], [[1203], "reforms-to-section-402-section-1203"], [[1204], "permits-for-dredged-or-fill-material-section-1204"],
+ [[1205], "judicial-review-timeline-clarity-section-1205"], [[1301], "endangered-species-act-esa"], [[1302, 1303], "consultation-timelines-sections-1302-1303"],
+ [[1304], "state-assumption-of-consultation-section-1304"], [[1305], "judicial-review-section-1305"], [[1401], "permitting-certainty"],
+ [[1402], "disparate-treatment-section-1402"], [[1403], "deadline-enforcement-section-1403"], [[2101], "transmission-siting-and-permitting-section-2101"],
+ [[2102], "transmission"], [[2103, 2104, 2105], "transmission-planning-sections-2103-2105"], [[2106], "consolidated-planning-section-2106"],
+ [[2107], "ratepayer-protection-from-data-centers-section-2107"], [[2108], "behind-the-meter-resources-market-access-section-2108"],
+ [[2109], "advanced-transmission-technologies-section-2109"], [[2110], "expediting-generator-interconnection-queues-section-2110"],
+ [[2111], "grid-data-access-section-2111"], [[2112], "power-marketing-administrations-section-2112"], [[2113], "ferc-fee-assessments-section-2113"],
+ [[2114], "data-center-energy-data-section-2114"], [[2201], "judicial-review-changes-by-statute-under-baaja"], [[2215], "hardrock-mining-mill-sites-section-2215"],
+ [[2221, 2222, 2223, 2224, 2225, 2226, 2227, 2228, 2229], "geothermal-sections-2221-2229"], [[2231, 2232, 2233, 2234], "hydropower-sections-2231-2234"],
+ [[2251, 2252], "offshore-energy-sections-2251-2252"], [[2301], "national-historic-preservation-act"], [[2302], "capacity-and-funding-sections-2301-2302"]
+].forEach(([nums, id]) => nums.forEach((n) => { BPC_ANCHOR[n] = "h-" + id; }));
+const S = (n) => {
+  const first = +(String(n).match(/\d{4}/) || [])[0];
+  // A range (e.g. 2101–2109) goes to the start of that title's part of the explainer.
+  const TITLE = { 11: "national-environmental-policy-act-nepa", 12: "clean-water-act-cwa", 13: "endangered-species-act-esa", 14: "permitting-certainty", 21: "transmission", 23: "national-historic-preservation-act" };
+  const anchor = /\d{4}\s*[–-]\s*\d{4}/.test(String(n)) && TITLE[Math.floor(first / 100)] ? "h-" + TITLE[Math.floor(first / 100)] : BPC_ANCHOR[first];
+  const href = anchor ? `${BPC_SXS}#${anchor}` : BPC_SXS;
+  return `<a class="sec" href="${href}" target="_blank" rel="noopener" title="Sec. ${n} in BPC's section-by-section explainer">§ ${n}</a>`;
+};
 
 const PEOPLE = [
   // ---------- OPPOSE ----------
@@ -959,17 +987,17 @@ const FIGHTS = [
 
 function renderCommonGround() {
   const col = (cls, title, items) => `<div class="venn-col ${cls}"><h4>${title}</h4>${items.map(([h, sec, d, who]) =>
-    `<div class="venn-item"><b>${h}${sec ? ` <span class="sec">§ ${sec}</span>` : ""}</b><span>${d}</span><span class="who-line">${who}</span></div>`).join("")}</div>`;
+    `<div class="venn-item"><b>${h}${sec ? ` ${S(sec)}` : ""}</b><span>${d}</span><span class="who-line">${who}</span></div>`).join("")}</div>`;
   document.getElementById("venn").innerHTML =
     col("venn-ind", "Only industry likes", VENN.ind) +
     col("venn-both", "Both like", VENN.both) +
     col("venn-grn", "Only the green groups like", VENN.grn);
   document.getElementById("fixBand").innerHTML = FIXBAND.map(([h, sec, what, crit, supp]) =>
-    `<div class="fb"><div><h4>${h} <span class="sec">§ ${sec}</span></h4><p>${what}</p></div>
+    `<div class="fb"><div><h4>${h} ${S(sec)}</h4><p>${what}</p></div>
       <div class="crit"><span class="side-lbl">Critics</span>${crit}</div>
       <div class="supp"><span class="side-lbl">Supporters</span>${supp}</div></div>`).join("");
   document.getElementById("fightList").innerHTML = FIGHTS.map(([h, sec, d]) =>
-    `<div class="fight"><h4>${h} <span class="sec">§ ${sec}</span></h4><p>${d}</p></div>`).join("");
+    `<div class="fight"><h4>${h} ${S(sec)}</h4><p>${d}</p></div>`).join("");
 }
 
 function renderGlance() {
@@ -1165,7 +1193,7 @@ function renderSummary() {
 
 function renderMatrix() {
   document.getElementById("matrix").innerHTML = MATRIX.map(([name, sec, cells]) =>
-    `<tr><th scope="row">${name}<span class="sec">§ ${sec}</span></th>${cells.map(c => { const [cls, sym, lbl] = CELL[c]; return `<td><span class="cell ${cls}" aria-label="${lbl}" title="${lbl}">${sym}</span></td>`; }).join("")}</tr>`
+    `<tr><th scope="row">${name}${S(sec)}</th>${cells.map(c => { const [cls, sym, lbl] = CELL[c]; return `<td><span class="cell ${cls}" aria-label="${lbl}" title="${lbl}">${sym}</span></td>`; }).join("")}</tr>`
   ).join("");
 }
 
@@ -1244,7 +1272,7 @@ document.addEventListener("click", (e) => {
 
 function renderFixes() {
   document.getElementById("fixList").innerHTML = FIXES.map(f => `<article class="fix">
-    <h3>${f.title} <span class="sec">§ ${f.sec}</span> <span class="consensus ${f.level[0]}">${f.level[1]}</span></h3>
+    <h3>${f.title} ${S(f.sec)} <span class="consensus ${f.level[0]}">${f.level[1]}</span></h3>
     <div class="what"><span class="k">The problem</span><p>${f.what}</p></div>
     <div class="who-says"><span class="k">Who says so</span><p>${f.who}</p></div>
   </article>`).join("");
