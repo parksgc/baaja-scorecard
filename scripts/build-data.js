@@ -70,8 +70,10 @@ seats.sort((p, q) => q.a - p.a || p.r - q.r);
 const PARTY = { D: "Democrat", R: "Republican", I: "Independent" };
 const short = (t) => { if (!t) return "No statement found."; if (t.length <= 150) return t; const cut = t.slice(0, 150); return cut.slice(0, cut.lastIndexOf(" ")) + "…"; };
 const seatRows = [["x", "y", "Senator", "Party", "State", "Position", "What they said"]];
-ordered.forEach((s, k) => {
-  const { a, r } = seats[k];
+const placed = ordered.map((s, k) => ({ s, ...seats[k] }));
+// Row order only sets the legend order (positions come from x/y): strongest support first, silence last.
+placed.sort((p, q) => rank[p.s.pos] - rank[q.s.pos]);
+placed.forEach(({ s, a, r }) => {
   seatRows.push([(r * Math.cos(a)).toFixed(1), (r * Math.sin(a)).toFixed(1), `Sen. ${s.key}`, PARTY[s.party], s.state, label(s), short(s.note)]);
 });
 

@@ -1,4 +1,22 @@
 x,y,Senator,Party,State,Position,What they said
+-40.9,179.4,Sen. Heinrich,Democrat,NM,Sponsor,"""Data center owners should pay for their electricity and any grid upgrades, not you. Our new permitting reform bill makes that mandatory."" His office…"
+-20.8,118.2,Sen. Whitehouse,Democrat,RI,Sponsor,"Sponsor, but sets a condition for his own caucus: ""regulatory misbehavior against clean energy does need to be resolved before Democrats will vote…"
+-19.9,215.1,Sen. Capito,Republican,WV,Sponsor,"Lead sponsor. Posts almost daily: ""We need to pass this bill to get our country back to building."" Promotes CEA and McKinsey savings estimates."
+-0.0,280.0,Sen. Lee,Republican,UT,Sponsor,"""We want to make it easier in America to build things."" On X: ""There is no negotiating with the anti-growth Left."" Cites the White House CEA estimate…"
+0.0,152.0,Sen. Armstrong,Republican,OK,Supports,"""Really, really meaningful permitting reform, all the way across the board."" Agencies can't walk back permits ""without being liable for the damages."""
+0.0,184.0,Sen. Boozman,Republican,AR,Supports,"""The bipartisan permitting bill will unlock critical infrastructure projects – from roads & bridges to energy."" Commends Capito's leadership (EPW…"
+0.0,248.0,Sen. Husted,Republican,OH,Supports,"""To help make life more affordable, we need permitting reform... EPW's bipartisan bill cuts through the bureaucracy."" Held a permitting roundtable…"
+19.9,215.1,Sen. Cornyn,Republican,TX,Leans support,"Attacked Podesta for trying ""to poison a bipartisan permitting reform""; amplified the NAM-led business push for lame-duck passage."
+39.8,277.2,Sen. Curtis,Republican,UT,Leans support,"""I'm glad to see my bill to bring environmental reviews into the digital age be included"" in BAAJA. Separately, data center transparency bills with…"
+38.8,244.9,Sen. McCormick,Republican,PA,Leans support,"Oct. 1, the day after introduction: ""We need clear approval timelines and legal certainty for approved projects. We must pass"" permitting reform. He…"
+20.8,118.2,Sen. Risch,Republican,ID,Leans support,"Sept. 30: ""Senate Democrats just blocked another chance"" to pass permitting reform, alongside the Ratepayer Protection Act. That is about the…"
+40.9,179.4,Sen. Thune,Republican,SD,Leans support,"Majority Leader. ""We need permitting reform... I think we can get the bill across the finish line."" Calls state jurisdiction the hurdle and says the…"
+-79.8,165.8,Sen. Duckworth,Democrat,IL,Conditions / concerns,"Led the letter. The Oct. 27 letter says the signers are still deciding ""whether to vote in favor of the motion to proceed."" It says they ""share the…"
+-116.3,254.7,Sen. Hirono,Democrat,HI,Conditions / concerns,Same Politico Pro report as Schatz: concern about effects on tribal and local communities. No direct quote found.
+-76.6,235.9,Sen. Markey,Democrat,MA,Conditions / concerns,"Signed the Duckworth letter. His Oct. 1 statement: ""I'm still reviewing text of this proposal."" He adds: ""Building transmission is important. It's…"
+-78.9,268.7,Sen. Merkley,Democrat,OR,Conditions / concerns,"Signed the Duckworth letter. The Oct. 27 letter says the signers are still deciding ""whether to vote in favor of the motion to proceed."" It says they…"
+-59.1,207.8,Sen. Schatz,Democrat,HI,Conditions / concerns,"Politico Pro reports he and Hirono ""have also expressed concern"" about the bill's effects on tribal and local communities. No direct quote found."
+-39.3,146.8,Sen. Wyden,Democrat,OR,Conditions / concerns,"Signed the Duckworth letter (same conditions). ""Strong reservations,"" per Oil Change International. Also wrote, with Merkley and Padilla, to Interior…"
 -120.0,0.0,Sen. Alsobrooks,Democrat,MD,No statement found,No statement found.
 -152.0,0.0,Sen. Baldwin,Democrat,WI,No statement found,"No BAAJA statement in her releases or X posts (Sept. 29 to Oct. 29). On Sept. 30 she voted against Husted's Ratepayer Protection Act, a separate data…"
 -184.0,0.0,Sen. Bennet,Democrat,CO,No statement found,No statement found.
@@ -36,26 +54,8 @@ x,y,Senator,Party,State,Position,What they said
 -76.0,131.6,Sen. Warnock,Democrat,GA,No statement found,One of four Democrats who voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.
 -112.6,221.0,Sen. Warren,Democrat,MA,No statement found,No statement found.
 -96.3,193.4,Sen. Welch,Democrat,VT,No statement found,No statement found.
--79.8,165.8,Sen. Duckworth,Democrat,IL,Conditions / concerns,"Led the letter. The Oct. 27 letter says the signers are still deciding ""whether to vote in favor of the motion to proceed."" It says they ""share the…"
--116.3,254.7,Sen. Hirono,Democrat,HI,Conditions / concerns,Same Politico Pro report as Schatz: concern about effects on tribal and local communities. No direct quote found.
--76.6,235.9,Sen. Markey,Democrat,MA,Conditions / concerns,"Signed the Duckworth letter. His Oct. 1 statement: ""I'm still reviewing text of this proposal."" He adds: ""Building transmission is important. It's…"
--78.9,268.7,Sen. Merkley,Democrat,OR,Conditions / concerns,"Signed the Duckworth letter. The Oct. 27 letter says the signers are still deciding ""whether to vote in favor of the motion to proceed."" It says they…"
--59.1,207.8,Sen. Schatz,Democrat,HI,Conditions / concerns,"Politico Pro reports he and Hirono ""have also expressed concern"" about the bill's effects on tribal and local communities. No direct quote found."
--39.3,146.8,Sen. Wyden,Democrat,OR,Conditions / concerns,"Signed the Duckworth letter (same conditions). ""Strong reservations,"" per Oil Change International. Also wrote, with Merkley and Padilla, to Interior…"
--40.9,179.4,Sen. Heinrich,Democrat,NM,Sponsor,"""Data center owners should pay for their electricity and any grid upgrades, not you. Our new permitting reform bill makes that mandatory."" His office…"
--20.8,118.2,Sen. Whitehouse,Democrat,RI,Sponsor,"Sponsor, but sets a condition for his own caucus: ""regulatory misbehavior against clean energy does need to be resolved before Democrats will vote…"
 -38.8,244.9,Sen. King,Independent,ME,No statement found,In May 2026 he told Interior there would be no votes for permitting reform without assurances on stalled renewable permits.
 -39.8,277.2,Sen. Sanders,Independent,VT,No statement found,No statement found.
--19.9,215.1,Sen. Capito,Republican,WV,Sponsor,"Lead sponsor. Posts almost daily: ""We need to pass this bill to get our country back to building."" Promotes CEA and McKinsey savings estimates."
--0.0,280.0,Sen. Lee,Republican,UT,Sponsor,"""We want to make it easier in America to build things."" On X: ""There is no negotiating with the anti-growth Left."" Cites the White House CEA estimate…"
-0.0,152.0,Sen. Armstrong,Republican,OK,Supports,"""Really, really meaningful permitting reform, all the way across the board."" Agencies can't walk back permits ""without being liable for the damages."""
-0.0,184.0,Sen. Boozman,Republican,AR,Supports,"""The bipartisan permitting bill will unlock critical infrastructure projects – from roads & bridges to energy."" Commends Capito's leadership (EPW…"
-0.0,248.0,Sen. Husted,Republican,OH,Supports,"""To help make life more affordable, we need permitting reform... EPW's bipartisan bill cuts through the bureaucracy."" Held a permitting roundtable…"
-19.9,215.1,Sen. Cornyn,Republican,TX,Leans support,"Attacked Podesta for trying ""to poison a bipartisan permitting reform""; amplified the NAM-led business push for lame-duck passage."
-39.8,277.2,Sen. Curtis,Republican,UT,Leans support,"""I'm glad to see my bill to bring environmental reviews into the digital age be included"" in BAAJA. Separately, data center transparency bills with…"
-38.8,244.9,Sen. McCormick,Republican,PA,Leans support,"Oct. 1, the day after introduction: ""We need clear approval timelines and legal certainty for approved projects. We must pass"" permitting reform. He…"
-20.8,118.2,Sen. Risch,Republican,ID,Leans support,"Sept. 30: ""Senate Democrats just blocked another chance"" to pass permitting reform, alongside the Ratepayer Protection Act. That is about the…"
-40.9,179.4,Sen. Thune,Republican,SD,Leans support,"Majority Leader. ""We need permitting reform... I think we can get the bill across the finish line."" Calls state jurisdiction the hurdle and says the…"
 39.3,146.8,Sen. Banks,Republican,IN,No statement found,No statement found.
 59.1,207.8,Sen. Barrasso,Republican,WY,No statement found,No statement found.
 78.9,268.7,Sen. Blackburn,Republican,TN,No statement found,No statement found.
