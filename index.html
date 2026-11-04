@@ -59,6 +59,8 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .sec { font-family: var(--font-mono); font-size: 12px; background: var(--silent-bg); color: var(--ink); padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
 a.sec { text-decoration: none; }
+a.sec-link { color: inherit; text-decoration: underline dotted; text-underline-offset: 2px; }
+a.sec-link:hover { text-decoration-style: solid; }
 a.sec:hover, a.sec:focus-visible { text-decoration: underline; outline: none; box-shadow: 0 0 0 1px var(--ink); }
 header { display: flex; flex-direction: column; gap: 10px; }
 .lede { color: var(--muted); max-width: 68ch; }
@@ -551,14 +553,44 @@ const BPC_ANCHOR = {};
  [[2221, 2222, 2223, 2224, 2225, 2226, 2227, 2228, 2229], "geothermal-sections-2221-2229"], [[2231, 2232, 2233, 2234], "hydropower-sections-2231-2234"],
  [[2251, 2252], "offshore-energy-sections-2251-2252"], [[2301], "national-historic-preservation-act"], [[2302], "capacity-and-funding-sections-2301-2302"]
 ].forEach(([nums, id]) => nums.forEach((n) => { BPC_ANCHOR[n] = "h-" + id; }));
-const S = (n) => {
+// BAAJA sections run 1101 to 2302; anything else (NHPA "Section 106", FPA "Sec. 228") is a different statute.
+const BAAJA_SEC = (n) => n >= 1100 && n < 2400;
+const secHref = (n) => {
   const first = +(String(n).match(/\d{4}/) || [])[0];
   // A range (e.g. 2101–2109) goes to the start of that title's part of the explainer.
   const TITLE = { 11: "national-environmental-policy-act-nepa", 12: "clean-water-act-cwa", 13: "endangered-species-act-esa", 14: "permitting-certainty", 21: "transmission", 23: "national-historic-preservation-act" };
   const anchor = /\d{4}\s*[–-]\s*\d{4}/.test(String(n)) && TITLE[Math.floor(first / 100)] ? "h-" + TITLE[Math.floor(first / 100)] : BPC_ANCHOR[first];
-  const href = anchor ? `${BPC_SXS}#${anchor}` : BPC_SXS;
-  return `<a class="sec" href="${href}" target="_blank" rel="noopener" title="Sec. ${n} in BPC's section-by-section explainer">§ ${n}</a>`;
+  return anchor ? `${BPC_SXS}#${anchor}` : BPC_SXS;
 };
+const S = (n) => `<a class="sec" href="${secHref(n)}" target="_blank" rel="noopener" title="Sec. ${n} in BPC's section-by-section explainer">§ ${n}</a>`;
+
+// Section numbers written out in text ("Sec. 2301", "Secs. 1401–1402", "Section 1110") become links too.
+// Runs on everything rendered, including cards and lists that re-render after a filter or "Show all".
+const SEC_TEXT = /\b(Secs?\.|Sections?)(\s+)(\d{4})((?:\([^)\s]*\))*)(\s*[–-]\s*\d{4})?/g;
+function linkifySections(root) {
+  if (typeof document === "undefined") return;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: (t) => {
+      SEC_TEXT.lastIndex = 0;
+      if (!SEC_TEXT.test(t.nodeValue)) return NodeFilter.FILTER_REJECT;
+      return t.parentElement && !t.parentElement.closest("a, script, style, textarea, input, .sec") ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    },
+  });
+  const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach((t) => {
+    const txt = t.nodeValue, frag = document.createDocumentFragment(); let last = 0;
+    SEC_TEXT.lastIndex = 0;
+    for (const m of txt.matchAll(SEC_TEXT)) {
+      const num = +m[3]; if (!BAAJA_SEC(num)) continue;
+      frag.append(txt.slice(last, m.index));
+      const a = document.createElement("a");
+      a.className = "sec-link"; a.href = secHref(m[3] + (m[5] || "")); a.target = "_blank"; a.rel = "noopener";
+      a.title = `Sec. ${num} in BPC's section-by-section explainer`; a.textContent = m[0];
+      frag.append(a); last = m.index + m[0].length;
+    }
+    if (last) { frag.append(txt.slice(last)); t.replaceWith(frag); }
+  });
+}
 
 const PEOPLE = [
   // ---------- OPPOSE ----------
@@ -1515,6 +1547,8 @@ window.addEventListener("hashchange", showView);
 
 renderSummary(); renderMatrix(); renderChips(); renderRoster(); renderFixes(); renderOfficials(); renderSenate(); renderHouse();
 renderHemi(); renderVotebar(); renderHouseViz(); renderStateMap(); renderGlance(); renderLatest("W"); renderLatest("G"); showView();
+linkifySections(document.body);
+new MutationObserver((muts) => muts.forEach((m) => m.addedNodes.forEach((n) => { if (n.nodeType === 1) linkifySections(n); else if (n.nodeType === 3 && n.parentElement) linkifySections(n.parentElement); }))).observe(document.body, { childList: true, subtree: true });
 </script>
 
 </body></html>
