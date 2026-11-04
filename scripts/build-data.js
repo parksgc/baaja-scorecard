@@ -28,7 +28,9 @@ const senators = SENATE.map((s) => {
 
 // One vocabulary for every chart, so the bar, the seat chart and the map read alike.
 // Datawrapper keys its colors to these exact strings: rename one here and its color must be reset in Datawrapper.
-const LABEL = { sponsor: "Sponsor", support: "Supports", lean: "Leans support", conditional: "Conditions", oppose: "Opposes", none: "No statement found" };
+// The seat chart's legend order follows Datawrapper's stored color map, which sorts keys by length and then
+// alphabetically, so these lengths are chosen to keep the legend running from Sponsor to No statement found.
+const LABEL = { sponsor: "Sponsor", support: "Supports", lean: "Leans support", conditional: "Wants changes", oppose: "Opposes outright", none: "No statement found" };
 
 // 1. Path to 60: one stacked bar
 const order = ["sponsor", "support", "lean", "conditional", "oppose", "none"].map((k) => [k, LABEL[k]]);
@@ -44,7 +46,7 @@ for (const code of Object.keys(NAMES)) {
   const [a, b] = senators.filter((s) => s.state === code).sort((x, y) => x.key.localeCompare(y.key));
   const p = [a.pos, b.pos];
   const cat = p.includes("oppose") ? "At least one opposes"
-    : p.includes("conditional") ? "Conditions"
+    : p.includes("conditional") ? "Wants changes"
     : p.every((x) => yes.has(x)) ? "Both support or lean"
     : p.some((x) => yes.has(x)) ? "One supports or leans"
     : "No statement found";
