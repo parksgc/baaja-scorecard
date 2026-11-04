@@ -12,8 +12,11 @@ const js = html.split("<script>")[1].split("</script>")[0];
 const dataJs = js.split("function srcLinks")[0].replace(/^if \(SUBSTACK_URL\)[\s\S]*?\n\}\n/m, "");
 const ctx = {};
 vm.createContext(ctx);
-vm.runInContext(dataJs + "\nthis.d = { SENATE, SEN_NOTES };", ctx);
-const { SENATE, SEN_NOTES } = ctx.d;
+vm.runInContext(dataJs + "\nthis.d = { SENATE, SEN_NOTES, secHref, BAAJA_SEC };", ctx);
+const { SENATE, SEN_NOTES, secHref, BAAJA_SEC } = ctx.d;
+// Same rule as the page: "Sec. 2301", "Secs. 1401–1402" link to BPC's section-by-section explainer.
+const linkSecs = (t) => String(t).replace(/\b(Secs?\.|Sections?)(\s+)(\d{4})((?:\([^)\s]*\))*)(\s*[–-]\s*\d{4})?/g, (m, _w, _s, num, _sub, range) =>
+  BAAJA_SEC(+num) ? `<a href="${secHref(num + (range || ""))}" target="_blank">${m}</a>` : m);
 
 const updated = (html.match(/Updated <strong>([^<]+)<\/strong>/) || [])[1] || "";
 const q = (v) => (/[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v));
@@ -80,7 +83,7 @@ const placed = ordered.map((s, k) => ({ s, ...seats[k] }));
 // Row order only sets the legend order (positions come from x/y): strongest support first, silence last.
 placed.sort((p, q) => rank[p.s.pos] - rank[q.s.pos]);
 placed.forEach(({ s, a, r }) => {
-  seatRows.push([(r * Math.cos(a)).toFixed(1), (r * Math.sin(a)).toFixed(1), `Sen. ${s.key}`, PARTY[s.party], s.state, label(s), short(s.note)]);
+  seatRows.push([(r * Math.cos(a)).toFixed(1), (r * Math.sin(a)).toFixed(1), `Sen. ${s.key}`, PARTY[s.party], s.state, label(s), linkSecs(short(s.note))]);
 });
 
 // 5. Latest stakeholder statements (outside groups only), newest first, for the Datawrapper table.
@@ -98,7 +101,7 @@ ctx.LATEST.filter((x) => x.k === "Group").sort((a, b) => b.d.localeCompare(a.d))
   latestRows.push([
     day(x.d),
     `<b>${x.who}</b><br><span style="color:${col};font-weight:600">● ${lab}</span>`,
-    `${firstSentence(plain(x.text))}<br><span style="color:#5a6578;font-size:12px">${src}</span>`,
+    `${linkSecs(firstSentence(plain(x.text)))}<br><span style="color:#5a6578;font-size:12px">${src}</span>`,
   ]);
 });
 
