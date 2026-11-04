@@ -163,7 +163,6 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .seat-key { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; align-items: center; }
 .sw { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
 .sw-none { background: var(--silent-bg); border: 1.5px solid var(--silent); }
-.sw-watch { background: var(--silent-bg); border: 2px dashed var(--muted); }
 #hemi .p-D { stroke: #2f5fb3; } #hemi .p-R { stroke: #b43a3a; } #hemi .p-I { stroke: #6b7280; }
 :root[data-theme="dark"] #hemi .p-D { stroke: #8fb4ec; } :root[data-theme="dark"] #hemi .p-R { stroke: #f08a7e; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #hemi .p-D { stroke: #8fb4ec; } :root:not([data-theme="light"]) #hemi .p-R { stroke: #f08a7e; } }
@@ -329,7 +328,6 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
           <span><i class="sw" style="background:var(--changes)"></i>Conditions</span>
           <span><i class="sw" style="background:var(--oppose)"></i>Opposes</span>
           <span><i class="sw sw-none"></i>No statement found</span>
-          <span><i class="sw sw-watch"></i>On the watch list</span>
           <span class="watch">Democrats left, independents center, Republicans right. Ring shows party.</span>
         </div>
       </div>
@@ -381,7 +379,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     </div>
     <div class="table-scroll">
       <table class="list-table">
-        <thead><tr><th scope="col">Senator</th><th scope="col">Party-State</th><th scope="col">Position</th><th scope="col">On the record / what to watch</th></tr></thead>
+        <thead><tr><th scope="col">Senator</th><th scope="col">Party-State</th><th scope="col">Position</th><th scope="col">On the record</th></tr></thead>
         <tbody id="senBody"></tbody>
       </table>
     </div>
@@ -1023,11 +1021,11 @@ const DUCK_LETTER2 = [["Letter (DocumentCloud)", "https://www.documentcloud.org/
 const LETTER_TXT = `The Oct. 27 letter says the signers are still deciding "whether to vote in favor of the motion to proceed." It says they "share the goals" of faster permitting and grid reform, but that BAAJA "will only succeed if President Trump takes care that it is faithfully executed." It asks for written confirmation, before the vote, that DOE is reinstating the canceled awards. It never says they will vote no.`;
 const SEN_NOTES = {
   "Armstrong": ["support", `"Really, really meaningful permitting reform, all the way across the board." Agencies can't walk back permits "without being liable for the damages."`, [["News 9, Sept. 30", "https://www.news9.com/national-politics-oklahoma/senate-taking-important-step-toward-making-permitting-reform-a-reality"]]],
-  "Hawley": ["none", `Watch: the lone ENR Republican to vote against EPRA in 2024, over FERC transmission siting and landowners. Nothing on BAAJA yet.`, [["E&E News (2024)", "https://www.eenews.net/articles/whats-next-for-the-permitting-bill/"]]],
-  "King": ["none", `Watch: in May 2026 he told Interior there would be no votes for permitting reform without assurances on stalled renewable permits.`, [["Development Today, May 2026", "https://developmentstoday.com/energy/renewables-permit-fight-threatens-bipartisan-reform-push"]]],
+  "Hawley": ["none", `The lone ENR Republican to vote against EPRA in 2024, over FERC transmission siting and landowners. Nothing on BAAJA yet.`, [["E&E News (2024)", "https://www.eenews.net/articles/whats-next-for-the-permitting-bill/"]]],
+  "King": ["none", `In May 2026 he told Interior there would be no votes for permitting reform without assurances on stalled renewable permits.`, [["Development Today, May 2026", "https://developmentstoday.com/energy/renewables-permit-fight-threatens-bipartisan-reform-push"]]],
   "Murkowski": ["none", `Her FLOWS Act hydropower language is in the bill; no statement of her own found.`, []],
   "Blunt Rochester": ["none", `Data center transparency bills with Curtis (Oct. 1), not tied to BAAJA.`, []],
-  "Baldwin": ["none", `Watch: no BAAJA statement in her releases or X posts (Sept. 29 to Oct. 29). On Sept. 30 she voted against Husted's Ratepayer Protection Act, a separate data center bill, because it only asks states to "consider" making data centers pay. She wants "a mandate, under law." BAAJA's Sec. 228 is that kind of mandate.`, [["Baldwin, Sept. 30", "https://www.baldwin.senate.gov/news/press-releases/baldwin-votes-against-voluntary-approach-to-data-centers-vows-to-push-real-reform-to-protect-wisconsin-ratepayers"]]],
+  "Baldwin": ["none", `No BAAJA statement in her releases or X posts (Sept. 29 to Oct. 29). On Sept. 30 she voted against Husted's Ratepayer Protection Act, a separate data center bill, because it only asks states to "consider" making data centers pay. She wants "a mandate, under law." BAAJA's Sec. 228 is that kind of mandate.`, [["Baldwin, Sept. 30", "https://www.baldwin.senate.gov/news/press-releases/baldwin-votes-against-voluntary-approach-to-data-centers-vows-to-push-real-reform-to-protect-wisconsin-ratepayers"]]],
   "Capito": ["sponsor", `Lead sponsor. Posts almost daily: "We need to pass this bill to get our country back to building." Promotes CEA and McKinsey savings estimates.`, [["Introduction release", "https://www.capito.senate.gov/news/press-releases/capito-lee-whitehouse-and-heinrich-introduce-bipartisan-american-affordability-and-jobs-act-of-2026"], ["@SenCapito, Oct. 23", "https://x.com/SenCapito/status/2113701126977835109"]]],
   "Lee": ["sponsor", `"We want to make it easier in America to build things." On X: "There is no negotiating with the anti-growth Left." Cites the White House CEA estimate of $250 a year in bill savings.`, [["Heatmap, Sept. 30", "https://heatmap.news/politics/bipartisan-permitting-reform"], ["@SenMikeLee, Oct. 29", "https://x.com/SenMikeLee/status/2115885495733379218"]]],
   "Whitehouse": ["sponsor", `Sponsor, but sets a condition for his own caucus: "regulatory misbehavior against clean energy does need to be resolved before Democrats will vote for this bill" (Oct. 19). On Oct. 29: "We await real signs of regulatory good faith." Also: "BAAJA is our best bet to lower people's electricity costs." Nov. 2, at a Rhode Island event: Democrats should not wait, because "a bird in the hand" may not be there next year (Punchbowl, Nov. 3).`, [["@SenWhitehouse, Oct. 19", "https://x.com/SenWhitehouse/status/2112239757837172958"], ["@SenWhitehouse, Oct. 29", "https://x.com/SenWhitehouse/status/2115827001005068551"], ["AP, Oct. 21", "https://www.click2houston.com/news/politics/2026/10/21/trump-again-targets-offshore-wind-risking-deal-to-speed-approvals-of-new-energy-projects/"]]],
@@ -1045,15 +1043,15 @@ const SEN_NOTES = {
   "Risch": ["lean", `Sept. 30: "Senate Democrats just blocked another chance" to pass permitting reform, alongside the Ratepayer Protection Act. That is about the pre-deal floor fight, not the BAAJA text.`, [["@SenatorRisch, Sept. 30", "https://x.com/SenatorRisch/status/2105411282220241043"]]],
   "Schatz": ["conditional", `Politico Pro reports he and Hirono "have also expressed concern" about the bill's effects on tribal and local communities. No direct quote found.`, [["Politico Pro, Oct. 23 (via Extracted)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-102626"]]],
   "Hirono": ["conditional", `Same Politico Pro report as Schatz: concern about effects on tribal and local communities. No direct quote found.`, [["Politico Pro, Oct. 23 (via Extracted)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-102626"]]],
-  "Padilla": ["none", `Watch: joined Wyden and Merkley's Oct. 29 letter to Interior on data centers on public lands (not about BAAJA). The Karuk Tribe is urging him and Schiff to oppose.`, [["Washington Sun, Oct. 29", "https://www.washingtonsun.com/congress/senate-democrats-demand-answers-public-land-use-data-centers"], ["Karuk Tribe, Oct. 28", "https://www.karuk.us/posts/karuk-tribe-condemns-senates-assault-on-tribal-sovereignty-and-sacred-places"]]],
-  "Schiff": ["none", `Watch: the Karuk Tribe is urging him and Padilla to oppose. No statement found.`, [["Karuk Tribe, Oct. 28", "https://www.karuk.us/posts/karuk-tribe-condemns-senates-assault-on-tribal-sovereignty-and-sacred-places"]]],
-  "Schumer": ["none", `Watch: called Husted's separate data center bill "a fraud, plain and simple." He is an addressee of both the opposition and support letters, but has stated no BAAJA position.`, [["AP via KSAT, Sept. 30", "https://www.ksat.com/news/politics/2026/09/30/data-center-bill-falls-short-in-senate-as-lawmakers-take-final-votes-before-the-midterms/"]]],
-  "Warnock": ["none", `Watch: one of four Democrats who voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
-  "Ossoff": ["none", `Watch: voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
-  "Hassan": ["none", `Watch: voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
-  "Klobuchar": ["none", `Watch: voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
-  "Rounds": ["none", `Watch: South Dakota PUC commissioners urged him and Thune to oppose the FERC transmission siting provisions. No statement found.`, [["Dakota Free Press, Oct. 29", "https://dakotafreepress.com/2026/10/29/kloucek-warns-senate-permitting-reform-bill-threatens-sd-rights-nelson-kinda-agrees/"]]],
-  "Cramer": ["none", `Watch: Sept. 29 (before the text): "time for Congress to pass a new highway bill and permitting reform." In 2024 he attacked EPRA's transmission provisions for "perverse incentives to overbuild."`, [["@SenKevinCramer, Sept. 29", "https://x.com/SenKevinCramer/status/2105044319384097177"]]]
+  "Padilla": ["none", `Joined Wyden and Merkley's Oct. 29 letter to Interior on data centers on public lands (not about BAAJA). The Karuk Tribe is urging him and Schiff to oppose.`, [["Washington Sun, Oct. 29", "https://www.washingtonsun.com/congress/senate-democrats-demand-answers-public-land-use-data-centers"], ["Karuk Tribe, Oct. 28", "https://www.karuk.us/posts/karuk-tribe-condemns-senates-assault-on-tribal-sovereignty-and-sacred-places"]]],
+  "Schiff": ["none", `The Karuk Tribe is urging him and Padilla to oppose. No statement found.`, [["Karuk Tribe, Oct. 28", "https://www.karuk.us/posts/karuk-tribe-condemns-senates-assault-on-tribal-sovereignty-and-sacred-places"]]],
+  "Schumer": ["none", `Called Husted's separate data center bill "a fraud, plain and simple." He is an addressee of both the opposition and support letters, but has stated no BAAJA position.`, [["AP via KSAT, Sept. 30", "https://www.ksat.com/news/politics/2026/09/30/data-center-bill-falls-short-in-senate-as-lawmakers-take-final-votes-before-the-midterms/"]]],
+  "Warnock": ["none", `One of four Democrats who voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
+  "Ossoff": ["none", `Voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
+  "Hassan": ["none", `Voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
+  "Klobuchar": ["none", `Voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
+  "Rounds": ["none", `South Dakota PUC commissioners urged him and Thune to oppose the FERC transmission siting provisions. No statement found.`, [["Dakota Free Press, Oct. 29", "https://dakotafreepress.com/2026/10/29/kloucek-warns-senate-permitting-reform-bill-threatens-sd-rights-nelson-kinda-agrees/"]]],
+  "Cramer": ["none", `Sept. 29 (before the text): "time for Congress to pass a new highway bill and permitting reform." In 2024 he attacked EPRA's transmission provisions for "perverse incentives to overbuild."`, [["@SenKevinCramer, Sept. 29", "https://x.com/SenKevinCramer/status/2105044319384097177"]]]
 };
 const SEN_LABEL = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-support"], lean: ["Leans support", "s-support"], conditional: ["Conditions / concerns", "s-changes"], oppose: ["Opposes", "s-oppose"], none: ["No statement found", "s-silent"] };
 const senState = { f: "record" };
@@ -1100,7 +1098,7 @@ function renderOfficials() {
 function senRows() {
   return SENATE.map(s => {
     const n = SEN_NOTES[s.name.replace(/ \(..\)$/, "")] || SEN_NOTES[s.name];
-    return { ...s, pos: n ? n[0] : "none", note: n ? n[1] : "", src: n ? n[2] : [], watch: n && n[0] === "none" };
+    return { ...s, pos: n ? n[0] : "none", note: n ? n[1] : "", src: n ? n[2] : [] };
   });
 }
 
@@ -1117,16 +1115,16 @@ function renderSenate() {
     `<div class="t"><b>${100 - onRecord}</b><span>No statement found</span></div>` +
     `<div class="t"><b>60</b><span>Needed for cloture</span></div>`;
   const ch = (v, l) => `<button class="chip" type="button" data-sen="${v}" aria-pressed="${senState.f === v}">${l}</button>`;
-  document.getElementById("senChips").innerHTML = ch("record", "On record + watch list") + ch("all", "All 100") + ch("D", "Democrats + Independents") + ch("R", "Republicans");
+  document.getElementById("senChips").innerHTML = ch("record", "On record") + ch("all", "All 100") + ch("D", "Democrats + Independents") + ch("R", "Republicans");
   let shown = rows;
-  if (senState.f === "record") shown = rows.filter(r => r.pos !== "none" || r.note);
+  if (senState.f === "record") shown = rows.filter(r => r.pos !== "none");
   if (senState.f === "D") shown = rows.filter(r => r.party !== "R");
   if (senState.f === "R") shown = rows.filter(r => r.party === "R");
   const order = { sponsor: 0, support: 1, lean: 2, conditional: 3, oppose: 4, none: 5 };
   shown =[...shown].sort((a, b) => order[a.pos] - order[b.pos] || (b.note ? 1 : 0) - (a.note ? 1 : 0) || a.name.localeCompare(b.name));
   document.getElementById("senBody").innerHTML = shown.map(r => {
     const [lbl, cls] = SEN_LABEL[r.pos];
-    const note = r.note ? `<span class="${r.watch ? "watch" : ""}">${r.note}</span> ${srcLinks(r.src)}` : `<span class="watch">Nothing found since Sept. 30.</span>`;
+    const note = r.note ? `${r.note} ${srcLinks(r.src)}` : `<span class="watch">Nothing found since Sept. 30.</span>`;
     return `<tr><th scope="row">${r.name}</th><td><span class="party-${r.party}">${r.party}</span>-${r.state}</td><td><span class="pill ${cls}">${lbl}</span></td><td class="said">${note}</td></tr>`;
   }).join("");
 }
@@ -1262,7 +1260,7 @@ function seatPanelDefault() {
   document.getElementById("seatPanel").innerHTML = `<span class="eyebrow">Select a seat</span>
     <h4>${rec} of 100 senators on record</h4>
     <p class="who">${n("sponsor")} sponsors and ${n("support")} other senators back the bill publicly, and ${n("lean")} more lean toward it, including Majority Leader Thune. ${n("conditional")} Democrats have conditions or concerns. Duckworth, Markey, Merkley, and Wyden tied their motion-to-proceed vote to DOE restoring canceled grants; Schatz and Hirono raised tribal concerns. No senator has come out against it.</p>
-    <p class="who">Tap or hover a seat for what that senator has said. Dashed rings mark senators to watch because of related votes or past positions.</p>`;
+    <p class="who">Tap or hover a seat for what that senator has said.</p>`;
 }
 
 function showSeat(r) {
@@ -1270,7 +1268,7 @@ function showSeat(r) {
   const note = r.note ? `${r.note}` : `Nothing found since Sept. 30.`;
   document.getElementById("seatPanel").innerHTML = `<span class="eyebrow">${r.party === "D" ? "Democrat" : r.party === "R" ? "Republican" : "Independent"} · ${r.state}</span>
     <h4>Sen. ${r.name.replace(/ \(..\)$/, "")}</h4>
-    <span><span class="pill ${cls}">${lbl}</span>${r.watch ? ' <span class="pill s-silent">Watch list</span>' : ""}</span>
+    <span><span class="pill ${cls}">${lbl}</span></span>
     <p class="said">${note}</p>
     <p class="said">${srcLinks(r.src)}</p>`;
 }
@@ -1279,13 +1277,12 @@ function renderHemi() {
   const rows = senRows();
   const byName = (a, b) => a.name.localeCompare(b.name);
   const D = rows.filter(r => r.party === "D"), I = rows.filter(r => r.party === "I"), R = rows.filter(r => r.party === "R");
-  const plainNone = (arr) => arr.filter(r => r.pos === "none" && !r.note).sort(byName);
-  const watchNone = (arr) => arr.filter(r => r.pos === "none" && r.note).sort(byName);
+  const plainNone = (arr) => arr.filter(r => r.pos === "none").sort(byName);
   const pos = (arr, p) => arr.filter(r => r.pos === p).sort(byName);
   const ordered = [
-    ...plainNone(D), ...watchNone(D), ...pos(D, "conditional"), ...pos(D, "lean"), ...pos(D, "support"), ...pos(D, "sponsor"),
-    ...plainNone(I), ...watchNone(I),
-    ...pos(R, "sponsor"), ...pos(R, "support"), ...pos(R, "lean"), ...watchNone(R), ...plainNone(R)
+    ...plainNone(D), ...pos(D, "conditional"), ...pos(D, "lean"), ...pos(D, "support"), ...pos(D, "sponsor"),
+    ...plainNone(I),
+    ...pos(R, "sponsor"), ...pos(R, "support"), ...pos(R, "lean"), ...plainNone(R)
   ];
   const cx = 300, cy = 312, counts = [10, 13, 15, 18, 21, 23], radii = [120, 152, 184, 216, 248, 280];
   const seats = [];
@@ -1294,8 +1291,7 @@ function renderHemi() {
   const svg = document.getElementById("hemi");
   const circles = seats.map((s, k) => {
     const m = ordered[k];
-    const dash = m.watch ? ' stroke-dasharray="3 2"' : "";
-    return `<circle class="seat p-${m.party}" data-k="${k}" tabindex="0" role="button" aria-label="${m.name}, ${m.party}-${m.state}: ${SEN_LABEL[m.pos][0]}" cx="${s.x.toFixed(1)}" cy="${s.y.toFixed(1)}" r="10.5" fill="${POS_FILL[m.pos]}" stroke-width="${m.watch ? 2.5 : 2}"${dash}></circle>`;
+    return `<circle class="seat p-${m.party}" data-k="${k}" tabindex="0" role="button" aria-label="${m.name}, ${m.party}-${m.state}: ${SEN_LABEL[m.pos][0]}" cx="${s.x.toFixed(1)}" cy="${s.y.toFixed(1)}" r="10.5" fill="${POS_FILL[m.pos]}" stroke-width="2"></circle>`;
   }).join("");
   const yes = rows.filter(r => r.pos === "sponsor" || r.pos === "support").length;
   svg.innerHTML = `<title id="hemiTitle">Senate seat chart colored by public position on BAAJA</title>${circles}
