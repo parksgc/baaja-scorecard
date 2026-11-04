@@ -104,10 +104,24 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .chip .n { font-variant-numeric: tabular-nums; opacity: 0.7; margin-left: 4px; }
 #q { font: inherit; padding: 8px 12px; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); color: var(--ink); width: 100%; max-width: 360px; }
 .count { font-size: 13px; color: var(--muted); }
-.roster { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 12px; align-items: start; }
-.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.card-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
-.card-top h3 { min-width: 0; }
+.roster { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
+@media (max-width: 1000px) { .roster { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 680px) { .roster { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .roster { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; min-width: 0; font-size: 13px; }
+.card h3 { font-size: 14px; line-height: 1.25; }
+.card-meta { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
+.card .pill { font-size: 11px; padding: 1px 7px; }
+.card .key { display: flex; flex-direction: column; gap: 2px; }
+.card .key p { font-size: 13px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.card details.more { margin-top: auto; border-top: 1px solid var(--rule); padding-top: 6px; }
+.card details.more summary { cursor: pointer; font-size: 12px; font-weight: 700; color: var(--accent); list-style: none; }
+.card details.more summary::-webkit-details-marker { display: none; }
+.card details.more summary::after { content: " +"; }
+.card details.more[open] summary::after { content: " −"; }
+.card details.more[open] { display: flex; flex-direction: column; gap: 8px; }
+.card .block ul { font-size: 13px; }
+.card-top { min-width: 0; overflow-wrap: anywhere; }
 .sector { font-size: 12px; color: var(--muted); }
 .who { font-size: 13px; color: var(--muted); }
 .block { display: flex; flex-direction: column; gap: 3px; }
@@ -232,7 +246,6 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .args { display: flex; flex-direction: column; gap: 9px; }
 .arg { display: flex; flex-direction: column; gap: 3px; }
 .arg-top { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; font-weight: 600; }
-.arg-top b { font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 700; }
 .arg-track { height: 8px; background: var(--silent-bg); border-radius: 4px; overflow: hidden; }
 .arg-fill { height: 100%; border-radius: 4px; }
 .arg-who { font-size: 11px; color: var(--muted); }
@@ -391,7 +404,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
         <div><h4 class="args-h sup">What supporters say</h4><div id="argsSup" class="args"></div></div>
         <div><h4 class="args-h det">What detractors say</h4><div id="argsDet" class="args"></div></div>
       </div>
-      <p class="who">A group counts once per argument. Supporters here include critics who praise a specific provision, such as the Sierra Club on the data center rule.</p>
+      <p class="who">Bar length shows how many groups make each argument. Supporters here include critics who praise a specific provision, such as the Sierra Club on the data center rule.</p>
     </div>
   </section>
 
@@ -610,19 +623,6 @@ const PEOPLE = [
     likes: [],
     src: [["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]] },
 
-  { name: "People's Environmental Justice Caucus", sector: "Elected officials", stance: "oppose", mi: true,
-    who: "Reps. Rashida Tlaib (MI-12), Summer Lee, Adelita Grijalva; statement Oct. 23",
-    obj: [`Fossil and Big Tech giveaway; says ratepayers get "pennies in relief" on data centers`],
-    likes: [],
-    src: [["Tlaib's House site", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"]] },
-
-  { name: "Rep. Jared Huffman", sector: "Elected officials", stance: "oppose",
-    who: "Ranking member, House Natural Resources",
-    obj: [`Administration's wind assurances are "cheap window dressing"; the bill doesn't protect renewables from the White House`, `Democrats can get a better deal by waiting: "Folding our hand now or in the lame duck makes no sense"`, `Nov. 3: promotes Purdue's Kevin Kircher model as "independent, science-based analysis" that BAAJA raises GHGs and air-pollution deaths. The model assumes fossil production rises 2% to 8%; Jane Flegal and Alex Trembath (Breakthrough) dispute that assumption, and Richard Meyer notes the model lumps all fossil fuels and cannot capture coal-to-gas switching`],
-    likes: [],
-    note: `Next in line to chair House Natural Resources if Democrats win the House. Says a Democratic Senate would remove Lee's ability to demand "poison pills."`,
-    src: [["Roll Call, Oct. 22", "https://rollcall.com/2026/10/22/permitting-bill-writers-seek-industry-aid-ahead-of-senate-vote/"], ["Politico, Nov. 3", "https://www.politico.com/news/2026/11/03/renewable-energy-environmentalists-permitting-split-01143886"], ["Huffman on X, Oct. 30", "https://x.com/JaredHuffman/status/2116324336659521845"], ["Huffman on X, Nov. 3 (Kircher)", "https://x.com/JaredHuffman/status/2117658347327635718"], ["Kircher study", "https://kevinjkircher.com/baaja/"]] },
-
   { name: "Third Act", sector: "Environmental", stance: "oppose",
     who: "Bill McKibben",
     obj: [`Building lots of both clean and dirty energy gets nowhere on climate`],
@@ -700,13 +700,6 @@ const PEOPLE = [
     likes: [],
     fix: [`Add a revocation exception for agency actions alleging a violation of federal law`, `Savings clause for the CWA, CAA, and similar statutes`, `Limit relief to actual damages and court costs`],
     src: [["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]] },
-
-  { name: "Sens. Duckworth, Markey, Wyden (and Merkley)", sector: "Elected officials", stance: "changes",
-    who: "Senate Democrats seeking conditions",
-    obj: [`Could help the administration fast-track fossil projects while it attacks renewables`, `Wyden and Merkley: "strong reservations" (Pacific Northwest groups oppose)`],
-    likes: [],
-    fix: [`DOE should reinstate $8B in cut clean energy grants and commit in writing not to block awards on political grounds`, `Duckworth, Markey, Merkley and Wyden say they will oppose the Nov. 9 motion to proceed if DOE does not comply`],
-    src: [["Inside Climate News, Oct. 29", "https://insideclimatenews.org/news/29102026/senate-debate-on-bipartisan-permitting-bill-approaches/"], ["Energy Central, Oct. 27","https://www.energycentral.com/energy-management/post/news-before-prominent-senate-dems-make-their-next-permitting-bill-moves-Ed50fQhBmqWS9Mk"], ["Oil Change Intl.", "https://oilchange.org/news/oregon-washington-opposition-baaja/"]] },
 
   { name: "Electric utilities", sector: "Utilities", stance: "changes",
     who: "EEI: \"encouraged\" by the permitting provisions but still \"reviewing\" the transmission title. Oklahoma Gas & Electric is lobbying for \"substantial revisions.\" Duke and Southern have taken no position this year",
@@ -817,7 +810,7 @@ const PEOPLE = [
     fix: [`Fishman: small fixes in the managers' amendment`, `Keohane: "legitimate legal readings" that weren't intended can get technical fixes`],
     src: [["Third Way", "https://www.thirdway.org/talking-points/on-permitting-reform-how-to-talk-about-baaja"], ["Niskanen", "https://www.niskanencenter.org/the-bipartisan-american-affordability-and-jobs-act-of-2026-4-ways-the-new-permitting-package-gets-transmission-policy-right/"], ["Heatmap (Keohane)", "https://heatmap.news/politics/baaja-permitting-certainty"], ["BPC: Affordability explainer, Nov. 3", "https://bipartisanpolicy.org/explainer/explaining-the-affordability-in-the-bipartisan-american-affordability-and-jobs-act/"], ["Fishman on X, Nov. 3", "https://x.com/XanFishman/status/2117711015559197050"]] },
 
-  { name: "Trump White House", sector: "Elected officials", stance: "support",
+  { name: "Trump White House", sector: "Administration", stance: "support",
     who: "Unnamed White House spokesperson, per Inside Climate News (Oct. 29)",
     obj: [],
     likes: [`Backs the bill for jobs and investment; spokesperson: "all that is left to do is vote"`],
@@ -833,12 +826,6 @@ const PEOPLE = [
     obj: [], likes: [`Endorsed passage`],
     src: [["@SearchlightInst on X", "https://x.com/SearchlightInst"]] },
 
-  { name: "Sponsors", sector: "Elected officials", stance: "support",
-    who: "Sens. Capito, Lee, Whitehouse, Heinrich",
-    obj: [],
-    likes: [`Bipartisan compromise; limits on revoking permits attract investment`, `Heinrich pushed the rule that data center hyperscalers bear their own power costs ${S(2107)}`, `Whitehouse (Nov. 2) says the data center rule \"saves ratepayers $55 BILLION.\" Grid Strategies' paper: $55B in transmission charges to data centers over ten years, $35B more than they pay now (Sec. 2107(a))`],
-    note: `Whitehouse and Heinrich argue the post-midterm period is the time to vote, while still pressing the administration to show it will not discriminate against renewables (Politico, Nov. 3). At a Rhode Island event on Nov. 2, Whitehouse told Democrats who want to wait until next year not to: waiting risks losing the votes or a president \"so grumpy that he won't sign it.\" His summary: \"a bird in the hand.\" (Punchbowl, from a transcript it obtained; seen via screenshot.)`,
-    src: [["Politico, Nov. 3", "https://www.politico.com/news/2026/11/03/renewable-energy-environmentalists-permitting-split-01143886"], ["Whitehouse on X, Nov. 2", "https://x.com/SenWhitehouse/status/2117321463925465131"], ["Introduction release", "https://www.heinrich.senate.gov/newsroom/press-releases/heinrich-lee-capito-and-whitehouse-introduce-bipartisan-american-affordability-and-jobs-act-of-2026"], ["Roll Call, Oct. 22", "https://rollcall.com/2026/10/22/permitting-bill-writers-seek-industry-aid-ahead-of-senate-vote/"]] }
 ];
 
 // Provision matrix: + praise, - object, ~ mixed, "" none stated
@@ -879,12 +866,12 @@ const FIXES = [
 
 // ---------- At a glance: argument tallies ----------
 const ARGS_SUP = [
-  ["Builds faster and cuts red tape", ["Clean energy trades", "API and oil and gas", "Business groups", "Building trades unions", "Governors and counties", "Sponsors", "AEP / Berkshire Hathaway", "Conservative groups", "Third Way, Niskanen, BPC, C2ES"]],
+  ["Builds faster and cuts red tape", ["Clean energy trades", "API and oil and gas", "Business groups", "Building trades unions", "Governors and counties", "AEP / Berkshire Hathaway", "Conservative groups", "Third Way, Niskanen, BPC, C2ES"]],
   ["Speeds clean energy and transmission", ["Clean energy trades", "Citizens' Climate Lobby", "Searchlight", "Center for Public Enterprise", "Breakthrough", "Third Way, Niskanen, BPC, C2ES", "Tom Steyer"]],
-  ["Lowers energy costs", ["Clean energy trades", "Business groups", "Conservative groups", "Sponsors", "Third Way, Niskanen, BPC, C2ES", "Searchlight"]],
-  ["Protects permits from political interference", ["Clean energy trades", "Building trades unions", "API and oil and gas", "Business groups", "Sponsors", "Governors and counties"]],
-  ["Makes data centers pay their own way", ["Sponsors", "Institute for Progress", "Sierra Club (critic)", "Earthjustice (critic)"]],
-  ["Creates jobs", ["Building trades unions", "Sponsors", "Business groups"]]
+  ["Lowers energy costs", ["Clean energy trades", "Business groups", "Conservative groups", "Third Way, Niskanen, BPC, C2ES", "Searchlight"]],
+  ["Protects permits from political interference", ["Clean energy trades", "Building trades unions", "API and oil and gas", "Business groups", "Governors and counties"]],
+  ["Makes data centers pay their own way", ["Institute for Progress", "Sierra Club (critic)", "Earthjustice (critic)"]],
+  ["Creates jobs", ["Building trades unions", "Business groups"]]
 ];
 
 const ARGS_DET = [
@@ -894,8 +881,8 @@ const ARGS_DET = [
   ["Shuts tribes out of consultation", ["Earthjustice", "NRDC", "NAACP", "IEN and tribal groups", "National Trust", "NPCA", "Karuk Tribe"]],
   ["A giveaway to fossil fuels", ["Sierra Club", "UCS", "NAACP", "Public Citizen", "Third Act", "Food & Water Watch", "CJA and EJ coalition"]],
   ["Weakens state control over water quality", ["NRDC", "Sierra Club", "Earthjustice", "NAACP", "Karuk Tribe", "Environment America"]],
-  ["A giveaway to Big Tech and data centers", ["Food & Water Watch", "CJA and EJ coalition", "People's EJ Caucus", "NAACP"]],
-  ["Trump can't be trusted to implement it", ["Sierra Club", "Rep. Huffman", "Duckworth, Markey, Merkley, Wyden"]]
+  ["A giveaway to Big Tech and data centers", ["Food & Water Watch", "CJA and EJ coalition", "NAACP"]],
+  ["Trump can't be trusted to implement it", ["Sierra Club"]]
 ];
 
 const VENN = {
@@ -955,7 +942,7 @@ function renderGlance() {
   const argHtml = (arr, color) => {
     const m = Math.max(...arr.map(a => a[1].length));
     return [...arr].sort((a, b) => b[1].length - a[1].length).map(([label, who]) =>
-      `<div class="arg"><div class="arg-top"><span>${label}</span><b>${who.length}</b></div>
+      `<div class="arg"><div class="arg-top"><span>${label}</span></div>
         <div class="arg-track"><div class="arg-fill" style="width:${(who.length / m * 100).toFixed(1)}%;background:${color}"></div></div>
         <span class="arg-who">${who.join(", ")}</span></div>`).join("");
   };
@@ -1179,32 +1166,39 @@ function list(label, cls, items) {
   return `<div class="block"><span class="label ${cls}">${label}</span><ul>${items.map(i => `<li>${i}</li>`).join("")}</ul></div>`;
 }
 
-// Shown by default: elected officials plus the groups in the provision chart. Everything else sits behind "Show all".
+// Shown by default: the groups in the provision chart. Everything else sits behind "Show all".
 const FEATURED = new Set(["Sierra Club", "Earthjustice", "NRDC", "Center for Biological Diversity", "NAACP", "National Trust for Historic Preservation", "NCAI, NARF, NATHPO and the 106 Strong coalition", "Clean energy trade groups", "American Petroleum Institute and oil and gas groups", "Business and manufacturing groups"]);
-const isElected = (p) => p.sector === "Elected officials";
 function renderRoster() {
   const order = { oppose: 0, changes: 1, silent: 2, support: 3 };
   const filtering = state.stance !== "all" || state.sector !== "all" || state.q;
-  const all = PEOPLE.filter(matches).sort((a, b) => (isElected(b) - isElected(a)) || order[a.stance] - order[b.stance]);
-  const rows = filtering || state.all ? all : all.filter(p => isElected(p) || FEATURED.has(p.name));
+  const all = PEOPLE.filter(matches).sort((a, b) => order[a.stance] - order[b.stance]);
+  const rows = filtering || state.all ? all : all.filter(p => FEATURED.has(p.name));
   const more = document.getElementById("rosterMore");
   more.hidden = filtering || all.length === rows.length && !state.all;
-  more.textContent = state.all ? "Show fewer" : `Show all ${PEOPLE.length} groups and officials`;
-  document.getElementById("count").textContent = filtering || state.all ? `Showing ${rows.length} of ${PEOPLE.length}` : `Showing elected officials and the groups in the chart above (${rows.length} of ${PEOPLE.length})`;
+  more.textContent = state.all ? "Show fewer" : `Show all ${PEOPLE.length} groups`;
+  document.getElementById("count").textContent = filtering || state.all ? `Showing ${rows.length} of ${PEOPLE.length}` : `Showing the groups in the chart above (${rows.length} of ${PEOPLE.length})`;
   const el = document.getElementById("roster");
   if (!rows.length) { el.innerHTML = `<p class="empty">No stakeholders match. Clear the search or pick another filter.</p>`; return; }
   el.innerHTML = rows.map(p => {
     const st = STANCES[p.stance];
     const likesLabel = p.stance === "support" ? "Why they back it" : "What they like";
     const likes = p.stance === "oppose" && !p.likes.length ? `<div class="block"><span class="label likes">What they like</span><ul><li style="color:var(--muted)">Nothing stated publicly</li></ul></div>` : list(likesLabel, "likes", p.likes);
+    const [keyLbl, keyCls, keyTxt] = p.stance === "support" && p.likes.length ? ["Why they back it", "likes", p.likes[0]]
+      : p.obj.length ? ["Main objection", "obj", p.obj[0]]
+      : p.likes.length ? ["What they like", "likes", p.likes[0]]
+      : ["", "", p.who || p.note || ""];
     return `<article class="card">
-      <div class="card-top"><div><h3>${esc(p.name)}${p.mi ? '<span class="tag-mi">MI</span>' : ""}</h3><span class="sector">${esc(p.sector)}</span></div><span class="pill ${st.cls}">${st.label}</span></div>
-      ${p.who ? `<p class="who">${p.who}</p>` : ""}
-      ${list("Objects to", "obj", p.obj)}
-      ${likes}
-      ${list("Fixes they want", "fix", p.fix)}
-      ${p.note ? `<p class="who">${p.note}</p>` : ""}
-      <div class="sources">${p.src.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join("")}</div>
+      <div class="card-top"><h3>${esc(p.name)}${p.mi ? '<span class="tag-mi">MI</span>' : ""}</h3></div>
+      <div class="card-meta"><span class="pill ${st.cls}">${st.label}</span><span class="sector">${esc(p.sector)}</span></div>
+      ${keyTxt ? `<div class="key">${keyLbl ? `<span class="label ${keyCls}">${keyLbl}</span>` : ""}<p>${keyTxt}</p></div>` : ""}
+      <details class="more"><summary>Details</summary>
+        ${p.who ? `<p class="who">${p.who}</p>` : ""}
+        ${list("Objects to", "obj", p.obj)}
+        ${likes}
+        ${list("Fixes they want", "fix", p.fix)}
+        ${p.note ? `<p class="who">${p.note}</p>` : ""}
+        <div class="sources">${p.src.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join("")}</div>
+      </details>
     </article>`;
   }).join("");
 }
