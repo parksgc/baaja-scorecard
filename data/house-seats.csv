@@ -1,22 +1,24 @@
 x,y,Member,Party,District,Position,What they said
--17.5,299.7,Rep. Adam Gray,Democrat,CA-13,Supports,"An ""important and long-overdue first step""; Congress should take it up ""immediately."""
--9.1,190.8,Rep. Scott Peters,Democrat,CA-50,Supports,"Transmission provisions ""are as good as anything we could ever get""; it ""ought to be voted on this Congress,"" though it ""still needs some adjustments…"
--8.7,227.2,Rep. Josh Harder,Democrat,CA-9,Supports,"As Build America Caucus co-chair: ""make passing this deal priority number one in November."" Nov. 4: ""Passing permitting reform should be our top…"
--8.8,263.7,Rep. Nikki Budzinski,Democrat,IL-13,Supports,"Urges acting in the lame duck: moving now shows voters ""we'll immediately get to work to lower costs."" ""Suggesting that the margin of victory last…"
+-9.0,154.3,Rep. Adam Gray,Democrat,CA-13,Supports,"An ""important and long-overdue first step""; Congress should take it up ""immediately."""
+-17.5,299.7,Rep. Scott Peters,Democrat,CA-50,Supports,"Transmission provisions ""are as good as anything we could ever get""; it ""ought to be voted on this Congress,"" though it ""still needs some adjustments…"
+-9.1,190.8,Rep. Josh Harder,Democrat,CA-9,Supports,"As Build America Caucus co-chair: ""make passing this deal priority number one in November."" Nov. 4: ""Passing permitting reform should be our top…"
+-8.7,227.2,Rep. Nikki Budzinski,Democrat,IL-13,Supports,"Urges acting in the lame duck: moving now shows voters ""we'll immediately get to work to lower costs."" ""Suggesting that the margin of victory last…"
+-8.8,263.7,Rep. Chrissy Houlahan,Democrat,PA-6,Supports,"Lists permitting reform among the unfinished lame-duck items before the Dec. 11 funding deadline: ""Permitting reform that accelerates essential…"
 -0.0,172.8,Rep. Bruce Westerman,Republican,AR-4,Supports,"""An encouraging step toward fixing our nation's permitting challenges."""
 -0.0,245.6,Rep. Gabe Evans,Republican,CO-8,Supports,Held a district event with the National Association of Manufacturers on Nov. 2 to tout the Senate's bipartisan permitting bill (Punchbowl preview;…
 0.0,118.2,Rep. Mike Johnson,Republican,LA-4,Supports,"Gave an enthusiastic ""yes"" on backing the bipartisan permitting bill; Roll Call says he endorsed its ""overall thrust."""
 0.0,209.2,Rep. Celeste Maloy,Republican,UT-2,Supports,"Build America Caucus co-chair; joint statement urging Congress to ""quickly pass the reforms into law."""
--9.3,136.1,Rep. Sean Casten,Democrat,IL-6,Wants changes,"Has not endorsed: ""I think there are modest changes we could make to it to make sure it works."" Axios's headline frames his worry as a ""gold rush for…"
--9.0,154.3,Rep. Teresa Leger Fernández,Democrat,NM-3,Wants changes,"""I cannot support the Bipartisan American Affordability and Jobs Act in its current form,"" citing ""serious concerns"" that it harms historic…"
+-18.2,208.4,Rep. Sean Casten,Democrat,IL-6,Wants changes,"Has not endorsed: ""I think there are modest changes we could make to it to make sure it works."" Axios's headline frames his worry as a ""gold rush for…"
+-17.5,245.0,Rep. Teresa Leger Fernández,Democrat,NM-3,Wants changes,"""I cannot support the Bipartisan American Affordability and Jobs Act in its current form,"" citing ""serious concerns"" that it harms historic…"
+-9.3,136.1,Rep. Hakeem Jeffries,Democrat,NY-8,Wants changes,"A spokesperson says the Senate bill ""falls short in several areas, including the manner in which NEPA reform is undertaken and the failure to…"
 0.0,300.2,Rep. Brett Guthrie,Republican,KY-2,Wants changes,Wants changes before a House vote (unspecified); Grist reports he opposes forcing new transmission lines. No statement in his own words found.
 8.7,281.9,Rep. Tom Cole,Republican,OK-4,Wants changes,"Joining Democrats on tribal concerns: ""That's going to be an issue for me."" Says he will push for changes to the NHPA provisions in the Senate and…"
--18.1,171.9,Rep. Adelita Grijalva,Democrat,AZ-7,Opposes outright,People's EJ Caucus statement.
--26.4,262.5,Rep. Ro Khanna,Democrat,CA-17,Opposes outright,Reported (paraphrase) as urging Democrats to wait until after the midterms for a better bill.
--9.2,99.6,Rep. Jared Huffman,Democrat,CA-2,Opposes outright,"A ""Trojan horse"" with fossil giveaways; wind assurances are ""cheap window dressing."" Says Democrats should wait for a better deal after the midterms.…"
--26.0,280.8,Rep. Rashida Tlaib,Democrat,MI-12,Opposes outright,"Co-founded the People's EJ Caucus, which calls it ""a gift to Big Oil and Big Tech."" At Oil Change International's Oct. 28 briefing she was the only…"
--18.2,208.4,Rep. Melanie Stansbury,Democrat,NM-1,Opposes outright,"""Adamantly opposed to this bill"" and won't vote for it ""for now,"" citing tribal sovereignty and consultation, sacred sites, public lands, and…"
--17.5,245.0,Rep. Summer Lee,Democrat,PA-12,Opposes outright,People's EJ Caucus statement.
+-34.9,298.2,Rep. Adelita Grijalva,Democrat,AZ-7,Opposes outright,People's EJ Caucus statement.
+-26.1,225.9,Rep. Ro Khanna,Democrat,CA-17,Opposes outright,Reported (paraphrase) as urging Democrats to wait until after the midterms for a better bill.
+-18.1,171.9,Rep. Jared Huffman,Democrat,CA-2,Opposes outright,"A ""Trojan horse"" with fossil giveaways; wind assurances are ""cheap window dressing."" Says Democrats should wait for a better deal after the midterms.…"
+-26.4,262.5,Rep. Rashida Tlaib,Democrat,MI-12,Opposes outright,"Co-founded the People's EJ Caucus, which calls it ""a gift to Big Oil and Big Tech."" At Oil Change International's Oct. 28 briefing she was the only…"
+-9.2,99.6,Rep. Melanie Stansbury,Democrat,NM-1,Opposes outright,"""Adamantly opposed to this bill"" and won't vote for it ""for now,"" citing tribal sovereignty and consultation, sacred sites, public lands, and…"
+-26.0,280.8,Rep. Summer Lee,Democrat,PA-12,Opposes outright,People's EJ Caucus statement.
 -100.0,0.0,Rep. Shomari Figures,Democrat,AL-2,No statement found,No statement found.
 -118.2,0.0,Rep. Terri A. Sewell,Democrat,AL-7,No statement found,No statement found.
 -136.4,0.0,Rep. Yassamin Ansari,Democrat,AZ-3,No statement found,No statement found.
@@ -167,58 +169,56 @@ x,y,Member,Party,District,Position,What they said
 -150.1,260.0,Rep. Gregory W. Meeks,Democrat,NY-5,No statement found,No statement found.
 -141.0,244.2,Rep. Grace Meng,Democrat,NY-6,No statement found,No statement found.
 -126.8,231.3,Rep. Nydia M. Velázquez,Democrat,NY-7,No statement found,No statement found.
--117.7,215.6,Rep. Hakeem S. Jeffries,Democrat,NY-8,No statement found,No statement found.
--108.6,199.8,Rep. Yvette D. Clarke,Democrat,NY-9,No statement found,No statement found.
--62.8,121.1,Rep. Greg Landsman,Democrat,OH-1,No statement found,No statement found.
--53.7,105.3,Rep. Shontel M. Brown,Democrat,OH-11,No statement found,No statement found.
--134.7,268.3,Rep. Emilia Strong Sykes,Democrat,OH-13,No statement found,No statement found.
--44.6,89.5,Rep. Joyce Beatty,Democrat,OH-3,No statement found,No statement found.
--125.7,252.4,Rep. Marcy Kaptur,Democrat,OH-9,No statement found,No statement found.
--88.4,189.6,Rep. Suzanne Bonamici,Democrat,OR-1,No statement found,No statement found.
--111.0,239.3,Rep. Maxine Dexter,Democrat,OR-3,No statement found,No statement found.
--79.3,173.7,Rep. Val T. Hoyle,Democrat,OR-4,No statement found,No statement found.
--102.0,223.4,Rep. Janelle S. Bynum,Democrat,OR-5,No statement found,No statement found.
--93.0,207.5,Rep. Andrea Salinas,Democrat,OR-6,No statement found,No statement found.
--70.3,157.9,Rep. Christopher R. Deluzio,Democrat,PA-17,No statement found,No statement found.
--61.2,142.0,Rep. Brendan F. Boyle,Democrat,PA-2,No statement found,No statement found.
--118.9,275.6,Rep. Dwight Evans,Democrat,PA-3,No statement found,No statement found.
--109.9,259.7,Rep. Madeleine Dean,Democrat,PA-4,No statement found,No statement found.
--94.8,246.2,Rep. Mary Gay Scanlon,Democrat,PA-5,No statement found,No statement found.
--85.8,230.1,Rep. Chrissy Houlahan,Democrat,PA-6,No statement found,No statement found.
--71.6,196.6,Rep. Gabe Amo,Democrat,RI-1,No statement found,No statement found.
--102.7,282.1,Rep. Seth Magaziner,Democrat,RI-2,No statement found,No statement found.
--76.9,214.0,Rep. James E. Clyburn,Democrat,SC-6,No statement found,No statement found.
--45.7,128.5,Rep. Steve Cohen,Democrat,TN-9,No statement found,No statement found.
--93.7,266.0,Rep. Veronica Escobar,Democrat,TX-16,No statement found,No statement found.
--62.5,180.5,Rep. Christian D. Menefee,Democrat,TX-18,No statement found,No statement found.
--36.5,112.4,Rep. Joaquin Castro,Democrat,TX-20,No statement found,No statement found.
--53.4,164.3,Rep. Henry Cuellar,Democrat,TX-28,No statement found,No statement found.
--78.2,252.0,Rep. Sylvia R. Garcia,Democrat,TX-29,No statement found,No statement found.
--44.3,148.1,Rep. Jasmine Crockett,Democrat,TX-30,No statement found,No statement found.
--86.1,287.6,Rep. Julie Johnson,Democrat,TX-32,No statement found,No statement found.
--69.2,235.7,Rep. Marc A. Veasey,Democrat,TX-33,No statement found,No statement found.
--27.4,96.2,Rep. Vicente Gonzalez,Democrat,TX-34,No statement found,No statement found.
--77.2,271.2,Rep. Greg Casar,Democrat,TX-35,No statement found,No statement found.
--60.3,219.3,Rep. Lloyd Doggett,Democrat,TX-37,No statement found,No statement found.
--54.1,202.1,Rep. Lizzie Fletcher,Democrat,TX-7,No statement found,No statement found.
--45.0,185.6,Rep. Al Green,Democrat,TX-9,No statement found,No statement found.
--61.2,256.6,Rep. Suhas Subramanyam,Democrat,VA-10,No statement found,No statement found.
--69.2,292.1,Rep. James R. Walkinshaw,Democrat,VA-11,No statement found,No statement found.
--60.3,275.5,"Rep. Robert C. ""Bobby"" Scott",Democrat,VA-3,No statement found,No statement found.
--52.2,240.0,Rep. Jennifer L. McClellan,Democrat,VA-4,No statement found,No statement found.
--35.9,169.0,Rep. Eugene Simon Vindman,Democrat,VA-7,No statement found,No statement found.
--27.8,133.5,"Rep. Donald S. Beyer, Jr.",Democrat,VA-8,No statement found,No statement found.
--43.3,223.2,Rep. Becca Balint,Democrat,VT-AL,No statement found,No statement found.
--26.8,152.3,Rep. Suzan K. DelBene,Democrat,WA-1,No statement found,No statement found.
--36.3,206.0,Rep. Marilyn Strickland,Democrat,WA-10,No statement found,No statement found.
--52.1,295.6,Rep. Rick Larsen,Democrat,WA-2,No statement found,No statement found.
--43.9,260.1,Rep. Marie Gluesenkamp Perez,Democrat,WA-3,No statement found,No statement found.
--18.5,116.7,Rep. Emily Randall,Democrat,WA-6,No statement found,No statement found.
--43.3,278.7,Rep. Pramila Jayapal,Democrat,WA-7,No statement found,No statement found.
--27.2,189.1,Rep. Kim Schrier,Democrat,WA-8,No statement found,No statement found.
--35.0,243.1,Rep. Adam Smith,Democrat,WA-9,No statement found,No statement found.
--34.9,298.2,Rep. Mark Pocan,Democrat,WI-2,No statement found,No statement found.
--26.1,225.9,Rep. Gwen Moore,Democrat,WI-4,No statement found,No statement found.
+-117.7,215.6,Rep. Yvette D. Clarke,Democrat,NY-9,No statement found,No statement found.
+-108.6,199.8,Rep. Greg Landsman,Democrat,OH-1,No statement found,No statement found.
+-62.8,121.1,Rep. Shontel M. Brown,Democrat,OH-11,No statement found,No statement found.
+-53.7,105.3,Rep. Emilia Strong Sykes,Democrat,OH-13,No statement found,No statement found.
+-134.7,268.3,Rep. Joyce Beatty,Democrat,OH-3,No statement found,No statement found.
+-44.6,89.5,Rep. Marcy Kaptur,Democrat,OH-9,No statement found,No statement found.
+-125.7,252.4,Rep. Suzanne Bonamici,Democrat,OR-1,No statement found,No statement found.
+-88.4,189.6,Rep. Maxine Dexter,Democrat,OR-3,No statement found,No statement found.
+-111.0,239.3,Rep. Val T. Hoyle,Democrat,OR-4,No statement found,No statement found.
+-79.3,173.7,Rep. Janelle S. Bynum,Democrat,OR-5,No statement found,No statement found.
+-102.0,223.4,Rep. Andrea Salinas,Democrat,OR-6,No statement found,No statement found.
+-93.0,207.5,Rep. Christopher R. Deluzio,Democrat,PA-17,No statement found,No statement found.
+-70.3,157.9,Rep. Brendan F. Boyle,Democrat,PA-2,No statement found,No statement found.
+-61.2,142.0,Rep. Dwight Evans,Democrat,PA-3,No statement found,No statement found.
+-118.9,275.6,Rep. Madeleine Dean,Democrat,PA-4,No statement found,No statement found.
+-109.9,259.7,Rep. Mary Gay Scanlon,Democrat,PA-5,No statement found,No statement found.
+-94.8,246.2,Rep. Gabe Amo,Democrat,RI-1,No statement found,No statement found.
+-85.8,230.1,Rep. Seth Magaziner,Democrat,RI-2,No statement found,No statement found.
+-71.6,196.6,Rep. James E. Clyburn,Democrat,SC-6,No statement found,No statement found.
+-102.7,282.1,Rep. Steve Cohen,Democrat,TN-9,No statement found,No statement found.
+-76.9,214.0,Rep. Veronica Escobar,Democrat,TX-16,No statement found,No statement found.
+-45.7,128.5,Rep. Christian D. Menefee,Democrat,TX-18,No statement found,No statement found.
+-93.7,266.0,Rep. Joaquin Castro,Democrat,TX-20,No statement found,No statement found.
+-62.5,180.5,Rep. Henry Cuellar,Democrat,TX-28,No statement found,No statement found.
+-36.5,112.4,Rep. Sylvia R. Garcia,Democrat,TX-29,No statement found,No statement found.
+-53.4,164.3,Rep. Jasmine Crockett,Democrat,TX-30,No statement found,No statement found.
+-78.2,252.0,Rep. Julie Johnson,Democrat,TX-32,No statement found,No statement found.
+-44.3,148.1,Rep. Marc A. Veasey,Democrat,TX-33,No statement found,No statement found.
+-86.1,287.6,Rep. Vicente Gonzalez,Democrat,TX-34,No statement found,No statement found.
+-69.2,235.7,Rep. Greg Casar,Democrat,TX-35,No statement found,No statement found.
+-27.4,96.2,Rep. Lloyd Doggett,Democrat,TX-37,No statement found,No statement found.
+-77.2,271.2,Rep. Lizzie Fletcher,Democrat,TX-7,No statement found,No statement found.
+-60.3,219.3,Rep. Al Green,Democrat,TX-9,No statement found,No statement found.
+-54.1,202.1,Rep. Suhas Subramanyam,Democrat,VA-10,No statement found,No statement found.
+-45.0,185.6,Rep. James R. Walkinshaw,Democrat,VA-11,No statement found,No statement found.
+-61.2,256.6,"Rep. Robert C. ""Bobby"" Scott",Democrat,VA-3,No statement found,No statement found.
+-69.2,292.1,Rep. Jennifer L. McClellan,Democrat,VA-4,No statement found,No statement found.
+-60.3,275.5,Rep. Eugene Simon Vindman,Democrat,VA-7,No statement found,No statement found.
+-52.2,240.0,"Rep. Donald S. Beyer, Jr.",Democrat,VA-8,No statement found,No statement found.
+-35.9,169.0,Rep. Becca Balint,Democrat,VT-AL,No statement found,No statement found.
+-27.8,133.5,Rep. Suzan K. DelBene,Democrat,WA-1,No statement found,No statement found.
+-43.3,223.2,Rep. Marilyn Strickland,Democrat,WA-10,No statement found,No statement found.
+-26.8,152.3,Rep. Rick Larsen,Democrat,WA-2,No statement found,No statement found.
+-36.3,206.0,Rep. Marie Gluesenkamp Perez,Democrat,WA-3,No statement found,No statement found.
+-52.1,295.6,Rep. Emily Randall,Democrat,WA-6,No statement found,No statement found.
+-43.9,260.1,Rep. Pramila Jayapal,Democrat,WA-7,No statement found,No statement found.
+-18.5,116.7,Rep. Kim Schrier,Democrat,WA-8,No statement found,No statement found.
+-43.3,278.7,Rep. Adam Smith,Democrat,WA-9,No statement found,No statement found.
+-27.2,189.1,Rep. Mark Pocan,Democrat,WI-2,No statement found,No statement found.
+-35.0,243.1,Rep. Gwen Moore,Democrat,WI-4,No statement found,No statement found.
 -8.7,281.9,Rep. Kevin Kiley,Independent,CA-3,No statement found,No statement found.
 8.8,263.7,Rep. Nicholas J. Begich III,Republican,AK-AL,No statement found,No statement found.
 8.7,227.2,Rep. Barry Moore,Republican,AL-1,No statement found,No statement found.
