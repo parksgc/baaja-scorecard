@@ -155,6 +155,29 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .views { display: flex; gap: 4px; border-bottom: 1px solid var(--rule); margin-top: 6px; }
 .view-tab { padding: 8px 14px; font-weight: 700; font-size: 14px; color: var(--muted); text-decoration: none; border-bottom: 3px solid transparent; margin-bottom: -1px; }
 .view-tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+/* Polling */
+.polls { display: flex; flex-direction: column; gap: 12px; }
+.poll { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+.poll-head { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+.poll-head h3 { font-size: 17px; }
+.poll-meta { font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.poll-meta strong { color: var(--ink); font-weight: 600; }
+.poll .k { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.stages { display: flex; flex-direction: column; gap: 8px; }
+.stage { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 2fr) 112px; gap: 10px; align-items: center; font-size: 13px; }
+.stage-bar { display: flex; height: 16px; background: var(--silent-bg); border-radius: 4px; overflow: hidden; }
+.stage-bar .y { background: var(--support); }
+.stage-bar .n { background: var(--oppose); margin-left: auto; }
+.stage-val { font-variant-numeric: tabular-nums; font-weight: 700; text-align: right; white-space: nowrap; }
+.stage-val .no { color: var(--oppose); font-weight: 600; }
+.stage.key { color: var(--muted); font-weight: 700; }
+.stage.key .stage-val { font-size: 12px; }
+.poll-args { display: flex; flex-wrap: wrap; gap: 6px; }
+.poll-args span { font-size: 12px; background: var(--silent-bg); border-radius: 999px; padding: 3px 10px; }
+.poll-args b { font-variant-numeric: tabular-nums; }
+.poll p { font-size: 13px; }
+.poll .srcs a { font-size: 12px; margin-right: 10px; }
+@media (max-width: 640px) { .stage { grid-template-columns: minmax(0, 1fr) 104px; } .stage .stage-bar { grid-column: 1 / -1; grid-row: 2; } .stage.key > span:nth-child(2) { display: none; } }
 .chamber { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 16px; align-items: start; }
 @media (max-width: 760px) { .chamber { grid-template-columns: 1fr; } }
 .chamber-chart, .panel, .seat-panel, .votebar-wrap { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
@@ -311,6 +334,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     <div class="views" role="tablist" aria-label="Views">
       <a role="tab" href="#congress" id="tab-congress" class="view-tab">Whip tracker</a>
       <a role="tab" href="#groups" id="tab-groups" class="view-tab">Stakeholders</a>
+      <a role="tab" href="#polls" id="tab-polls" class="view-tab">Polling</a>
     </div>
     <nav class="jump" aria-label="Sections" data-view="groups"><a href="#glance">At a glance</a><a href="#provisions">Provisions</a><a href="#stakeholders">Groups</a><a href="#officials">Former officials</a><a href="#fixes">Fixes</a></nav>
   </header>
@@ -397,6 +421,24 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
         <tbody id="houseBody"></tbody>
       </table>
     </div>
+  </section>
+
+  <section id="polls" data-view="polls">
+    <div class="section-head">
+      <span class="eyebrow">Public opinion</span>
+      <h2>Polling</h2>
+      <p>Polls that ask voters about BAAJA itself. Most voters have never heard of the bill, so what respondents are told shapes the answer. Each poll below shows who paid for it, how it was fielded, and how support moved as respondents heard more about the bill.</p>
+    </div>
+    <div class="tally" id="pollTally"></div>
+    <div class="polls" id="pollCards"></div>
+    <h3 style="margin-top:8px">All polls</h3>
+    <div class="table-scroll">
+      <table class="list-table">
+        <thead><tr><th scope="col">Pollster (sponsor)</th><th scope="col">Released</th><th scope="col">Fielded</th><th scope="col">Sample</th><th scope="col">First read</th><th scope="col">After the case against</th><th scope="col">Source</th></tr></thead>
+        <tbody id="pollBody"></tbody>
+      </table>
+    </div>
+    <p class="who">Polls about permitting reform in general, or about earlier bills, are not included. A poll's sponsor is listed with its own stance on BAAJA because advocacy groups commission most issue polls. "First read" is support after the first description of the bill; "After the case against" is support and opposition after respondents hear arguments against it.</p>
   </section>
 
   <div class="panel latest" id="latestG" data-view="groups">
@@ -1165,6 +1207,44 @@ const HOUSE = [
   ["Problem Solvers Caucus", "Bipartisan caucus", "conditional", `No position yet; expects to announce one in the lame duck. Peters and Rep. Gabe Evans lead its permitting working group.`, [["Bloomberg Law, Oct. 27", "https://news.bloomberglaw.com/health-law-and-business/bipartisan-house-caucus-weighs-senate-permitting-bill-support"]]]
 ];
 
+// Polls that ask about BAAJA itself (not permitting reform in general, not earlier bills). Newest first.
+// stages: [label, support %, oppose % or null]. The first stage is the "first read" figure; mark the stage
+// taken after respondents hear the case against the bill with against: true. args: [argument, % convincing].
+// sponsorPos: the poll sponsor's own stance on the bill (support, changes, oppose, none).
+const POLLS = [
+  {
+    id: "thirdway-impact-oct26",
+    released: "Nov. 6, 2026",
+    pollster: "Impact Research",
+    sponsor: "Third Way",
+    sponsorPos: "support",
+    sponsorNote: "Third Way, a center-left think tank, backs the bill",
+    sponsorSrc: ["Third Way talking points", "https://www.thirdway.org/talking-points/on-permitting-reform-how-to-talk-about-baaja"],
+    field: "Oct. 26–29, 2026",
+    n: 1000,
+    pop: "likely voters, nationwide",
+    mode: "Online panel",
+    moe: "±3.1 (credibility interval)",
+    stages: [
+      ["After a first description of the bill", 79, null],
+      ["Described as faster permits for roads, bridges, power plants and power lines", 82, null],
+      ["Described around wind and solar projects", 77, null],
+      ["After hearing concerns about environmental protections and local communities", 66, 21, { against: true }],
+      ["After hearing more about the bill's benefits", 80, null],
+    ],
+    args: [
+      ["Data centers pay for the grid they need", 78],
+      ["Creates American jobs", 77],
+      ["Improves roads and highways", 77],
+      ["Lowers costs", 74],
+      ["Builds more clean energy", 68],
+      ["Addresses climate change", 65],
+    ],
+    notes: `Question wording and results by party were not released; the memo says support holds "across party lines." More than half of respondents said they knew little or nothing about permitting reform. Heatmap, which reported the poll first, described the sample as registered voters; Third Way's memo says likely voters. Oppose figures were released only for the stage after the arguments against.`,
+    src: [["Third Way memo", "https://www.thirdway.org/memo/polling-americans-want-permitting-reform"], ["Heatmap AM (Kaufman, Nov. 6)", "https://heatmap.news/am/canada-shell-oil"]],
+  },
+];
+
 function srcLinks(arr) { return (arr || []).map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join(" "); }
 
 function renderOfficials() {
@@ -1580,16 +1660,58 @@ document.addEventListener("click", (e) => {
 const GROUP_IDS = ["groups", "glance", "provisions", "stakeholders", "officials", "fixes"];
 function showView() {
   const h = location.hash.slice(1);
-  const view = GROUP_IDS.includes(h) ? "groups" : "congress";
+  const view = GROUP_IDS.includes(h) ? "groups" : h === "polls" ? "polls" : "congress";
   document.querySelectorAll("[data-view]").forEach(el => { el.hidden = el.dataset.view !== view; });
-  document.getElementById("tab-groups").setAttribute("aria-selected", view === "groups");
-  document.getElementById("tab-congress").setAttribute("aria-selected", view === "congress");
-  if (h && h !== "groups" && h !== "congress") { const t = document.getElementById(h); if (t) t.scrollIntoView(); }
+  ["groups", "congress", "polls"].forEach(v => document.getElementById("tab-" + v).setAttribute("aria-selected", view === v));
+  if (h && h !== "groups" && h !== "congress" && h !== "polls") { const t = document.getElementById(h); if (t) t.scrollIntoView(); }
 }
 window.addEventListener("hashchange", showView);
 
+const POLL_POS = { support: ["Sponsor backs the bill", "s-support"], changes: ["Sponsor wants changes", "s-changes"], oppose: ["Sponsor opposes the bill", "s-oppose"], none: ["Sponsor has no position", "s-silent"] };
+function renderPolls() {
+  const pct = (v) => (v == null ? "" : `${v}%`);
+  const againstOf = (p) => p.stages.find((s) => s[3] && s[3].against);
+  const avg = (xs) => Math.round(xs.reduce((a, b) => a + b, 0) / xs.length);
+  const firsts = POLLS.map((p) => p.stages[0][1]);
+  const againsts = POLLS.map(againstOf).filter(Boolean);
+  const t = (b, s) => `<div class="t"><b>${b}</b><span>${s}</span></div>`;
+  const pl = POLLS.length === 1 ? "" : "s";
+  document.getElementById("pollTally").innerHTML = POLLS.length
+    ? t(POLLS.length, `Poll${pl} tracked`) +
+      t(`${avg(firsts)}%`, POLLS.length === 1 ? "Support on first read" : "Average support on first read") +
+      (againsts.length ? t(`${avg(againsts.map((s) => s[1]))}% / ${avg(againsts.filter((s) => s[2] != null).map((s) => s[2]))}%`, `Support / oppose after the case against${againsts.length === 1 ? "" : " (average)"}`) : "")
+    : t(0, "Polls tracked");
+
+  document.getElementById("pollCards").innerHTML = POLLS.map((p) => {
+    const [posLabel, posCls] = POLL_POS[p.sponsorPos] || POLL_POS.none;
+    const stages = p.stages.map(([label, y, n]) => `
+      <div class="stage">
+        <span>${label}</span>
+        <div class="stage-bar" role="img" aria-label="${y}% support${n != null ? `, ${n}% oppose` : ""}"><i class="y" style="width:${y}%"></i>${n != null ? `<i class="n" style="width:${n}%"></i>` : ""}</div>
+        <span class="stage-val">${pct(y)}${n != null ? ` <span class="no">/ ${pct(n)}</span>` : ""}</span>
+      </div>`).join("");
+    const args = (p.args || []).map(([a, v]) => `<span>${a} <b>${v}%</b></span>`).join("");
+    return `<article class="poll" id="poll-${p.id}">
+      <div class="poll-head"><h3>${p.pollster} for ${p.sponsor}</h3><span class="pill ${posCls}" title="${p.sponsorNote || ""}">${posLabel}</span></div>
+      <div class="poll-meta"><span>Released <strong>${p.released}</strong></span><span>Fielded <strong>${p.field}</strong></span><span><strong>${p.n.toLocaleString("en-US")}</strong> ${p.pop}</span><span>${p.mode}, ${p.moe}</span></div>
+      <div class="stages">
+        <div class="stage key"><span>What respondents had heard</span><span></span><span class="stage-val">Support <span class="no">/ oppose</span></span></div>
+        ${stages}
+      </div>
+      ${args ? `<div><div class="k">Arguments for the bill: share who found each convincing</div><div class="poll-args">${args}</div></div>` : ""}
+      <p>${p.sponsorNote ? `${p.sponsorNote} (${srcLinks([p.sponsorSrc])}). ` : ""}${p.notes || ""}</p>
+      <div class="srcs">${srcLinks(p.src)}</div>
+    </article>`;
+  }).join("") || `<p class="empty">No polls on BAAJA found yet.</p>`;
+
+  document.getElementById("pollBody").innerHTML = POLLS.map((p) => {
+    const a = againstOf(p);
+    return `<tr><th scope="row"><a href="#poll-${p.id}">${p.pollster}</a> (${p.sponsor})</th><td>${p.released}</td><td>${p.field}</td><td>${p.n.toLocaleString("en-US")} ${p.pop.split(",")[0]}</td><td>${pct(p.stages[0][1])}</td><td>${a ? `${pct(a[1])} / ${pct(a[2])}` : "Not asked"}</td><td class="said">${srcLinks(p.src.slice(0, 1))}</td></tr>`;
+  }).join("");
+}
+
 renderSummary(); renderMatrix(); renderChips(); renderRoster(); renderFixes(); renderOfficials(); renderSenate(); renderHouse();
-renderHemi(); renderVotebar(); renderHouseViz(); renderStateMap(); renderGlance(); renderLatest("W"); renderLatest("G"); showView();
+renderHemi(); renderVotebar(); renderHouseViz(); renderStateMap(); renderGlance(); renderLatest("W"); renderLatest("G"); renderPolls(); showView();
 linkifySections(document.body);
 new MutationObserver((muts) => muts.forEach((m) => m.addedNodes.forEach((n) => { if (n.nodeType === 1) linkifySections(n); else if (n.nodeType === 3 && n.parentElement) linkifySections(n.parentElement); }))).observe(document.body, { childList: true, subtree: true });
 </script>

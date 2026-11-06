@@ -12,8 +12,8 @@ const js = html.split("<script>")[1].split("</script>")[0];
 const dataJs = js.split("function srcLinks")[0].replace(/^if \(SUBSTACK_URL\)[\s\S]*?\n\}\n/m, "");
 const ctx = {};
 vm.createContext(ctx);
-vm.runInContext(dataJs + "\nthis.d = { SENATE, SEN_NOTES, HOUSE, secHref, BAAJA_SEC };", ctx);
-const { SENATE, SEN_NOTES, HOUSE, secHref, BAAJA_SEC } = ctx.d;
+vm.runInContext(dataJs + "\nthis.d = { SENATE, SEN_NOTES, HOUSE, secHref, BAAJA_SEC, POLLS };", ctx);
+const { SENATE, SEN_NOTES, HOUSE, secHref, BAAJA_SEC, POLLS } = ctx.d;
 // Same rule as the page: "Sec. 2301", "Secs. 1401–1402" link to BPC's section-by-section explainer.
 const linkSecs = (t) => String(t).replace(/\b(Secs?\.|Sections?)(\s+)(\d{4})((?:\([^)\s]*\))*)(\s*[–-]\s*\d{4})?/g, (m, _w, _s, num, _sub, range) =>
   BAAJA_SEC(+num) ? `<a href="${secHref(num + (range || ""))}" target="_blank">${m}</a>` : m);
@@ -158,6 +158,10 @@ const hcount = (k) => members.filter((m) => m.pos === k).length;
 const hOrder = ["support", "conditional", "oppose", "none", "vacant"];
 const bar218 = [["House", ...hOrder.map((k) => HLABEL[k])], [`House (updated ${updated})`, ...hOrder.map(hcount)]];
 
+// 8. Polls: one row per question stage, for a Datawrapper chart of how support moves as respondents hear more.
+const pollRows = [["Poll", "Released", "Fielded", "Sample", "Sponsor stance", "Stage", "Support", "Oppose", "Source"]];
+for (const p of POLLS) p.stages.forEach(([label, y, n]) => pollRows.push([`${p.pollster} for ${p.sponsor}`, p.released, p.field, `${p.n} ${p.pop}`, p.sponsorPos, label, y, n == null ? "" : n, p.src[0][1]]));
+
 fs.mkdirSync(path.join(root, "data"), { recursive: true });
 fs.writeFileSync(path.join(root, "data", "latest-statements.csv"), csv(latestRows));
 fs.writeFileSync(path.join(root, "data", "senate-seats.csv"), csv(seatRows));
@@ -166,4 +170,5 @@ fs.writeFileSync(path.join(root, "data", "senate-by-state.csv"), csv(map));
 fs.writeFileSync(path.join(root, "data", "senators-on-record.csv"), csv(table));
 fs.writeFileSync(path.join(root, "data", "house-seats.csv"), csv(houseSeatRows));
 fs.writeFileSync(path.join(root, "data", "path-to-218.csv"), csv(bar218));
+fs.writeFileSync(path.join(root, "data", "polls.csv"), csv(pollRows));
 console.log(`Built data/ (updated ${updated}): ${senators.length - count("none")} senators on record, ${map.length - 1} states; House ${members.filter((m) => !["none", "vacant"].includes(m.pos)).length} on record, ${hcount("vacant")} vacant.`);
