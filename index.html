@@ -97,6 +97,10 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .c-plus { color: var(--support); background: var(--support-bg); }
 .c-minus { color: var(--oppose); background: var(--oppose-bg); }
 .c-mixed { color: var(--changes); background: var(--changes-bg); }
+:root { --stripe: repeating-linear-gradient(135deg, var(--support) 0 3px, var(--surface) 3px 6px); }
+.s-supchg { color: var(--support); border: 1px solid var(--support); background: repeating-linear-gradient(135deg, var(--support-bg) 0 5px, var(--surface) 5px 10px); }
+.sw-supchg { background: var(--stripe); border: 1px solid var(--support); }
+.disclaimer { font-size: 12px; color: var(--muted); font-style: italic; margin: 4px 0 0; }
 .tier { font-size: 12px; color: var(--muted); margin: 6px 0 0; }
 .searched { margin-top: 18px; font-size: 13px; color: var(--muted); }
 .searched h3 { font-size: 14px; color: var(--ink); margin: 0 0 6px; }
@@ -358,6 +362,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
         <div class="seat-key">
           <span><i class="sw" style="background:var(--support)"></i>Sponsor / supports</span>
           <span><i class="sw" style="background:var(--lean)"></i>Leans support</span>
+          <span><i class="sw sw-supchg"></i>Supports, wants changes</span>
           <span><i class="sw" style="background:var(--changes)"></i>Conditions</span>
           <span><i class="sw" style="background:var(--oppose)"></i>Opposes</span>
           <span><i class="sw sw-none"></i>No statement found</span>
@@ -390,6 +395,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
         <div class="seat-key">
           <span><i class="sw" style="background:var(--support)"></i>Supports</span>
           <span><i class="sw" style="background:var(--lean)"></i>Leans support</span>
+          <span><i class="sw sw-supchg"></i>Supports, wants changes</span>
           <span><i class="sw" style="background:var(--changes)"></i>Conditions</span>
           <span><i class="sw" style="background:var(--oppose)"></i>Opposes</span>
           <span><i class="sw sw-none"></i>No statement found</span>
@@ -585,6 +591,7 @@ const STANCES = {
   oppose: { label: "Opposes", cls: "s-oppose", color: "var(--oppose)" },
   changes: { label: "Seeking changes", cls: "s-changes", color: "var(--changes)" },
   support: { label: "Supports", cls: "s-support", color: "var(--support)" },
+  supchg: { label: "Supports, wants changes", cls: "s-supchg", color: "var(--stripe)" },
   silent: { label: "No position taken", cls: "s-silent", color: "var(--silent)" }
 };
 
@@ -1420,7 +1427,7 @@ const SEN_NOTES = {
   "Duckworth": ["conditional", `Led the letter. ${LETTER_TXT} On X: "Bipartisan permitting reform won't work if Trump ignores the law."`, [...DUCK_LETTER2, ["@SenDuckworth, Oct. 27", "https://x.com/SenDuckworth/status/2115107904810340473"]]],
   "Markey": ["conditional", `Signed the Duckworth letter. His Oct. 1 statement: "I'm still reviewing text of this proposal." He adds: "Building transmission is important. It's also important not to lock in more fossil fuels and lock out communities."`, [...DUCK_LETTER2, ["@SenMarkey statement, Oct. 1", "https://x.com/SenMarkey/status/2105677921838829654"]]],
   "Merkley": ["conditional", `Signed the Duckworth letter. ${LETTER_TXT} Oil Change International also reports "strong reservations" from him and Wyden.`, [...DUCK_LETTER2, ["Oil Change Intl.", "https://oilchange.org/news/oregon-washington-opposition-baaja/"]]],
-  "Wyden": ["conditional", `Signed the Duckworth letter (same conditions). "Strong reservations," per Oil Change International. Also wrote, with Merkley and Padilla, to Interior about data centers on public lands (Oct. 29), and has a separate bill to ban them there.`, [...DUCK_LETTER2, ["Washington Sun, Oct. 29", "https://www.washingtonsun.com/congress/senate-democrats-demand-answers-public-land-use-data-centers"]]],
+  "Wyden": ["oppose", `Nov. 6: "I cannot support a deal that strips Oregonians and tribes of the most important tools they have to hold Trump and his cronies accountable." And: "I cannot support a bill that relies on a handshake promise from the same administration that's spent the last two years waging a war on new clean energy projects to hold up its end of the bargain." Says Democrats can "negotiate a deal that will reduce red tape for all new energy projects... without substantial risk of political interference" (quoted by Pavan Acharya). Earlier he signed the Oct. 27 Duckworth letter tying his vote to DOE restoring canceled grants, and wrote with Merkley and Padilla to Interior about data centers on public lands.`, [["Pavan Acharya, Nov. 6", "https://x.com/pavanmacharya/status/2118793826626396164"], ...DUCK_LETTER2, ["Washington Sun, Oct. 29", "https://www.washingtonsun.com/congress/senate-democrats-demand-answers-public-land-use-data-centers"]]],
   "Thune": ["lean", `Majority Leader. "We need permitting reform... I think we can get the bill across the finish line." Calls state jurisdiction the hurdle and says the midterms have "some bearing." South Dakota PUC commissioners urged him and Rounds to oppose the transmission siting provisions.`, [["SDPB, Oct. 25", "https://www.sdpb.org/politics/2026-10-25/congressional-permitting-reform-bill-faces-jurisdictional-concerns-potential-midterm-election-hoops-thune-says"], ["Dakota Free Press, Oct. 29", "https://dakotafreepress.com/2026/10/29/kloucek-warns-senate-permitting-reform-bill-threatens-sd-rights-nelson-kinda-agrees/"]]],
   "Boozman": ["support", `"The bipartisan permitting bill will unlock critical infrastructure projects – from roads & bridges to energy." Commends Capito's leadership (EPW member).`, [["@JohnBoozman, Oct. 22", "https://x.com/JohnBoozman/status/2113355095714807933"]]],
   "Husted": ["support", `"To help make life more affordable, we need permitting reform... EPW's bipartisan bill cuts through the bureaucracy." Held a permitting roundtable with Barrasso. He also sponsored the separate Ratepayer Protection Act, which failed 57-43. Lost his Nov. 3 race to Sherrod Brown (AP); still a senator for the Nov. 9 vote.`, [["NPR, Nov. 3", "https://www.npr.org/2026/11/03/g-s1-148948/ohio-senate-race-sherrod-brown-jon-husted"], ["@SenJonHusted, Oct. 1", "https://x.com/SenJonHusted/status/2105804374664417696"], ["@SenJonHusted, Oct. 13", "https://x.com/SenJonHusted/status/2110149677815652727"]]],
@@ -1430,7 +1437,7 @@ const SEN_NOTES = {
   "Curtis": ["lean", `"I'm glad to see my bill to bring environmental reviews into the digital age be included" in BAAJA. Separately, data center transparency bills with Blunt Rochester.`, [["@SenJohnCurtis, Oct. 6", "https://x.com/SenJohnCurtis/status/2107561775017156622"]]],
   "McCormick": ["lean", `Oct. 1, the day after introduction: "We need clear approval timelines and legal certainty for approved projects. We must pass" permitting reform. He introduced his own permitting bill in May.`, [["@SenMcCormickPA, Oct. 1", "https://x.com/SenMcCormickPA/status/2105756141410295868"]]],
   "Risch": ["lean", `Sept. 30: "Senate Democrats just blocked another chance" to pass permitting reform, alongside the Ratepayer Protection Act. That is about the pre-deal floor fight, not the BAAJA text.`, [["@SenatorRisch, Sept. 30", "https://x.com/SenatorRisch/status/2105411282220241043"]]],
-  "Schatz": ["conditional", `Wants changes to address tribes' concerns: "There's still time to improve this bill." Skeptical of waiting: "The likelihood that something better would pass in the next Congress, someone would have to prove that to me" (Washington Sun interview, Oct. 14). Politico Pro also reports he and Hirono "have also expressed concern" about the bill's effects on tribal and local communities.`, [["Igor Bobic (Washington Sun), Oct. 14", "https://x.com/igorbobic/status/2110356797043232874"], ["Politico Pro, Oct. 23 (via Extracted)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-102626"]]],
+  "Schatz": ["supchg", `Wants changes to address tribes' concerns: "There's still time to improve this bill." Argues against waiting: "The likelihood that something better would pass in the next Congress, someone would have to prove that to me" (Washington Sun interview, Oct. 14). Politico Pro also reports he and Hirono "have also expressed concern" about the bill's effects on tribal and local communities.`, [["Igor Bobic (Washington Sun), Oct. 14", "https://x.com/igorbobic/status/2110356797043232874"], ["Politico Pro, Oct. 23 (via Extracted)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-102626"]]],
   "Hirono": ["conditional", `Same Politico Pro report as Schatz: concern about effects on tribal and local communities. No direct quote found.`, [["Politico Pro, Oct. 23 (via Extracted)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-102626"]]],
   "Padilla": ["none", `Joined Wyden and Merkley's Oct. 29 letter to Interior on data centers on public lands (not about BAAJA). The Karuk Tribe is urging him and Schiff to oppose.`, [["Washington Sun, Oct. 29", "https://www.washingtonsun.com/congress/senate-democrats-demand-answers-public-land-use-data-centers"], ["Karuk Tribe, Oct. 28", "https://www.karuk.us/posts/karuk-tribe-condemns-senates-assault-on-tribal-sovereignty-and-sacred-places"]]],
   "Schiff": ["none", `The Karuk Tribe is urging him and Padilla to oppose. No statement found.`, [["Karuk Tribe, Oct. 28", "https://www.karuk.us/posts/karuk-tribe-condemns-senates-assault-on-tribal-sovereignty-and-sacred-places"]]],
@@ -1442,7 +1449,9 @@ const SEN_NOTES = {
   "Rounds": ["none", `South Dakota PUC commissioners urged him and Thune to oppose the FERC transmission siting provisions. No statement found.`, [["Dakota Free Press, Oct. 29", "https://dakotafreepress.com/2026/10/29/kloucek-warns-senate-permitting-reform-bill-threatens-sd-rights-nelson-kinda-agrees/"]]],
   "Cramer": ["none", `Sept. 29 (before the text): "time for Congress to pass a new highway bill and permitting reform." In 2024 he criticized EPRA's transmission provisions for "perverse incentives to overbuild."`, [["@SenKevinCramer, Sept. 29", "https://x.com/SenKevinCramer/status/2105044319384097177"]]]
 };
-const SEN_LABEL = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-support"], lean: ["Leans support", "s-support"], conditional: ["Conditions / concerns", "s-changes"], oppose: ["Opposes", "s-oppose"], none: ["No statement found", "s-silent"] };
+const SUPCHG_WHY = { Schatz: "Our reading, not his words: Schatz has said he wants tribal changes and that waiting is unlikely to produce a better bill. He has not said he will vote yes." };
+const supchgNote = (name) => `<p class="disclaimer">${SUPCHG_WHY[name.replace(/ \(..\)$/, "")] || "Our reading of what the member has said, not a stated vote."} Not counted as a public yes vote.</p>`;
+const SEN_LABEL = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-support"], lean: ["Leans support", "s-support"], supchg: ["Supports, wants changes", "s-supchg"], conditional: ["Conditions / concerns", "s-changes"], oppose: ["Opposes", "s-oppose"], none: ["No statement found", "s-silent"] };
 const senState = { f: "record" };
 
 // ---------- House ----------
@@ -1543,6 +1552,7 @@ function renderSenate() {
     `<div class="t"><b>${c("sponsor")}</b><span>Sponsors</span></div>` +
     `<div class="t"><b>${c("support")}</b><span>Other public supporters</span></div>` +
     `<div class="t"><b>${c("lean")}</b><span>Lean support</span></div>` +
+    `<div class="t"><b>${c("supchg")}</b><span>Support, want changes</span></div>` +
     `<div class="t"><b>${c("conditional")}</b><span>Conditions / concerns</span></div>` +
     `<div class="t"><b>${c("oppose")}</b><span>Opposed</span></div>` +
     `<div class="t"><b>${100 - onRecord}</b><span>No statement found</span></div>` +
@@ -1553,18 +1563,18 @@ function renderSenate() {
   if (senState.f === "record") shown = rows.filter(r => r.pos !== "none");
   if (senState.f === "D") shown = rows.filter(r => r.party !== "R");
   if (senState.f === "R") shown = rows.filter(r => r.party === "R");
-  const order = { sponsor: 0, support: 1, lean: 2, conditional: 3, oppose: 4, none: 5 };
+  const order = { sponsor: 0, support: 1, lean: 2, supchg: 3, conditional: 4, oppose: 5, none: 6 };
   shown =[...shown].sort((a, b) => order[a.pos] - order[b.pos] || (b.note ? 1 : 0) - (a.note ? 1 : 0) || a.name.localeCompare(b.name));
   document.getElementById("senBody").innerHTML = shown.map(r => {
     const [lbl, cls] = SEN_LABEL[r.pos];
-    const note = r.note ? `${r.note} ${srcLinks(r.src)}` : `<span class="watch">Nothing found since Sept. 30.</span>`;
+    const note = r.note ? `${r.note} ${srcLinks(r.src)}${r.pos === "supchg" ? supchgNote(r.name) : ""}` : `<span class="watch">Nothing found since Sept. 30.</span>`;
     return `<tr><th scope="row">${r.name}</th><td><span class="party-${r.party}">${r.party}</span>-${r.state}</td><td><span class="pill ${cls}">${lbl}</span></td><td class="said">${note}</td></tr>`;
   }).join("");
 }
 
 function renderHouse() {
-  const order = { support: 0, conditional: 1, oppose: 2 };
-  const lab = { support: ["Supports", "s-support"], conditional: ["Conditions / undecided", "s-changes"], oppose: ["Opposes", "s-oppose"] };
+  const order = { support: 0, supchg: 1, conditional: 2, oppose: 3 };
+  const lab = { support: ["Supports", "s-support"], supchg: ["Supports, wants changes", "s-supchg"], conditional: ["Conditions / undecided", "s-changes"], oppose: ["Opposes", "s-oppose"] };
   const rows = [...HOUSE].sort((a, b) => order[a[2]] - order[b[2]]).map(([n, d, st, said, src]) =>
     `<tr><th scope="row">${n}</th><td>${d}</td><td><span class="pill ${lab[st][1]}">${lab[st][0]}</span></td><td class="said">${said} ${srcLinks(src)}</td></tr>`).join("");
   document.getElementById("houseBody").innerHTML = rows;
@@ -1582,7 +1592,7 @@ function renderSummary() {
   const counts = {};
   Object.keys(STANCES).forEach(k => counts[k] = PEOPLE.filter(p => p.stance === k).length);
   const total = PEOPLE.length;
-  const order = ["oppose", "changes", "silent", "support"];
+  const order = ["oppose", "changes", "silent", "supchg", "support"];
   document.getElementById("bar").innerHTML = order.map(k => `<span style="width:${(counts[k] / total * 100).toFixed(2)}%;background:${STANCES[k].color}" title="${STANCES[k].label}: ${counts[k]}"></span>`).join("");
   document.getElementById("legend").innerHTML = order.map(k => `<span><span class="dot" style="background:${STANCES[k].color}"></span>${STANCES[k].label} <b>${counts[k]}</b></span>`).join("") + `<span style="color:var(--muted)">Entries, not member counts. Coalition letters carry 100 to 200+ signers.</span>`;
 }
@@ -1620,7 +1630,7 @@ function list(label, cls, items) {
 
 // Each position gets its own section. One row of five shows by default (groups in the provision chart first); the rest sit behind that section's "Show all" button.
 const FEATURED = new Set(["Sierra Club", "Earthjustice", "NRDC", "Center for Biological Diversity", "NAACP", "National Trust for Historic Preservation", "National Congress of American Indians (NCAI)", "Coalition of Large Tribes (COLT)", "American Clean Power Association (ACP)", "American Petroleum Institute (API)", "International Brotherhood of Electrical Workers (IBEW)", "U.S. Chamber of Commerce"]);
-const SECTIONS = [["support", "Supports"], ["oppose", "Opposes"], ["changes", "Wants changes or has conditions"], ["silent", "Has spoken, but taken no position"]];
+const SECTIONS = [["support", "Supports"], ["supchg", "Supports, wants changes"], ["oppose", "Opposes"], ["changes", "Wants changes or has conditions"], ["silent", "Has spoken, but taken no position"]];
 const ROW = 5;
 const TIER_TXT = { 1: "Source: the group's own statement, read directly.", 2: "Source: a named reporter quoting the group or its letter.", 3: "Source: secondhand (a compilation, a letter signature, or a summary of the group's statement)." };
 const expanded = {};
@@ -1692,16 +1702,18 @@ document.addEventListener("click", (e) => {
 document.getElementById("q").addEventListener("input", (e) => { state.q = e.target.value.trim(); renderRoster(); });
 
 // ---------- Congress charts ----------
-const POS_FILL = { sponsor: "var(--support)", support: "var(--support)", lean: "var(--lean)", conditional: "var(--changes)", oppose: "var(--oppose)", none: "var(--silent-bg)" };
+const POS_FILL = { sponsor: "var(--support)", support: "var(--support)", lean: "var(--lean)", supchg: "url(#supchgPat)", conditional: "var(--changes)", oppose: "var(--oppose)", none: "var(--silent-bg)" };
+const STRIPE_DEF = '<defs><pattern id="supchgPat" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--surface)"></rect><rect width="3" height="6" fill="var(--support)"></rect></pattern></defs>';
 let selSeat = null;
 
 function seatPanelDefault() {
   const rows = senRows();
   const n = (p) => rows.filter(r => r.pos === p).length;
   const rec = 100 - n("none");
+  const names = (p) => rows.filter(r => r.pos === p).map(r => r.name.replace(/ \(..\)$/, "")).join(", ");
   document.getElementById("seatPanel").innerHTML = `<span class="eyebrow">Select a seat</span>
     <h4>${rec} of 100 senators on record</h4>
-    <p class="who">${n("sponsor")} sponsors and ${n("support")} other senators back the bill publicly, and ${n("lean")} more lean toward it, including Majority Leader Thune. ${n("conditional")} Democrats have conditions or concerns. Duckworth, Markey, Merkley, and Wyden tied their motion-to-proceed vote to DOE restoring canceled grants; Schatz and Hirono raised tribal concerns. No senator has come out against it.</p>
+    <p class="who">${n("sponsor")} sponsors and ${n("support")} other senators back the bill publicly, and ${n("lean")} more lean toward it, including Majority Leader Thune. ${n("supchg") ? `${names("supchg")} ${n("supchg") === 1 ? "supports" : "support"} it but ${n("supchg") === 1 ? "wants" : "want"} changes. ` : ""}${n("conditional")} Democrats have conditions or concerns. ${n("oppose") ? `${names("oppose")} ${n("oppose") === 1 ? "opposes" : "oppose"} it.` : "No senator has come out against it."}</p>
     <p class="who">Tap or hover a seat for what that senator has said.</p>`;
 }
 
@@ -1712,7 +1724,7 @@ function showSeat(r) {
     <h4>Sen. ${r.name.replace(/ \(..\)$/, "")}</h4>
     <span><span class="pill ${cls}">${lbl}</span></span>
     <p class="said">${note}</p>
-    <p class="said">${srcLinks(r.src)}</p>`;
+    <p class="said">${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}`;
 }
 
 function renderHemi() {
@@ -1723,7 +1735,7 @@ function renderHemi() {
   const pos = (arr, p) => arr.filter(r => r.pos === p).sort(byName);
   // Left to right: Democrats (silent, opposed, conditions, lean, support, sponsors), independents, then Republicans in mirror order.
   // Every position appears for every party so no senator can drop off the chart.
-  const L = ["none", "oppose", "conditional", "lean", "support", "sponsor"];
+  const L = ["none", "oppose", "conditional", "supchg", "lean", "support", "sponsor"];
   const ordered = [
     ...L.flatMap(p => p === "none" ? plainNone(D) : pos(D, p)),
     ...L.flatMap(p => p === "none" ? plainNone(I) : pos(I, p)),
@@ -1739,7 +1751,7 @@ function renderHemi() {
     return `<circle class="seat p-${m.party}" data-k="${k}" tabindex="0" role="button" aria-label="${m.name}, ${m.party}-${m.state}: ${SEN_LABEL[m.pos][0]}" cx="${s.x.toFixed(1)}" cy="${s.y.toFixed(1)}" r="10.5" fill="${POS_FILL[m.pos]}" stroke-width="2"></circle>`;
   }).join("");
   const yes = rows.filter(r => r.pos === "sponsor" || r.pos === "support").length;
-  svg.innerHTML = `<title id="hemiTitle">Senate seat chart colored by public position on BAAJA</title>${circles}
+  svg.innerHTML = `<title id="hemiTitle">Senate seat chart colored by public position on BAAJA</title>${STRIPE_DEF}${circles}
     <text x="${cx}" y="${cy - 46}" text-anchor="middle" font-size="44" font-weight="800">${yes}</text>
     <text class="sub" x="${cx}" y="${cy - 24}" text-anchor="middle">public yes votes</text>
     <text class="sub" x="${cx}" y="${cy - 6}" text-anchor="middle">60 needed for cloture</text>`;
@@ -1759,32 +1771,34 @@ function renderVotebar() {
   const rows = senRows();
   const yes = rows.filter(r => r.pos === "sponsor" || r.pos === "support").length;
   const lean = rows.filter(r => r.pos === "lean").length;
+  const sc = rows.filter(r => r.pos === "supchg").length;
   const cond = rows.filter(r => r.pos === "conditional").length;
   const opp = rows.filter(r => r.pos === "oppose").length;
-  const none = 100 - yes - lean - cond - opp;
+  const none = 100 - yes - lean - sc - cond - opp;
   const seg = (n, bg, label, dark) => n ? `<div class="seg" style="width:${n}%;background:${bg};${dark ? "color:var(--muted)" : ""}" title="${label}: ${n}">${n >= 3 ? n : ""}</div>` : "";
   document.getElementById("votebar").innerHTML =
-    seg(yes, "var(--support)", "Public yes") + seg(lean, "var(--lean)", "Leans support") + seg(cond, "var(--changes)", "Conditions") + seg(opp, "var(--oppose)", "Opposed") +
+    seg(yes, "var(--support)", "Public yes") + seg(lean, "var(--lean)", "Leans support") + seg(sc, "var(--stripe)", "Supports, wants changes") + seg(cond, "var(--changes)", "Conditions") + seg(opp, "var(--oppose)", "Opposed") +
     seg(none, "transparent", "No statement found", true) +
     `<span class="mark" style="left:60%" title="60 votes for cloture"></span><span class="mark target" style="left:70%" title="Backers' target of about 70"></span>`;
   document.getElementById("voteaxis").innerHTML = `<span style="left:60%;transform:translateX(calc(-100% - 6px))">60 cloture</span><span style="left:70%;transform:translateX(6px)">~70 target</span>`;
-  document.getElementById("votecap").textContent = `${yes} public yes votes, ${lean} leaning yes, ${cond} with conditions, ${opp} opposed, ${none} with no statement found. Solid line: 60 votes for cloture. Dashed: backers' target of about 70.`;
+  document.getElementById("votecap").textContent = `${yes} public yes votes, ${lean} leaning yes, ${sc} supporting but wanting changes (not counted as yes), ${cond} with conditions, ${opp} opposed, ${none} with no statement found. Solid line: 60 votes for cloture. Dashed: backers' target of about 70.`;
 }
 
 function renderHouseViz() {
   const members = HOUSE.filter(h => !/caucus/i.test(h[1]));
   document.getElementById("houseHead").textContent = `House: ${members.length} of 435 on record`;
   document.getElementById("waffle").setAttribute("aria-label", `435 squares, ${members.length} colored for members with a public position`);
-  const order = { support: 0, conditional: 1, oppose: 2 };
+  const order = { support: 0, supchg: 1, conditional: 2, oppose: 3 };
   const sorted = [...members].sort((a, b) => order[a[2]] - order[b[2]]);
-  const col = { support: "var(--support)", conditional: "var(--changes)", oppose: "var(--oppose)" };
+  const col = { support: "var(--support)", supchg: "var(--stripe)", conditional: "var(--changes)", oppose: "var(--oppose)" };
   let cells = sorted.map(m => `<i style="background:${col[m[2]]}" title="${m[0]} (${m[1]})"></i>`).join("");
   cells += "<i></i>".repeat(435 - sorted.length);
   document.getElementById("waffle").innerHTML = cells;
-  const lab = { support: "Supports", conditional: "Conditions / undecided", oppose: "Opposes" };
-  document.getElementById("houseGroups").innerHTML = ["support", "conditional", "oppose"].map(k => {
+  const lab = { support: "Supports", supchg: "Supports, wants changes", conditional: "Conditions / undecided", oppose: "Opposes" };
+  document.getElementById("houseGroups").innerHTML = ["support", "supchg", "conditional", "oppose"].map(k => {
     const ms = HOUSE.filter(h => h[2] === k);
-    return `<div class="row"><b>${lab[k]} (${ms.filter(m => !/caucus/i.test(m[1])).length})</b>${ms.map(m => `<span class="mchip" style="border-color:${col[k]}">${m[0]} <span class="watch">${m[1].replace(/ \(.+\)/, "")}</span></span>`).join("")}</div>`;
+    if (!ms.length) return "";
+    return `<div class="row"><b>${lab[k]} (${ms.filter(m => !/caucus/i.test(m[1])).length})</b>${ms.map(m => `<span class="mchip" style="border-color:${k === "supchg" ? "var(--support)" : col[k]}">${m[0]} <span class="watch">${m[1].replace(/ \(.+\)/, "")}</span></span>`).join("")}</div>`;
   }).join("");
 }
 
@@ -1792,7 +1806,7 @@ function renderHouseViz() {
 const TILES = "AK 0 0|ME 10 0|VT 9 1|NH 10 1|WA 0 2|ID 1 2|MT 2 2|ND 3 2|MN 4 2|IL 5 2|WI 6 2|MI 7 2|NY 8 2|RI 9 2|MA 10 2|OR 0 3|NV 1 3|WY 2 3|SD 3 3|IA 4 3|IN 5 3|OH 6 3|PA 7 3|NJ 8 3|CT 9 3|CA 0 4|UT 1 4|CO 2 4|NE 3 4|MO 4 4|KY 5 4|WV 6 4|VA 7 4|MD 8 4|DE 9 4|AZ 1 5|NM 2 5|KS 3 5|AR 4 5|TN 5 5|NC 6 5|SC 7 5|OK 3 6|LA 4 6|MS 5 6|AL 6 6|GA 7 6|HI 0 7|TX 3 7|FL 8 7".split("|").map(t => { const [st, c, r] = t.split(" "); return { st, c: +c, r: +r }; });
 const STATE_NAME = { AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware", FL: "Florida", GA: "Georgia", HI: "Hawaii", ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming" };
 const HOUSE_SEATS = { AL: 7, AK: 1, AZ: 9, AR: 4, CA: 52, CO: 8, CT: 5, DE: 1, FL: 28, GA: 14, HI: 2, ID: 2, IL: 17, IN: 9, IA: 4, KS: 4, KY: 6, LA: 6, ME: 2, MD: 8, MA: 9, MI: 13, MN: 8, MS: 4, MO: 8, MT: 2, NE: 3, NV: 4, NH: 2, NJ: 12, NM: 3, NY: 26, NC: 14, ND: 1, OH: 15, OK: 5, OR: 6, PA: 17, RI: 2, SC: 7, SD: 1, TN: 9, TX: 38, UT: 4, VT: 1, VA: 11, WA: 10, WV: 2, WI: 8, WY: 1 };
-const HOUSE_POS = { support: ["Supports", "s-support", "var(--support)"], conditional: ["Conditions", "s-changes", "var(--changes)"], oppose: ["Opposes", "s-oppose", "var(--oppose)"] };
+const HOUSE_POS = { support: ["Supports", "s-support", "var(--support)"], supchg: ["Supports, wants changes", "s-supchg", "url(#supchgPat)"], conditional: ["Conditions", "s-changes", "var(--changes)"], oppose: ["Opposes", "s-oppose", "var(--oppose)"] };
 let selState = "MI";
 
 function houseByState() {
@@ -1813,7 +1827,7 @@ function renderStateMap() {
     return `<g class="tile" data-st="${t.st}" tabindex="0" role="button" aria-label="${label}"><rect class="bg" x="${x}" y="${y}" width="${size}" height="${size}" rx="6"></rect>${circles}<text x="${x + size / 2}" y="${y + 35}" text-anchor="middle">${t.st}</text>${sq}</g>`;
   }).join("");
   const svg = document.getElementById("tmap");
-  svg.innerHTML = `<title>Tile map of the 50 states colored by each senator's public position on BAAJA</title>${g}`;
+  svg.innerHTML = `<title>Tile map of the 50 states colored by each senator's public position on BAAJA</title>${STRIPE_DEF}${g}`;
   svg.querySelectorAll(".tile").forEach(el => {
     const pick = () => { selState = el.dataset.st; showState(); };
     el.addEventListener("click", pick);
@@ -1831,7 +1845,7 @@ function showState() {
   const senHtml = sens.map(r => {
     const [lbl, cls] = SEN_LABEL[r.pos];
     return `<div class="who-row"><b>Sen. ${r.name}</b><span class="said">(${r.party})</span><span class="pill ${cls}">${lbl}</span></div>
-      <p>${r.note || "Nothing found since Sept. 30."}</p><p>${srcLinks(r.src)}</p>`;
+      <p>${r.note || "Nothing found since Sept. 30."}</p><p>${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}`;
   }).join("");
   const memHtml = mem.map(h => {
     const [lbl, cls] = HOUSE_POS[h[2]];
@@ -1852,6 +1866,7 @@ function showState() {
 // ---------- Latest statements ----------
 // Newest first. d = date the statement was made or reported; k = Senate | House | Group.
 const LATEST = [
+  { d: "2026-11-06", k: "Senate", who: "Ron Wyden (D-OR)", pos: "oppose", text: `"I cannot support a deal that strips Oregonians and tribes of the most important tools they have to hold Trump and his cronies accountable." Says the bill relies on "a handshake promise" from the administration. First senator to say he opposes the bill; he had been one of four conditioning their vote on DOE grants.`, src: [["Pavan Acharya, Nov. 6", "https://x.com/pavanmacharya/status/2118793826626396164"]] },
   { d: "2026-11-04", k: "House", who: "Marc Veasey (D-TX-33)", pos: "support", text: `"#BAAJA needs to pass when we return next week; before the calendar expires." First statement recorded here; he has posted in support since October.`, src: [["@MarcVeasey, Nov. 4", "https://x.com/MarcVeasey/status/2118001372939370623"]] },
   { d: "2026-11-06", k: "House", who: "Sharice Davids (D-KS-3)", pos: "conditional", text: `Pushes House Democratic leaders to move permitting reform "without delay," but says the bill "cannot come at the expense of Tribal sovereignty and the federal trust responsibility" and she is working "to fix these provisions."`, src: [["Davids release, Nov. 6", "https://davids.house.gov/media/press-releases/davids-pushes-democratic-leadership-move-bipartisan-permitting-reform-without"]] },
   { d: "2026-11-06", k: "Group", who: "National Tribal Energy Association and Apsaalooke (Crow) Nation", pos: "support", text: `Submitted letters supporting the bill. NTEA says it takes "meaningful steps to honor our Tribal sovereignty and self-determination"; Crow Chair Frank White Clay says "a predictable regulatory environment can strengthen our ability to negotiate sound partnerships, retain tribal ownership."`, src: [["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118788792492704215"]] },
@@ -1903,7 +1918,7 @@ const LATEST = [
 ];
 LATEST.push({ d: "2026-10-21", k: "Group", who: "Nine Democratic state attorneys general", pos: "changes", text: `Letter to Senate leaders and the sponsors: some provisions "could further national progress," but without amendment others would "unnecessarily intrude upon states' rights." Asks for a staff meeting; names no section.`, src: [["AGs' letter, Oct. 21", "https://oag.ca.gov/system/files/attachments/press-docs/261021-final-multistate-baaja-letter.pdf"]] });
 LATEST.sort((a, b) => b.d.localeCompare(a.d));
-const LATEST_POS = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-support"], lean: ["Leans support", "s-support"], changes: ["Conditions", "s-changes"], conditional: ["Conditions", "s-changes"], oppose: ["Opposes", "s-oppose"] };
+const LATEST_POS = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-support"], supchg: ["Supports, wants changes", "s-supchg"], lean: ["Leans support", "s-support"], changes: ["Conditions", "s-changes"], conditional: ["Conditions", "s-changes"], oppose: ["Opposes", "s-oppose"] };
 const LATEST_SHOW = 6;
 const MONTHS = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
 function fmtDay(d) { const [, m, dd] = d.split("-"); return `${MONTHS[+m - 1]} ${+dd}`; }

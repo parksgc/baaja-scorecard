@@ -33,10 +33,11 @@ const senators = SENATE.map((s) => {
 // Datawrapper keys its colors to these exact strings: rename one here and its color must be reset in Datawrapper.
 // The seat chart's legend order follows Datawrapper's stored color map, which sorts keys by length and then
 // alphabetically, so these lengths are chosen to keep the legend running from Sponsor to No statement found.
-const LABEL = { sponsor: "Sponsor", support: "Supports", lean: "Leans support", conditional: "Wants changes", oppose: "Opposes outright", none: "No statement found" };
+// "Supports, wants changes" (supchg) sorts after "No statement found" by length; the charts set categoryOrder to place it after "Leans support".
+const LABEL = { sponsor: "Sponsor", support: "Supports", lean: "Leans support", supchg: "Supports, wants changes", conditional: "Wants changes", oppose: "Opposes outright", none: "No statement found" };
 
 // 1. Path to 60: one stacked bar
-const order = ["sponsor", "support", "lean", "conditional", "oppose", "none"].map((k) => [k, LABEL[k]]);
+const order = ["sponsor", "support", "lean", "supchg", "conditional", "oppose", "none"].map((k) => [k, LABEL[k]]);
 const count = (k) => senators.filter((s) => s.pos === k).length;
 const bar = [["Senate", ...order.map(([, l]) => l)], [`Senate (updated ${updated})`, ...order.map(([k]) => count(k))]];
 
@@ -49,7 +50,7 @@ for (const code of Object.keys(NAMES)) {
   const [a, b] = senators.filter((s) => s.state === code).sort((x, y) => x.key.localeCompare(y.key));
   const p = [a.pos, b.pos];
   const cat = p.includes("oppose") ? "At least one opposes"
-    : p.includes("conditional") ? "Wants changes"
+    : p.includes("conditional") || p.includes("supchg") ? "Wants changes"
     : p.every((x) => yes.has(x)) ? "Both support or lean"
     : p.some((x) => yes.has(x)) ? "One supports or leans"
     : "No statement found";
@@ -57,14 +58,14 @@ for (const code of Object.keys(NAMES)) {
 }
 
 // 3. Senate table: senators on record
-const rank = { sponsor: 0, support: 1, lean: 2, conditional: 3, oppose: 4, none: 5 };
+const rank = { sponsor: 0, support: 1, lean: 2, supchg: 3, conditional: 4, oppose: 5, none: 6 };
 const table = [["Senator", "Party", "State", "Position", "On the record"]];
 senators.filter((s) => s.pos !== "none").sort((a, b) => rank[a.pos] - rank[b.pos] || a.key.localeCompare(b.key))
   .forEach((s) => table.push([s.key, s.party, s.state, label(s), s.note]));
 
 // 4. Seat chart: one row per senator with x/y seat coordinates (same layout and order as the page's chart)
 const byName = (a, b) => a.key.localeCompare(b.key);
-const L = ["none", "oppose", "conditional", "lean", "support", "sponsor"];
+const L = ["none", "oppose", "conditional", "supchg", "lean", "support", "sponsor"];
 const grab = (party, p) => senators.filter((s) => s.party === party && s.pos === p).sort(byName);
 const ordered = [
   ...L.flatMap((p) => grab("D", p)),
@@ -89,7 +90,7 @@ placed.forEach(({ s, a, r }) => {
 // 5. Latest stakeholder statements (outside groups only), newest first, for the Datawrapper table.
 const latestSrc = js.slice(js.indexOf("const LATEST = ["), js.indexOf("\n];", js.indexOf("const LATEST = [")) + 3);
 vm.runInContext(latestSrc.replace("const LATEST", "this.LATEST"), ctx);
-const GROUP_POS = { support: ["Supports", "#3a9a74"], oppose: ["Opposes", "#b0452a"], changes: ["Wants changes", "#d9923a"], conditional: ["Wants changes", "#d9923a"] };
+const GROUP_POS = { support: ["Supports", "#3a9a74"], supchg: ["Supports, wants changes", "#3a9a74"], oppose: ["Opposes", "#b0452a"], changes: ["Wants changes", "#d9923a"], conditional: ["Wants changes", "#d9923a"] };
 const MONTHS = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
 const day = (d) => { const [, m, dd] = d.split("-"); return `${MONTHS[+m - 1]} ${+dd}`; };
 // First sentence only: the table is a pointer to the page, which has the full entry.
@@ -130,7 +131,7 @@ const unmatched = Object.keys(houseNotes);
 if (unmatched.length) throw new Error(`House entries with no roster seat: ${unmatched.join(", ")}`);
 // "Seat currently vacant" is longer than "No statement found" so it sorts last in Datawrapper's legend (see LABEL note).
 const HLABEL = { ...LABEL, vacant: "Seat currently vacant" };
-const HL = ["none", "oppose", "conditional", "lean", "support", "sponsor"];
+const HL = ["none", "oppose", "conditional", "supchg", "lean", "support", "sponsor"];
 const hgrab = (party, p) => members.filter((m) => m.party === party && m.pos === p).sort((a, b) => a.key.localeCompare(b.key));
 const hOrdered = [
   ...HL.flatMap((p) => hgrab("D", p)),
@@ -147,7 +148,7 @@ const hSeats = [];
 hCounts.forEach((n, i) => { for (let j = 0; j < n; j++) hSeats.push({ a: Math.PI - (Math.PI * j) / (n - 1), r: hRadii[i] }); });
 hSeats.sort((p, q) => q.a - p.a || p.r - q.r);
 const HPARTY = { D: "Democrat", R: "Republican", I: "Independent", "": "Vacant" };
-const hRank = { ...rank, vacant: 6 };
+const hRank = { ...rank, vacant: 7 };
 const houseSeatRows = [["x", "y", "Member", "Party", "District", "Position", "What they said"]];
 hOrdered.map((m, k) => ({ m, ...hSeats[k] })).sort((p, q) => hRank[p.m.pos] - hRank[q.m.pos]).forEach(({ m, a, r }) => {
   houseSeatRows.push([(r * Math.cos(a)).toFixed(1), (r * Math.sin(a)).toFixed(1), m.party ? `Rep. ${m.shown}` : "Seat currently vacant",
@@ -155,7 +156,7 @@ hOrdered.map((m, k) => ({ m, ...hSeats[k] })).sort((p, q) => hRank[p.m.pos] - hR
 });
 // 7. Path to 218: one stacked bar, same vocabulary as the Senate bar.
 const hcount = (k) => members.filter((m) => m.pos === k).length;
-const hOrder = ["support", "conditional", "oppose", "none", "vacant"];
+const hOrder = ["support", "supchg", "conditional", "oppose", "none", "vacant"];
 const bar218 = [["House", ...hOrder.map((k) => HLABEL[k])], [`House (updated ${updated})`, ...hOrder.map(hcount)]];
 
 // 8. Polls: one row per question stage, for a Datawrapper chart of how support moves as respondents hear more.
