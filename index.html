@@ -461,6 +461,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
             <th scope="col">NAACP</th>
             <th scope="col">Natl. Trust / tribes</th>
             <th scope="col">Clean energy trades</th>
+            <th scope="col">Unions</th>
             <th scope="col">API / business</th>
           </tr>
         </thead>
@@ -832,11 +833,11 @@ const PEOPLE = [
     src: [["NAM, Nov. 5", "https://x.com/ShopFloorNAM/status/2118471705588793698"], ["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["Chamber letter", "https://www.uschamber.com/assets/documents/261013_Hill_Support-for-American-Affordability-and-Jobs-Act-of-2026_EPW-ENR_Clean.pdf"]] },
 
   { name: "Building trades unions", sector: "Labor", stance: "support",
-    who: "North America's Building Trades Unions (NABTU); LIUNA, United Association (plumbers and pipefitters), Operating Engineers; Nov. 3 letter adds the Teamsters, Iron Workers, Boilermakers and SMART",
+    who: "IBEW; North America's Building Trades Unions (NABTU); LIUNA, United Association (plumbers and pipefitters), Operating Engineers; Nov. 3 letter adds the Teamsters, Iron Workers, Boilermakers and SMART",
     obj: [],
-    likes: [`Union jobs, prevailing wages, apprenticeships`, `Project certainty and faster federal reviews`, `Faster transmission buildout`],
-    note: `Nov. 5: NABTU endorsed the bill in a letter to the negotiators, calling it a "significant step toward a more efficient permitting system that supports job creation" that "helps reduce costs" (letter obtained by Punchbowl). Nov. 3: the Teamsters, Iron Workers, Boilermakers, SMART and at least one more union (list cut off) urged the four lead negotiators to \"swiftly pass\" S. 5653, per a letter shared with Politico's James Bikales; letter text not seen. AFL-CIO not found taking a position. IBEW has not endorsed: a spokesperson says it is \"reviewing the language\" (Heatmap, Oct. 29); its members span utilities, transmission and construction.`,
-    src: [["Punchbowl via Joshua Siegel, Nov. 5 (NABTU)", "https://x.com/SiegelScribe/status/2118455243654451600"], ["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["LIUNA at Whitehouse roundtable, Nov. 2", "https://www.whitehouse.senate.gov/news/release/whitehouse-nam-convene-roundtable-with-ri-manufacturing-labor-and-business-leaders-to-support-permitting-reform/"], ["Politico via Nico Portuondo, Nov. 3", "https://x.com/nicoportuondo/status/2117644196152758749"]] },
+    likes: [`Union jobs, prevailing wages, apprenticeships`, `Project certainty: UA says it will "increase project certainty"; Operating Engineers praise "greater certainty for projects permitted and financed across administrations" ${S(1401)}`, `Faster transmission buildout: Operating Engineers cite "building energy transmission capacity faster" ${S("2101–2109")}`, `Clear deadlines for environmental reviews and fewer projects "delayed for years through litigation" (Operating Engineers)`],
+    note: `Nov. 6: IBEW endorsed: "The IBEW strongly supports BAAJA... that will unlock development across the energy industry," per a statement to Punchbowl; a spokesman, Matt Spence, said the union resolved "minor issues for our members." Nov. 5: NABTU endorsed the bill in a letter to the negotiators, calling it a "significant step toward a more efficient permitting system that supports job creation" that "helps reduce costs" (letter obtained by Punchbowl). Nov. 3: the Teamsters, Iron Workers, Boilermakers, SMART and at least one more union (list cut off) urged the four lead negotiators to \"swiftly pass\" S. 5653, per a letter shared with Politico's James Bikales; letter text not seen. AFL-CIO not found taking a position. IBEW, which had been "reviewing the language" (Heatmap, Oct. 29), endorsed Nov. 6; its members span utilities, transmission and construction.`,
+    src: [["Punchbowl via Joshua Siegel, Nov. 6 (IBEW)", "https://x.com/SiegelScribe/status/2118744831593681027"], ["Punchbowl via Joshua Siegel, Nov. 5 (NABTU)", "https://x.com/SiegelScribe/status/2118455243654451600"], ["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["LIUNA at Whitehouse roundtable, Nov. 2", "https://www.whitehouse.senate.gov/news/release/whitehouse-nam-convene-roundtable-with-ri-manufacturing-labor-and-business-leaders-to-support-permitting-reform/"], ["Politico via Nico Portuondo, Nov. 3", "https://x.com/nicoportuondo/status/2117644196152758749"]] },
 
   { name: "Electric co-ops and public power (NRECA, APPA)", sector: "Utilities", stance: "changes",
     who: "NRECA (CEO Jim Matheson, 900+ co-ops) and APPA (CEO Scott Corwin, 2,000+ public power utilities); joint letter to Lee, Heinrich, Capito and Whitehouse, reported Nov. 3",
@@ -932,15 +933,15 @@ const PEOPLE = [
 
 // Provision matrix: + praise, - object, ~ mixed, "" none stated
 const MATRIX = [
-  ["Transmission title", "2101–2109", ["+", "+", "+", "", "-", "", "+", ""]],
-  ["Data center cost rule", "2107 / FPA 228", ["+", "+", "", "", "", "", "", ""]],
-  ["Project certainty", "1401", ["-", "-", "-", "-", "", "", "+", ""]],
-  ["Disparate treatment", "1402", ["-", "-", "-", "-", "-", "", "+", ""]],
-  ["NEPA exclusions", "1102", ["", "", "", "", "-", "", "", ""]],
-  ["NEPA judicial review", "1110", ["-", "-", "", "", "-", "", "", "+"]],
-  ["Clean Water Act 401 / 404", "1202–1205", ["-", "-", "-", "", "-", "", "", "+"]],
-  ["Endangered Species Act", "1301–1305", ["-", "-", "", "-", "-", "", "", ""]],
-  ["Historic preservation (NHPA)", "2301", ["", "-", "-", "", "-", "-", "", ""]]
+  ["Transmission title", "2101–2109", ["+", "+", "+", "", "-", "", "+", "+", ""]],
+  ["Data center cost rule", "2107 / FPA 228", ["+", "+", "", "", "", "", "", "", ""]],
+  ["Project certainty", "1401", ["-", "-", "-", "-", "", "", "+", "+", ""]],
+  ["Disparate treatment", "1402", ["-", "-", "-", "-", "-", "", "+", "", ""]],
+  ["NEPA exclusions", "1102", ["", "", "", "", "-", "", "", "", ""]],
+  ["NEPA judicial review", "1110", ["-", "-", "", "", "-", "", "", "", "+"]],
+  ["Clean Water Act 401 / 404", "1202–1205", ["-", "-", "-", "", "-", "", "", "", "+"]],
+  ["Endangered Species Act", "1301–1305", ["-", "-", "", "-", "-", "", "", "", ""]],
+  ["Historic preservation (NHPA)", "2301", ["", "-", "-", "", "-", "-", "", "", ""]]
 ];
 
 const CELL = { "+": ["c-plus", "+", "praises"], "-": ["c-minus", "−", "objects"], "~": ["c-mixed", "±", "mixed"], "": ["c-none", "·", "no stated position"] };
@@ -1495,6 +1496,7 @@ function showState() {
 // ---------- Latest statements ----------
 // Newest first. d = date the statement was made or reported; k = Senate | House | Group.
 const LATEST = [
+  { d: "2026-11-06", k: "Group", who: "International Brotherhood of Electrical Workers (IBEW)", pos: "support", text: `Endorses the bill: "The IBEW strongly supports BAAJA... that will unlock development across the energy industry." A spokesman, Matt Spence, says the union resolved "minor issues for our members." IBEW had been reviewing the text since October.`, src: [["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118744831593681027"]] },
   { d: "2026-11-06", k: "Group", who: "Trump White House", pos: "support", text: `The Pentagon is advancing nine more large wind projects it had held up, including two in New Mexico. A White House official says the administration is "fulfilling all the promises made" so there are "NO barriers" to passage.`, src: [["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118687354000937172"]] },
   { d: "2026-11-06", k: "Group", who: "American Clean Power Association", pos: "support", text: `CEO Jason Grumet calls the wind approvals "a first step in implementing their agreement with Senate leaders" and "what is needed to pass permitting reform."`, src: [["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118718823545151828"]] },
   { d: "2026-11-06", k: "Group", who: "Sierra Club", pos: "changes", text: `Says the bill "achieves critical wins on transmission and potential emissions reduction," but Congress "must demand fundamental changes" on tribal consultation, clean water, wildlife and the ability to challenge unlawful projects. Executive Director Loren Blackford: Democrats "can and must fight for a better deal."`, src: [["@SierraClub, Nov. 6", "https://x.com/SierraClub/status/2118711190486397324"]] },
