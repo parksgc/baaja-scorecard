@@ -4,7 +4,7 @@ name: Rebuild chart data
 on:
   push:
     branches: [main]
-    paths: [index.html, scripts/build-data.js]
+    paths: [index.html, scripts/build-data.js, scripts/house-roster.csv]
   workflow_dispatch:
 
 permissions:
