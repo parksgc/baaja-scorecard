@@ -97,6 +97,10 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .c-plus { color: var(--support); background: var(--support-bg); }
 .c-minus { color: var(--oppose); background: var(--oppose-bg); }
 .c-mixed { color: var(--changes); background: var(--changes-bg); }
+.tier { font-size: 12px; color: var(--muted); margin: 6px 0 0; }
+.searched { margin-top: 18px; font-size: 13px; color: var(--muted); }
+.searched h3 { font-size: 14px; color: var(--ink); margin: 0 0 6px; }
+.searched p { margin: 4px 0; }
 .c-none { color: var(--muted); }
 .matrix-key { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--muted); align-items: center; }
 
@@ -501,7 +505,11 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
             <th scope="col">NRDC</th>
             <th scope="col">CBD</th>
             <th scope="col">NAACP</th>
-            <th scope="col">Natl. Trust / tribes</th>
+            <th scope="col">Natl. Trust</th>
+            <th scope="col">NCAI, NARF, NATHPO, 106 Strong</th>
+            <th scope="col">COLT</th>
+            <th scope="col">Standing Rock</th>
+            <th scope="col">Karuk</th>
             <th scope="col">Clean energy trades</th>
             <th scope="col">Unions</th>
             <th scope="col">API / business</th>
@@ -513,6 +521,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     <div class="matrix-key">
       <span><span class="cell c-plus">+</span> praises</span>
       <span><span class="cell c-minus">−</span> objects</span>
+      <span><span class="cell c-mixed">±</span> wants fixes, not removal</span>
       <span><span class="cell c-none">·</span> no stated position</span>
     </div>
   </section>
@@ -528,6 +537,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
       <span class="count" id="count"></span>
     </div>
     <div class="roster" id="roster"></div>
+    <div class="searched" id="searched"></div>
   </section>
 
   <section id="officials" data-view="groups">
@@ -575,7 +585,7 @@ const STANCES = {
   oppose: { label: "Opposes", cls: "s-oppose", color: "var(--oppose)" },
   changes: { label: "Seeking changes", cls: "s-changes", color: "var(--changes)" },
   support: { label: "Supports", cls: "s-support", color: "var(--support)" },
-  silent: { label: "Silent / undecided", cls: "s-silent", color: "var(--silent)" }
+  silent: { label: "No position taken", cls: "s-silent", color: "var(--silent)" }
 };
 
 // Section tags link to the matching part of BPC's section-by-section explainer.
@@ -675,12 +685,6 @@ const PEOPLE = [
     likes: [`Transmission goals, though it argues most transmission provisions are achievable under existing FERC authority`],
     src: [["UCS blog", "https://blog.ucs.org/?p=98737"]] },
 
-  { name: "Climate Justice Alliance and EJ coalition", sector: "Civil rights / EJ", stance: "oppose",
-    who: "GreenLatinos, Indigenous Environmental Network, WE ACT, Western Environmental Law Center; 100+ groups on the Oct. 28 letter",
-    obj: [`Frames the bill as a data center and billionaire giveaway`, `Polluter-driven; cuts community input on siting`],
-    likes: [],
-    src: [["CJA BAAJA page", "https://climatejusticealliance.org/baaja/"], ["Oct. 28 letter", "https://climatejusticealliance.org/100ej-groups-letter-opposing-baaja/"]] },
-
   { name: "Food & Water Watch", sector: "Environmental", stance: "oppose",
     who: "Jim Walsh",
     obj: [`Big Tech and data center power grab; the energy buildout would serve data centers`, `Joined a 185-group letter against "back-door permitting deals"`],
@@ -688,25 +692,12 @@ const PEOPLE = [
     note: `HuffPost notes the bill doesn't speed permitting for data centers themselves, which sit mostly on private land.`,
     src: [["HuffPost", "https://www.huffpost.com/entry/permitting-reform-baaja-data-centers-martin-heinrich_n_6ad6336ae4b05354557e05b7"], ["@foodandwater, Oct. 23", "https://x.com/foodandwater/status/2113676849599353273"]] },
 
-  { name: "Indigenous Environmental Network and tribal groups", sector: "Tribal / preservation", stance: "oppose",
-    who: "Jordan Harmon (Muscogee (Creek) Nation, IEN); NATHPO; Karuk Tribe",
-    obj: [`NHPA rewrite ${S(2301)} would shut tribal voices out of decisions about sacred and cultural sites`],
-    likes: [],
-    src: [["Washington Examiner, Oct. 28", "https://www.washingtonexaminer.com/?p=4783176"]] },
-
   { name: "Coalition of Large Tribes (COLT)", sector: "Tribal / preservation", stance: "changes",
     who: "Executive director OJ Semans Sr. (Rosebud Sioux); COLT represents large land base tribes",
     obj: [`Pushing negotiators for targeted technical fixes to the NHPA section ${S(2301)}; circulated a discussion paper with proposed amendments to Hill offices (Punchbowl obtained it)`],
     likes: [`Semans expects the bill to pass the Senate, so COLT is trying to improve it; leaders met last week with more than a dozen Democratic and Republican offices, including EPW and Energy Committee staff`, `\"Working to make BAAJA better for large land base tribes\" is more productive than telling drafters to scrap it, he said (Punchbowl)`],
     note: `A marked break from NCAI, NARF, NATHPO and other tribes. Source is Punchbowl's report, seen via a post quoting it. The discussion paper and its specific amendments have not been seen, and COLT's website has no BAAJA statement.`,
     src: [["Adam Jentleson quoting Punchbowl, Nov. 3", "https://x.com/AJentleson/status/2117752551227400260"]] },
-
-  { name: "NCAI, NARF, NATHPO and the 106 Strong coalition", sector: "Tribal / preservation", stance: "oppose",
-    who: "National Congress of American Indians, Native American Rights Fund, National Association of Tribal Historic Preservation Officers, the 106 Strong coalition; Standing Rock Sioux Tribe (Chairman Steve Sitting Bear, statement Oct. 30, posted Nov. 3)",
-    obj: [`Oct. 9 coalition letter asks Senate leaders to withdraw the Section 106 provisions (Title III of Division B)`, `NATHPO: statutory definitions of "undertaking," "adverse effect" and area of potential effects could keep projects and harms out of review; agencies control key determinations; judicial review limited (150-day filing deadline, restricted injunctions); a tribe that misses the 30-day window cannot force reconsideration; underfunding "answered with oversight, penalties, and potential federal takeover"`, `NATHPO says the NHPA language cannot be fixed by amendment and asks senators before Nov. 9 not to amend Section 106 without government-to-government consultation`, `Standing Rock: BAAJA would "all but eliminate" U.S. treaty and trust responsibilities and weaken NHPA, CWA, NEPA and ESA`],
-    likes: [],
-    note: `106 Strong planned a Capitol rally for Nov. 9, when votes start (Siegel, Oct. 19). They have directly targeted Sen. Heinrich, whose state has 23 federally recognized tribes. Rep. Tom Cole (R-OK) also raised tribal concerns.`,
-    src: [["Turtle Talk, Oct. 13", "https://turtletalk.blog/2026/10/13/a-broad-tribal-coalition-urges-congress-to-withdraw-baajas-section-106-rewrite/"], ["NATHPO", "https://www.nathpo.org/permitting-reform-baaja-tribal-historic-preservation/"], ["Standing Rock Sioux Tribe", "https://standingrock.org/2026/11/03/the-standing-rock-sioux-tribe-opposes-the-bipartisan-american-affordability-and-jobs-act-baaja"], ["Siegel (Punchbowl), Oct. 19", "https://x.com/SiegelScribe/status/2112162140526104855"]] },
 
   { name: "The Wilderness Society", sector: "Environmental", stance: "oppose",
     who: "Tracy Stone-Manning, president (BLM director under Biden); statement reported Nov. 2",
@@ -721,7 +712,7 @@ const PEOPLE = [
     likes: [],
     src: [["Quoted in Breakthrough, Oct. 30", "https://www.breakthroughjournal.org/p/the-faulty-logic-at-the-heart-of"]] },
 
-  { name: "Access-to-courts coalition letter", sector: "Civil rights / EJ", stance: "oppose",
+  { name: "Access-to-courts coalition letter", sector: "Civil rights / EJ", stance: "changes",
     who: "Oct. 29 letter to Congress: Alliance for Justice, American Association for Justice (trial lawyers), Center for Justice & Democracy, Earthjustice Action, NAACP, National Women's Law Center Action Fund, Public Citizen, Public Justice. Source: copy of the letter; no public URL found yet",
     obj: [`Strike the judicial review provisions: they "limit the public's access to the courts and benefit polluting industries"`, `Sec. 1401 locks in permits "no matter how legally flawed, unless a court orders it" ${S(1401)}`, `No injunctions or vacatur for NEPA and NHPA claims, only remand; no APA workaround ${S(1110)} ${S(2301)}`, `Expedited consideration for permitting suits ahead of voting-rights and civil-rights cases; developer-only deadline suits ${S(2201)} ${S(1106)} ${S(1403)}`, `NEPA and NHPA claims start in the court of appeals and ESA claims in the D.C. Circuit, while developers get district court ${S(1305)}`, `Statute of limitations cut from about 6 years to 150 days ${S(1110)} ${S(1205)} ${S(1305)} ${S(2301)} ${S(2201)}`],
     likes: [],
@@ -819,11 +810,11 @@ const PEOPLE = [
     likes: [],
     src: [["AWI, Oct. 1", "https://awionline.org/news/awi-strongly-opposes-permitting-bill-that-would-stab-heart-of-endangered-species-act/"]] },
 
-  { name: "Western wildlife groups on CBD's ESA letter", sector: "Wildlife", stance: "oppose",
+  { name: "CBD-led ESA letter: wildlife signers", sector: "Wildlife", stance: "oppose",
     who: "WildEarth Guardians, Western Watersheds Project, Southern Utah Wilderness Alliance, Wilderness Watch, IFAW, Born Free USA, Sea Turtle Conservancy, Wolf Conservation Center; Great Lakes Wildlife Alliance and Save Lake Superior Association",
     obj: [`Best-available-science definition ${S(1301)}, state Sec. 7 assumption ${S(1304)}, D.C. Circuit plus 150-day review ${S(1305)}`],
     likes: [],
-    note: `215 signers in all, addressed to Whitehouse, Heinrich, and Schumer.`,
+    note: `One letter, Oct. 6, with 215 signers in all, addressed to Whitehouse, Heinrich, and Schumer. Its opposition is to the ESA title; the signers listed here have no standalone BAAJA statement that we have found.`,
     src: [["CBD ESA letter (PDF)", "https://biologicaldiversity.org/programs/government-affairs/pdfs/Oppose-ESA-attacks-in-permitting-deal.pdf"]] },
 
   { name: "Environmental Protection Network", sector: "Environmental", stance: "changes",
@@ -833,132 +824,53 @@ const PEOPLE = [
     fix: [`Add a revocation exception for agency actions alleging a violation of federal law`, `Savings clause for the CWA, CAA, and similar statutes`, `Limit relief to actual damages and court costs`],
     src: [["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]] },
 
-  { name: "Electric utilities", sector: "Utilities", stance: "changes",
-    who: "EEI: \"encouraged\" by the permitting provisions but still \"reviewing\" the transmission title. Oklahoma Gas & Electric is lobbying for \"substantial revisions.\" Duke and Southern have taken no position this year",
-    obj: [`Provisions that make it easier to move renewable power across regions`, `OG&E: backstop siting, state referral of local planning ${S(2104)}, and mandatory advanced transmission tech ${S(2109)} expand federal power at the states' expense`, `OG&E \"strongly opposes\" ending federal or state ROFR protections ${S(2105)}`],
-    likes: [],
-    fix: [`OG&E: expressly preserve state ROFR laws (the bill does not preempt them) and restore a federal ROFR for regionally planned lines`, `OG&E: \"permitting reform should not expand federal authority at the expense of the states\"`],
-    note: `AEP and Berkshire Hathaway Energy support the bill (see Supports). Co-ops and public power are now reported in strong support (separate card). Duke and Southern helped defeat the 2024 package; Southern has lobbied FERC for a federal ROFR.`,
-    src: [["Energy and Policy Institute, Oct. 20", "https://energyandpolicy.org/oge-baaja-transmission-reforms-lobbying/"], ["Roll Call, Oct. 27", "https://rollcall.com/2026/10/27/transmission-overhaul-threads-careful-needle-in-permitting-bill/"], ["Heatmap on IBEW", "https://heatmap.news/politics/baaja-ibew-unions"], ["Roll Call, Oct. 22", "https://rollcall.com/2026/10/22/permitting-bill-writers-seek-industry-aid-ahead-of-senate-vote/"], ["Eno tracker, Oct. 23", "https://enotrans.org/article/tracking-the-evolution-of-responses-to-baaja-permitting-bill/"], ["APPA/NRECA on EPRA (2024)", "https://www.publicpower.org/periodical/article/appa-nreca-voice-concerns-about-provisions-permitting-reform-bill"]] },
-
   // ---------- SILENT ----------
-  { name: "EDF, The Nature Conservancy, LCV", sector: "Environmental", stance: "silent",
-    who: "No public position; none signed the opposition letters. LCV says it is still analyzing",
-    obj: [], likes: [],
-    src: [["HuffPost", "https://www.huffpost.com/entry/permitting-reform-baaja-data-centers-martin-heinrich_n_6ad6336ae4b05354557e05b7"]] },
-
-  { name: "Big wildlife and sportsmen's groups", sector: "Wildlife", stance: "silent",
-    who: "National Wildlife Federation, World Wildlife Fund, Trout Unlimited, Ducks Unlimited, Backcountry Hunters & Anglers, American Bird Conservancy, Endangered Species Coalition, Wildlife Conservation Society, Assn. of Fish & Wildlife Agencies",
-    obj: [], likes: [],
-    note: `No BAAJA statement found as of Oct. 30, and none signed CBD's ESA letter. Ducks Unlimited instead praised a separate restoration-permitting bill. American Bird Conservancy opposed the House SPEED Act in January. Treat this as "none found," not confirmed silence.`,
-    src: [["NWF press releases", "https://www.nwf.org/Latest-News/Press-Releases"], ["Ducks Unlimited, Oct. 9", "https://www.ducks.org/newsroom/ducks-unlimited-applauds-the-introduction-of-the-ecological-restoration-project-permitting-act-"]] },
-
   // ---------- SUPPORT ----------
-  { name: "Clean energy trade groups", sector: "Clean energy industry", stance: "support",
-    who: "ACP (Jason Grumet), SEIA (Tim Pawlenty), ACORE (Ray Long), Advanced Energy United, Clean Energy Buyers Association",
-    obj: [],
-    likes: [`Technology-neutral reform plus an administration commitment to approve wind projects`, `Certainty for approved projects ${S(1401)}, enforceable deadlines, remedies for disparate treatment ${S(1402)}`, `Transmission and cost allocation for independent developers`, `ACP: 350+ GW of clean energy ready to build (industry figure)`],
-    fix: [`ACORE: technical fixes are "fine" only if they don't delay a vote this year; otherwise pass a corrections bill later`],
-    note: `Politico (Nov. 3): the industry is united on the bill and lobbying alongside fossil groups. ACP counts solar, wind and storage at more than 93% of planned utility-scale additions this year (1,742 GW in interconnection queues vs. 253 GW of gas). Developers concede the tradeoff: CleanCapital's Jon Powers, \"I think we will see more fossils built, but I think this will streamline us building clean energy faster.\"`,
-    src: [["Politico, Nov. 3", "https://www.politico.com/news/2026/11/03/renewable-energy-environmentalists-permitting-split-01143886"], ["ACP statement", "https://cleanpower.org/news/acp-statement-on-bipartisan-american-affordability-and-jobs-act-of-2026/"], ["SEIA statement", "https://seia.org/news/seia-statement-on-senate-permitting-reform-deal/"], ["ACORE statement", "https://acore.org/news/acore-statement-supporting-the-bipartisan-american-affordability-and-jobs-act-of-2026/"], ["Joint trades (X)", "https://x.com/USCleanPower/status/2112962713995595980"]] },
-
-  { name: "American Petroleum Institute and oil and gas groups", sector: "Oil and gas", stance: "support",
-    who: "API led a 137-group letter (Oct. 22); IPAA, AXPC, U.S. Oil & Gas Association",
-    obj: [],
-    likes: [`Modernizes NEPA; fewer duplicative reviews and less litigation`, `Clean Water Act permitting and judicial review changes`, `Clear timelines and investment certainty`],
-    src: [["API, Sept. 30", "https://www.api.org/news-policy-and-issues/news/2026/09/30/api-welcomes-bipartisan-american-affordability-and-jobs-act-to-modernize-permitt"], ["API coalition, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
-
-  { name: "Business and manufacturing groups", sector: "Business", stance: "support",
-    who: "U.S. Chamber, Business Roundtable, NAM, American Chemistry Council, Steel Manufacturers, National Mining Association, NAHB, BCSE, Ceres",
-    obj: [],
-    likes: [`Faster, more predictable approvals; NAM's Nov. 5 analysis puts permitting costs to manufacturers at more than $12B a year and says the bill would save them $4.23B a year`, `NAHB: Clean Water Act permit changes and longer permit terms`, `Ceres and BCSE: durable reform that speeds clean infrastructure`],
-    src: [["NAM, Nov. 5", "https://x.com/ShopFloorNAM/status/2118471705588793698"], ["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["Chamber letter", "https://www.uschamber.com/assets/documents/261013_Hill_Support-for-American-Affordability-and-Jobs-Act-of-2026_EPW-ENR_Clean.pdf"]] },
-
-  { name: "Building trades unions", sector: "Labor", stance: "support",
-    who: "IBEW; North America's Building Trades Unions (NABTU); LIUNA, United Association (plumbers and pipefitters), Operating Engineers; Nov. 3 letter adds the Teamsters, Iron Workers, Boilermakers and SMART",
-    obj: [],
-    likes: [`Union jobs, prevailing wages, apprenticeships`, `Project certainty: UA says it will "increase project certainty"; Operating Engineers praise "greater certainty for projects permitted and financed across administrations" ${S(1401)}`, `Faster transmission buildout: Operating Engineers cite "building energy transmission capacity faster" ${S("2101–2109")}`, `Clear deadlines for environmental reviews and fewer projects "delayed for years through litigation" (Operating Engineers)`],
-    note: `Nov. 6: IBEW endorsed: "The IBEW strongly supports BAAJA... that will unlock development across the energy industry," per a statement to Punchbowl; a spokesman, Matt Spence, said the union resolved "minor issues for our members." Nov. 5: NABTU endorsed the bill in a letter to the negotiators, calling it a "significant step toward a more efficient permitting system that supports job creation" that "helps reduce costs" (letter obtained by Punchbowl). Nov. 3: the Teamsters, Iron Workers, Boilermakers, SMART and at least one more union (list cut off) urged the four lead negotiators to \"swiftly pass\" S. 5653, per a letter shared with Politico's James Bikales; letter text not seen. AFL-CIO not found taking a position. IBEW, which had been "reviewing the language" (Heatmap, Oct. 29), endorsed Nov. 6; its members span utilities, transmission and construction.`,
-    src: [["Punchbowl via Joshua Siegel, Nov. 6 (IBEW)", "https://x.com/SiegelScribe/status/2118744831593681027"], ["Punchbowl via Joshua Siegel, Nov. 5 (NABTU)", "https://x.com/SiegelScribe/status/2118455243654451600"], ["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["LIUNA at Whitehouse roundtable, Nov. 2", "https://www.whitehouse.senate.gov/news/release/whitehouse-nam-convene-roundtable-with-ri-manufacturing-labor-and-business-leaders-to-support-permitting-reform/"], ["Politico via Nico Portuondo, Nov. 3", "https://x.com/nicoportuondo/status/2117644196152758749"]] },
-
-  { name: "Electric co-ops and public power (NRECA, APPA)", sector: "Utilities", stance: "changes",
-    who: "NRECA (CEO Jim Matheson, 900+ co-ops) and APPA (CEO Scott Corwin, 2,000+ public power utilities); joint letter to Lee, Heinrich, Capito and Whitehouse, reported Nov. 3",
-    obj: [`Their continued support depends on a \"technical change included in the manager's amendment\" recognizing local governance in not-for-profit utilities and avoiding \"new, burdensome\" FERC regulation of co-ops and public power`],
-    likes: [`\"Strong support\": greater certainty in NEPA, Clean Water Act, ESA consultation and NHPA reviews, with clearer timelines and interagency coordination`, `A notable reversal: these groups fought the 2024 deal (EPRA) over expanded federal transmission authority`],
-    fix: [`A manager's amendment change on FERC jurisdiction over non-jurisdictional utilities. The letter names no section. The bill already creates an \"exempt transmitting utility\" category (states, political subdivisions, and co-ops selling under 4 million MWh a year) that stays out of the new planning and backstop siting authorities unless it opts in, but FERC can still require an exempt utility that owns facilities built under those provisions to provide open access service and allocate costs (new FPA 216(f)(2), 224(g)(2)). Sec. 2115 also extends FPA 225 to 233, including 228, to non-jurisdictional entities.`],
-    note: `The letter does not say which provision the \"technical change\" targets; the FPA sections above are a reading of the bill text. Xiao Wang calls it a loophole and asks why investor-owned utilities would not want the same.`,
-    src: [["Joshua Siegel (Punchbowl), Nov. 3", "https://x.com/siegelscribe/status/2117589170038460442"], ["NRECA/APPA letter (PDF)", "https://punchbowl.news/wp-content/uploads/NRECA-APPA-Joint-Letter-Permitting-FINAL.pdf"], ["Xiao Wang, Nov. 3", "https://x.com/xiaowang1984/status/2117594374959767746"]] },
-
-  { name: "AEP and Berkshire Hathaway Energy", sector: "Utilities", stance: "support",
-    who: "The utility exceptions",
-    obj: [],
-    likes: [`Faster approval of generation and transmission`, `Grid modernization and private investment`],
-    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
-
   { name: "Democratic state attorneys general", sector: "State and local", stance: "changes",
     who: "Nine AGs: Andrea Joy Campbell (MA), Nicholas Brown (WA), Rob Bonta (CA), Charity Clark (VT), Kathleen Jennings (DE), Dan Rayfield (OR), Aaron Frey (ME), Kwame Raoul (IL), Kris Mayes (AZ)",
     obj: [`Without amendment, some provisions would "unnecessarily intrude upon states' rights"`, `Limits on states', tribes' and communities' ability to protect the environment and public health (no sections named)`],
     likes: [`Shares the goals of lower energy costs, jobs and clean energy; some provisions "could further national progress"`],
     note: `Oct. 21 letter to Thune, Schumer and the four sponsors asking for a staff meeting. It names no section.`,
     src: [["AGs' letter, Oct. 21", "https://oag.ca.gov/system/files/attachments/press-docs/261021-final-multistate-baaja-letter.pdf"]] },
-  { name: "Governors and counties", sector: "State and local", stance: "support",
-    who: "National Governors Association; 21 governors (joint statement); National Association of Counties",
-    obj: [],
-    likes: [`Greater certainty and accountability in permitting`, `NACo: counties recognized as cooperating agencies`],
-    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
-
-  { name: "Citizens' Climate Lobby", sector: "Climate / abundance", stance: "support",
+  { name: "Citizens' Climate Lobby", sector: "Climate", stance: "support",
     who: "Unequivocal endorsement; call-your-senator campaign",
     obj: [],
     likes: [`Connects more clean energy to the grid`],
     src: [["CCL endorsement", "https://citizensclimatelobby.org/blog/policy/ccl-endorses-bipartisan-american-affordability-and-jobs-act/"]] },
 
-  { name: "Searchlight Institute", sector: "Climate / abundance", stance: "support",
+  { name: "Searchlight Institute", sector: "Abundance", stance: "support",
     who: "Jane Flegal, senior fellow",
     obj: [],
     likes: [`"Really important for climate"`, `Sec. 1402 is a deterrent, not a lawsuit magnet; critics wrongly assume it freezes current rates ${S(1402)}`, `Courts can still vacate permits that violate FLPMA, NFMA, the Wilderness Act, or a monument proclamation`],
     fix: [`Calls the full-capacity freeze "a pretty clear technical fix" and expects negotiators to make it ${S(1401)}`],
     src: [["Flegal thread, Oct. 21", "https://x.com/JaneAFlegal/status/2112881718592180646"], ["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]] },
 
-  { name: "Institute for Progress", sector: "Climate / abundance", stance: "support",
-    who: "Ben Schifman, former DOJ lawyer",
+  { name: "Institute for Progress", sector: "Abundance", stance: "support",
+    who: "Alec Stapp; Ben Schifman, former DOJ lawyer",
     obj: [],
-    likes: [`Harmed parties can still win APA vacatur of illegal permits; only a NEPA- or NHPA-only case is cut off`, `Data center provisions make large loads pay their way ${S(2107)}`],
+    likes: [`Stapp: "the most ambitious bipartisan permitting bill in decades"`, `Harmed parties can still win APA vacatur of illegal permits; only a NEPA- or NHPA-only case is cut off`, `Data center provisions make large loads pay their way ${S(2107)}`],
     fix: [`Whether an agency can sue the holder to undo a bad permit is "an ambiguity" and "a good candidate for a few-word technical amendment" ${S(1401)}`],
-    src: [["Schifman on Podesta", "https://x.com/BenSchifman/status/2115598576889839663"], ["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]] },
+    src: [["IFP statement of support", "https://ifp.org/wp-content/uploads/IFP-Permitting-Reform-Statement-of-Support.pdf"], ["Schifman on Podesta", "https://x.com/BenSchifman/status/2115598576889839663"], ["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]] },
 
-  { name: "Center for Public Enterprise", sector: "Climate / abundance", stance: "support",
+  { name: "Center for Public Enterprise", sector: "Abundance", stance: "support",
     who: "Chirag Lala",
     obj: [],
     likes: [`Most significant grid-governance reform in decades; a legal framework for interregional transmission ${S("2101–2109")}`, `State referral of utility planning to FERC, with ROE cuts and fines ${S(2104)}`, `Geothermal parity with oil and gas`],
     fix: [`Self-flagged weaknesses: no forcing function for interregional planning, no required project selection, TFF funding rescinded, state ROFR laws untouched`],
     src: [["CPE transmission post", "https://publicenterprise.org/the-bipartisan-permitting-bill-gets-transmission-right-2/"], ["Lala thread", "https://x.com/CtheLala/status/2115464493010710976"]] },
 
-  { name: "Breakthrough Institute", sector: "Climate / abundance", stance: "support",
-    who: "Seaver Wang, Ryan Alimento, Alex Trembath",
+  { name: "Breakthrough Institute", sector: "Abundance", stance: "support",
+    who: "Marc Levitt (statement, Sept. 30); Seaver Wang, Ryan Alimento, Alex Trembath",
     obj: [],
-    likes: [`Emissions case against the bill depends on pessimistic LNG assumptions; transmission benefits dominate`, `Interconnection, wind protection, geothermal, DER market access`],
+    likes: [`"We urge its passage without the slightest hesitation."`, `Trembath, Nov. 6: calls waiting for a better deal after the election "very dumb" game theory`, `Emissions case against the bill depends on pessimistic LNG assumptions; transmission benefits dominate`, `Interconnection, wind protection, geothermal, DER market access`],
     fix: [`Green groups "should be fighting to strengthen the bill, not to kill it"`],
-    src: [["Breakthrough, Oct. 30", "https://www.breakthroughjournal.org/p/the-faulty-logic-at-the-heart-of"]] },
-
-  { name: "Third Way, Niskanen, BPC Action, C2ES, PPI", sector: "Climate / abundance", stance: "support",
-    who: "Josh Freed (Third Way), Xan Fishman (BPC Action), Nat Keohane (C2ES)",
-    obj: [],
-    likes: [`Third Way cites C2ES/Greenline: 71 Mt (9%) less CO2 by 2035`, `Niskanen: four ways the bill gets transmission right`, `Fishman: status quo is bad for the environment, economy, and affordability`, `BPC's Nov. 3 explainer (Adam Cowie-Haskell): requiring data centers to pay embedded plus incremental transmission cost raises about $6B a year (early estimate), directed to lowering other customers' bills; most provisions depend on FERC rules and state action, so benefits take years`, `Fishman, Nov. 3, on a post-midterm wait: "One BAAJA bird in the hand is worth 2000 fictitious 'perfect' permitting bills in the bush"`],
-    fix: [`Fishman: small fixes in the managers' amendment`, `Keohane: "legitimate legal readings" that weren't intended can get technical fixes`],
-    src: [["Third Way", "https://www.thirdway.org/talking-points/on-permitting-reform-how-to-talk-about-baaja"], ["Niskanen", "https://www.niskanencenter.org/the-bipartisan-american-affordability-and-jobs-act-of-2026-4-ways-the-new-permitting-package-gets-transmission-policy-right/"], ["Heatmap (Keohane)", "https://heatmap.news/politics/baaja-permitting-certainty"], ["BPC: Affordability explainer, Nov. 3", "https://bipartisanpolicy.org/explainer/explaining-the-affordability-in-the-bipartisan-american-affordability-and-jobs-act/"], ["Fishman on X, Nov. 3", "https://x.com/XanFishman/status/2117711015559197050"]] },
+    src: [["Breakthrough statement, Sept. 30", "https://thebreakthrough.org/press/release-breakthrough-institute-statement-on-the-bipartisan-american-affordability-and-jobs-act-of-2026"], ["Trembath, Nov. 6", "https://www.breakthroughjournal.org/p/on-anti-baaja-bullshit"], ["Breakthrough, Oct. 30", "https://www.breakthroughjournal.org/p/the-faulty-logic-at-the-heart-of"]] },
 
   { name: "Trump White House", sector: "Administration", stance: "support",
     who: "Unnamed White House spokesperson, per Inside Climate News (Oct. 29)",
     obj: [],
     likes: [`Backs the bill for jobs and investment; spokesperson: "all that is left to do is vote"`, `Nov. 6: the Pentagon is advancing nine more wind projects it had held up; a White House official says the administration is "fulfilling all the promises made" so there are "NO barriers" to passage (Punchbowl)`],
     src: [["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118687354000937172"], ["Inside Climate News, Oct. 29", "https://insideclimatenews.org/news/29102026/senate-debate-on-bipartisan-permitting-bill-approaches/"]] },
-  { name: "Conservative and libertarian groups", sector: "Business", stance: "support",
-    who: "Club for Growth, Americans for Prosperity, Pacific Legal Foundation; PLF led a 35+ group letter (Oct. 28) with ClearPath Action, C3 Solutions, Goldwater Institute, National Taxpayers Union",
-    obj: [],
-    likes: [`Deregulation and lower energy costs`, `PLF: "Giving people the freedom to build will help lower costs"`],
-    src: [["PLF coalition, Oct. 28", "https://pacificlegal.org/press-release/pacific-legal-foundation-leads-more-than-35-coalition-partners-urging-congress-to-advance-permitting-deal/"],["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
-
   { name: "American Public Transportation Association", sector: "Transportation", stance: "support",
     who: "APTA, the public transit trade association; endorsement posted Nov. 2",
     obj: [],
@@ -966,27 +878,380 @@ const PEOPLE = [
     note: `Endorsement seen in APTA's post; its linked fact sheet did not load. Eno's Stephanie Pollack (former USDOT official) has argued NEPA delays mostly hit repairs, safety and transit projects.`,
     src: [["@APTA_info, Nov. 2", "https://x.com/APTA_info/status/2117313270952735124"]] },
 
-  { name: "Tom Steyer", sector: "Climate / abundance", stance: "support",
+  { name: "Tom Steyer", sector: "Climate", stance: "support",
     who: "Climate investor; endorsement amplified by Searchlight (Oct. 27)",
     obj: [], likes: [`Endorsed passage`],
     src: [["@SearchlightInst on X", "https://x.com/SearchlightInst"]] },
 
+  // ---------- PER-ENTITY CARDS (Nov. 6 restructure) ----------
+  { name: "International Brotherhood of Electrical Workers (IBEW)", sector: "Labor", stance: "support", tier: 1,
+    who: `President Kenneth W. Cooper; statement Nov. 6`,
+    obj: [],
+    likes: [`"The IBEW strongly supports the Bipartisan American Affordability and Jobs Act (BAAJA)"`, `Calls the bill "an important step in addressing these longstanding challenges"`, `A spokesman, Matt Spence, told Punchbowl the union resolved "minor issues for our members"`],
+    note: `IBEW had been "reviewing the language" in late October (Heatmap). Its members span utilities, transmission and construction.`,
+    src: [["IBEW statement, Nov. 6", "https://ibew.org/press-release/bipartisan-american-affordability-and-jobs-act/"], ["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118744831593681027"], ["Heatmap, Oct. 29", "https://heatmap.news/politics/baaja-ibew-unions"]] },
+  { name: "North America's Building Trades Unions (NABTU)", sector: "Labor", stance: "support", tier: 2,
+    who: `Letter to the four lead negotiators, Nov. 5, obtained by Punchbowl; the umbrella group for the building trades unions`,
+    obj: [],
+    likes: [`Calls the bill a "significant step toward a more efficient permitting system that supports job creation"`, `Says it "helps reduce costs"`],
+    note: `The letter itself has not been published.`,
+    src: [["Punchbowl via Joshua Siegel, Nov. 5", "https://x.com/SiegelScribe/status/2118455243654451600"]] },
+  { name: "Laborers' International Union (LIUNA)", sector: "Labor", stance: "support", tier: 3,
+    who: `General President Brent Booker (statement Oct. 2); Michael Sabitoni at Sen. Whitehouse's Nov. 2 roundtable`,
+    obj: [],
+    likes: [`Says S. 5653 "exceeds those standards while maintaining proper regulations and safeguards"`, `Sabitoni: "We need Congress to pass the Bipartisan American Affordability and Jobs Act right away."`],
+    src: [["LIUNA statement, Oct. 2", "https://www.liuna.org/news/story/liuna-general-president-brent-bookers-statement-on-permitting-reform"], ["Whitehouse roundtable release, Nov. 2", "https://www.whitehouse.senate.gov/news/release/whitehouse-nam-convene-roundtable-with-ri-manufacturing-labor-and-business-leaders-to-support-permitting-reform/"]] },
+  { name: "United Association (plumbers and pipefitters)", sector: "Labor", stance: "support", tier: 3,
+    who: `General President Mark McManus (EPW compilation)`,
+    obj: [],
+    likes: [`"In our industry, uncertainty means one thing: unemployment."`, `Says the bill will "increase project certainty, streamline federal review timelines, and create thousands of good-paying jobs" ${S(1401)}`],
+    note: `Third Way reports the union is asking members to contact their elected officials in support (Nov. 5).`,
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "International Union of Operating Engineers", sector: "Labor", stance: "support", tier: 3,
+    who: `General President John L. Downey (EPW compilation)`,
+    obj: [],
+    likes: [`"These reforms will put thousands of Operating Engineers to work"`, `Transmission: "building energy transmission capacity faster" ${S("2101–2109")}`, `Certainty: "greater certainty for projects permitted and financed across administrations" ${S(1401)}`, `Cites projects "unnecessarily delayed for years through litigation" and backs "setting clear deadlines for environmental reviews"`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "International Brotherhood of Teamsters", sector: "Labor", stance: "support", tier: 3,
+    who: `Joint letter to the four lead negotiators with the Iron Workers, Boilermakers, SMART and other unions, Nov. 3, as reported by Politico`,
+    obj: [],
+    likes: [`Urges the negotiators to "swiftly pass" S. 5653`, `Says the bill "will help ensure the United States continues to lead in the development of clean energy"`],
+    note: `Known only from Politico's excerpt; the letter and its full signer list have not been published.`,
+    src: [["Politico via Nico Portuondo, Nov. 3", "https://x.com/nicoportuondo/status/2117644196152758749"]] },
+  { name: "Iron Workers", sector: "Labor", stance: "support", tier: 3,
+    who: `Joint letter to the four lead negotiators with the Teamsters, Boilermakers, SMART and other unions, Nov. 3, as reported by Politico`,
+    obj: [],
+    likes: [`Urges the negotiators to "swiftly pass" S. 5653`, `Says the bill "will help ensure the United States continues to lead in the development of clean energy"`],
+    note: `Known only from Politico's excerpt; the letter and its full signer list have not been published.`,
+    src: [["Politico via Nico Portuondo, Nov. 3", "https://x.com/nicoportuondo/status/2117644196152758749"]] },
+  { name: "Boilermakers", sector: "Labor", stance: "support", tier: 3,
+    who: `Joint letter to the four lead negotiators with the Teamsters, Iron Workers, SMART and other unions, Nov. 3, as reported by Politico`,
+    obj: [],
+    likes: [`Urges the negotiators to "swiftly pass" S. 5653`, `Says the bill "will help ensure the United States continues to lead in the development of clean energy"`],
+    note: `Known only from Politico's excerpt; the letter and its full signer list have not been published.`,
+    src: [["Politico via Nico Portuondo, Nov. 3", "https://x.com/nicoportuondo/status/2117644196152758749"]] },
+  { name: "SMART (sheet metal, air, rail and transportation workers)", sector: "Labor", stance: "support", tier: 3,
+    who: `Joint letter to the four lead negotiators with the Teamsters, Iron Workers, Boilermakers and other unions, Nov. 3, as reported by Politico`,
+    obj: [],
+    likes: [`Urges the negotiators to "swiftly pass" S. 5653`, `Says the bill "will help ensure the United States continues to lead in the development of clean energy"`],
+    note: `Known only from Politico's excerpt; the letter and its full signer list have not been published.`,
+    src: [["Politico via Nico Portuondo, Nov. 3", "https://x.com/nicoportuondo/status/2117644196152758749"]] },
+  { name: "Rhode Island AFL-CIO", sector: "Labor", stance: "support", tier: 3,
+    who: `President Patrick Crowley, at Sen. Whitehouse's Nov. 2 roundtable`,
+    obj: [],
+    likes: [`Backs permitting reform; says development has been "held back by a permitting regime designed to thwart that development"`],
+    note: `The national AFL-CIO has not taken a position that we've found.`,
+    src: [["Whitehouse roundtable release, Nov. 2", "https://www.whitehouse.senate.gov/news/release/whitehouse-nam-convene-roundtable-with-ri-manufacturing-labor-and-business-leaders-to-support-permitting-reform/"]] },
+  { name: "American Clean Power Association (ACP)", sector: "Clean energy industry", stance: "support", tier: 3,
+    who: `CEO Jason Grumet; signed the Oct. 21 joint clean energy letter`,
+    obj: [],
+    likes: [`Developers could "confidently rely on the durability of federal permitting decisions" ${S(1401)}`, `"If adopted, the legislation will substantially increase the deployment of clean resources."`, `ACP summary: certainty for approved projects, enforceable deadlines, and remedies for disparate treatment ${S(1402)}`, `Technology-neutral reform plus an administration commitment to approve wind projects`],
+    note: `Nov. 6: called the Pentagon's release of nine held-up wind projects "a first step in implementing their agreement with Senate leaders" (Punchbowl). ACP counts solar, wind and storage at more than 93% of planned utility-scale additions this year (industry figure).`,
+    src: [["ACP statement, Sept. 30", "https://cleanpower.org/news/acp-statement-on-bipartisan-american-affordability-and-jobs-act-of-2026/"], ["ACP summary", "https://cleanpower.org/resources/summary-permitting-reform-package/"], ["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118718823545151828"], ["Joint clean energy letter (X), Oct. 21", "https://x.com/USCleanPower/status/2112962713995595980"]] },
+  { name: "Solar Energy Industries Association (SEIA)", sector: "Clean energy industry", stance: "support", tier: 3,
+    who: `CEO Tim Pawlenty; signed the Oct. 21 joint clean energy letter`,
+    obj: [],
+    likes: [`"This is the kind of bipartisan action America needs to meet growing energy demand"`, `SEIA's preliminary modeling claims 167 GW more solar and 75% more solar generation by 2035, measured against a baseline in which unapproved projects never proceed`],
+    src: [["SEIA statement", "https://seia.org/news/seia-statement-on-senate-permitting-reform-deal/"], ["@SEIA, Nov. 5", "https://x.com/SEIA/status/2118374027576090639"], ["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "American Council on Renewable Energy (ACORE)", sector: "Clean energy industry", stance: "support", tier: 3,
+    who: `CEO Ray Long; signed the Oct. 21 joint clean energy letter`,
+    obj: [],
+    likes: [`"predictable, durable, bipartisan principles that will outlast two- and four-year election cycles"`, `Transmission cost allocation for independent developers`],
+    fix: [`Technical fixes are "fine" only if they don't delay a vote this year; otherwise pass a corrections bill later (Heatmap)`],
+    src: [["ACORE statement, Sept. 30", "https://acore.org/news/acore-statement-supporting-the-bipartisan-american-affordability-and-jobs-act-of-2026/"], ["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]] },
+  { name: "Advanced Energy United", sector: "Clean energy industry", stance: "support", tier: 3,
+    who: `Heather O'Neill; released the Oct. 21 joint letter, "Clean Energy Industry United in Support of BAAJA," with ACP, SEIA, ACORE and CEBA`,
+    obj: [],
+    likes: [`"BAAJA represents substantial positive reforms to our permitting system"`, `Ties the bill to competition in transmission planning and less red tape`],
+    src: [["Joint clean energy letter (X), Oct. 21", "https://x.com/USCleanPower/status/2112962713995595980"]] },
+  { name: "Clean Energy Buyers Association (CEBA)", sector: "Clean energy industry", stance: "support", tier: 3,
+    who: `CEO Rich Powell; signed the Oct. 21 joint clean energy letter`,
+    obj: [],
+    likes: [`"This bipartisan package is a generational opportunity to unleash abundant American energy"`],
+    src: [["CEBA statement, Sept. 30", "https://ceba.org/statement-from-ceba-ceo-rich-powell-on-the-bipartisan-american-affordability-and-jobs-act/"]] },
+  { name: "Business Council for Sustainable Energy (BCSE)", sector: "Clean energy industry", stance: "support", tier: 3,
+    who: `Lisa Jacobson`,
+    obj: [],
+    likes: [`"Congress now has an opportunity to advance comprehensive, durable permitting reform"`, `Its Sept. 30 release urges enactment of the reforms this year`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "American Petroleum Institute (API)", sector: "Oil and gas", stance: "support", tier: 3,
+    who: `CEO Mike Sommers; led the 137-group coalition letter urging a floor vote (Oct. 22)`,
+    obj: [],
+    likes: [`"Washington has a generational opportunity to fundamentally transform a broken permitting system"`, `Modernizes NEPA, with fewer duplicative reviews and less litigation ${S(1110)}`, `Clean Water Act Sec. 401 reform ${S("1202–1205")}`],
+    src: [["API, Sept. 30", "https://www.api.org/news-policy-and-issues/news/2026/09/30/api-welcomes-bipartisan-american-affordability-and-jobs-act-to-modernize-permitt"], ["API-led letter, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
+  { name: "Independent Petroleum Association of America (IPAA)", sector: "Oil and gas", stance: "support", tier: 3,
+    who: `Edith Naegele; signed the API-led letter`,
+    obj: [],
+    likes: [`Backs "clear and enforceable timelines, greater levels of certainty, and fewer unnecessary delays"`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["API-led letter, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
+  { name: "American Exploration and Production Council (AXPC)", sector: "Oil and gas", stance: "support", tier: 3,
+    who: `CEO Anne Bradbury; signed the API-led letter`,
+    obj: [],
+    likes: [`"This bipartisan breakthrough goes big to durably reform a broken permitting system"`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["API-led letter, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
+  { name: "U.S. Oil & Gas Association", sector: "Oil and gas", stance: "support", tier: 3,
+    who: `Signed the API-led letter`,
+    obj: [],
+    likes: [`"Pass the frickin' bill so we can start building things again"`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["API-led letter, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
+  { name: "National Ocean Industries Association (NOIA)", sector: "Oil and gas", stance: "support", tier: 3,
+    who: `Signed the API-led letter, Oct. 22; no standalone statement found`,
+    obj: [],
+    likes: [`Joined the letter urging leaders to bring S. 5653 to the floor`],
+    src: [["API-led letter, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
+  { name: "U.S. Chamber of Commerce", sector: "Business", stance: "support", tier: 3,
+    who: `Neil Bradley; letter to the four sponsors, Oct. 15; also signed the API-led letter`,
+    obj: [],
+    likes: [`"strongly supports the Bipartisan American Affordability and Jobs Act of 2026"`, `Urges Congress to "send the bill to the President's desk as soon as possible"`],
+    src: [["Chamber letter", "https://www.uschamber.com/assets/documents/261013_Hill_Support-for-American-Affordability-and-Jobs-Act-of-2026_EPW-ENR_Clean.pdf"], ["API-led letter, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
+  { name: "Business Roundtable", sector: "Business", stance: "support", tier: 3,
+    who: `Joshua Bolten`,
+    obj: [],
+    likes: [`"This vital legislation would create a faster, more durable permitting process"`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "National Association of Manufacturers (NAM)", sector: "Business", stance: "support", tier: 3,
+    who: `CEO Jay Timmons; co-hosted Sen. Whitehouse's Nov. 2 roundtable`,
+    obj: [],
+    likes: [`"Manufacturers are all in on this game-changing agreement"`, `NAM's Nov. 5 analysis: permitting costs manufacturers more than $12B a year, and the bill would save them $4.23B a year`],
+    src: [["NAM, Nov. 5", "https://x.com/ShopFloorNAM/status/2118471705588793698"], ["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["Whitehouse roundtable release, Nov. 2", "https://www.whitehouse.senate.gov/news/release/whitehouse-nam-convene-roundtable-with-ri-manufacturing-labor-and-business-leaders-to-support-permitting-reform/"]] },
+  { name: "American Chemistry Council", sector: "Business", stance: "support", tier: 3,
+    who: `Signed the API-led letter`,
+    obj: [],
+    likes: [`"America cannot build, power, and compete without modern infrastructure."`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["API-led letter, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
+  { name: "Steel Manufacturers Association", sector: "Business", stance: "support", tier: 3,
+    who: `Brandon Farris; signed the API-led letter`,
+    obj: [],
+    likes: [`Calls the agreement "a major step" toward fixing permitting delays`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["API-led letter, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
+  { name: "National Mining Association", sector: "Business", stance: "support", tier: 3,
+    who: `Rich Nolan`,
+    obj: [],
+    likes: [`Urges Congress "to pass commonsense, much-needed reforms that will benefit all Americans"`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "National Association of Home Builders (NAHB)", sector: "Business", stance: "support", tier: 3,
+    who: `Blog by Sam Gause, Oct. 22; signed the API-led letter`,
+    obj: [],
+    likes: [`"NAHB members can help advance this vital bill by calling their senators"`, `Clean Water Act permit changes and longer permit terms`],
+    src: [["NAHB, Oct. 22", "https://www.nahb.org/blog/2026/10/senate-baaja-permitting-reform"], ["API-led letter, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
+  { name: "Ceres", sector: "Business", stance: "support", tier: 3,
+    who: `Zach Friedman`,
+    obj: [],
+    likes: [`"Any bipartisan compromise will have trade-offs," but "now is the time to deliver reforms that allow us to build"`, `Praises the certainty, transmission and grid provisions`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "Club for Growth", sector: "Conservative / libertarian", stance: "support", tier: 3,
+    who: `David McIntosh (EPW compilation)`,
+    obj: [],
+    likes: [`"Excessive regulation has constrained production and contributed to higher costs for American consumers."`],
+    note: `Listed among the bill's supporters on EPW's compilation; the line quoted there does not name the bill.`,
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "Americans for Prosperity", sector: "Conservative / libertarian", stance: "support", tier: 3,
+    who: `James Morrone (Oct. 27); signed the PLF-led letter`,
+    obj: [],
+    likes: [`"BAAJA needs to become law in November."`],
+    src: [["AFP, Oct. 27", "https://americansforprosperity.org/policy-corner/taking-a-closer-look-at-baaja-lets-talk-about-nepa-baby/"], ["PLF-led letter, Oct. 28", "https://pacificlegal.org/press-release/pacific-legal-foundation-leads-more-than-35-coalition-partners-urging-congress-to-advance-permitting-deal/"]] },
+  { name: "Pacific Legal Foundation", sector: "Conservative / libertarian", stance: "support", tier: 3,
+    who: `Joe Luppino-Esposito; led a 35+ group letter, Oct. 28, joined by AFP, C3 Solutions, ClearPath Action, Goldwater Institute and National Taxpayers Union`,
+    obj: [],
+    likes: [`"Americans should not have to spend years navigating government red tape"`, `Backs NEPA streamlining, shorter deadlines for legal challenges and remedies reform`],
+    src: [["PLF-led letter, Oct. 28", "https://pacificlegal.org/press-release/pacific-legal-foundation-leads-more-than-35-coalition-partners-urging-congress-to-advance-permitting-deal/"]] },
+  { name: "ClearPath Action", sector: "Conservative / libertarian", stance: "support", tier: 3,
+    who: `Signed the PLF-led letter, Oct. 28; no standalone statement found`,
+    obj: [],
+    likes: [`Joined the letter urging Congress to advance the permitting deal`],
+    src: [["PLF-led letter, Oct. 28", "https://pacificlegal.org/press-release/pacific-legal-foundation-leads-more-than-35-coalition-partners-urging-congress-to-advance-permitting-deal/"]] },
+  { name: "C3 Solutions", sector: "Conservative / libertarian", stance: "support", tier: 3,
+    who: `Signed the PLF-led letter, Oct. 28; no standalone statement found`,
+    obj: [],
+    likes: [`Joined the letter urging Congress to advance the permitting deal`],
+    src: [["PLF-led letter, Oct. 28", "https://pacificlegal.org/press-release/pacific-legal-foundation-leads-more-than-35-coalition-partners-urging-congress-to-advance-permitting-deal/"]] },
+  { name: "Goldwater Institute", sector: "Conservative / libertarian", stance: "support", tier: 3,
+    who: `Signed the PLF-led letter, Oct. 28; no standalone statement found`,
+    obj: [],
+    likes: [`Joined the letter urging Congress to advance the permitting deal`],
+    src: [["PLF-led letter, Oct. 28", "https://pacificlegal.org/press-release/pacific-legal-foundation-leads-more-than-35-coalition-partners-urging-congress-to-advance-permitting-deal/"]] },
+  { name: "National Taxpayers Union", sector: "Conservative / libertarian", stance: "support", tier: 3,
+    who: `Signed the PLF-led letter, Oct. 28; no standalone statement found`,
+    obj: [],
+    likes: [`Joined the letter urging Congress to advance the permitting deal`],
+    src: [["PLF-led letter, Oct. 28", "https://pacificlegal.org/press-release/pacific-legal-foundation-leads-more-than-35-coalition-partners-urging-congress-to-advance-permitting-deal/"]] },
+  { name: "R Street Institute", sector: "Conservative / libertarian", stance: "changes", tier: 3,
+    who: `Nader and Opdyke, Oct. 30`,
+    obj: [`Skeptical of handing ESA consultation to states ${S(1304)}`, `Wants the certainty provisions ${S(1401)} improved to "make it worthy of passage"`],
+    likes: [`Calls advice to delay the bill "bad advice"`],
+    src: [["R Street, Oct. 30", "https://www.rstreet.org/commentary/baaja-blast-part-2-what-does-permitting-reform-mean-for-the-environment/"]] },
+  { name: "Edison Electric Institute (EEI)", sector: "Utilities", stance: "silent", tier: 3,
+    who: `CEO Drew Maloney`,
+    obj: [],
+    likes: [],
+    note: `No formal position. Roll Call (Oct. 27): EEI "hasn't taken a position" and is "reviewing the transmission provisions." Heatmap (Oct. 7) reported it "encouraged" by the permitting provisions.`,
+    src: [["Roll Call, Oct. 27", "https://rollcall.com/2026/10/27/transmission-overhaul-threads-careful-needle-in-permitting-bill/"]] },
+  { name: "Oklahoma Gas & Electric (OG&E)", sector: "Utilities", stance: "changes", tier: 3,
+    who: `Internal lobbying document seeking "substantial revisions," confirmed by spokesperson Christi Woodworth (Roll Call)`,
+    obj: [`Backstop siting, state referral of local planning ${S(2104)}, and mandatory advanced transmission tech ${S(2109)} expand federal power at the states' expense`, `"Strongly opposes" ending federal or state ROFR protections ${S(2105)}`],
+    likes: [],
+    fix: [`Expressly preserve state ROFR laws (the bill does not preempt them) and restore a federal ROFR for regionally planned lines`, `"permitting reform should not expand federal authority at the expense of the states"`],
+    src: [["Energy and Policy Institute, Oct. 20", "https://energyandpolicy.org/oge-baaja-transmission-reforms-lobbying/"], ["Roll Call, Oct. 27", "https://rollcall.com/2026/10/27/transmission-overhaul-threads-careful-needle-in-permitting-bill/"]] },
+  { name: "National Rural Electric Cooperative Association (NRECA)", sector: "Utilities", stance: "changes", tier: 3,
+    who: `CEO Jim Matheson (900+ co-ops); joint letter with APPA to Lee, Heinrich, Capito and Whitehouse, reported Nov. 3`,
+    obj: [`Continued support "is contingent upon an important technical change" in the manager's amendment that recognizes local governance in not-for-profit utilities and avoids "new, burdensome" FERC regulation of co-ops and public power`],
+    likes: [`"BAAJA represents a meaningful and balanced effort to address these challenges"`, `Greater certainty in NEPA, Clean Water Act, ESA consultation and NHPA reviews`],
+    fix: [`A manager's amendment change on FERC jurisdiction over non-jurisdictional utilities. The letter names no section. The bill already creates an "exempt transmitting utility" category (states, political subdivisions, and co-ops selling under 4 million MWh a year) that stays out of the new planning and backstop siting authorities unless it opts in, but FERC can still require an exempt utility that owns facilities built under those provisions to provide open access service and allocate costs (new FPA 216(f)(2), 224(g)(2)). Sec. 2115 also extends FPA 225 to 233, including 228, to non-jurisdictional entities.`],
+    note: `A notable shift: co-ops and public power fought the 2024 deal (EPRA) over expanded federal transmission authority. The letter does not say which provision the technical change targets; the FPA sections above are a reading of the bill text.`,
+    src: [["NRECA/APPA letter (PDF)", "https://punchbowl.news/wp-content/uploads/NRECA-APPA-Joint-Letter-Permitting-FINAL.pdf"], ["Joshua Siegel (Punchbowl), Nov. 3", "https://x.com/siegelscribe/status/2117589170038460442"]] },
+  { name: "American Public Power Association (APPA)", sector: "Utilities", stance: "changes", tier: 3,
+    who: `CEO Scott Corwin (2,000+ public power utilities); joint letter with NRECA; Nov. 3 release`,
+    obj: [`Continued support "is contingent upon an important technical change" in the manager's amendment that recognizes local governance in not-for-profit utilities and avoids "new, burdensome" FERC regulation of co-ops and public power`],
+    likes: [`Says permitting reform would "give public power utilities the certainty they need to make those investments"`],
+    fix: [`A manager's amendment change on FERC jurisdiction over non-jurisdictional utilities. The letter names no section. The bill already creates an "exempt transmitting utility" category (states, political subdivisions, and co-ops selling under 4 million MWh a year) that stays out of the new planning and backstop siting authorities unless it opts in, but FERC can still require an exempt utility that owns facilities built under those provisions to provide open access service and allocate costs (new FPA 216(f)(2), 224(g)(2)). Sec. 2115 also extends FPA 225 to 233, including 228, to non-jurisdictional entities.`],
+    note: `APPA said on Sept. 30 that it was still reviewing the bill.`,
+    src: [["NRECA/APPA letter (PDF)", "https://punchbowl.news/wp-content/uploads/NRECA-APPA-Joint-Letter-Permitting-FINAL.pdf"], ["Joshua Siegel (Punchbowl), Nov. 3", "https://x.com/siegelscribe/status/2117589170038460442"]] },
+  { name: "American Electric Power (AEP)", sector: "Utilities", stance: "support", tier: 3,
+    who: `CEO Bill Fehrman`,
+    obj: [],
+    likes: [`"This legislation will help accelerate the process to bring critical infrastructure projects online."`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "Berkshire Hathaway Energy", sector: "Utilities", stance: "support", tier: 3,
+    who: `Mark Hewett`,
+    obj: [],
+    likes: [`Says the bill will "unlock trillions of dollars in private sector investment and job creation"`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "National Congress of American Indians (NCAI)", sector: "Tribal / preservation", stance: "changes", tier: 3,
+    who: `Oct. 9 coalition letter with NARF and NATHPO; Nov. 4 action alert; member of the 106 Strong coalition`,
+    obj: [`Asks Congress to "withdraw Title III of BAAJA" and preserve Section 106 consultation ${S(2301)}`],
+    likes: [],
+    note: `Its ask targets the historic preservation title, not the whole bill.`,
+    src: [["Turtle Talk on the Oct. 9 letter", "https://turtletalk.blog/2026/10/13/a-broad-tribal-coalition-urges-congress-to-withdraw-baajas-section-106-rewrite/"]] },
+  { name: "Native American Rights Fund (NARF)", sector: "Tribal / preservation", stance: "changes", tier: 3,
+    who: `Signed the Oct. 9 coalition letter with NCAI and NATHPO; no standalone statement found`,
+    obj: [`Asks Senate leaders to withdraw the Section 106 provisions ${S(2301)}`],
+    likes: [],
+    src: [["Turtle Talk on the Oct. 9 letter", "https://turtletalk.blog/2026/10/13/a-broad-tribal-coalition-urges-congress-to-withdraw-baajas-section-106-rewrite/"]] },
+  { name: "National Association of Tribal Historic Preservation Officers (NATHPO)", sector: "Tribal / preservation", stance: "oppose", tier: 1,
+    who: `Action page, updated Nov. 3`,
+    obj: [`"NATHPO opposes BAAJA as written" and asks senators to "REMOVE THE NHPA SECTION" ${S(2301)}`, `Statutory definitions of "undertaking," "adverse effect" and area of potential effects could keep projects and harms out of review; agencies control key determinations`, `Review is limited (150-day filing deadline, restricted injunctions); a tribe that misses the 30-day window cannot force reconsideration`, `Chronic underfunding "answered with oversight, penalties, and potential federal takeover"`],
+    likes: [],
+    note: `Says the NHPA language cannot be fixed by amendment.`,
+    src: [["NATHPO", "https://www.nathpo.org/permitting-reform-baaja-tribal-historic-preservation/"]] },
+  { name: "106 Strong coalition", sector: "Tribal / preservation", stance: "oppose", tier: 3,
+    who: `National coalition (1,200+ members, per its letter); NCAI is a member`,
+    obj: [`Open letter calling for the defeat of S. 5653: "Section 106 will cease to be a tool for historic preservation" ${S(2301)}`],
+    likes: [],
+    note: `Planned a Capitol rally for Nov. 9, when votes start (Siegel, Oct. 19).`,
+    src: [["106 Strong open letter", "https://culturalheritagepartners.com/open-letter-to-congress-from-national-coalition/"], ["Siegel (Punchbowl), Oct. 19", "https://x.com/SiegelScribe/status/2112162140526104855"]] },
+  { name: "Standing Rock Sioux Tribe", sector: "Tribal / preservation", stance: "oppose", tier: 1,
+    who: `Chairman Steve Sitting Bear; statement Oct. 30, posted Nov. 3`,
+    obj: [`BAAJA "would all but eliminate the United States Treaty and Trust responsibilities"`, `Says it weakens the NHPA, Clean Water Act, NEPA and ESA (no sections named)`],
+    likes: [],
+    src: [["Standing Rock Sioux Tribe", "https://standingrock.org/2026/11/03/the-standing-rock-sioux-tribe-opposes-the-bipartisan-american-affordability-and-jobs-act-baaja"]] },
+  { name: "Indigenous Environmental Network", sector: "Tribal / preservation", stance: "oppose", tier: 1,
+    who: `Policy specialist Jordan Harmon; co-lead of the Sept. 30 coalition release with CJA, GreenLatinos, WE ACT and WELC`,
+    obj: [`Tribal nations "deserve better than being treated as a negotiation pawn in backroom permitting deals"`, `NHPA rewrite ${S(2301)} would shut tribal voices out of decisions about sacred and cultural sites`],
+    likes: [],
+    src: [["Coalition release, Sept. 30", "https://climatejusticealliance.org/broadcoalitionrejects-polluter-driven-permitting-reform/"], ["Washington Examiner, Oct. 28", "https://www.washingtonexaminer.com/?p=4783176"]] },
+  { name: "National Tribal Energy Association", sector: "Tribal / preservation", stance: "support", tier: 2,
+    who: `Letter of support, reported Nov. 6`,
+    obj: [],
+    likes: [`Says BAAJA takes "meaningful steps to honor our Tribal sovereignty and self-determination and modernize the federal permitting partnership" (as quoted by Punchbowl)`],
+    note: `The letter itself has not been published.`,
+    src: [["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118788792492704215"]] },
+  { name: "Apsaalooke (Crow) Nation", sector: "Tribal / preservation", stance: "support", tier: 2,
+    who: `Letter of support, reported Nov. 6`,
+    obj: [],
+    likes: [`Submitted a letter supporting BAAJA (Punchbowl)`],
+    note: `The letter itself has not been published.`,
+    src: [["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118788792492704215"]] },
+  { name: "Climate Justice Alliance", sector: "Civil rights / EJ", stance: "oppose", tier: 3,
+    who: `Legislative director Mar Zepeda Salazar; led the Sept. 30 coalition release; 100+ groups on its Oct. 28 letter`,
+    obj: [`"It cuts off communities' access to the courts"`, `Objects to the NEPA exemption for pipelines in existing rights-of-way, the 150-day window to sue, and the project-certainty provisions`, `Frames the bill as a data center and billionaire giveaway`],
+    likes: [],
+    note: `Nov. 4 to 5: urging supporters to email senators to vote no, citing the election.`,
+    src: [["CJA BAAJA page", "https://climatejusticealliance.org/baaja/"], ["Coalition release, Sept. 30", "https://climatejusticealliance.org/broadcoalitionrejects-polluter-driven-permitting-reform/"], ["Oct. 28 letter", "https://climatejusticealliance.org/100ej-groups-letter-opposing-baaja/"]] },
+  { name: "GreenLatinos", sector: "Civil rights / EJ", stance: "oppose", tier: 3,
+    who: `Irene Burga; co-lead of the Sept. 30 coalition release`,
+    obj: [`"Congress should be strengthening the protections communities rely on," "not bargaining them away"`],
+    likes: [],
+    src: [["Coalition release, Sept. 30", "https://climatejusticealliance.org/broadcoalitionrejects-polluter-driven-permitting-reform/"]] },
+  { name: "WE ACT for Environmental Justice", sector: "Civil rights / EJ", stance: "oppose", tier: 3,
+    who: `Chief Federal Officer Leslie Fields; co-lead of the Sept. 30 coalition release`,
+    obj: [`Co-led the release rejecting "polluter-driven" permitting reform`],
+    likes: [],
+    src: [["Coalition release, Sept. 30", "https://climatejusticealliance.org/broadcoalitionrejects-polluter-driven-permitting-reform/"]] },
+  { name: "National Governors Association", sector: "State and local", stance: "support", tier: 3,
+    who: `CEO Brandon Tatum, Oct. 1`,
+    obj: [],
+    likes: [`"Reform will help grow our economy, reduce costs, and improve quality of life"`],
+    src: [["NGA, Oct. 1", "https://www.nga.org/?p=81333"]] },
+  { name: "National Association of Counties (NACo)", sector: "State and local", stance: "support", tier: 3,
+    who: `County advocacy hub, Oct. 8`,
+    obj: [],
+    likes: [`Urges county leaders to ask senators "to support the Bipartisan American Affordability and Jobs Act of 2026"`, `Counties recognized as cooperating agencies`],
+    src: [["NACo advocacy hub", "https://www.naco.org/resource/bipartisan-american-affordability-and-jobs-act-2026-permitting-reform-county-advocacy-hub"]] },
+  { name: "21 governors (joint statement)", sector: "State and local", stance: "support", tier: 3,
+    who: `Joint statement on EPW's compilation; the governors are not named there`,
+    obj: [],
+    likes: [`"outdated federal bureaucracy continues to delay critical energy and infrastructure projects"`, `"The Bipartisan American Affordability and Jobs Act is an opportunity to change that."`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "Third Way", sector: "Abundance", stance: "support", tier: 3,
+    who: `Ryan Fitzpatrick; Josh Freed`,
+    obj: [],
+    likes: [`Democrats "should all be committed to getting to yes on this deal"`, `Cites C2ES/Greenline modeling: 71 Mt (9%) less CO2 by 2035`, `Commissioned an Impact Research poll on the bill (see the Polling tab)`],
+    src: [["Third Way, Sept. 30", "https://www.thirdway.org/press/third-way-applauds-bipartisan-permitting-deal"], ["Third Way talking points", "https://www.thirdway.org/talking-points/on-permitting-reform-how-to-talk-about-baaja"]] },
+  { name: "Niskanen Center", sector: "Abundance", stance: "support", tier: 3,
+    who: `Levine and Reed, Oct. 2`,
+    obj: [],
+    likes: [`"Its passage is critical to ensuring affordable and reliable power for all."`, `Four ways the bill gets transmission policy right ${S("2101–2109")}`],
+    src: [["Niskanen, Oct. 2", "https://www.niskanencenter.org/the-bipartisan-american-affordability-and-jobs-act-of-2026-4-ways-the-new-permitting-package-gets-transmission-policy-right/"]] },
+  { name: "Bipartisan Policy Center Action", sector: "Abundance", stance: "support", tier: 3,
+    who: `Michele Stockwell; Xan Fishman`,
+    obj: [],
+    likes: [`"We urge swift action and look forward to working with members of both parties"`, `Fishman: "I'm optimistic that this incredible bill can be signed into law this year"`, `BPC's Nov. 3 explainer: requiring data centers to pay embedded plus incremental transmission cost raises about $6B a year (early estimate), directed to lowering other customers' bills ${S(2107)}`, `Fishman, Nov. 3: "One BAAJA bird in the hand is worth 2000 fictitious 'perfect' permitting bills in the bush"`],
+    fix: [`Fishman: small fixes in the managers' amendment`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["BPC affordability explainer, Nov. 3", "https://bipartisanpolicy.org/explainer/explaining-the-affordability-in-the-bipartisan-american-affordability-and-jobs-act/"], ["Fishman on X, Nov. 3", "https://x.com/XanFishman/status/2117711015559197050"]] },
+  { name: "Progressive Policy Institute", sector: "Abundance", stance: "support", tier: 3,
+    who: `Colin Mortimer (EPW compilation)`,
+    obj: [],
+    likes: [`"This bill would get power lines, clean energy and critical infrastructure built faster"`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "Inclusive Abundance", sector: "Abundance", stance: "support", tier: 3,
+    who: `Derek Kaufman`,
+    obj: [],
+    likes: [`"This is a huge bipartisan win"`],
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "Center for New Liberalism", sector: "Abundance", stance: "support", tier: 1,
+    who: `Endorsed Nov. 6; letter signed by 45 chapters to all 49 Democratic and independent senators`,
+    obj: [],
+    likes: [`Director Colin Mortimer: "we will never see real progress on our climate goals or on energy affordability if every single wind, solar, and battery project is spending years, or even decades, stuck in the permitting pipeline"`, `Michigan state Rep. Jasper Martus (D-Flushing): the bill "will bring some much-needed common sense to federal permitting laws"`],
+    note: `The release headline says 55 chapters; the body and the group's post say 45.`,
+    src: [["CNL release, Nov. 6", "https://cnliberalism.org/posts/center-for-new-liberalism-endorses-bipartisan-permitting-legislation"], ["@CNLiberalism, Nov. 6", "https://x.com/CNLiberalism/status/2118758279010738239"]] },
+  { name: "Climate Leadership Council", sector: "Climate", stance: "support", tier: 3,
+    who: `Erin Alejandre`,
+    obj: [],
+    likes: [`Says it "is encouraged by progress on the Bipartisan American Affordability and Jobs Act"`],
+    note: `Weaker than an endorsement.`,
+    src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
+  { name: "Center for Climate and Energy Solutions (C2ES)", sector: "Climate", stance: "silent", tier: 3,
+    who: `President Nat Keohane`,
+    obj: [],
+    likes: [],
+    note: `No formal position. C2ES published a neutral section-by-section summary. Keohane told Politico "clean energy is going to win out" if building gets easier, and told Heatmap that "legitimate legal readings" that weren't intended can get technical fixes.`,
+    src: [["C2ES summary", "https://www.c2es.org/document/comprehensive-summary-of-the-bipartisan-american-affordability-and-jobs-act/"], ["Politico, Nov. 3", "https://www.politico.com/news/2026/11/03/renewable-energy-environmentalists-permitting-split-01143886"], ["Heatmap, Oct. 30", "https://heatmap.news/politics/baaja-permitting-certainty"]] }
 ];
 
 // Provision matrix: + praise, - object, ~ mixed, "" none stated
 const MATRIX = [
-  ["Transmission title", "2101–2109", ["+", "+", "+", "", "-", "", "+", "+", ""]],
-  ["Data center cost rule", "2107 / FPA 228", ["+", "+", "", "", "", "", "", "", ""]],
-  ["Project certainty", "1401", ["-", "-", "-", "-", "", "", "+", "+", ""]],
-  ["Disparate treatment", "1402", ["-", "-", "-", "-", "-", "", "+", "", ""]],
-  ["NEPA exclusions", "1102", ["", "", "", "", "-", "", "", "", ""]],
-  ["NEPA judicial review", "1110", ["-", "-", "", "", "-", "", "", "", "+"]],
-  ["Clean Water Act 401 / 404", "1202–1205", ["-", "-", "-", "", "-", "", "", "", "+"]],
-  ["Endangered Species Act", "1301–1305", ["-", "-", "", "-", "-", "", "", "", ""]],
-  ["Historic preservation (NHPA)", "2301", ["", "-", "-", "", "-", "-", "", "", ""]]
+  ["Transmission title", "2101–2109", ["+", "+", "+", "", "-", "", "", "", "", "", "+", "+", ""]],
+  ["Data center cost rule", "2107 / FPA 228", ["+", "+", "", "", "", "", "", "", "", "", "", "", ""]],
+  ["Project certainty", "1401", ["-", "-", "-", "-", "", "", "", "", "", "", "+", "+", ""]],
+  ["Disparate treatment", "1402", ["-", "-", "-", "-", "-", "", "", "", "", "", "+", "", ""]],
+  ["NEPA exclusions", "1102", ["", "", "", "", "-", "", "", "", "", "", "", "", ""]],
+  ["NEPA judicial review", "1110", ["-", "-", "", "", "-", "", "", "", "", "", "", "", "+"]],
+  ["Clean Water Act 401 / 404", "1202–1205", ["-", "-", "-", "", "-", "", "", "", "-", "-", "", "", "+"]],
+  ["Endangered Species Act", "1301–1305", ["-", "-", "", "-", "-", "", "", "", "-", "", "", "", ""]],
+  ["Historic preservation (NHPA)", "2301", ["", "-", "-", "", "-", "-", "-", "~", "-", "-", "", "", ""]]
 ];
 
-const CELL = { "+": ["c-plus", "+", "praises"], "-": ["c-minus", "−", "objects"], "~": ["c-mixed", "±", "mixed"], "": ["c-none", "·", "no stated position"] };
+const CELL = { "+": ["c-plus", "+", "praises"], "-": ["c-minus", "−", "objects"], "~": ["c-mixed", "±", "wants fixes, not removal"], "": ["c-none", "·", "no stated position"] };
 
 const FIXES = [
   { title: "Drop the regulatory freeze on existing facilities", sec: "1401(b)(1)", level: ["k-high", "Near-consensus"],
@@ -1182,6 +1447,7 @@ const senState = { f: "record" };
 
 // ---------- House ----------
 const HOUSE = [
+  ["Sharice Davids", "D-KS-3", "conditional", `Breaks with House Democratic leadership to push moving permitting reform now: "Modernizing our permitting process is an important way to lower utility costs, create good-paying local jobs, and secure our energy future, and we need to get it done." But "passing this bill cannot come at the expense of Tribal sovereignty and the federal trust responsibility," and she is working with leaders "to fix these provisions." Her release does not name BAAJA or a section.`, [["Davids release, Nov. 6", "https://davids.house.gov/media/press-releases/davids-pushes-democratic-leadership-move-bipartisan-permitting-reform-without"]]],
   ["Hakeem Jeffries", "D-NY-8 (House Democratic leader)", "conditional", `A spokesperson says the Senate bill "falls short in several areas, including the manner in which NEPA reform is undertaken and the failure to adequately protect tribal sovereignty," and that Jeffries "will not rubber-stamp legislation that emerges from the Senate without more constructive involvement with our Caucus." Also: he "supports the need for permitting reform that prioritizes lower costs for hardworking American taxpayers, strengthens our energy infrastructure and protects the environment." Politico's headline calls it opposition; the statement asks for House input before the bill is taken up.`, [["Politico via Nico Portuondo, Nov. 5", "https://x.com/NicoPortuondo/status/2118491287569531306"]]],
   ["Chrissy Houlahan", "D-PA-6", "support", `Lists permitting reform among the unfinished lame-duck items before the Dec. 11 funding deadline: "Permitting reform that accelerates essential infrastructure projects while maintaining environmental safeguards." Does not name BAAJA.`, [["@RepHoulahan, Nov. 5", "https://x.com/RepHoulahan/status/2118441334801375702"]]],
   ["Mike Johnson", "R-LA-4 (Speaker)", "support", `Gave an enthusiastic "yes" on backing the bipartisan permitting bill; Roll Call says he endorsed its "overall thrust."`, [["Roll Call, Oct. 27", "https://rollcall.com/2026/10/27/transmission-overhaul-threads-careful-needle-in-permitting-bill/"]]],
@@ -1352,9 +1618,10 @@ function list(label, cls, items) {
 }
 
 // Each position gets its own section. One row of five shows by default (groups in the provision chart first); the rest sit behind that section's "Show all" button.
-const FEATURED = new Set(["Sierra Club", "Earthjustice", "NRDC", "Center for Biological Diversity", "NAACP", "National Trust for Historic Preservation", "NCAI, NARF, NATHPO and the 106 Strong coalition", "Clean energy trade groups", "American Petroleum Institute and oil and gas groups", "Business and manufacturing groups"]);
-const SECTIONS = [["support", "Supports"], ["oppose", "Opposes"], ["changes", "Wants changes or has conditions"], ["silent", "No public position yet"]];
+const FEATURED = new Set(["Sierra Club", "Earthjustice", "NRDC", "Center for Biological Diversity", "NAACP", "National Trust for Historic Preservation", "National Congress of American Indians (NCAI)", "Coalition of Large Tribes (COLT)", "American Clean Power Association (ACP)", "American Petroleum Institute (API)", "International Brotherhood of Electrical Workers (IBEW)", "U.S. Chamber of Commerce"]);
+const SECTIONS = [["support", "Supports"], ["oppose", "Opposes"], ["changes", "Wants changes or has conditions"], ["silent", "Has spoken, but taken no position"]];
 const ROW = 5;
+const TIER_TXT = { 1: "Source: the group's own statement, read directly.", 2: "Source: a named reporter quoting the group or its letter.", 3: "Source: secondhand (a compilation, a letter signature, or a summary of the group's statement)." };
 const expanded = {};
 function card(p) {
   const likes = p.stance === "oppose" && !p.likes.length ? `<div class="block"><span class="label likes">What they like</span><ul><li style="color:var(--muted)">Nothing stated publicly</li></ul></div>` : list(p.stance === "support" ? "Why they back it" : "What they like", "likes", p.likes);
@@ -1371,6 +1638,7 @@ function card(p) {
       ${likes}
       ${list("Fixes they want", "fix", p.fix)}
       ${p.note ? `<p class="who">${p.note}</p>` : ""}
+      ${p.tier ? `<p class="tier">${TIER_TXT[p.tier]}</p>` : ""}
       <div class="sources">${p.src.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join("")}</div>
     </details>
   </article>`;
@@ -1398,6 +1666,13 @@ document.addEventListener("click", (e) => {
   expanded[k] = !expanded[k]; renderRoster();
   if (!expanded[k]) document.getElementById("sec-" + k).scrollIntoView({ block: "nearest" });
 });
+
+const SEARCHED = [["Labor", ["AFL-CIO", "BlueGreen Alliance", "United Steelworkers", "United Mine Workers", "SEIU", "Communications Workers of America"], ["UAW", "Utility Workers Union of America"]], ["Utilities", ["Duke Energy", "Southern Company"], []], ["Environmental", ["Environmental Defense Fund", "The Nature Conservancy", "League of Conservation Voters (said in October it was still analyzing the bill)"], []], ["Wildlife", ["National Wildlife Federation", "World Wildlife Fund", "Ducks Unlimited (praised a separate restoration-permitting bill)", "Backcountry Hunters & Anglers", "American Bird Conservancy", "Endangered Species Coalition"], ["Trout Unlimited", "Wildlife Conservation Society", "Association of Fish & Wildlife Agencies"]], ["Tribal", [], ["Affiliated Tribes of Northwest Indians", "United South and Eastern Tribes"]]];
+function renderSearched() {
+  const found = SEARCHED.filter(([, n]) => n.length).map(([sec, n]) => `<p><b>${sec}:</b> ${n.join(", ")}</p>`).join("");
+  const nochk = SEARCHED.flatMap(([, , c]) => c);
+  document.getElementById("searched").innerHTML = `<h3>Searched, no position found (as of Nov. 6)</h3><p>These groups have not taken a public position on BAAJA that we've found. That is not a position.</p>${found}${nochk.length ? `<p><b>Could not check (sites would not load):</b> ${nochk.join(", ")}</p>` : ""}`;
+}
 
 function renderFixes() {
   document.getElementById("fixList").innerHTML = FIXES.map(f => `<article class="fix">
@@ -1576,7 +1851,10 @@ function showState() {
 // ---------- Latest statements ----------
 // Newest first. d = date the statement was made or reported; k = Senate | House | Group.
 const LATEST = [
-  { d: "2026-11-06", k: "Group", who: "International Brotherhood of Electrical Workers (IBEW)", pos: "support", text: `Endorses the bill: "The IBEW strongly supports BAAJA... that will unlock development across the energy industry." A spokesman, Matt Spence, says the union resolved "minor issues for our members." IBEW had been reviewing the text since October.`, src: [["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118744831593681027"]] },
+  { d: "2026-11-06", k: "House", who: "Sharice Davids (D-KS-3)", pos: "conditional", text: `Pushes House Democratic leaders to move permitting reform "without delay," but says the bill "cannot come at the expense of Tribal sovereignty and the federal trust responsibility" and she is working "to fix these provisions."`, src: [["Davids release, Nov. 6", "https://davids.house.gov/media/press-releases/davids-pushes-democratic-leadership-move-bipartisan-permitting-reform-without"]] },
+  { d: "2026-11-06", k: "Group", who: "National Tribal Energy Association and Apsaalooke (Crow) Nation", pos: "support", text: `Submitted letters supporting the bill. NTEA says it takes "meaningful steps to honor our Tribal sovereignty and self-determination."`, src: [["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118788792492704215"]] },
+  { d: "2026-11-06", k: "Group", who: "Center for New Liberalism", pos: "support", text: `Endorses the bill and sends a letter from 45 chapters to all 49 Democratic and independent senators. Michigan state Rep. Jasper Martus: it "will bring some much-needed common sense to federal permitting laws."`, src: [["CNL release, Nov. 6", "https://cnliberalism.org/posts/center-for-new-liberalism-endorses-bipartisan-permitting-legislation"]] },
+  { d: "2026-11-06", k: "Group", who: "International Brotherhood of Electrical Workers (IBEW)", pos: "support", text: `Endorses the bill: "The IBEW strongly supports BAAJA... that will unlock development across the energy industry." A spokesman, Matt Spence, says the union resolved "minor issues for our members." IBEW had been reviewing the text since October.`, src: [["IBEW statement, Nov. 6", "https://ibew.org/press-release/bipartisan-american-affordability-and-jobs-act/"], ["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118744831593681027"]] },
   { d: "2026-11-06", k: "Group", who: "Trump White House", pos: "support", text: `The Pentagon is advancing nine more large wind projects it had held up, including two in New Mexico. A White House official says the administration is "fulfilling all the promises made" so there are "NO barriers" to passage.`, src: [["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118687354000937172"]] },
   { d: "2026-11-06", k: "Group", who: "American Clean Power Association", pos: "support", text: `CEO Jason Grumet calls the wind approvals "a first step in implementing their agreement with Senate leaders" and "what is needed to pass permitting reform."`, src: [["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118718823545151828"]] },
   { d: "2026-11-06", k: "Group", who: "Sierra Club", pos: "changes", text: `Says the bill "achieves critical wins on transmission and potential emissions reduction," but Congress "must demand fundamental changes" on tribal consultation, clean water, wildlife and the ability to challenge unlawful projects. Executive Director Loren Blackford: Democrats "can and must fight for a better deal."`, src: [["@SierraClub, Nov. 6", "https://x.com/SierraClub/status/2118711190486397324"]] },
@@ -1710,7 +1988,7 @@ function renderPolls() {
   }).join("");
 }
 
-renderSummary(); renderMatrix(); renderChips(); renderRoster(); renderFixes(); renderOfficials(); renderSenate(); renderHouse();
+renderSummary(); renderMatrix(); renderChips(); renderRoster(); renderSearched(); renderFixes(); renderOfficials(); renderSenate(); renderHouse();
 renderHemi(); renderVotebar(); renderHouseViz(); renderStateMap(); renderGlance(); renderLatest("W"); renderLatest("G"); renderPolls(); showView();
 linkifySections(document.body);
 new MutationObserver((muts) => muts.forEach((m) => m.addedNodes.forEach((n) => { if (n.nodeType === 1) linkifySections(n); else if (n.nodeType === 3 && n.parentElement) linkifySections(n.parentElement); }))).observe(document.body, { childList: true, subtree: true });
