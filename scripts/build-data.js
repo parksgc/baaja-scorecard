@@ -128,7 +128,8 @@ const members = roster.map((r) => {
 });
 const unmatched = Object.keys(houseNotes);
 if (unmatched.length) throw new Error(`House entries with no roster seat: ${unmatched.join(", ")}`);
-const HLABEL = { ...LABEL, vacant: "Vacant seat" };
+// "Seat currently vacant" is longer than "No statement found" so it sorts last in Datawrapper's legend (see LABEL note).
+const HLABEL = { ...LABEL, vacant: "Seat currently vacant" };
 const HL = ["none", "oppose", "conditional", "lean", "support", "sponsor"];
 const hgrab = (party, p) => members.filter((m) => m.party === party && m.pos === p).sort((a, b) => a.key.localeCompare(b.key));
 const hOrdered = [
@@ -149,7 +150,7 @@ const HPARTY = { D: "Democrat", R: "Republican", I: "Independent", "": "Vacant" 
 const hRank = { ...rank, vacant: 6 };
 const houseSeatRows = [["x", "y", "Member", "Party", "District", "Position", "What they said"]];
 hOrdered.map((m, k) => ({ m, ...hSeats[k] })).sort((p, q) => hRank[p.m.pos] - hRank[q.m.pos]).forEach(({ m, a, r }) => {
-  houseSeatRows.push([(r * Math.cos(a)).toFixed(1), (r * Math.sin(a)).toFixed(1), m.party ? `Rep. ${m.shown}` : "Vacant seat",
+  houseSeatRows.push([(r * Math.cos(a)).toFixed(1), (r * Math.sin(a)).toFixed(1), m.party ? `Rep. ${m.shown}` : "Seat currently vacant",
     HPARTY[m.party], `${m.state}-${m.dist}`, HLABEL[m.pos], m.party ? linkSecs(short(m.note)) : "Seat currently vacant."]);
 });
 // 7. Path to 218: one stacked bar, same vocabulary as the Senate bar.
