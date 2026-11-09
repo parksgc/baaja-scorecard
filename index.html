@@ -338,7 +338,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     <h1>The BAAJA Scorecard</h1>
     <p class="lede">Most of the people fighting over BAAJA agree on more than they admit. This page tracks where Congress and the major stakeholders stand, which sections they praise or attack, and the fixes even the bill's supporters say it needs.</p>
     <p class="hlr" id="hlr" hidden>Analysis and updates at <a id="hlrHome" href="#">Hard Look Review</a><span aria-hidden="true"> · </span><a id="hlrSub" href="#">Subscribe</a></p>
-    <div class="meta"><span>Updated <strong>Nov. 6, 2026</strong></span><span>Senate motion to proceed <strong>Nov. 9</strong></span><span>Introduced <strong>Sept. 30</strong></span><span><a href="https://bipartisanpolicy.org/explainer/bipartisan-american-affordability-and-jobs-act-baaja-resource-hub/" target="_blank" rel="noopener">Guide to the bill (BPC)</a></span></div>
+    <div class="meta"><span>Updated <strong>Nov. 8, 2026</strong></span><span>Senate motion to proceed <strong>Nov. 9</strong></span><span>Introduced <strong>Sept. 30</strong></span><span><a href="https://bipartisanpolicy.org/explainer/bipartisan-american-affordability-and-jobs-act-baaja-resource-hub/" target="_blank" rel="noopener">Guide to the bill (BPC)</a></span></div>
     <div class="views" role="tablist" aria-label="Views">
       <a role="tab" href="#congress" id="tab-congress" class="view-tab">Whip tracker</a>
       <a role="tab" href="#groups" id="tab-groups" class="view-tab">Stakeholders</a>
@@ -703,7 +703,7 @@ const PEOPLE = [
     who: "Executive director OJ Semans Sr. (Rosebud Sioux); COLT represents large land base tribes",
     obj: [`Pushing negotiators for targeted technical fixes to the NHPA section ${S(2301)}; circulated a discussion paper with proposed amendments to Hill offices (Punchbowl obtained it)`],
     likes: [`Semans expects the bill to pass the Senate, so COLT is trying to improve it; leaders met last week with more than a dozen Democratic and Republican offices, including EPW and Energy Committee staff`, `\"Working to make BAAJA better for large land base tribes\" is more productive than telling drafters to scrap it, he said (Punchbowl)`],
-    note: `A marked break from NCAI, NARF, NATHPO and other tribes. Source is Punchbowl's report, seen via a post quoting it. The discussion paper and its specific amendments have not been seen, and COLT's website has no BAAJA statement.`,
+    note: `Nov. 7, on the manager's amendment, its leader is "grateful to see many positive changes for tribes" but sees "still room for improvement" (as quoted by Heatmap). A marked break from NCAI, NARF, NATHPO and other tribes. Source is Punchbowl's report, seen via a post quoting it. The discussion paper and its specific amendments have not been seen, and COLT's website has no BAAJA statement.`,
     src: [["Adam Jentleson quoting Punchbowl, Nov. 3", "https://x.com/AJentleson/status/2117752551227400260"]] },
 
   { name: "The Wilderness Society", sector: "Environmental", stance: "oppose",
@@ -713,11 +713,11 @@ const PEOPLE = [
     note: `Statement seen as an image in Siegel's post; no public URL for the full text found yet. Siegel noted it "continues trend of former Biden officials splitting hard on BAAJA."`,
     src: [["Joshua Siegel (Punchbowl), Nov. 2", "https://x.com/SiegelScribe/status/2117264866100838871"]] },
 
-  { name: "Public Citizen", sector: "Environmental", stance: "oppose",
-    who: "Tyson Slocum, Energy Program director",
-    obj: [`Would "guarantee increased domestic oil and gas fracking" to feed fossil fuel exports`],
-    likes: [],
-    src: [["Quoted in Breakthrough, Oct. 30", "https://www.breakthroughjournal.org/p/the-faulty-logic-at-the-heart-of"]] },
+  { name: "Public Citizen", sector: "Environmental", stance: "oppose", tier: 1,
+    who: "David Arkush, director of its Climate Program (Nov. 6 statement); Tyson Slocum, Energy Program director",
+    obj: [`Says the drawbacks are "greater, more immediate, and more certain" than the benefits`, `Slocum: would "guarantee increased domestic oil and gas fracking" to feed fossil fuel exports`],
+    likes: [`"We appreciate the effort and care Senators Whitehouse and Heinrich put into reaching a compromise to facilitate the buildout of desperately needed clean energy and protect ratepayers from Big Tech's voracious data center binge"`, `Calls the transmission and ratepayer provisions "strong and sorely needed"`],
+    src: [["Public Citizen, Nov. 6", "https://www.citizen.org/news/public-citizen-opposes-senate-permitting-bill/"], ["Quoted in Breakthrough, Oct. 30", "https://www.breakthroughjournal.org/p/the-faulty-logic-at-the-heart-of"]] },
 
   { name: "Access-to-courts coalition letter", sector: "Civil rights / EJ", stance: "changes",
     who: "Oct. 29 letter to Congress: Alliance for Justice, American Association for Justice (trial lawyers), Center for Justice & Democracy, Earthjustice Action, NAACP, National Women's Law Center Action Fund, Public Citizen, Public Justice. Source: copy of the letter; no public URL found yet",
@@ -874,10 +874,10 @@ const PEOPLE = [
     src: [["Breakthrough statement, Sept. 30", "https://thebreakthrough.org/press/release-breakthrough-institute-statement-on-the-bipartisan-american-affordability-and-jobs-act-of-2026"], ["Trembath, Nov. 6", "https://www.breakthroughjournal.org/p/on-anti-baaja-bullshit"], ["Breakthrough, Oct. 30", "https://www.breakthroughjournal.org/p/the-faulty-logic-at-the-heart-of"]] },
 
   { name: "Trump White House", sector: "Administration", stance: "support",
-    who: "Unnamed White House spokesperson, per Inside Climate News (Oct. 29)",
+    who: "President Trump (Truth Social, Nov. 8); White House spokesperson (Inside Climate News, Oct. 29)",
     obj: [],
-    likes: [`Backs the bill for jobs and investment; spokesperson: "all that is left to do is vote"`, `Nov. 6: the Pentagon is advancing nine more wind projects it had held up; a White House official says the administration is "fulfilling all the promises made" so there are "NO barriers" to passage (Punchbowl)`],
-    src: [["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118687354000937172"], ["Inside Climate News, Oct. 29", "https://insideclimatenews.org/news/29102026/senate-debate-on-bipartisan-permitting-bill-approaches/"]] },
+    likes: [`Nov. 8, President Trump: "I am urging all Senators to vote for The American Affordability and Jobs Act (S. 5653)! This Bill is a BIG WIN for U.S. ENERGY INDEPENDENCE and DOMINANCE." Says it "codifies my RATEPAYER PROTECTION PLEDGE, ensuring Data Centers build and pay for their own Electricity" ${S(2107)}`, `Backs the bill for jobs and investment; spokesperson: "all that is left to do is vote"`, `Nov. 6: the Pentagon is advancing nine more wind projects it had held up; a White House official says the administration is "fulfilling all the promises made" so there are "NO barriers" to passage (Punchbowl)`],
+    src: [["@realDonaldTrump on Truth Social, Nov. 8", "https://truthsocial.com/@realDonaldTrump/posts/117583560661477967"], ["Punchbowl via Joshua Siegel, Nov. 6", "https://x.com/SiegelScribe/status/2118687354000937172"], ["Inside Climate News, Oct. 29", "https://insideclimatenews.org/news/29102026/senate-debate-on-bipartisan-permitting-bill-approaches/"]] },
   { name: "American Public Transportation Association", sector: "Transportation", stance: "support",
     who: "APTA, the public transit trade association; endorsement posted Nov. 2",
     obj: [],
@@ -971,11 +971,11 @@ const PEOPLE = [
     obj: [],
     likes: [`"BAAJA represents substantial positive reforms to our permitting system"`, `Ties the bill to competition in transmission planning and less red tape`],
     src: [["Joint clean energy letter (X), Oct. 21", "https://x.com/USCleanPower/status/2112962713995595980"]] },
-  { name: "Clean Energy Buyers Association (CEBA)", sector: "Clean energy industry", stance: "support", tier: 3,
+  { name: "Clean Energy Buyers Association (CEBA)", sector: "Clean energy industry", stance: "support", tier: 1,
     who: `CEO Rich Powell; signed the Oct. 21 joint clean energy letter`,
     obj: [],
-    likes: [`"This bipartisan package is a generational opportunity to unleash abundant American energy"`],
-    src: [["CEBA statement, Sept. 30", "https://ceba.org/statement-from-ceba-ceo-rich-powell-on-the-bipartisan-american-affordability-and-jobs-act/"]] },
+    likes: [`Nov. 7, after the manager's amendment: "BAAJA negotiators improved this landmark affordability and clean energy bill"`, `"This bipartisan package is a generational opportunity to unleash abundant American energy"`],
+    src: [["@CEBAPower, Nov. 7", "https://x.com/CEBAPower/status/2119191595195011453"], ["CEBA statement, Sept. 30", "https://ceba.org/statement-from-ceba-ceo-rich-powell-on-the-bipartisan-american-affordability-and-jobs-act/"]] },
   { name: "Business Council for Sustainable Energy (BCSE)", sector: "Clean energy industry", stance: "support", tier: 3,
     who: `Lisa Jacobson`,
     obj: [],
@@ -1001,11 +1001,11 @@ const PEOPLE = [
     obj: [],
     likes: [`"Pass the frickin' bill so we can start building things again"`],
     src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"], ["API-led letter, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
-  { name: "National Ocean Industries Association (NOIA)", sector: "Oil and gas", stance: "support", tier: 3,
-    who: `Signed the API-led letter, Oct. 22; no standalone statement found`,
+  { name: "National Ocean Industries Association (NOIA)", sector: "Oil and gas", stance: "support", tier: 1,
+    who: `President Erik Milito; signed the API-led letter, Oct. 22`,
     obj: [],
-    likes: [`Joined the letter urging leaders to bring S. 5653 to the floor`],
-    src: [["API-led letter, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
+    likes: [`Nov. 7, on the manager's amendment: "We urge the Senate to pass it without delay."`, `Joined the letter urging leaders to bring S. 5653 to the floor`],
+    src: [["NOIA, Nov. 7", "https://www.noia.org/bipartisan-permitting-reform-managers-amendment/"], ["API-led letter, Oct. 22", "https://www.api.org/news-policy-and-issues/news/2026/10/22/broad-coalition-of-130-groups-urge-congress-to-pass-bipartisan-permitting-reform"]] },
   { name: "U.S. Chamber of Commerce", sector: "Business", stance: "support", tier: 3,
     who: `Neil Bradley; letter to the four sponsors, Oct. 15; also signed the API-led letter`,
     obj: [],
@@ -1052,11 +1052,11 @@ const PEOPLE = [
     likes: [`"Excessive regulation has constrained production and contributed to higher costs for American consumers."`],
     note: `Listed among the bill's supporters on EPW's compilation; the line quoted there does not name the bill.`,
     src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
-  { name: "Americans for Prosperity", sector: "Conservative / libertarian", stance: "support", tier: 3,
-    who: `James Morrone (Oct. 27); signed the PLF-led letter`,
+  { name: "Americans for Prosperity", sector: "Conservative / libertarian", stance: "support", tier: 1,
+    who: `James Morrone (Oct. 27); AFP government affairs (Nov. 8); signed the PLF-led letter`,
     obj: [],
-    likes: [`"BAAJA needs to become law in November."`],
-    src: [["AFP, Oct. 27", "https://americansforprosperity.org/policy-corner/taking-a-closer-look-at-baaja-lets-talk-about-nepa-baby/"], ["PLF-led letter, Oct. 28", "https://pacificlegal.org/press-release/pacific-legal-foundation-leads-more-than-35-coalition-partners-urging-congress-to-advance-permitting-deal/"]] },
+    likes: [`Nov. 8: "After reviewing the manager's amendment, we believe Senators should support this legislation on final passage."`, `"BAAJA needs to become law in November."`],
+    src: [["@AFPGovAffairs, Nov. 8", "https://x.com/AFPGovAffairs/status/2119463022049755631"], ["AFP, Oct. 27", "https://americansforprosperity.org/policy-corner/taking-a-closer-look-at-baaja-lets-talk-about-nepa-baby/"], ["PLF-led letter, Oct. 28", "https://pacificlegal.org/press-release/pacific-legal-foundation-leads-more-than-35-coalition-partners-urging-congress-to-advance-permitting-deal/"]] },
   { name: "Pacific Legal Foundation", sector: "Conservative / libertarian", stance: "support", tier: 3,
     who: `Joe Luppino-Esposito; led a 35+ group letter, Oct. 28, joined by AFP, C3 Solutions, ClearPath Action, Goldwater Institute and National Taxpayers Union`,
     obj: [],
@@ -1123,12 +1123,12 @@ const PEOPLE = [
     obj: [],
     likes: [`Says the bill will "unlock trillions of dollars in private sector investment and job creation"`],
     src: [["EPW \"What They're Saying\"", "https://www.epw.senate.gov/public/index.cfm/2026/10/what-they-re-saying-bipartisan-permitting-reform-will-deliver-cheaper-energy-more-jobs-responsible-growth"]] },
-  { name: "National Congress of American Indians (NCAI)", sector: "Tribal / preservation", stance: "changes", tier: 3,
-    who: `Oct. 9 coalition letter with NARF and NATHPO; Nov. 4 action alert; member of the 106 Strong coalition`,
-    obj: [`Asks Congress to "withdraw Title III of BAAJA" and preserve Section 106 consultation ${S(2301)}`],
+  { name: "National Congress of American Indians (NCAI)", sector: "Tribal / preservation", stance: "oppose", tier: 1,
+    who: `President Macarro (Nov. 8 statement); Oct. 9 coalition letter with NARF and NATHPO; member of the 106 Strong coalition`,
+    obj: [`Nov. 8: urges senators to vote no on cloture and to withdraw Division B, Title III ${S(2301)}`, `"Any amendment to S. 5653 merely puts lipstick on a pig. This bill is rotten from the inside, and there is no fixing the rot."`],
     likes: [],
-    note: `Its ask targets the historic preservation title, not the whole bill.`,
-    src: [["Turtle Talk on the Oct. 9 letter", "https://turtletalk.blog/2026/10/13/a-broad-tribal-coalition-urges-congress-to-withdraw-baajas-section-106-rewrite/"]] },
+    note: `Moved from "wants changes" to "opposes" on Nov. 8, when NCAI urged a no vote on cloture. Its earlier ask (Oct. 9, Nov. 4) was to withdraw the historic preservation title.`,
+    src: [["NCAI, Nov. 8", "https://www.ncai.org/news/ncai-warns-baaja-s-5653"], ["Joint release, Nov. 7", "https://www.106strong.com/nov-7-press-release"], ["Turtle Talk on the Oct. 9 letter", "https://turtletalk.blog/2026/10/13/a-broad-tribal-coalition-urges-congress-to-withdraw-baajas-section-106-rewrite/"]] },
   { name: "Native American Rights Fund (NARF)", sector: "Tribal / preservation", stance: "changes", tier: 3,
     who: `Signed the Oct. 9 coalition letter with NCAI and NATHPO; no standalone statement found`,
     obj: [`Asks Senate leaders to withdraw the Section 106 provisions ${S(2301)}`],
@@ -1138,14 +1138,19 @@ const PEOPLE = [
     who: `Action page, updated Nov. 3`,
     obj: [`"NATHPO opposes BAAJA as written" and asks senators to "REMOVE THE NHPA SECTION" ${S(2301)}`, `Statutory definitions of "undertaking," "adverse effect" and area of potential effects could keep projects and harms out of review; agencies control key determinations`, `Review is limited (150-day filing deadline, restricted injunctions); a tribe that misses the 30-day window cannot force reconsideration`, `Chronic underfunding "answered with oversight, penalties, and potential federal takeover"`],
     likes: [],
-    note: `Says the NHPA language cannot be fixed by amendment.`,
-    src: [["NATHPO", "https://www.nathpo.org/permitting-reform-baaja-tribal-historic-preservation/"]] },
+    note: `Says the NHPA language cannot be fixed by amendment. Nov. 7 joint release with 106 Strong, NCAI and the Association on American Indian Affairs on the manager's amendment: "This is lipstick on a pig."`,
+    src: [["Joint release, Nov. 7", "https://www.106strong.com/nov-7-press-release"], ["NATHPO", "https://www.nathpo.org/permitting-reform-baaja-tribal-historic-preservation/"]] },
   { name: "106 Strong coalition", sector: "Tribal / preservation", stance: "oppose", tier: 3,
     who: `National coalition (1,200+ members, per its letter); NCAI is a member`,
     obj: [`Open letter calling for the defeat of S. 5653: "Section 106 will cease to be a tool for historic preservation" ${S(2301)}`],
     likes: [],
-    note: `Planned a Capitol rally for Nov. 9, when votes start (Siegel, Oct. 19).`,
-    src: [["106 Strong open letter", "https://culturalheritagepartners.com/open-letter-to-congress-from-national-coalition/"], ["Siegel (Punchbowl), Oct. 19", "https://x.com/SiegelScribe/status/2112162140526104855"]] },
+    note: `Nov. 7, on the manager's amendment, with NCAI, NATHPO and the Association on American Indian Affairs: "This is lipstick on a pig." Credits the amendment with dropping the takeover of tribal historic preservation offices but calls for removing Title III. Rally at the Capitol on Nov. 9.`,
+    src: [["Joint release, Nov. 7", "https://www.106strong.com/nov-7-press-release"], ["106 Strong open letter", "https://culturalheritagepartners.com/open-letter-to-congress-from-national-coalition/"], ["Siegel (Punchbowl), Oct. 19", "https://x.com/SiegelScribe/status/2112162140526104855"]] },
+  { name: "Association on American Indian Affairs", sector: "Tribal / preservation", stance: "oppose", tier: 1,
+    who: `Co-signer of the Nov. 7 joint release with 106 Strong, NCAI and NATHPO`,
+    obj: [`On the manager's amendment: "This is lipstick on a pig." Calls for removing Title III ${S(2301)}`],
+    likes: [`Credits the amendment with withdrawing "a few patently unconstitutional provisions," such as agency commandeering of tribal historic preservation offices`],
+    src: [["Joint release, Nov. 7", "https://www.106strong.com/nov-7-press-release"]] },
   { name: "Standing Rock Sioux Tribe", sector: "Tribal / preservation", stance: "oppose", tier: 1,
     who: `Chairman Steve Sitting Bear; statement Oct. 30, posted Nov. 3`,
     obj: [`BAAJA "would all but eliminate the United States Treaty and Trust responsibilities"`, `Says it weakens the NHPA, Clean Water Act, NEPA and ESA (no sections named)`],
@@ -1231,6 +1236,12 @@ const PEOPLE = [
     likes: [`Director Colin Mortimer: "we will never see real progress on our climate goals or on energy affordability if every single wind, solar, and battery project is spending years, or even decades, stuck in the permitting pipeline"`, `Michigan state Rep. Jasper Martus (D-Flushing): the bill "will bring some much-needed common sense to federal permitting laws"`],
     note: `The release headline says 55 chapters; the body and the group's post say 45.`,
     src: [["CNL release, Nov. 6", "https://cnliberalism.org/posts/center-for-new-liberalism-endorses-bipartisan-permitting-legislation"], ["@CNLiberalism, Nov. 6", "https://x.com/CNLiberalism/status/2118758279010738239"]] },
+  { name: "Evergreen Action", sector: "Climate", stance: "support", tier: 1,
+    who: `Executive Director Lena Moffitt; statement and essay, Nov. 7`,
+    obj: [],
+    likes: [`"The Senate should pass this bill when it comes to a vote, and the House should take it up and pass it immediately after."`, `"I do not believe that a better deal is around the corner. The time to act is now."`, `"We are pleased to see improvements made to the text in this manager's amendment"`, `Praises interregional transmission planning and the backstop ${S("2101–2105")}, utility oversight of local transmission ${S(2104)}, data center cost rules ${S(2107)} and market access for distributed resources ${S(2108)}`],
+    note: `Concedes that "Republicans were able to extract significant concessions" and that the bill "weakens tools that advocates have used for decades"; says it will work with new Democratic majorities to build on it later.`,
+    src: [["Evergreen statement, Nov. 7", "https://www.evergreenaction.com/news/evergreen-congress-should-pass-the-bipartisan-american-affordability-and-jobs-act-baaja/"], ["Evergreen essay, Nov. 7", "https://www.evergreenaction.com/news/why-were-supporting-the-permitting-bill/"]] },
   { name: "Climate Leadership Council", sector: "Climate", stance: "support", tier: 3,
     who: `Erin Alejandre`,
     obj: [],
@@ -1435,7 +1446,7 @@ const SEN_NOTES = {
   "Gallego": ["support", `Says Democrats should pass BAAJA now rather than wait for a better deal: "Six months from now, after a [possible] impeachment, maybe [the White House] won't be willing to negotiate, or maybe we get too close to an election and Vance doesn't want to negotiate, right? So why not take this win now?" Quoted by a reporter; brackets are the reporter's.`, [["Igor Bobic, Nov. 5", "https://x.com/igorbobic/status/2118413049145278486"]]],
   "Cornyn": ["lean", `Criticized John Podesta for trying "to poison a bipartisan permitting reform"; shared the NAM-led business push for lame-duck passage.`, [["@JohnCornyn, Oct. 29", "https://x.com/JohnCornyn/status/2115786466903146536"], ["@JohnCornyn, Oct. 14", "https://x.com/JohnCornyn/status/2110445905560150369"]]],
   "Curtis": ["lean", `"I'm glad to see my bill to bring environmental reviews into the digital age be included" in BAAJA. Separately, data center transparency bills with Blunt Rochester.`, [["@SenJohnCurtis, Oct. 6", "https://x.com/SenJohnCurtis/status/2107561775017156622"]]],
-  "McCormick": ["lean", `Oct. 1, the day after introduction: "We need clear approval timelines and legal certainty for approved projects. We must pass" permitting reform. He introduced his own permitting bill in May.`, [["@SenMcCormickPA, Oct. 1", "https://x.com/SenMcCormickPA/status/2105756141410295868"]]],
+  "McCormick": ["support", `Nov. 7: "Now is the time to get permitting reform across the finish line during the lame-duck session" (the posts do not name BAAJA). Oct. 1, the day after introduction: "We need clear approval timelines and legal certainty for approved projects. We must pass" permitting reform. He introduced his own permitting bill in May.`, [["@SenMcCormickPA, Nov. 7", "https://x.com/SenMcCormickPA/status/2119153577507594561"], ["@SenMcCormickPA, Nov. 7 (second post)", "https://x.com/SenMcCormickPA/status/2119140328242556983"], ["@SenMcCormickPA, Oct. 1", "https://x.com/SenMcCormickPA/status/2105756141410295868"]]],
   "Risch": ["lean", `Sept. 30: "Senate Democrats just blocked another chance" to pass permitting reform, alongside the Ratepayer Protection Act. That is about the pre-deal floor fight, not the BAAJA text.`, [["@SenatorRisch, Sept. 30", "https://x.com/SenatorRisch/status/2105411282220241043"]]],
   "Schatz": ["supchg", `Wants changes to address tribes' concerns: "There's still time to improve this bill." Argues against waiting: "The likelihood that something better would pass in the next Congress, someone would have to prove that to me" (Washington Sun interview, Oct. 14). Politico Pro also reports he and Hirono "have also expressed concern" about the bill's effects on tribal and local communities.`, [["Igor Bobic (Washington Sun), Oct. 14", "https://x.com/igorbobic/status/2110356797043232874"], ["Politico Pro, Oct. 23 (via Extracted)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-102626"]]],
   "Hirono": ["conditional", `Same Politico Pro report as Schatz: concern about effects on tribal and local communities. No direct quote found.`, [["Politico Pro, Oct. 23 (via Extracted)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-102626"]]],
@@ -1456,7 +1467,14 @@ const senState = { f: "record" };
 
 // ---------- House ----------
 const HOUSE = [
-  ["Marc Veasey", "D-TX-33", "support", `"#BAAJA needs to pass when we return next week; before the calendar expires" (Nov. 4). Earlier: "The ONLY way to get Trump to stop slowing down renewable energy projects is to get the permitting bill passed" (Oct. 28), and "tanking the bill b/c it also benefits hydrocarbons would be the epitome of irresponsible behavior" (Oct. 14).`, [["@MarcVeasey, Nov. 4", "https://x.com/MarcVeasey/status/2118001372939370623"], ["@MarcVeasey, Oct. 28", "https://x.com/MarcVeasey/status/2115631039418638795"], ["@MarcVeasey, Oct. 14", "https://x.com/MarcVeasey/status/2110538051478863987"]]],
+  ["Jared Golden", "D-ME-2", "support", `"The Bipartisan American Affordability and Jobs Act of 2026 builds on my bill with @repwesterman to get shovels in the ground. The Senate should pass it" (Oct. 1). Also praises the provision that stops a president from "pulling the plug on projects approved under their predecessor." Posted before the manager's amendment.`, [["@RepGolden, Oct. 1", "https://x.com/RepGolden/status/2105775325418504641"], ["@RepGolden, Oct. 1 (second post)", "https://x.com/RepGolden/status/2105775334784446693"]]],
+  ["Erin Houchin", "R-IN-9", "support", `"I'm with @SpeakerJohnson, the @WhiteHouse, and the Senate in support of BAAJA" (Oct. 23).`, [["@RepHouchin, Oct. 23", "https://x.com/RepHouchin/status/2113731773456863551"]]],
+  ["Pat Fallon", "R-TX-4", "support", `"I'm proud to back the Senate's bipartisan permitting reform bill" (Oct. 26). The post does not name BAAJA.`, [["@RepPatFallon, Oct. 26", "https://x.com/RepPatFallon/status/2114900842264310218"]]],
+  ["Ronny Jackson", "R-TX-13", "support", `"The Senate's bipartisan permitting reform bill is about getting projects moving" (Oct. 26). The post does not name BAAJA.`, [["@RepRonnyJackson, Oct. 26", "https://x.com/RepRonnyJackson/status/2114877829318066556"]]],
+  ["Nick Begich", "R-AK-AL", "support", `"The bipartisan permitting reform package is a top priority for our state... The Senate must act swiftly when we return in November" (Oct. 21). The post does not name BAAJA.`, [["@RepNickBegich, Oct. 21", "https://x.com/RepNickBegich/status/2113087337102037138"]]],
+  ["Lizzie Fletcher", "D-TX-7", "lean", `"I am encouraged by what I have seen of the Senate's permitting bill, the BAAJA Act" (Oct. 1). Says she will judge it on public input on clean air and water, data centers paying their fair share, and ending partisan attacks on energy projects.`, [["@RepFletcher, Oct. 1", "https://x.com/RepFletcher/status/2105748489544380783"]]],
+  ["Veronica Escobar", "D-TX-16", "oppose", `"Proud to stand with my colleagues in urging the Senate to vote no on BAAJA" (Nov. 8).`, [["@RepEscobar, Nov. 8", "https://x.com/RepEscobar/status/2119447837683372108"]]],
+  ["Marc Veasey", "D-TX-33", "support", `Nov. 8: "I believe same will happen w/#BAAJA." Nov. 6: "We need to get #BAAJA passed!" Nov. 4: "#BAAJA needs to pass when we return next week; before the calendar expires." Earlier: "The ONLY way to get Trump to stop slowing down renewable energy projects is to get the permitting bill passed" (Oct. 28), and "tanking the bill b/c it also benefits hydrocarbons would be the epitome of irresponsible behavior" (Oct. 14).`, [["@MarcVeasey, Nov. 8", "https://x.com/MarcVeasey/status/2119606148198498739"], ["@MarcVeasey, Nov. 4", "https://x.com/MarcVeasey/status/2118001372939370623"], ["@MarcVeasey, Oct. 28", "https://x.com/MarcVeasey/status/2115631039418638795"], ["@MarcVeasey, Oct. 14", "https://x.com/MarcVeasey/status/2110538051478863987"]]],
   ["Sharice Davids", "D-KS-3", "conditional", `Breaks with House Democratic leadership to push moving permitting reform now: "Modernizing our permitting process is an important way to lower utility costs, create good-paying local jobs, and secure our energy future, and we need to get it done." But "passing this bill cannot come at the expense of Tribal sovereignty and the federal trust responsibility," and she is working with leaders "to fix these provisions." Her release does not name BAAJA or a section.`, [["Davids release, Nov. 6", "https://davids.house.gov/media/press-releases/davids-pushes-democratic-leadership-move-bipartisan-permitting-reform-without"]]],
   ["Hakeem Jeffries", "D-NY-8 (House Democratic leader)", "conditional", `A spokesperson says the Senate bill "falls short in several areas, including the manner in which NEPA reform is undertaken and the failure to adequately protect tribal sovereignty," and that Jeffries "will not rubber-stamp legislation that emerges from the Senate without more constructive involvement with our Caucus." Also: he "supports the need for permitting reform that prioritizes lower costs for hardworking American taxpayers, strengthens our energy infrastructure and protects the environment." Politico's headline calls it opposition; the statement asks for House input before the bill is taken up.`, [["Politico via Nico Portuondo, Nov. 5", "https://x.com/NicoPortuondo/status/2118491287569531306"]]],
   ["Chrissy Houlahan", "D-PA-6", "support", `Lists permitting reform among the unfinished lame-duck items before the Dec. 11 funding deadline: "Permitting reform that accelerates essential infrastructure projects while maintaining environmental safeguards." Does not name BAAJA.`, [["@RepHoulahan, Nov. 5", "https://x.com/RepHoulahan/status/2118441334801375702"]]],
@@ -1471,15 +1489,15 @@ const HOUSE = [
   ["Josh Harder", "D-CA-9", "support", `As Build America Caucus co-chair: "make passing this deal priority number one in November." Nov. 4: "Passing permitting reform should be our top priority when Congress returns next week."`, [["Punchbowl via Joshua Siegel, Nov. 4", "https://x.com/SiegelScribe/status/2118122235148050605"], ["Build America Caucus, Sept. 30", "https://buildamericacaucus-harder.house.gov/media/press-releases/permitting-build-america-caucus-chairs-call-on-congress-to-pass-senate-permitting-deal"]]],
   ["Nikki Budzinski", "D-IL-13 (incoming New Democrat Coalition chair)", "support", `Urges acting in the lame duck: moving now shows voters "we'll immediately get to work to lower costs." "Suggesting that the margin of victory last night means we need to start from scratch means you're not fully assessing our political realities. We still need 60 votes in the Senate and President Trump's signature to get this done."`, [["Punchbowl via Joshua Siegel, Nov. 4", "https://x.com/SiegelScribe/status/2118121655260049668"]]],
   ["Celeste Maloy", "R-UT-2", "support", `Build America Caucus co-chair; joint statement urging Congress to "quickly pass the reforms into law."`, [["Build America Caucus, Sept. 30", "https://buildamericacaucus-harder.house.gov/media/press-releases/permitting-build-america-caucus-chairs-call-on-congress-to-pass-senate-permitting-deal"]]],
-  ["Melanie Stansbury", "D-NM-1", "oppose", `"Adamantly opposed to this bill" and won't vote for it "for now," citing tribal sovereignty and consultation, sacred sites, public lands, and community input. Heinrich's home-state colleague.`, [["NM Political Report, Oct. 28", "https://nmpoliticalreport.com/2026/10/28/stansbury-adamantly-opposed-to-heinrichs-signature-permit-reform-bill/"]]],
-  ["Teresa Leger Fernández", "D-NM-3", "conditional", `"I cannot support the Bipartisan American Affordability and Jobs Act in its current form," citing "serious concerns" that it harms historic preservation protections and threatens tribal sovereignty under the NHPA. Says she wants to work with the Senate "to make necessary changes ... before it receives a vote." Former vice chair of the Advisory Council on Historic Preservation.`, [["@RepTeresaLF, Oct. 24", "https://x.com/RepTeresaLF/status/2114006840979677187"]]],
+  ["Melanie Stansbury", "D-NM-1", "oppose", `"Adamantly opposed to this bill" and won't vote for it "for now," citing tribal sovereignty and consultation, sacred sites, public lands, and community input. Heinrich's home-state colleague. Nov. 7, with Rep. Grijalva: opposes the bill and the manager's amendment and urges the Senate "to vote no."`, [["Stansbury and Grijalva joint statement, Nov. 7", "https://x.com/Rep_Stansbury/status/2119221708007858435"], ["NM Political Report, Oct. 28", "https://nmpoliticalreport.com/2026/10/28/stansbury-adamantly-opposed-to-heinrichs-signature-permit-reform-bill/"]]],
+  ["Teresa Leger Fernández", "D-NM-3", "oppose", `Nov. 8: "The proposed manager's amendment does not resolve the fatal flaws in the bill's changes to our historic preservation process," and calls it a "secretive, backroom permitting deal." Oct. 24: "I cannot support the Bipartisan American Affordability and Jobs Act in its current form," citing "serious concerns" that it harms historic preservation protections and threatens tribal sovereignty under the NHPA. Says she wants to work with the Senate "to make necessary changes ... before it receives a vote." Former vice chair of the Advisory Council on Historic Preservation.`, [["@RepTeresaLF, Nov. 8", "https://x.com/RepTeresaLF/status/2119547317409731011"], ["@RepTeresaLF, Oct. 24", "https://x.com/RepTeresaLF/status/2114006840979677187"]]],
   ["New Democrat Coalition", "House caucus (Peters, Schneider, Budzinski)", "support", `Leans support: "encouraged by the good-faith bipartisan negotiations." Still reviewing, with no endorsement yet. Wants "permit certainty and parity" for all energy.`, [["New Dems, Sept. 30", "https://newdemocratcoalition.house.gov/media-center/press-releases/new-democrat-coalition-statement-on-senate-permitting-reform-deal"]]],
   ["Build America Caucus", "Bipartisan caucus (43 members)", "support", `Co-chairs Harder and Maloy urge passage in November.`, [["Build America Caucus, Sept. 30", "https://buildamericacaucus-harder.house.gov/media/press-releases/permitting-build-america-caucus-chairs-call-on-congress-to-pass-senate-permitting-deal"]]],
   ["Jared Huffman", "D-CA-2 (Natural Resources ranking)", "oppose", `A "Trojan horse" with fossil giveaways; wind assurances are "cheap window dressing." Says Democrats should wait for a better deal after the midterms. Nov. 4, set to chair Natural Resources next year: says he has pledged to the incoming speaker to negotiate "a better deal" quickly next year, and that it would be "deeply idiotic to fold your hand now." Nov. 5, after Jeffries's statement: "House Democrats support, and will deliver, responsible permitting reform... we must have a chance to fix the most glaring flaws in BAAJA."`, [["@JaredHuffman, Nov. 5", "https://x.com/JaredHuffman/status/2118509927425860005"], ["Punchbowl via Joshua Siegel, Nov. 4", "https://x.com/SiegelScribe/status/2118123225800384911"], ["Huffman, Sept. 30", "https://democrats-naturalresources.house.gov/media/press-releases/ranking-member-huffman-statement-on-senate-permitting-deal"], ["Heatmap interview", "https://heatmap.news/politics/jared-huffman-baaja"]]],
   ["Ro Khanna", "D-CA-17", "oppose", `Reported (paraphrase) as urging Democrats to wait until after the midterms for a better bill.`, [["Latitude Media", "https://www.latitudemedia.com/news/why-green-groups-wont-endorse-the-senate-permitting-deal/"]]],
   ["Rashida Tlaib", "D-MI-12", "oppose", `Co-founded the People's EJ Caucus, which calls it "a gift to Big Oil and Big Tech." At Oil Change International's Oct. 28 briefing she was the only member of Congress: "We know the bill is 417 pages of empty promises" (National Review, via Extracted clips).`, [["Caucus statement", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"], ["Oil Change briefing", "https://oilchange.org/news/virtual-press-conference-baaja/"]]],
   ["Summer Lee", "D-PA-12", "oppose", `People's EJ Caucus statement.`, [["Caucus statement", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"]]],
-  ["Adelita Grijalva", "D-AZ-7", "oppose", `People's EJ Caucus statement.`, [["Caucus statement", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"]]],
+  ["Adelita Grijalva", "D-AZ-7", "oppose", `People's EJ Caucus statement. Nov. 7, with Rep. Stansbury: opposes the bill and the manager's amendment, urging the Senate "to reconsider bringing this legislation to the floor" and "to vote no."`, [["Stansbury and Grijalva joint statement, Nov. 7", "https://x.com/Rep_Stansbury/status/2119221708007858435"], ["Caucus statement", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"]]],
   ["Problem Solvers Caucus", "Bipartisan caucus", "conditional", `No position yet; expects to announce one in the lame duck. Peters and Rep. Gabe Evans lead its permitting working group.`, [["Bloomberg Law, Oct. 27", "https://news.bloomberglaw.com/health-law-and-business/bipartisan-house-caucus-weighs-senate-permitting-bill-support"]]]
 ];
 
@@ -1573,8 +1591,8 @@ function renderSenate() {
 }
 
 function renderHouse() {
-  const order = { support: 0, supchg: 1, conditional: 2, oppose: 3 };
-  const lab = { support: ["Supports", "s-support"], supchg: ["Supports, wants changes", "s-supchg"], conditional: ["Conditions / undecided", "s-changes"], oppose: ["Opposes", "s-oppose"] };
+  const order = { support: 0, lean: 1, supchg: 2, conditional: 3, oppose: 4 };
+  const lab = { support: ["Supports", "s-support"], lean: ["Leans support", "s-support"], supchg: ["Supports, wants changes", "s-supchg"], conditional: ["Conditions / undecided", "s-changes"], oppose: ["Opposes", "s-oppose"] };
   const rows = [...HOUSE].sort((a, b) => order[a[2]] - order[b[2]]).map(([n, d, st, said, src]) =>
     `<tr><th scope="row">${n}</th><td>${d}</td><td><span class="pill ${lab[st][1]}">${lab[st][0]}</span></td><td class="said">${said} ${srcLinks(src)}</td></tr>`).join("");
   document.getElementById("houseBody").innerHTML = rows;
@@ -1788,14 +1806,14 @@ function renderHouseViz() {
   const members = HOUSE.filter(h => !/caucus/i.test(h[1]));
   document.getElementById("houseHead").textContent = `House: ${members.length} of 435 on record`;
   document.getElementById("waffle").setAttribute("aria-label", `435 squares, ${members.length} colored for members with a public position`);
-  const order = { support: 0, supchg: 1, conditional: 2, oppose: 3 };
+  const order = { support: 0, lean: 1, supchg: 2, conditional: 3, oppose: 4 };
   const sorted = [...members].sort((a, b) => order[a[2]] - order[b[2]]);
-  const col = { support: "var(--support)", supchg: "var(--stripe)", conditional: "var(--changes)", oppose: "var(--oppose)" };
+  const col = { support: "var(--support)", lean: "var(--lean)", supchg: "var(--stripe)", conditional: "var(--changes)", oppose: "var(--oppose)" };
   let cells = sorted.map(m => `<i style="background:${col[m[2]]}" title="${m[0]} (${m[1]})"></i>`).join("");
   cells += "<i></i>".repeat(435 - sorted.length);
   document.getElementById("waffle").innerHTML = cells;
-  const lab = { support: "Supports", supchg: "Supports, wants changes", conditional: "Conditions / undecided", oppose: "Opposes" };
-  document.getElementById("houseGroups").innerHTML = ["support", "supchg", "conditional", "oppose"].map(k => {
+  const lab = { support: "Supports", lean: "Leans support", supchg: "Supports, wants changes", conditional: "Conditions / undecided", oppose: "Opposes" };
+  document.getElementById("houseGroups").innerHTML = ["support", "lean", "supchg", "conditional", "oppose"].map(k => {
     const ms = HOUSE.filter(h => h[2] === k);
     if (!ms.length) return "";
     return `<div class="row"><b>${lab[k]} (${ms.filter(m => !/caucus/i.test(m[1])).length})</b>${ms.map(m => `<span class="mchip" style="border-color:${k === "supchg" ? "var(--support)" : col[k]}">${m[0]} <span class="watch">${m[1].replace(/ \(.+\)/, "")}</span></span>`).join("")}</div>`;
@@ -1806,7 +1824,7 @@ function renderHouseViz() {
 const TILES = "AK 0 0|ME 10 0|VT 9 1|NH 10 1|WA 0 2|ID 1 2|MT 2 2|ND 3 2|MN 4 2|IL 5 2|WI 6 2|MI 7 2|NY 8 2|RI 9 2|MA 10 2|OR 0 3|NV 1 3|WY 2 3|SD 3 3|IA 4 3|IN 5 3|OH 6 3|PA 7 3|NJ 8 3|CT 9 3|CA 0 4|UT 1 4|CO 2 4|NE 3 4|MO 4 4|KY 5 4|WV 6 4|VA 7 4|MD 8 4|DE 9 4|AZ 1 5|NM 2 5|KS 3 5|AR 4 5|TN 5 5|NC 6 5|SC 7 5|OK 3 6|LA 4 6|MS 5 6|AL 6 6|GA 7 6|HI 0 7|TX 3 7|FL 8 7".split("|").map(t => { const [st, c, r] = t.split(" "); return { st, c: +c, r: +r }; });
 const STATE_NAME = { AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware", FL: "Florida", GA: "Georgia", HI: "Hawaii", ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming" };
 const HOUSE_SEATS = { AL: 7, AK: 1, AZ: 9, AR: 4, CA: 52, CO: 8, CT: 5, DE: 1, FL: 28, GA: 14, HI: 2, ID: 2, IL: 17, IN: 9, IA: 4, KS: 4, KY: 6, LA: 6, ME: 2, MD: 8, MA: 9, MI: 13, MN: 8, MS: 4, MO: 8, MT: 2, NE: 3, NV: 4, NH: 2, NJ: 12, NM: 3, NY: 26, NC: 14, ND: 1, OH: 15, OK: 5, OR: 6, PA: 17, RI: 2, SC: 7, SD: 1, TN: 9, TX: 38, UT: 4, VT: 1, VA: 11, WA: 10, WV: 2, WI: 8, WY: 1 };
-const HOUSE_POS = { support: ["Supports", "s-support", "var(--support)"], supchg: ["Supports, wants changes", "s-supchg", "url(#supchgPat)"], conditional: ["Conditions", "s-changes", "var(--changes)"], oppose: ["Opposes", "s-oppose", "var(--oppose)"] };
+const HOUSE_POS = { support: ["Supports", "s-support", "var(--support)"], lean: ["Leans support", "s-support", "var(--lean)"], supchg: ["Supports, wants changes", "s-supchg", "url(#supchgPat)"], conditional: ["Conditions", "s-changes", "var(--changes)"], oppose: ["Opposes", "s-oppose", "var(--oppose)"] };
 let selState = "MI";
 
 function houseByState() {
@@ -1866,6 +1884,19 @@ function showState() {
 // ---------- Latest statements ----------
 // Newest first. d = date the statement was made or reported; k = Senate | House | Group.
 const LATEST = [
+  { d: "2026-11-08", k: "Group", who: "President Trump", pos: "support", text: `"I am urging all Senators to vote for The American Affordability and Jobs Act (S. 5653)! This Bill is a BIG WIN for U.S. ENERGY INDEPENDENCE and DOMINANCE." Ends: "Call your Senator TODAY, and tell them to vote YES."`, src: [["Truth Social, Nov. 8", "https://truthsocial.com/@realDonaldTrump/posts/117583560661477967"]] },
+  { d: "2026-11-08", k: "Senate", who: "Shelley Moore Capito (R-WV) and Mike Lee (R-UT)", pos: "sponsor", text: `Thank the President for his endorsement. Capito: "Thank you for your endorsement of the Bipartisan American Affordability and Jobs Act, and thanks to the members of your administration who have worked with us."`, src: [["@SenCapito, Nov. 8", "https://x.com/SenCapito/status/2119609192931581985"], ["@SenMikeLee, Nov. 8", "https://x.com/SenMikeLee/status/2119621218944831699"]] },
+  { d: "2026-11-08", k: "Group", who: "National Congress of American Indians", pos: "oppose", text: `Urges senators to vote no on cloture and to withdraw the historic preservation title. President Macarro: "Any amendment to S. 5653 merely puts lipstick on a pig. This bill is rotten from the inside, and there is no fixing the rot."`, src: [["NCAI, Nov. 8", "https://www.ncai.org/news/ncai-warns-baaja-s-5653"]] },
+  { d: "2026-11-08", k: "House", who: "Teresa Leger Fernández (D-NM-3)", pos: "oppose", text: `"The proposed manager's amendment does not resolve the fatal flaws in the bill's changes to our historic preservation process." Had said in October she could not support the bill "in its current form."`, src: [["@RepTeresaLF, Nov. 8", "https://x.com/RepTeresaLF/status/2119547317409731011"]] },
+  { d: "2026-11-08", k: "Group", who: "Americans for Prosperity", pos: "support", text: `"After reviewing the manager's amendment, we believe Senators should support this legislation on final passage."`, src: [["@AFPGovAffairs, Nov. 8", "https://x.com/AFPGovAffairs/status/2119463022049755631"]] },
+  { d: "2026-11-08", k: "House", who: "Veronica Escobar (D-TX-16)", pos: "oppose", text: `"Proud to stand with my colleagues in urging the Senate to vote no on BAAJA."`, src: [["@RepEscobar, Nov. 8", "https://x.com/RepEscobar/status/2119447837683372108"]] },
+  { d: "2026-11-07", k: "Senate", who: "Dave McCormick (R-PA)", pos: "support", text: `"Now is the time to get permitting reform across the finish line during the lame-duck session." Moved from "leans support"; the posts do not name BAAJA.`, src: [["@SenMcCormickPA, Nov. 7", "https://x.com/SenMcCormickPA/status/2119153577507594561"]] },
+  { d: "2026-11-07", k: "House", who: "Melanie Stansbury (D-NM-1) and Adelita Grijalva (D-AZ-7)", pos: "oppose", text: `Joint statement opposing the bill and the manager's amendment; urge the Senate "to reconsider bringing this legislation to the floor" and "to vote no."`, src: [["Joint statement, Nov. 7", "https://x.com/Rep_Stansbury/status/2119221708007858435"]] },
+  { d: "2026-11-07", k: "Group", who: "106 Strong, NCAI, NATHPO and the Association on American Indian Affairs", pos: "oppose", text: `On the manager's amendment: "This is lipstick on a pig." Credit it with dropping the takeover of tribal historic preservation offices; call for removing Title III. Rally at the Capitol on Nov. 9.`, src: [["Joint release, Nov. 7", "https://www.106strong.com/nov-7-press-release"]] },
+  { d: "2026-11-07", k: "Group", who: "Evergreen Action", pos: "support", text: `"The Senate should pass this bill when it comes to a vote, and the House should take it up and pass it immediately after." Says it is "pleased to see improvements made to the text in this manager's amendment."`, src: [["Evergreen, Nov. 7", "https://www.evergreenaction.com/news/evergreen-congress-should-pass-the-bipartisan-american-affordability-and-jobs-act-baaja/"]] },
+  { d: "2026-11-07", k: "Group", who: "Clean Energy Buyers Association and National Ocean Industries Association", pos: "support", text: `Both back the bill after the manager's amendment. CEBA: "BAAJA negotiators improved this landmark affordability and clean energy bill." NOIA's Erik Milito: "We urge the Senate to pass it without delay."`, src: [["@CEBAPower, Nov. 7", "https://x.com/CEBAPower/status/2119191595195011453"], ["NOIA, Nov. 7", "https://www.noia.org/bipartisan-permitting-reform-managers-amendment/"]] },
+  { d: "2026-11-06", k: "Group", who: "Public Citizen", pos: "oppose", text: `Opposes the bill. David Arkush credits Whitehouse and Heinrich's "effort and care" and calls the transmission and ratepayer provisions "strong and sorely needed," but says the drawbacks are "greater, more immediate, and more certain."`, src: [["Public Citizen, Nov. 6", "https://www.citizen.org/news/public-citizen-opposes-senate-permitting-bill/"]] },
+  { d: "2026-10-23", k: "House", who: "Erin Houchin (R-IN-9), Pat Fallon (R-TX-4), Ronny Jackson (R-TX-13), Nick Begich (R-AK)", pos: "support", text: `House Republicans backing the Senate bill in October posts. Houchin: "I'm with @SpeakerJohnson, the @WhiteHouse, and the Senate in support of BAAJA." Fallon, Jackson and Begich's posts back the Senate's bipartisan permitting bill without naming it.`, src: [["@RepHouchin, Oct. 23", "https://x.com/RepHouchin/status/2113731773456863551"], ["@RepPatFallon, Oct. 26", "https://x.com/RepPatFallon/status/2114900842264310218"], ["@RepRonnyJackson, Oct. 26", "https://x.com/RepRonnyJackson/status/2114877829318066556"], ["@RepNickBegich, Oct. 21", "https://x.com/RepNickBegich/status/2113087337102037138"]] },
   { d: "2026-11-06", k: "Senate", who: "Ron Wyden (D-OR)", pos: "oppose", text: `"I cannot support a deal that strips Oregonians and tribes of the most important tools they have to hold Trump and his cronies accountable." Says the bill relies on "a handshake promise" from the administration. First senator to say he opposes the bill; he had been one of four conditioning their vote on DOE grants.`, src: [["Pavan Acharya, Nov. 6", "https://x.com/pavanmacharya/status/2118793826626396164"]] },
   { d: "2026-11-04", k: "House", who: "Marc Veasey (D-TX-33)", pos: "support", text: `"#BAAJA needs to pass when we return next week; before the calendar expires." First statement recorded here; he has posted in support since October.`, src: [["@MarcVeasey, Nov. 4", "https://x.com/MarcVeasey/status/2118001372939370623"]] },
   { d: "2026-11-06", k: "House", who: "Sharice Davids (D-KS-3)", pos: "conditional", text: `Pushes House Democratic leaders to move permitting reform "without delay," but says the bill "cannot come at the expense of Tribal sovereignty and the federal trust responsibility" and she is working "to fix these provisions."`, src: [["Davids release, Nov. 6", "https://davids.house.gov/media/press-releases/davids-pushes-democratic-leadership-move-bipartisan-permitting-reform-without"]] },

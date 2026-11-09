@@ -156,7 +156,7 @@ hOrdered.map((m, k) => ({ m, ...hSeats[k] })).sort((p, q) => hRank[p.m.pos] - hR
 });
 // 7. Path to 218: one stacked bar, same vocabulary as the Senate bar.
 const hcount = (k) => members.filter((m) => m.pos === k).length;
-const hOrder = ["support", "supchg", "conditional", "oppose", "none", "vacant"];
+const hOrder = ["support", "lean", "supchg", "conditional", "oppose", "none", "vacant"];
 const bar218 = [["House", ...hOrder.map((k) => HLABEL[k])], [`House (updated ${updated})`, ...hOrder.map(hcount)]];
 
 // 8. Polls: one row per question stage, for a Datawrapper chart of how support moves as respondents hear more.
