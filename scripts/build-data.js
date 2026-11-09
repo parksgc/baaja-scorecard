@@ -12,8 +12,8 @@ const js = html.split("<script>")[1].split("</script>")[0];
 const dataJs = js.split("function srcLinks")[0].replace(/^if \(SUBSTACK_URL\)[\s\S]*?\n\}\n/m, "");
 const ctx = {};
 vm.createContext(ctx);
-vm.runInContext(dataJs + "\nthis.d = { SENATE, SEN_NOTES, HOUSE, secHref, BAAJA_SEC, POLLS };", ctx);
-const { SENATE, SEN_NOTES, HOUSE, secHref, BAAJA_SEC, POLLS } = ctx.d;
+vm.runInContext(dataJs + "\nthis.d = { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS };", ctx);
+const { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS } = ctx.d;
 // Same rule as the page: "Sec. 2301", "Secs. 1401–1402" link to BPC's section-by-section explainer.
 const linkSecs = (t) => String(t).replace(/\b(Secs?\.|Sections?)(\s+)(\d{4})((?:\([^)\s]*\))*)(\s*[–-]\s*\d{4})?/g, (m, _w, _s, num, _sub, range) =>
   BAAJA_SEC(+num) ? `<a href="${secHref(num + (range || ""))}" target="_blank">${m}</a>` : m);
@@ -117,9 +117,10 @@ const roster = fs.readFileSync(path.join(__dirname, "house-roster.csv"), "utf8")
 });
 if (roster.length !== 435) throw new Error(`House roster has ${roster.length} seats, expected 435`);
 const houseNotes = {};
-HOUSE.forEach(([who, where, pos, note]) => {
+[...HOUSE, ...CAUCUS_ROWS].forEach(([who, where, pos, note]) => {
   const m = /^[RDI]-([A-Z]{2})-(\d+|AL)\b/.exec(where);
-  if (m) houseNotes[`${m[1]}-${m[2] === "AL" ? "AL" : +m[2]}`] = { who, pos, note: plain(note) };
+  const k = m && `${m[1]}-${m[2] === "AL" ? "AL" : +m[2]}`;
+  if (m && !houseNotes[k]) houseNotes[k] = { who, pos, note: plain(note) };
 });
 const members = roster.map((r) => {
   const key = `${r.state}-${r.dist === "AL" ? "AL" : +r.dist}`;
@@ -130,8 +131,8 @@ const members = roster.map((r) => {
 const unmatched = Object.keys(houseNotes);
 if (unmatched.length) throw new Error(`House entries with no roster seat: ${unmatched.join(", ")}`);
 // "Seat currently vacant" is longer than "No statement found" so it sorts last in Datawrapper's legend (see LABEL note).
-const HLABEL = { ...LABEL, vacant: "Seat currently vacant" };
-const HL = ["none", "oppose", "conditional", "supchg", "lean", "support", "sponsor"];
+const HLABEL = { ...LABEL, vacant: "Seat currently vacant", cs: "Caucus endorsed (no member statement)", co: "Caucus opposed (no member statement)" };
+const HL = ["co", "none", "cs", "oppose", "conditional", "supchg", "lean", "support", "sponsor"];
 const hgrab = (party, p) => members.filter((m) => m.party === party && m.pos === p).sort((a, b) => a.key.localeCompare(b.key));
 const hOrdered = [
   ...HL.flatMap((p) => hgrab("D", p)),
@@ -148,7 +149,7 @@ const hSeats = [];
 hCounts.forEach((n, i) => { for (let j = 0; j < n; j++) hSeats.push({ a: Math.PI - (Math.PI * j) / (n - 1), r: hRadii[i] }); });
 hSeats.sort((p, q) => q.a - p.a || p.r - q.r);
 const HPARTY = { D: "Democrat", R: "Republican", I: "Independent", "": "Vacant" };
-const hRank = { ...rank, vacant: 7 };
+const hRank = { ...rank, cs: 7, co: 8, vacant: 9 };
 const houseSeatRows = [["x", "y", "Member", "Party", "District", "Position", "What they said"]];
 hOrdered.map((m, k) => ({ m, ...hSeats[k] })).sort((p, q) => hRank[p.m.pos] - hRank[q.m.pos]).forEach(({ m, a, r }) => {
   houseSeatRows.push([(r * Math.cos(a)).toFixed(1), (r * Math.sin(a)).toFixed(1), m.party ? `Rep. ${m.shown}` : "Seat currently vacant",
@@ -156,7 +157,7 @@ hOrdered.map((m, k) => ({ m, ...hSeats[k] })).sort((p, q) => hRank[p.m.pos] - hR
 });
 // 7. Path to 218: one stacked bar, same vocabulary as the Senate bar.
 const hcount = (k) => members.filter((m) => m.pos === k).length;
-const hOrder = ["support", "lean", "supchg", "conditional", "oppose", "none", "vacant"];
+const hOrder = ["support", "lean", "supchg", "conditional", "oppose", "cs", "none", "vacant"];
 const bar218 = [["House", ...hOrder.map((k) => HLABEL[k])], [`House (updated ${updated})`, ...hOrder.map(hcount)]];
 
 // 8. Polls: one row per question stage, for a Datawrapper chart of how support moves as respondents hear more.
@@ -172,4 +173,4 @@ fs.writeFileSync(path.join(root, "data", "senators-on-record.csv"), csv(table));
 fs.writeFileSync(path.join(root, "data", "house-seats.csv"), csv(houseSeatRows));
 fs.writeFileSync(path.join(root, "data", "path-to-218.csv"), csv(bar218));
 fs.writeFileSync(path.join(root, "data", "polls.csv"), csv(pollRows));
-console.log(`Built data/ (updated ${updated}): ${senators.length - count("none")} senators on record, ${map.length - 1} states; House ${members.filter((m) => !["none", "vacant"].includes(m.pos)).length} on record, ${hcount("vacant")} vacant.`);
+console.log(`Built data/ (updated ${updated}): ${senators.length - count("none")} senators on record, ${map.length - 1} states; House ${members.filter((m) => !["none", "vacant", "cs", "co"].includes(m.pos)).length} on record (+${hcount("cs")} caucus-shaded), ${hcount("vacant")} vacant.`);

@@ -97,7 +97,11 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .c-plus { color: var(--support); background: var(--support-bg); }
 .c-minus { color: var(--oppose); background: var(--oppose-bg); }
 .c-mixed { color: var(--changes); background: var(--changes-bg); }
-:root { --stripe: repeating-linear-gradient(135deg, var(--support) 0 3px, var(--surface) 3px 6px); }
+:root { --stripe: repeating-linear-gradient(135deg, var(--support) 0 3px, var(--surface) 3px 6px); --cs-stripe: repeating-linear-gradient(135deg, var(--lean) 0 2px, var(--surface) 2px 5px); --co-stripe: repeating-linear-gradient(135deg, var(--oppose-bg) 0 2px, var(--surface) 2px 5px); }
+.s-cs { color: var(--support); border: 1px dashed var(--support); background: var(--surface); }
+.s-co { color: var(--oppose); border: 1px dashed var(--oppose); background: var(--surface); }
+.sw-cs { background: var(--cs-stripe); border: 1px dashed var(--support); }
+.caucus-note { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
 .s-supchg { color: var(--support); border: 1px solid var(--support); background: repeating-linear-gradient(135deg, var(--support-bg) 0 5px, var(--surface) 5px 10px); }
 .sw-supchg { background: var(--stripe); border: 1px solid var(--support); }
 .disclaimer { font-size: 12px; color: var(--muted); font-style: italic; margin: 4px 0 0; }
@@ -338,7 +342,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     <h1>The BAAJA Scorecard</h1>
     <p class="lede">Most of the people fighting over BAAJA agree on more than they admit. This page tracks where Congress and the major stakeholders stand, which sections they praise or attack, and the fixes even the bill's supporters say it needs.</p>
     <p class="hlr" id="hlr" hidden>Analysis and updates at <a id="hlrHome" href="#">Hard Look Review</a><span aria-hidden="true"> · </span><a id="hlrSub" href="#">Subscribe</a></p>
-    <div class="meta"><span>Updated <strong>Nov. 8, 2026</strong></span><span>Senate motion to proceed <strong>Nov. 9</strong></span><span>Introduced <strong>Sept. 30</strong></span><span><a href="https://bipartisanpolicy.org/explainer/bipartisan-american-affordability-and-jobs-act-baaja-resource-hub/" target="_blank" rel="noopener">Guide to the bill (BPC)</a></span></div>
+    <div class="meta"><span>Updated <strong>Nov. 9, 2026</strong></span><span>Senate motion to proceed <strong>Nov. 9</strong></span><span>Introduced <strong>Sept. 30</strong></span><span><a href="https://bipartisanpolicy.org/explainer/bipartisan-american-affordability-and-jobs-act-baaja-resource-hub/" target="_blank" rel="noopener">Guide to the bill (BPC)</a></span></div>
     <div class="views" role="tablist" aria-label="Views">
       <a role="tab" href="#congress" id="tab-congress" class="view-tab">Whip tracker</a>
       <a role="tab" href="#groups" id="tab-groups" class="view-tab">Stakeholders</a>
@@ -399,6 +403,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
           <span><i class="sw" style="background:var(--changes)"></i>Conditions</span>
           <span><i class="sw" style="background:var(--oppose)"></i>Opposes</span>
           <span><i class="sw sw-none"></i>No statement found</span>
+          <span><i class="sw sw-cs"></i>House: caucus endorsed, no member statement (not counted)</span>
           <span class="watch">Two circles = the state's senators (ring shows party). Small squares = House members on record.</span>
         </div>
       </div>
@@ -1466,6 +1471,15 @@ const SEN_LABEL = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-
 const senState = { f: "record" };
 
 // ---------- House ----------
+// Caucus-implied shading: members of a caucus that has taken a position, with no statement of their own found.
+// Never counted in support or oppose totals. Individual statements always win (a member with a HOUSE row is not shaded).
+// Membership must come from the caucus's own published roster.
+const CAUCUS = {
+  bluedog: { name: "Blue Dog Coalition", stance: "cs", date: "Oct. 2 and Nov. 9, 2026", verb: "endorsed BAAJA",
+    src: [["Blue Dog statement, Oct. 2", "https://bluedogs-gluesenkampperez.house.gov/media-center/press-releases/blue-dog-statement-bipartisan-permitting-reform-agreement"], ["Punchbowl, Nov. 9", "https://punchbowl.news/article/policy/utility-lobby-backs-permitting-before-vote/"], ["John Arnold relaying Punchbowl, Nov. 9", "https://x.com/johnarnold/status/2119791353735557589"]],
+    roster: "Coalition roster, bluedogdems.com (10 members; new members join in January)",
+    members: [["Sanford Bishop", "D-GA-2"], ["Lou Correa", "D-CA-46"], ["Jim Costa", "D-CA-21"], ["Henry Cuellar", "D-TX-28"], ["Vicente Gonzalez", "D-TX-34"], ["Marie Gluesenkamp Perez", "D-WA-3"], ["Josh Gottheimer", "D-NJ-5"], ["Mike Thompson", "D-CA-4"], ["Jared Golden", "D-ME-2"], ["Adam Gray", "D-CA-13"]] },
+};
 const HOUSE = [
   ["Jared Golden", "D-ME-2", "support", `"The Bipartisan American Affordability and Jobs Act of 2026 builds on my bill with @repwesterman to get shovels in the ground. The Senate should pass it" (Oct. 1). Also praises the provision that stops a president from "pulling the plug on projects approved under their predecessor." Posted before the manager's amendment.`, [["@RepGolden, Oct. 1", "https://x.com/RepGolden/status/2105775325418504641"], ["@RepGolden, Oct. 1 (second post)", "https://x.com/RepGolden/status/2105775334784446693"]]],
   ["Erin Houchin", "R-IN-9", "support", `"I'm with @SpeakerJohnson, the @WhiteHouse, and the Senate in support of BAAJA" (Oct. 23).`, [["@RepHouchin, Oct. 23", "https://x.com/RepHouchin/status/2113731773456863551"]]],
@@ -1491,6 +1505,8 @@ const HOUSE = [
   ["Celeste Maloy", "R-UT-2", "support", `Build America Caucus co-chair; joint statement urging Congress to "quickly pass the reforms into law."`, [["Build America Caucus, Sept. 30", "https://buildamericacaucus-harder.house.gov/media/press-releases/permitting-build-america-caucus-chairs-call-on-congress-to-pass-senate-permitting-deal"]]],
   ["Melanie Stansbury", "D-NM-1", "oppose", `"Adamantly opposed to this bill" and won't vote for it "for now," citing tribal sovereignty and consultation, sacred sites, public lands, and community input. Heinrich's home-state colleague. Nov. 7, with Rep. Grijalva: opposes the bill and the manager's amendment and urges the Senate "to vote no."`, [["Stansbury and Grijalva joint statement, Nov. 7", "https://x.com/Rep_Stansbury/status/2119221708007858435"], ["NM Political Report, Oct. 28", "https://nmpoliticalreport.com/2026/10/28/stansbury-adamantly-opposed-to-heinrichs-signature-permit-reform-bill/"]]],
   ["Teresa Leger Fernández", "D-NM-3", "oppose", `Nov. 8: "The proposed manager's amendment does not resolve the fatal flaws in the bill's changes to our historic preservation process," and calls it a "secretive, backroom permitting deal." Oct. 24: "I cannot support the Bipartisan American Affordability and Jobs Act in its current form," citing "serious concerns" that it harms historic preservation protections and threatens tribal sovereignty under the NHPA. Says she wants to work with the Senate "to make necessary changes ... before it receives a vote." Former vice chair of the Advisory Council on Historic Preservation.`, [["@RepTeresaLF, Nov. 8", "https://x.com/RepTeresaLF/status/2119547317409731011"], ["@RepTeresaLF, Oct. 24", "https://x.com/RepTeresaLF/status/2114006840979677187"]]],
+  ["Blue Dog Coalition", "House caucus (10 members)", "support", `Oct. 2: urges passage of the Bipartisan American Affordability and Jobs Act and asks leaders to "bring this bill to the floor for a vote in November." Nov. 9, to Punchbowl: "The American people made clear that they expect action on lowering costs, not more delays. Failing to act now would be an act of disrespect to those who placed their trust in us." Members without their own statement are shaded on the House chart as caucus-endorsed.`, [["Blue Dog statement, Oct. 2", "https://bluedogs-gluesenkampperez.house.gov/media-center/press-releases/blue-dog-statement-bipartisan-permitting-reform-agreement"], ["Punchbowl, Nov. 9", "https://punchbowl.news/article/policy/utility-lobby-backs-permitting-before-vote/"], ["John Arnold relaying Punchbowl, Nov. 9", "https://x.com/johnarnold/status/2119791353735557589"]]],
+  ["House Freedom Caucus", "House caucus (Board letter)", "support", `Nov. 9 letter from the caucus Board to Speaker Johnson and Leader Thune lists, as one of eight lame-duck priorities, "Pass a robust permitting bill to expand American energy dominance and drive down the price of fuel and electricity for families." It does not name BAAJA; the Scorecard reads lame-duck references to "the permitting bill" as BAAJA. A Board letter, not a caucus vote. The caucus does not publish a membership list, so no members are shaded.`, [["House Freedom Caucus Board letter, Nov. 9", "https://x.com/freedomcaucus/status/2119807275728502973"]]],
   ["New Democrat Coalition", "House caucus (Peters, Schneider, Budzinski)", "support", `Leans support: "encouraged by the good-faith bipartisan negotiations." Still reviewing, with no endorsement yet. Wants "permit certainty and parity" for all energy.`, [["New Dems, Sept. 30", "https://newdemocratcoalition.house.gov/media-center/press-releases/new-democrat-coalition-statement-on-senate-permitting-reform-deal"]]],
   ["Build America Caucus", "Bipartisan caucus (43 members)", "support", `Co-chairs Harder and Maloy urge passage in November.`, [["Build America Caucus, Sept. 30", "https://buildamericacaucus-harder.house.gov/media/press-releases/permitting-build-america-caucus-chairs-call-on-congress-to-pass-senate-permitting-deal"]]],
   ["Jared Huffman", "D-CA-2 (Natural Resources ranking)", "oppose", `A "Trojan horse" with fossil giveaways; wind assurances are "cheap window dressing." Says Democrats should wait for a better deal after the midterms. Nov. 4, set to chair Natural Resources next year: says he has pledged to the incoming speaker to negotiate "a better deal" quickly next year, and that it would be "deeply idiotic to fold your hand now." Nov. 5, after Jeffries's statement: "House Democrats support, and will deliver, responsible permitting reform... we must have a chance to fix the most glaring flaws in BAAJA."`, [["@JaredHuffman, Nov. 5", "https://x.com/JaredHuffman/status/2118509927425860005"], ["Punchbowl via Joshua Siegel, Nov. 4", "https://x.com/SiegelScribe/status/2118123225800384911"], ["Huffman, Sept. 30", "https://democrats-naturalresources.house.gov/media/press-releases/ranking-member-huffman-statement-on-senate-permitting-deal"], ["Heatmap interview", "https://heatmap.news/politics/jared-huffman-baaja"]]],
@@ -1500,6 +1516,13 @@ const HOUSE = [
   ["Adelita Grijalva", "D-AZ-7", "oppose", `People's EJ Caucus statement. Nov. 7, with Rep. Stansbury: opposes the bill and the manager's amendment, urging the Senate "to reconsider bringing this legislation to the floor" and "to vote no."`, [["Stansbury and Grijalva joint statement, Nov. 7", "https://x.com/Rep_Stansbury/status/2119221708007858435"], ["Caucus statement", "https://tlaib.house.gov/posts/peoples-environmental-justice-caucus-opposes-senate-permitting-reform-bill"]]],
   ["Problem Solvers Caucus", "Bipartisan caucus", "conditional", `No position yet; expects to announce one in the lame duck. Peters and Rep. Gabe Evans lead its permitting working group.`, [["Bloomberg Law, Oct. 27", "https://news.bloomberglaw.com/health-law-and-business/bipartisan-house-caucus-weighs-senate-permitting-bill-support"]]]
 ];
+const houseKey = (d) => { const m = /^[RDI]-([A-Z]{2})-(\d+|AL)\b/.exec(d); return m ? `${m[1]}-${m[2]}` : null; };
+const CAUCUS_ROWS = (() => {
+  const own = new Set(HOUSE.map(h => houseKey(h[1])).filter(Boolean));
+  return Object.values(CAUCUS).flatMap(c => c.members.filter(([, d]) => !own.has(houseKey(d))).map(([n, d]) =>
+    [n, d, c.stance, `Member of the ${c.name}, which ${c.verb} (${c.date}). No statement from this member found. A caucus position is not a binding vote.`, c.src]));
+})();
+
 
 // Polls that ask about BAAJA itself (not permitting reform in general, not earlier bills). Newest first.
 // stages: [label, support %, oppose % or null]. The first stage is the "first read" figure; mark the stage
@@ -1591,9 +1614,9 @@ function renderSenate() {
 }
 
 function renderHouse() {
-  const order = { support: 0, lean: 1, supchg: 2, conditional: 3, oppose: 4 };
-  const lab = { support: ["Supports", "s-support"], lean: ["Leans support", "s-support"], supchg: ["Supports, wants changes", "s-supchg"], conditional: ["Conditions / undecided", "s-changes"], oppose: ["Opposes", "s-oppose"] };
-  const rows = [...HOUSE].sort((a, b) => order[a[2]] - order[b[2]]).map(([n, d, st, said, src]) =>
+  const order = { support: 0, lean: 1, supchg: 2, conditional: 3, oppose: 4, cs: 5, co: 6 };
+  const lab = { support: ["Supports", "s-support"], lean: ["Leans support", "s-support"], supchg: ["Supports, wants changes", "s-supchg"], conditional: ["Conditions / undecided", "s-changes"], oppose: ["Opposes", "s-oppose"], cs: ["Caucus endorsed; no member statement", "s-cs"], co: ["Caucus opposed; no member statement", "s-co"] };
+  const rows = [...HOUSE, ...CAUCUS_ROWS].sort((a, b) => order[a[2]] - order[b[2]]).map(([n, d, st, said, src]) =>
     `<tr><th scope="row">${n}</th><td>${d}</td><td><span class="pill ${lab[st][1]}">${lab[st][0]}</span></td><td class="said">${said} ${srcLinks(src)}</td></tr>`).join("");
   document.getElementById("houseBody").innerHTML = rows;
 }
@@ -1721,7 +1744,7 @@ document.getElementById("q").addEventListener("input", (e) => { state.q = e.targ
 
 // ---------- Congress charts ----------
 const POS_FILL = { sponsor: "var(--support)", support: "var(--support)", lean: "var(--lean)", supchg: "url(#supchgPat)", conditional: "var(--changes)", oppose: "var(--oppose)", none: "var(--silent-bg)" };
-const STRIPE_DEF = '<defs><pattern id="supchgPat" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--surface)"></rect><rect width="3" height="6" fill="var(--support)"></rect></pattern></defs>';
+const STRIPE_DEF = '<defs><pattern id="csPat" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)"><rect width="5" height="5" fill="var(--surface)"></rect><rect width="2" height="5" fill="var(--lean)"></rect></pattern><pattern id="coPat" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)"><rect width="5" height="5" fill="var(--surface)"></rect><rect width="2" height="5" fill="var(--oppose-bg)"></rect></pattern><pattern id="supchgPat" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--surface)"></rect><rect width="3" height="6" fill="var(--support)"></rect></pattern></defs>';
 let selSeat = null;
 
 function seatPanelDefault() {
@@ -1810,26 +1833,29 @@ function renderHouseViz() {
   const sorted = [...members].sort((a, b) => order[a[2]] - order[b[2]]);
   const col = { support: "var(--support)", lean: "var(--lean)", supchg: "var(--stripe)", conditional: "var(--changes)", oppose: "var(--oppose)" };
   let cells = sorted.map(m => `<i style="background:${col[m[2]]}" title="${m[0]} (${m[1]})"></i>`).join("");
-  cells += "<i></i>".repeat(435 - sorted.length);
+  const cs = CAUCUS_ROWS.filter(r => r[2] === "cs"), co = CAUCUS_ROWS.filter(r => r[2] === "co");
+  cells += cs.map(m => `<i style="background:var(--cs-stripe)" title="${m[0]} (${m[1]}): caucus endorsed; no member statement"></i>`).join("");
+  cells += "<i></i>".repeat(435 - sorted.length - cs.length - co.length);
+  cells += co.map(m => `<i style="background:var(--co-stripe)" title="${m[0]} (${m[1]}): caucus opposed; no member statement"></i>`).join("");
   document.getElementById("waffle").innerHTML = cells;
   const lab = { support: "Supports", lean: "Leans support", supchg: "Supports, wants changes", conditional: "Conditions / undecided", oppose: "Opposes" };
   document.getElementById("houseGroups").innerHTML = ["support", "lean", "supchg", "conditional", "oppose"].map(k => {
     const ms = HOUSE.filter(h => h[2] === k);
     if (!ms.length) return "";
     return `<div class="row"><b>${lab[k]} (${ms.filter(m => !/caucus/i.test(m[1])).length})</b>${ms.map(m => `<span class="mchip" style="border-color:${k === "supchg" ? "var(--support)" : col[k]}">${m[0]} <span class="watch">${m[1].replace(/ \(.+\)/, "")}</span></span>`).join("")}</div>`;
-  }).join("");
+  }).join("") + (CAUCUS_ROWS.length ? `<div class="row"><b>Caucus endorsed, no member statement (${CAUCUS_ROWS.filter(r => r[2] === "cs").length}, not counted)</b>${CAUCUS_ROWS.map(m => `<span class="mchip" style="border-style:dashed;border-color:var(--support)">${m[0]} <span class="watch">${m[1]}</span></span>`).join("")}</div><p class="caucus-note">Light striped squares are members of a caucus that has endorsed the bill (the Blue Dog Coalition) who have not said anything themselves that we have found. They are not counted as supporters. A caucus position is not a binding vote, and a member's own statement always replaces the caucus shading.</p>` : "");
 }
 
 // ---------- Delegation tile map ----------
 const TILES = "AK 0 0|ME 10 0|VT 9 1|NH 10 1|WA 0 2|ID 1 2|MT 2 2|ND 3 2|MN 4 2|IL 5 2|WI 6 2|MI 7 2|NY 8 2|RI 9 2|MA 10 2|OR 0 3|NV 1 3|WY 2 3|SD 3 3|IA 4 3|IN 5 3|OH 6 3|PA 7 3|NJ 8 3|CT 9 3|CA 0 4|UT 1 4|CO 2 4|NE 3 4|MO 4 4|KY 5 4|WV 6 4|VA 7 4|MD 8 4|DE 9 4|AZ 1 5|NM 2 5|KS 3 5|AR 4 5|TN 5 5|NC 6 5|SC 7 5|OK 3 6|LA 4 6|MS 5 6|AL 6 6|GA 7 6|HI 0 7|TX 3 7|FL 8 7".split("|").map(t => { const [st, c, r] = t.split(" "); return { st, c: +c, r: +r }; });
 const STATE_NAME = { AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware", FL: "Florida", GA: "Georgia", HI: "Hawaii", ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming" };
 const HOUSE_SEATS = { AL: 7, AK: 1, AZ: 9, AR: 4, CA: 52, CO: 8, CT: 5, DE: 1, FL: 28, GA: 14, HI: 2, ID: 2, IL: 17, IN: 9, IA: 4, KS: 4, KY: 6, LA: 6, ME: 2, MD: 8, MA: 9, MI: 13, MN: 8, MS: 4, MO: 8, MT: 2, NE: 3, NV: 4, NH: 2, NJ: 12, NM: 3, NY: 26, NC: 14, ND: 1, OH: 15, OK: 5, OR: 6, PA: 17, RI: 2, SC: 7, SD: 1, TN: 9, TX: 38, UT: 4, VT: 1, VA: 11, WA: 10, WV: 2, WI: 8, WY: 1 };
-const HOUSE_POS = { support: ["Supports", "s-support", "var(--support)"], lean: ["Leans support", "s-support", "var(--lean)"], supchg: ["Supports, wants changes", "s-supchg", "url(#supchgPat)"], conditional: ["Conditions", "s-changes", "var(--changes)"], oppose: ["Opposes", "s-oppose", "var(--oppose)"] };
+const HOUSE_POS = { support: ["Supports", "s-support", "var(--support)"], lean: ["Leans support", "s-support", "var(--lean)"], supchg: ["Supports, wants changes", "s-supchg", "url(#supchgPat)"], conditional: ["Conditions", "s-changes", "var(--changes)"], oppose: ["Opposes", "s-oppose", "var(--oppose)"], cs: ["Caucus endorsed; no member statement", "s-cs", "url(#csPat)"], co: ["Caucus opposed; no member statement", "s-co", "url(#coPat)"] };
 let selState = "MI";
 
 function houseByState() {
   const out = {};
-  HOUSE.forEach(h => { const m = /^[RDI]-([A-Z]{2})-/.exec(h[1]); if (m) (out[m[1]] = out[m[1]] || []).push(h); });
+  [...HOUSE, ...CAUCUS_ROWS].forEach(h => { const m = /^[RDI]-([A-Z]{2})-/.exec(h[1]); if (m) (out[m[1]] = out[m[1]] || []).push(h); });
   return out;
 }
 
@@ -1841,7 +1867,7 @@ function renderStateMap() {
     const x = t.c * step, y = t.r * step;
     const circles = sens.map((r, i) => `<circle class="p-${r.party}" cx="${x + 17 + i * 18}" cy="${y + 15}" r="7" fill="${POS_FILL[r.pos]}"></circle>`).join("");
     const sq = (hs[t.st] || []).map((h, i) => `<rect x="${x + 7 + i * 7}" y="${y + 41}" width="5" height="5" rx="1" fill="${HOUSE_POS[h[2]][2]}"></rect>`).join("");
-    const label = `${STATE_NAME[t.st]}: ${sens.map(r => `${r.name}, ${SEN_LABEL[r.pos][0]}`).join("; ")}; ${(hs[t.st] || []).length} House members on record`;
+    const label = `${STATE_NAME[t.st]}: ${sens.map(r => `${r.name}, ${SEN_LABEL[r.pos][0]}`).join("; ")}; ${(hs[t.st] || []).filter(h => !["cs", "co"].includes(h[2])).length} House members on record`;
     return `<g class="tile" data-st="${t.st}" tabindex="0" role="button" aria-label="${label}"><rect class="bg" x="${x}" y="${y}" width="${size}" height="${size}" rx="6"></rect>${circles}<text x="${x + size / 2}" y="${y + 35}" text-anchor="middle">${t.st}</text>${sq}</g>`;
   }).join("");
   const svg = document.getElementById("tmap");
@@ -1871,6 +1897,7 @@ function showState() {
       <p>${h[3]}</p><p>${srcLinks(h[4])}</p>`;
   }).join("");
   const rest = seats - mem.length;
+  const onRec = mem.filter(h => !["cs", "co"].includes(h[2])).length;
   let restHtml = "";
   if (rest > 0) {
     restHtml = `<p class="who">${mem.length ? `The other ${rest} House member${rest === 1 ? "" : "s"} from ${STATE_NAME[st]}: no statement found.` : `${seats === 1 ? "The state's one House member has" : `All ${seats} House members have`} no statement found.`}</p>`;
@@ -1878,12 +1905,14 @@ function showState() {
   document.getElementById("statePanel").innerHTML = `<span class="eyebrow">${seats} House seat${seats === 1 ? "" : "s"} · ${sens.length} senators</span>
     <h4>${STATE_NAME[st]}</h4>
     <div class="st-sec"><h5>Senators</h5>${senHtml}</div>
-    <div class="st-sec"><h5>House: ${mem.length} of ${seats} on record</h5>${memHtml}${restHtml}</div>`;
+    <div class="st-sec"><h5>House: ${onRec} of ${seats} on record</h5>${memHtml}${restHtml}</div>`;
 }
 
 // ---------- Latest statements ----------
 // Newest first. d = date the statement was made or reported; k = Senate | House | Group.
 const LATEST = [
+  { d: "2026-11-09", k: "House", who: "Blue Dog Coalition", pos: "support", text: `"The American people made clear that they expect action on lowering costs, not more delays. Failing to act now would be an act of disrespect to those who placed their trust in us." The coalition urged passage on Oct. 2.`, src: [["Blue Dog statement, Oct. 2", "https://bluedogs-gluesenkampperez.house.gov/media-center/press-releases/blue-dog-statement-bipartisan-permitting-reform-agreement"], ["Punchbowl, Nov. 9", "https://punchbowl.news/article/policy/utility-lobby-backs-permitting-before-vote/"], ["John Arnold relaying Punchbowl, Nov. 9", "https://x.com/johnarnold/status/2119791353735557589"]] },
+  { d: "2026-11-09", k: "House", who: "House Freedom Caucus (Board letter)", pos: "support", text: `Lists "Pass a robust permitting bill to expand American energy dominance and drive down the price of fuel and electricity for families" among eight lame-duck priorities in a letter to Johnson and Thune. Does not name BAAJA.`, src: [["House Freedom Caucus Board letter, Nov. 9", "https://x.com/freedomcaucus/status/2119807275728502973"]] },
   { d: "2026-11-08", k: "Group", who: "President Trump", pos: "support", text: `"I am urging all Senators to vote for The American Affordability and Jobs Act (S. 5653)! This Bill is a BIG WIN for U.S. ENERGY INDEPENDENCE and DOMINANCE." Ends: "Call your Senator TODAY, and tell them to vote YES."`, src: [["Truth Social, Nov. 8", "https://truthsocial.com/@realDonaldTrump/posts/117583560661477967"]] },
   { d: "2026-11-08", k: "Senate", who: "Shelley Moore Capito (R-WV) and Mike Lee (R-UT)", pos: "sponsor", text: `Thank the President for his endorsement. Capito: "Thank you for your endorsement of the Bipartisan American Affordability and Jobs Act, and thanks to the members of your administration who have worked with us."`, src: [["@SenCapito, Nov. 8", "https://x.com/SenCapito/status/2119609192931581985"], ["@SenMikeLee, Nov. 8", "https://x.com/SenMikeLee/status/2119621218944831699"]] },
   { d: "2026-11-08", k: "Group", who: "National Congress of American Indians", pos: "oppose", text: `Urges senators to vote no on cloture and to withdraw the historic preservation title. President Macarro: "Any amendment to S. 5653 merely puts lipstick on a pig. This bill is rotten from the inside, and there is no fixing the rot."`, src: [["NCAI, Nov. 8", "https://www.ncai.org/news/ncai-warns-baaja-s-5653"]] },
