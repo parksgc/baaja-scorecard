@@ -1391,7 +1391,7 @@ const IFP_LETTER = ["IFP letter (PDF)", "https://ifp.org/wp-content/uploads/econ
 const LETTER_NOTE = `Signed the Oct. 20 letter calling BAAJA essential to U.S. competitiveness.`;
 const OFFICIALS = [
   ["Janet Yellen", "Treasury Secretary; Fed Chair; CEA Chair", "Biden; Obama/Trump; Clinton", "support", LETTER_NOTE, [IFP_LETTER, ["Alec Stapp thread", "https://x.com/AlecStapp/status/2112535120338972833"]]],
-  ["Jennifer Granholm", "Energy Secretary; Michigan governor", "Biden", "support", `Imperfect, but "I think we should pass it." "Who's to say we're going to get a better deal?"`, [["Washington Examiner, Oct. 28", "https://www.washingtonexaminer.com/?p=4783176"]]],
+  ["Jennifer Granholm", "Energy Secretary; Michigan governor", "Biden", "support", `"I think we should pass it. I know it's not perfect." "Who's to say we're going to get a better deal?" "We still need a presidential signature in the next two years." On tribal concerns: "we should make the bill better when we have the opportunity to do so." Also warned the administration on wind: "If they want permitting reform, knock it off."`, [["Axios, Oct. 28", "https://www.axios.com/2026/10/28/granholm-permitting-warning-trump-democrats"], ["Washington Examiner, Oct. 28", "https://www.washingtonexaminer.com/?p=4783176"]]],
   ["Mike Pompeo", "Secretary of State; CIA Director", "Trump (1st)", "support", LETTER_NOTE, [IFP_LETTER]],
   ["Steven Mnuchin", "Treasury Secretary", "Trump (1st)", "support", LETTER_NOTE, [IFP_LETTER]],
   ["Leon Panetta", "Defense Secretary; CIA Director; WH Chief of Staff", "Obama; Clinton", "support", LETTER_NOTE, [IFP_LETTER]],
@@ -1481,6 +1481,9 @@ const CAUCUS = {
     members: [["Sanford Bishop", "D-GA-2"], ["Lou Correa", "D-CA-46"], ["Jim Costa", "D-CA-21"], ["Henry Cuellar", "D-TX-28"], ["Vicente Gonzalez", "D-TX-34"], ["Marie Gluesenkamp Perez", "D-WA-3"], ["Josh Gottheimer", "D-NJ-5"], ["Mike Thompson", "D-CA-4"], ["Jared Golden", "D-ME-2"], ["Adam Gray", "D-CA-13"]] },
 };
 const HOUSE = [
+  ["Russ Fulcher", "R-ID-1", "support", `Oct. 1: "language from my bill, the CLEAN Act, has been included in the large Senate permitting package that was just introduced... I look forward to working with my House and Senate colleagues to deliver this legislation to President Trump's desk." Identifies the Senate package by its contents; does not name it.`, [["@RepRussFulcher, Oct. 1", "https://x.com/RepRussFulcher/status/2105734088887791679"]]],
+  ["Randy Weber", "R-TX-14", "support", `Oct. 26: "Congress has kicked the can on permitting reform long enough... I look forward to getting this done with @WhiteHouse & @SpeakerJohnson." The post does not name the bill; the Scorecard reads lame-duck "permitting reform" as BAAJA.`, [["@TXRandy14, Oct. 26", "https://x.com/TXRandy14/status/2114800663276269669"]]],
+  ["Mariannette Miller-Meeks", "R-IA-1", "support", `Oct. 23: "Permitting reform is critical to strengthening American energy production... Congress must act now!... get it across the finish line as soon as we return." The post does not name the bill; the Scorecard reads lame-duck "permitting reform" as BAAJA.`, [["@RepMMM, Oct. 23", "https://x.com/RepMMM/status/2113763181155987603"]]],
   ["Jared Golden", "D-ME-2", "support", `"The Bipartisan American Affordability and Jobs Act of 2026 builds on my bill with @repwesterman to get shovels in the ground. The Senate should pass it" (Oct. 1). Also praises the provision that stops a president from "pulling the plug on projects approved under their predecessor." Posted before the manager's amendment.`, [["@RepGolden, Oct. 1", "https://x.com/RepGolden/status/2105775325418504641"], ["@RepGolden, Oct. 1 (second post)", "https://x.com/RepGolden/status/2105775334784446693"]]],
   ["Erin Houchin", "R-IN-9", "support", `"I'm with @SpeakerJohnson, the @WhiteHouse, and the Senate in support of BAAJA" (Oct. 23).`, [["@RepHouchin, Oct. 23", "https://x.com/RepHouchin/status/2113731773456863551"]]],
   ["Pat Fallon", "R-TX-4", "support", `"I'm proud to back the Senate's bipartisan permitting reform bill" (Oct. 26). The post does not name BAAJA.`, [["@RepPatFallon, Oct. 26", "https://x.com/RepPatFallon/status/2114900842264310218"]]],
@@ -1519,7 +1522,10 @@ const HOUSE = [
 const houseKey = (d) => { const m = /^[RDI]-([A-Z]{2})-(\d+|AL)\b/.exec(d); return m ? `${m[1]}-${m[2]}` : null; };
 const CAUCUS_ROWS = (() => {
   const own = new Set(HOUSE.map(h => houseKey(h[1])).filter(Boolean));
-  return Object.values(CAUCUS).flatMap(c => c.members.filter(([, d]) => !own.has(houseKey(d))).map(([n, d]) =>
+  // A member in caucuses with opposite positions gets no shading (Collin, Nov. 9).
+  const seen = {};
+  Object.values(CAUCUS).forEach(c => c.members.forEach(([, d]) => { const k = houseKey(d); (seen[k] = seen[k] || new Set()).add(c.stance); }));
+  return Object.values(CAUCUS).flatMap(c => c.members.filter(([, d]) => !own.has(houseKey(d)) && seen[houseKey(d)].size === 1).map(([n, d]) =>
     [n, d, c.stance, `Member of the ${c.name}, which ${c.verb} (${c.date}). No statement from this member found. A caucus position is not a binding vote.`, c.src]));
 })();
 
