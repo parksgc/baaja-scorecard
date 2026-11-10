@@ -1,51 +1,51 @@
 State,Code,Map category,Senator 1,Senator 1 position,Senator 2,Senator 2 position
 Alabama,AL,Both support or voted for cloture,Britt (R),Voted for cloture,Tuberville (R),Voted for cloture
 Alaska,AK,Both support or voted for cloture,Murkowski (R),Voted for cloture,Sullivan (R),Voted for cloture
-Arizona,AZ,Wants changes,Gallego (D),Supports,Kelly (D),Wants changes
+Arizona,AZ,At least one opposes,Gallego (D),Supports,Kelly (D),Opposes or voted no
 Arkansas,AR,Both support or voted for cloture,Boozman (R),Supports,Cotton (R),Voted for cloture
-California,CA,No statement found,Padilla (D),No statement found,Schiff (D),No statement found
-Colorado,CO,One supports or voted for cloture,Bennet (D),No statement found,Hickenlooper (D),Voted for cloture
+California,CA,At least one opposes,Padilla (D),Opposes or voted no,Schiff (D),Opposes or voted no
+Colorado,CO,At least one opposes,Bennet (D),Opposes or voted no,Hickenlooper (D),Voted for cloture
 Connecticut,CT,One supports or voted for cloture,Blumenthal (D),Voted for cloture,Murphy (D),No statement found
-Delaware,DE,One supports or voted for cloture,Blunt Rochester (D),No statement found,Coons (D),Voted for cloture
+Delaware,DE,At least one opposes,Blunt Rochester (D),Opposes or voted no,Coons (D),Voted for cloture
 Florida,FL,Both support or voted for cloture,Moody (R),Voted for cloture,Scott (R),Voted for cloture
 Georgia,GA,Both support or voted for cloture,Ossoff (D),Voted for cloture,Warnock (D),Voted for cloture
-Hawaii,HI,Wants changes,Hirono (D),Wants changes,Schatz (D),"Supports, wants changes"
+Hawaii,HI,At least one opposes,Hirono (D),Opposes or voted no,Schatz (D),"Supports, wants changes"
 Idaho,ID,Both support or voted for cloture,Crapo (R),Voted for cloture,Risch (R),Voted for cloture
-Illinois,IL,Wants changes,Duckworth (D),Wants changes,Durbin (D),No statement found
+Illinois,IL,At least one opposes,Duckworth (D),Opposes or voted no,Durbin (D),Opposes or voted no
 Indiana,IN,Both support or voted for cloture,Banks (R),Voted for cloture,Young (R),Voted for cloture
 Iowa,IA,Both support or voted for cloture,Ernst (R),Voted for cloture,Grassley (R),Voted for cloture
 Kansas,KS,Both support or voted for cloture,Marshall (R),Voted for cloture,Moran (R),Voted for cloture
 Kentucky,KY,Both support or voted for cloture,McConnell (R),Voted for cloture,Paul (R),Voted for cloture
 Louisiana,LA,Both support or voted for cloture,Cassidy (R),Voted for cloture,Kennedy (R),Voted for cloture
 Maine,ME,Both support or voted for cloture,Collins (R),Voted for cloture,King (I),Voted for cloture
-Maryland,MD,At least one opposes,Alsobrooks (D),Opposes outright,Van Hollen (D),No statement found
-Massachusetts,MA,Wants changes,Markey (D),Wants changes,Warren (D),No statement found
+Maryland,MD,At least one opposes,Alsobrooks (D),Opposes or voted no,Van Hollen (D),Opposes or voted no
+Massachusetts,MA,At least one opposes,Markey (D),Opposes or voted no,Warren (D),Opposes or voted no
 Michigan,MI,Both support or voted for cloture,Peters (D),Voted for cloture,Slotkin (D),Voted for cloture
-Minnesota,MN,One supports or voted for cloture,Klobuchar (D),Voted for cloture,Smith (D),No statement found
+Minnesota,MN,At least one opposes,Klobuchar (D),Voted for cloture,Smith (D),Opposes or voted no
 Mississippi,MS,Both support or voted for cloture,Hyde-Smith (R),Voted for cloture,Wicker (R),Voted for cloture
 Missouri,MO,Both support or voted for cloture,Hawley (R),Voted for cloture,Schmitt (R),Voted for cloture
 Montana,MT,One supports or voted for cloture,Daines (R),Voted for cloture,Sheehy (R),No statement found
 Nebraska,NE,Both support or voted for cloture,Fischer (R),Voted for cloture,Ricketts (R),Voted for cloture
 Nevada,NV,Both support or voted for cloture,Cortez Masto (D),Voted for cloture,Rosen (D),Voted for cloture
-New Hampshire,NH,One supports or voted for cloture,Hassan (D),No statement found,Shaheen (D),Voted for cloture
-New Jersey,NJ,One supports or voted for cloture,Booker (D),No statement found,Kim (D),Voted for cloture
-New Mexico,NM,One supports or voted for cloture,Heinrich (D),Sponsor,Luján (D),No statement found
+New Hampshire,NH,At least one opposes,Hassan (D),Opposes or voted no,Shaheen (D),Voted for cloture
+New Jersey,NJ,At least one opposes,Booker (D),Opposes or voted no,Kim (D),Voted for cloture
+New Mexico,NM,At least one opposes,Heinrich (D),Sponsor,Luján (D),Opposes or voted no
 New York,NY,Both support or voted for cloture,Gillibrand (D),Voted for cloture,Schumer (D),Voted for cloture
 North Carolina,NC,Both support or voted for cloture,Budd (R),Voted for cloture,Tillis (R),Voted for cloture
 North Dakota,ND,Both support or voted for cloture,Cramer (R),Voted for cloture,Hoeven (R),Voted for cloture
 Ohio,OH,Both support or voted for cloture,Husted (R),Supports,Moreno (R),Voted for cloture
 Oklahoma,OK,Both support or voted for cloture,Armstrong (R),Supports,Lankford (R),Voted for cloture
-Oregon,OR,At least one opposes,Merkley (D),Opposes outright,Wyden (D),Opposes outright
+Oregon,OR,At least one opposes,Merkley (D),Opposes or voted no,Wyden (D),Opposes or voted no
 Pennsylvania,PA,Both support or voted for cloture,Fetterman (D),Voted for cloture,McCormick (R),Supports
 Rhode Island,RI,Both support or voted for cloture,Reed (D),Voted for cloture,Whitehouse (D),Sponsor
 South Carolina,SC,Both support or voted for cloture,Graham (R),Voted for cloture,Scott (R),Voted for cloture
-South Dakota,SD,One supports or voted for cloture,Rounds (R),No statement found,Thune (R),Voted for cloture
+South Dakota,SD,At least one opposes,Rounds (R),Opposes or voted no,Thune (R),Voted for cloture
 Tennessee,TN,Both support or voted for cloture,Blackburn (R),Voted for cloture,Hagerty (R),Voted for cloture
 Texas,TX,Both support or voted for cloture,Cornyn (R),Voted for cloture,Cruz (R),Voted for cloture
 Utah,UT,Both support or voted for cloture,Curtis (R),Voted for cloture,Lee (R),Sponsor
-Vermont,VT,No statement found,Sanders (I),No statement found,Welch (D),No statement found
-Virginia,VA,One supports or voted for cloture,Kaine (D),No statement found,Warner (D),Voted for cloture
-Washington,WA,No statement found,Cantwell (D),No statement found,Murray (D),No statement found
+Vermont,VT,At least one opposes,Sanders (I),Opposes or voted no,Welch (D),Opposes or voted no
+Virginia,VA,At least one opposes,Kaine (D),Opposes or voted no,Warner (D),Voted for cloture
+Washington,WA,At least one opposes,Cantwell (D),Opposes or voted no,Murray (D),Opposes or voted no
 West Virginia,WV,Both support or voted for cloture,Capito (R),Sponsor,Justice (R),Voted for cloture
-Wisconsin,WI,One supports or voted for cloture,Baldwin (D),No statement found,Johnson (R),Voted for cloture
+Wisconsin,WI,At least one opposes,Baldwin (D),Opposes or voted no,Johnson (R),Voted for cloture
 Wyoming,WY,Both support or voted for cloture,Barrasso (R),Voted for cloture,Lummis (R),Voted for cloture

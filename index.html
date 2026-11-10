@@ -377,10 +377,9 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
           <span><i class="sw" style="background:var(--support)"></i>Sponsor / supports</span>
           <span><i class="sw" style="background:var(--lean)"></i>Voted for cloture, Nov. 9</span>
           <span><i class="sw sw-supchg"></i>Supports, wants changes</span>
-          <span><i class="sw" style="background:var(--changes)"></i>Conditions</span>
-          <span><i class="sw" style="background:var(--oppose)"></i>Opposes</span>
+          <span><i class="sw" style="background:var(--oppose)"></i>Opposes or voted no</span>
           <span><i class="sw sw-none"></i>No statement found</span>
-          <span class="watch">Light green: voted yes on cloture on the motion to proceed (Nov. 9) without a stated position of support. A stated position outranks the vote. Democrats left, independents center, Republicans right. Ring shows party.</span>
+          <span class="watch">Since the Nov. 9 cloture vote on the motion to proceed: a yes vote with no stated support is light green ("Voted for cloture"), and a no vote counts as opposition, including for senators who had set conditions. Stated support or opposition outranks the vote. Democrats left, independents center, Republicans right. Ring shows party.</span>
         </div>
       </div>
       <div class="chamber-side">
@@ -388,8 +387,8 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
           <span class="stamp">Nov. 9, 2026 · about 5:30 PM ET</span>
           <h4>Senate invokes cloture on the motion to proceed, 73 to 25</h4>
           <p>The Senate voted to take up H.R. 2347, the House bill serving as the vehicle for BAAJA (S. 5653). Sixty votes were needed. Fifty-one Republicans and 22 Democrats and independents voted yes. Sen. Mike Rounds (R-SD) and 24 Democrats and independents voted no. Sens. Chris Murphy (D-CT) and Tim Sheehy (R-MT) show no vote.</p>
-          <p>This is a procedural vote, not a vote on passage. Reports say up to 30 hours of debate on the motion can follow, and the substitute amendment and the bill itself still need votes. Timing of a final vote has not been announced. Senators who voted yes and have no stated position are now shaded light green; a stated position still outranks the vote.</p>
-          <p class="src">Count: <a href="https://www.ksnt.com/hill-politics/senate-advances-bipartisan-permitting-reform-bill-teeing-up-passage/" target="_blank" rel="noopener">The Hill</a>, <a href="https://www.washingtontimes.com/news/2026/nov/9/senate-permitting-overhaul-clears-procedural-hurdle-obstacles-remain/" target="_blank" rel="noopener">Washington Times</a>, <a href="https://nmpoliticalreport.com/2026/11/09/heinrichs-permit-reform-bill-clears-60-votes-in-senate-to-proceed-despite-opposition-from-tribes-enviro-groups/" target="_blank" rel="noopener">NM Political Report</a>. Names from a preliminary tally; the senate.gov roll call has not posted. Note added Nov. 9, 8:30 PM ET; shading updated 8:33 PM ET.</p>
+          <p>This is a procedural vote, not a vote on passage. Reports say up to 30 hours of debate on the motion can follow, and the substitute amendment and the bill itself still need votes. Timing of a final vote has not been announced. Senators who voted yes without stating support are now shaded light green, and a no vote now counts as opposition. Stated positions still outrank the vote.</p>
+          <p class="src">Count: <a href="https://www.ksnt.com/hill-politics/senate-advances-bipartisan-permitting-reform-bill-teeing-up-passage/" target="_blank" rel="noopener">The Hill</a>, <a href="https://www.washingtontimes.com/news/2026/nov/9/senate-permitting-overhaul-clears-procedural-hurdle-obstacles-remain/" target="_blank" rel="noopener">Washington Times</a>, <a href="https://nmpoliticalreport.com/2026/11/09/heinrichs-permit-reform-bill-clears-60-votes-in-senate-to-proceed-despite-opposition-from-tribes-enviro-groups/" target="_blank" rel="noopener">NM Political Report</a>. Names from a preliminary tally; the senate.gov roll call has not posted. Note added Nov. 9, 8:30 PM ET; shading updated 8:51 PM ET.</p>
         </div>
         <aside class="seat-panel" id="seatPanel" aria-live="polite"></aside>
       </div>
@@ -420,7 +419,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
           <span><i class="sw" style="background:var(--lean)"></i>Senate: voted for cloture, Nov. 9 · House: leans support</span>
           <span><i class="sw sw-supchg"></i>Supports, wants changes</span>
           <span><i class="sw" style="background:var(--changes)"></i>Conditions</span>
-          <span><i class="sw" style="background:var(--oppose)"></i>Opposes</span>
+          <span><i class="sw" style="background:var(--oppose)"></i>Opposes (Senate: or voted no on cloture)</span>
           <span><i class="sw sw-none"></i>No statement found</span>
           <span><i class="sw sw-cs"></i>House: caucus endorsed, no member statement (not counted)</span>
           <span class="watch">Two circles = the state's senators (ring shows party). Small squares = House members on record.</span>
@@ -1498,7 +1497,7 @@ const voteOf = (name) => { const v = VOTE_NOW.votes[name]; return v === undefine
 const voteLine = (name) => { const v = voteOf(name); const tail = VOTE_NOW.status === "preliminary" ? " (preliminary tally; senate.gov roll call pending)" : ""; return v === "Y" || v === "N" ? `${VOTE_NOW.short}: ${v === "Y" ? "Yes" : "No"}${tail}` : `${VOTE_NOW.short}: no vote shown on the preliminary tally.`; };
 const SUPCHG_WHY = { Schatz: "Our reading, not his words: Schatz has said he wants tribal changes and that waiting is unlikely to produce a better bill. He has not said he will vote yes." };
 const supchgNote = (name) => `<p class="disclaimer">${SUPCHG_WHY[name.replace(/ \(..\)$/, "")] || "Our reading of what the member has said, not a stated vote."} Not counted as a public yes vote.</p>`;
-const SEN_LABEL = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-support"], lean: ["Voted for cloture", "s-support"], supchg: ["Supports, wants changes", "s-supchg"], conditional: ["Conditions / concerns", "s-changes"], oppose: ["Opposes", "s-oppose"], none: ["No statement found", "s-silent"] };
+const SEN_LABEL = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-support"], lean: ["Voted for cloture", "s-support"], supchg: ["Supports, wants changes", "s-supchg"], conditional: ["Conditions / concerns", "s-changes"], oppose: ["Opposes or voted no", "s-oppose"], none: ["No statement found", "s-silent"] };
 const senState = { f: "record" };
 
 // ---------- House ----------
@@ -1621,8 +1620,10 @@ function senRows() {
     const pos0 = n ? n[0] : "none";
     // Collin's Nov. 9 rule: a yes vote on cloture moves a senator with no stated position into the light-green tier.
     // Stated positions (sponsor, support, supchg, conditional, oppose) still win over the vote.
-    const pos = (pos0 === "none" || pos0 === "lean") && VOTE_NOW.votes[s.name] === "Y" ? "lean" : pos0;
-    return { ...s, pos, note: n ? n[1] : "", src: n ? n[2] : [] };
+    // Collin's second Nov. 9 rule: a no vote on cloture counts as opposition for a senator with no stated position or with conditions.
+    const v = VOTE_NOW.votes[s.name];
+    const pos = (pos0 === "none" || pos0 === "lean") && v === "Y" ? "lean" : (pos0 === "none" || pos0 === "conditional") && v === "N" ? "oppose" : pos0;
+    return { ...s, pos, pos0, note: n ? n[1] : "", src: n ? n[2] : [] };
   });
 }
 
@@ -1648,7 +1649,7 @@ function renderSenate() {
   shown =[...shown].sort((a, b) => order[a.pos] - order[b.pos] || (b.note ? 1 : 0) - (a.note ? 1 : 0) || a.name.localeCompare(b.name));
   document.getElementById("senBody").innerHTML = shown.map(r => {
     const [lbl, cls] = SEN_LABEL[r.pos];
-    const note = r.note ? `${r.note} ${srcLinks(r.src)}${r.pos === "supchg" ? supchgNote(r.name) : ""}` : `<span class="watch">${r.pos === "lean" ? "No statement on the bill found. Voted for cloture." : "Nothing found since Sept. 30."}</span>`;
+    const note = r.note ? `${r.note} ${srcLinks(r.src)}${r.pos === "supchg" ? supchgNote(r.name) : ""}` : `<span class="watch">${r.pos === "lean" ? "No statement on the bill found. Voted for cloture." : r.pos === "oppose" ? "No statement on the bill found. Voted no on cloture." : "Nothing found since Sept. 30."}</span>`;
     const v = voteOf(r.name);
     return `<tr><th scope="row">${r.name}</th><td><span class="party-${r.party}">${r.party}</span>-${r.state}</td><td><span class="pill ${cls}">${lbl}</span></td><td>${v === "Y" ? "Yes" : v === "N" ? "No" : `<span class="watch">Not shown</span>`}</td><td class="said">${note}</td></tr>`;
   }).join("");
@@ -1792,16 +1793,16 @@ function seatPanelDefault() {
   const rows = senRows();
   const n = (p) => rows.filter(r => r.pos === p).length;
   const rec = 100 - n("none");
-  const names = (p) => { const a = rows.filter(r => r.pos === p).map(r => r.name.replace(/ \(..\)$/, "")); return a.length < 3 ? a.join(" and ") : `${a.slice(0, -1).join(", ")}, and ${a[a.length - 1]}`; };
+  const names = (p) => { const a = rows.filter(r => p === "stated-oppose" ? r.pos0 === "oppose" : r.pos === p).map(r => r.name.replace(/ \(..\)$/, "")); return a.length < 3 ? a.join(" and ") : `${a.slice(0, -1).join(", ")}, and ${a[a.length - 1]}`; };
   document.getElementById("seatPanel").innerHTML = `<span class="eyebrow">Select a seat</span>
-    <h4>${rec} of 100 senators on record or voted for cloture</h4>
-    <p class="who">${n("sponsor")} sponsors and ${n("support")} other senators back the bill publicly. ${n("lean")} more voted for cloture on the motion to proceed on Nov. 9, including Majority Leader Thune. ${n("supchg") ? `${names("supchg")} ${n("supchg") === 1 ? "supports" : "support"} it but ${n("supchg") === 1 ? "wants" : "want"} changes. ` : ""}${n("conditional")} Democrats have conditions or concerns. ${n("oppose") ? `${names("oppose")} ${n("oppose") === 1 ? "opposes" : "oppose"} it.` : "No senator has come out against it."}</p>
+    <h4>${rec} of 100 senators on record or voted on cloture</h4>
+    <p class="who">${n("sponsor")} sponsors and ${n("support")} other senators back the bill publicly. ${n("lean")} more voted for cloture on the motion to proceed on Nov. 9, including Majority Leader Thune. ${n("supchg") ? `${names("supchg")} ${n("supchg") === 1 ? "supports" : "support"} it but ${n("supchg") === 1 ? "wants" : "want"} changes. ` : ""}${n("conditional") ? `${n("conditional")} Democrats have conditions or concerns. ` : ""}${n("oppose")} oppose it or voted no on cloture, including ${names("stated-oppose")}, who have said so publicly.</p>
     <p class="who">Tap or hover a seat for what that senator has said.</p>`;
 }
 
 function showSeat(r) {
   const [lbl, cls] = SEN_LABEL[r.pos];
-  const note = r.note ? `${r.note}` : r.pos === "lean" ? `No statement on the bill found. Voted for cloture on the motion to proceed, Nov. 9.` : `Nothing found since Sept. 30.`;
+  const note = r.note ? `${r.note}` : r.pos === "lean" ? `No statement on the bill found. Voted for cloture on the motion to proceed, Nov. 9.` : r.pos === "oppose" ? `No statement on the bill found. Voted no on cloture on the motion to proceed, Nov. 9.` : `Nothing found since Sept. 30.`;
   document.getElementById("seatPanel").innerHTML = `<span class="eyebrow">${r.party === "D" ? "Democrat" : r.party === "R" ? "Republican" : "Independent"} · ${r.state}</span>
     <h4>Sen. ${r.name.replace(/ \(..\)$/, "")}</h4>
     <span><span class="pill ${cls}">${lbl}</span></span>
@@ -1931,7 +1932,7 @@ function showState() {
   const senHtml = sens.map(r => {
     const [lbl, cls] = SEN_LABEL[r.pos];
     return `<div class="who-row"><b>Sen. ${r.name}</b><span class="said">(${r.party})</span><span class="pill ${cls}">${lbl}</span></div>
-      <p>${r.note || (r.pos === "lean" ? "No statement on the bill found. Voted for cloture on the motion to proceed, Nov. 9." : "Nothing found since Sept. 30.")}</p><p>${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}<p class="vote-line">${voteLine(r.name)}</p>`;
+      <p>${r.note || (r.pos === "lean" ? "No statement on the bill found. Voted for cloture on the motion to proceed, Nov. 9." : r.pos === "oppose" ? "No statement on the bill found. Voted no on cloture on the motion to proceed, Nov. 9." : "Nothing found since Sept. 30.")}</p><p>${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}<p class="vote-line">${voteLine(r.name)}</p>`;
   }).join("");
   const memHtml = mem.map(h => {
     const [lbl, cls] = HOUSE_POS[h[2]];
