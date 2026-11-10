@@ -34,7 +34,11 @@ const plain = (s) => String(s).replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim
 const senators = SENATE.map((s) => {
   const key = s.name.replace(/ \(..\)$/, "");
   const n = SEN_NOTES[key];
-  return { ...s, key, pos: n ? n[0] : "none", note: n ? plain(n[1]) : "" };
+  const pos0 = n ? n[0] : "none";
+  // Same rule as the page: a cloture yes vote moves a senator with no stated position into the light-green tier.
+  const lastVote = VOTES[VOTES.length - 1].votes[s.name];
+  const pos = (pos0 === "none" || pos0 === "lean") && lastVote === "Y" ? "lean" : pos0;
+  return { ...s, key, pos, note: n ? plain(n[1]) : pos === "lean" ? "No statement on the bill found. Voted for cloture on the motion to proceed, Nov. 9." : "" };
 });
 
 // One vocabulary for every chart, so the bar, the seat chart and the map read alike.
@@ -42,7 +46,7 @@ const senators = SENATE.map((s) => {
 // The seat chart's legend order follows Datawrapper's stored color map, which sorts keys by length and then
 // alphabetically, so these lengths are chosen to keep the legend running from Sponsor to No statement found.
 // "Supports, wants changes" (supchg) sorts after "No statement found" by length; the charts set categoryOrder to place it after "Leans support".
-const LABEL = { sponsor: "Sponsor", support: "Supports", lean: "Leans support", supchg: "Supports, wants changes", conditional: "Wants changes", oppose: "Opposes outright", none: "No statement found" };
+const LABEL = { sponsor: "Sponsor", support: "Supports", lean: "Voted for cloture", supchg: "Supports, wants changes", conditional: "Wants changes", oppose: "Opposes outright", none: "No statement found" };
 
 // 1. Path to 60: one stacked bar
 const order = ["sponsor", "support", "lean", "supchg", "conditional", "oppose", "none"].map((k) => [k, LABEL[k]]);
@@ -59,8 +63,8 @@ for (const code of Object.keys(NAMES)) {
   const p = [a.pos, b.pos];
   const cat = p.includes("oppose") ? "At least one opposes"
     : p.includes("conditional") || p.includes("supchg") ? "Wants changes"
-    : p.every((x) => yes.has(x)) ? "Both support or lean"
-    : p.some((x) => yes.has(x)) ? "One supports or leans"
+    : p.every((x) => yes.has(x)) ? "Both support or voted for cloture"
+    : p.some((x) => yes.has(x)) ? "One supports or voted for cloture"
     : "No statement found";
   map.push([NAMES[code], code, cat, `${a.key} (${a.party})`, label(a), `${b.key} (${b.party})`, label(b)]);
 }
@@ -139,7 +143,7 @@ const members = roster.map((r) => {
 const unmatched = Object.keys(houseNotes);
 if (unmatched.length) throw new Error(`House entries with no roster seat: ${unmatched.join(", ")}`);
 // "Seat currently vacant" is longer than "No statement found" so it sorts last in Datawrapper's legend (see LABEL note).
-const HLABEL = { ...LABEL, vacant: "Seat currently vacant", cs: "Caucus endorsed (no member statement)", co: "Caucus opposed (no member statement)" };
+const HLABEL = { ...LABEL, lean: "Leans support", vacant: "Seat currently vacant", cs: "Caucus endorsed (no member statement)", co: "Caucus opposed (no member statement)" };
 const HL = ["co", "none", "cs", "oppose", "conditional", "supchg", "lean", "support", "sponsor"];
 const hgrab = (party, p) => members.filter((m) => m.party === party && m.pos === p).sort((a, b) => a.key.localeCompare(b.key));
 const hOrdered = [
