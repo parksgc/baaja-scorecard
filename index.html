@@ -376,10 +376,9 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
         <div class="seat-key">
           <span><i class="sw" style="background:var(--support)"></i>Sponsor / supports</span>
           <span><i class="sw" style="background:var(--lean)"></i>Voted for cloture, Nov. 9</span>
-          <span><i class="sw sw-supchg"></i>Supports, wants changes</span>
           <span><i class="sw" style="background:var(--oppose)"></i>Opposes or voted no</span>
           <span><i class="sw sw-none"></i>No statement found</span>
-          <span class="watch">Since the Nov. 9 cloture vote on the motion to proceed: a yes vote with no stated support is light green ("Voted for cloture"), and a no vote counts as opposition, including for senators who had set conditions. Stated support or opposition outranks the vote. Democrats left, independents center, Republicans right. Ring shows party.</span>
+          <span class="watch">Since the Nov. 9 cloture vote on the motion to proceed: a yes vote without a stated position of full support is light green ("Voted for cloture"; this includes Schatz, who supports the bill but wants changes), and a no vote counts as opposition, including for senators who had set conditions. Stated support or opposition outranks the vote. Democrats left, independents center, Republicans right. Ring shows party.</span>
         </div>
       </div>
       <div class="chamber-side">
@@ -387,8 +386,8 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
           <span class="stamp">Nov. 9, 2026 · about 5:30 PM ET</span>
           <h4>Senate invokes cloture on the motion to proceed, 73 to 25</h4>
           <p>The Senate voted to take up H.R. 2347, the House bill serving as the vehicle for BAAJA (S. 5653). Sixty votes were needed. Fifty-one Republicans and 22 Democrats and independents voted yes. Sen. Mike Rounds (R-SD) and 24 Democrats and independents voted no. Sens. Chris Murphy (D-CT) and Tim Sheehy (R-MT) show no vote.</p>
-          <p>This is a procedural vote, not a vote on passage. Reports say up to 30 hours of debate on the motion can follow, and the substitute amendment and the bill itself still need votes. Timing of a final vote has not been announced. Senators who voted yes without stating support are now shaded light green, and a no vote now counts as opposition. Stated positions still outrank the vote.</p>
-          <p class="src">Count: <a href="https://www.ksnt.com/hill-politics/senate-advances-bipartisan-permitting-reform-bill-teeing-up-passage/" target="_blank" rel="noopener">The Hill</a>, <a href="https://www.washingtontimes.com/news/2026/nov/9/senate-permitting-overhaul-clears-procedural-hurdle-obstacles-remain/" target="_blank" rel="noopener">Washington Times</a>, <a href="https://nmpoliticalreport.com/2026/11/09/heinrichs-permit-reform-bill-clears-60-votes-in-senate-to-proceed-despite-opposition-from-tribes-enviro-groups/" target="_blank" rel="noopener">NM Political Report</a>. Names from a preliminary tally; the senate.gov roll call has not posted. Note added Nov. 9, 8:30 PM ET; shading updated 8:51 PM ET.</p>
+          <p>This is a procedural vote, not a vote on passage. Reports say up to 30 hours of debate on the motion can follow, and the substitute amendment and the bill itself still need votes. Timing of a final vote has not been announced. Senators who voted yes without stating full support are now shaded light green, and a no vote now counts as opposition. Stated positions still outrank the vote.</p>
+          <p class="src">Count: <a href="https://www.ksnt.com/hill-politics/senate-advances-bipartisan-permitting-reform-bill-teeing-up-passage/" target="_blank" rel="noopener">The Hill</a>, <a href="https://www.washingtontimes.com/news/2026/nov/9/senate-permitting-overhaul-clears-procedural-hurdle-obstacles-remain/" target="_blank" rel="noopener">Washington Times</a>, <a href="https://nmpoliticalreport.com/2026/11/09/heinrichs-permit-reform-bill-clears-60-votes-in-senate-to-proceed-despite-opposition-from-tribes-enviro-groups/" target="_blank" rel="noopener">NM Political Report</a>. Names from a preliminary tally; the senate.gov roll call has not posted. Note added Nov. 9, 8:30 PM ET; shading updated 8:56 PM ET.</p>
         </div>
         <aside class="seat-panel" id="seatPanel" aria-live="polite"></aside>
       </div>
@@ -417,7 +416,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
         <div class="seat-key">
           <span><i class="sw" style="background:var(--support)"></i>Supports</span>
           <span><i class="sw" style="background:var(--lean)"></i>Senate: voted for cloture, Nov. 9 · House: leans support</span>
-          <span><i class="sw sw-supchg"></i>Supports, wants changes</span>
+          <span><i class="sw sw-supchg"></i>House: supports, wants changes</span>
           <span><i class="sw" style="background:var(--changes)"></i>Conditions</span>
           <span><i class="sw" style="background:var(--oppose)"></i>Opposes (Senate: or voted no on cloture)</span>
           <span><i class="sw sw-none"></i>No statement found</span>
@@ -1622,7 +1621,8 @@ function senRows() {
     // Stated positions (sponsor, support, supchg, conditional, oppose) still win over the vote.
     // Collin's second Nov. 9 rule: a no vote on cloture counts as opposition for a senator with no stated position or with conditions.
     const v = VOTE_NOW.votes[s.name];
-    const pos = (pos0 === "none" || pos0 === "lean") && v === "Y" ? "lean" : (pos0 === "none" || pos0 === "conditional") && v === "N" ? "oppose" : pos0;
+    // Collin, 8:56 p.m.: no striped tier in the Senate; "supports, wants changes" plus a yes vote is light green.
+    const pos = (pos0 === "none" || pos0 === "lean" || pos0 === "supchg") && v === "Y" ? "lean" : (pos0 === "none" || pos0 === "conditional") && v === "N" ? "oppose" : pos0;
     return { ...s, pos, pos0, note: n ? n[1] : "", src: n ? n[2] : [] };
   });
 }
@@ -1635,9 +1635,9 @@ function renderSenate() {
     `<div class="t"><b>${c("sponsor")}</b><span>Sponsors</span></div>` +
     `<div class="t"><b>${c("support")}</b><span>Other public supporters</span></div>` +
     `<div class="t"><b>${c("lean")}</b><span>Voted for cloture</span></div>` +
-    `<div class="t"><b>${c("supchg")}</b><span>Support, want changes</span></div>` +
-    `<div class="t"><b>${c("conditional")}</b><span>Conditions / concerns</span></div>` +
-    `<div class="t"><b>${c("oppose")}</b><span>Opposed</span></div>` +
+    (c("supchg") ? `<div class="t"><b>${c("supchg")}</b><span>Support, want changes</span></div>` : "") +
+    (c("conditional") ? `<div class="t"><b>${c("conditional")}</b><span>Conditions / concerns</span></div>` : "") +
+    `<div class="t"><b>${c("oppose")}</b><span>Opposed or voted no</span></div>` +
     `<div class="t"><b>${100 - onRecord}</b><span>No statement found</span></div>`;
   const ch = (v, l) => `<button class="chip" type="button" data-sen="${v}" aria-pressed="${senState.f === v}">${l}</button>`;
   document.getElementById("senChips").innerHTML = ch("record", "On record") + ch("all", "All 100") + ch("D", "Democrats + Independents") + ch("R", "Republicans");
@@ -1865,7 +1865,7 @@ function renderVotebar() {
     seg(none, "transparent", "No statement found", true) +
     `<span class="mark" style="left:60%" title="60 votes for cloture"></span><span class="mark target" style="left:70%" title="Backers' target of about 70"></span>`;
   document.getElementById("voteaxis").innerHTML = `<span style="left:60%;transform:translateX(calc(-100% - 6px))">60 cloture</span><span style="left:70%;transform:translateX(6px)">~70 target</span>`;
-  document.getElementById("votecap").textContent = `${yes} stated supporters, ${lean} more who voted for cloture on Nov. 9, ${sc} supporting but wanting changes (not counted as yes), ${cond} with conditions, ${opp} opposed, ${none} with no statement found. Solid line: 60 votes for cloture. Dashed: backers' target of about 70.`;
+  document.getElementById("votecap").textContent = `${yes} stated supporters, ${lean} more who voted for cloture on Nov. 9, ${sc ? `${sc} supporting but wanting changes, ` : ""}${cond ? `${cond} with conditions, ` : ""}${opp} opposed or voting no, ${none} with no statement found. Solid line: 60 votes for cloture. Dashed: backers' target of about 70.`;
 }
 
 function renderHouseViz() {

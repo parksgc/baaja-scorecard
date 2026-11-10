@@ -37,7 +37,7 @@ const senators = SENATE.map((s) => {
   const pos0 = n ? n[0] : "none";
   // Same rule as the page: a cloture yes vote moves a senator with no stated position into the light-green tier.
   const lastVote = VOTES[VOTES.length - 1].votes[s.name];
-  const pos = (pos0 === "none" || pos0 === "lean") && lastVote === "Y" ? "lean" : (pos0 === "none" || pos0 === "conditional") && lastVote === "N" ? "oppose" : pos0;
+  const pos = (pos0 === "none" || pos0 === "lean" || pos0 === "supchg") && lastVote === "Y" ? "lean" : (pos0 === "none" || pos0 === "conditional") && lastVote === "N" ? "oppose" : pos0;
   return { ...s, key, pos, note: n ? plain(n[1]) : pos === "lean" ? "No statement on the bill found. Voted for cloture on the motion to proceed, Nov. 9." : pos === "oppose" ? "No statement on the bill found. Voted no on cloture on the motion to proceed, Nov. 9." : "" };
 });
 
@@ -51,7 +51,9 @@ const LABEL = { sponsor: "Sponsor", support: "Supports", lean: "Voted for clotur
 // 1. Path to 60: one stacked bar
 const order = ["sponsor", "support", "lean", "supchg", "conditional", "oppose", "none"].map((k) => [k, LABEL[k]]);
 const count = (k) => senators.filter((s) => s.pos === k).length;
-const bar = [["Senate", ...order.map(([, l]) => l)], [`Senate (updated ${updated})`, ...order.map(([k]) => count(k))]];
+// Empty Senate tiers (since the Nov. 9 vote rules, "Supports, wants changes" and "Wants changes") drop out of the bar and its legend.
+const barOrder = order.filter(([k]) => count(k) > 0 || ["sponsor", "support", "lean", "oppose", "none"].includes(k));
+const bar = [["Senate", ...barOrder.map(([, l]) => l)], [`Senate (updated ${updated})`, ...barOrder.map(([k]) => count(k))]];
 
 // 2. Map: one row per state
 const NAMES = { AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware", FL: "Florida", GA: "Georgia", HI: "Hawaii", ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming" };
