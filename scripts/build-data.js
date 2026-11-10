@@ -172,7 +172,21 @@ hOrdered.map((m, k) => ({ m, ...hSeats[k] })).sort((p, q) => hRank[p.m.pos] - hR
 // 7. Path to 218: one stacked bar, same vocabulary as the Senate bar.
 const hcount = (k) => members.filter((m) => m.pos === k).length;
 const hOrder = ["support", "lean", "supchg", "conditional", "oppose", "cs", "none", "vacant"];
-const bar218 = [["House", ...hOrder.map((k) => HLABEL[k])], [`House (updated ${updated})`, ...hOrder.map(hcount)]];
+// One bar for the whole House, then one per party, so readers can see the split at a glance.
+const hcountP = (k, p) => members.filter((m) => m.pos === k && m.party === p).length;
+const seatsP = (p) => members.filter((m) => m.party === p).length;
+const bar218 = [["House", ...hOrder.map((k) => HLABEL[k])],
+  [`Whole House (updated ${updated})`, ...hOrder.map(hcount)],
+  [`Democrats (${seatsP("D")} seats)`, ...hOrder.map((k) => hcountP(k, "D"))],
+  [`Republicans (${seatsP("R")} seats)`, ...hOrder.map((k) => hcountP(k, "R"))]];
+if (members.some((m) => m.party === "I" && m.pos !== "none")) throw new Error("An independent House member is on record: add an Independents row to path-to-218");
+
+// 7b. House members on record, by party, for a Datawrapper table. Caucus-shaded members are left out (not counted).
+const HPOS_ORDER = { support: 0, lean: 1, supchg: 2, conditional: 3, oppose: 4 };
+const houseRecord = [["Party", "Member", "District", "Position", "What they said"]];
+members.filter((m) => m.pos in HPOS_ORDER)
+  .sort((a, b) => HPOS_ORDER[a.pos] - HPOS_ORDER[b.pos] || (a.party === b.party ? 0 : a.party === "D" ? -1 : 1) || a.shown.localeCompare(b.shown))
+  .forEach((m) => houseRecord.push([HPARTY[m.party], `Rep. ${m.shown}`, `${m.party}-${m.state}-${m.dist}`, HLABEL[m.pos], linkSecs(short(m.note))]));
 
 // 8. Polls: one row per question stage, for a Datawrapper chart of how support moves as respondents hear more.
 const pollRows = [["Poll", "Released", "Fielded", "Sample", "Sponsor stance", "Stage", "Support", "Oppose", "Source"]];
@@ -186,5 +200,6 @@ fs.writeFileSync(path.join(root, "data", "senate-by-state.csv"), csv(map));
 fs.writeFileSync(path.join(root, "data", "senators-on-record.csv"), csv(table));
 fs.writeFileSync(path.join(root, "data", "house-seats.csv"), csv(houseSeatRows));
 fs.writeFileSync(path.join(root, "data", "path-to-218.csv"), csv(bar218));
+fs.writeFileSync(path.join(root, "data", "house-on-record.csv"), csv(houseRecord));
 fs.writeFileSync(path.join(root, "data", "polls.csv"), csv(pollRows));
 console.log(`Built data/ (updated ${updated}): ${senators.length - count("none")} senators on record, ${map.length - 1} states; House ${members.filter((m) => !["none", "vacant", "cs", "co"].includes(m.pos)).length} on record (+${hcount("cs")} caucus-shaded), ${hcount("vacant")} vacant.`);

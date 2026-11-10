@@ -226,7 +226,19 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 16px; align-items: start; }
 .waffle { display: grid; grid-template-columns: repeat(29, 1fr); gap: 2px; }
 .waffle i { aspect-ratio: 1; border-radius: 2px; background: var(--silent-bg); display: block; }
-.house-groups { display: flex; flex-direction: column; gap: 8px; }
+.house-groups { display: flex; flex-direction: column; gap: 12px; }
+.party-tally { border-collapse: collapse; font-size: 14px; width: 100%; max-width: 560px; min-width: 0; }
+.party-tally tbody th { min-width: 0; }
+.party-tally .pill { white-space: normal; }
+.party-tally .sm { display: none; }
+@media (max-width: 640px) { .party-tally th, .party-tally td { padding: 4px 5px; font-size: 13px; } .party-tally .lg { display: none; } .party-tally .sm { display: inline; } }
+.party-tally th, .party-tally td { padding: 4px 10px; border-bottom: 1px solid var(--rule); text-align: right; }
+.party-tally th[scope="row"], .party-tally thead th:first-child { text-align: left; }
+.party-tally td { font-variant-numeric: tabular-nums; font-weight: 700; }
+.party-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 640px) { .party-cols { grid-template-columns: 1fr; } }
+.pcol { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.pcol h4 { margin: 0; font-size: 15px; }
 .house-groups .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .house-groups .row > b { font-size: 12px; width: 100%; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
 .mchip { font-size: 12px; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--rule); background: var(--bg); }
@@ -447,6 +459,9 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     <p class="who">Senate and House tables were last swept in full on Oct. 30; statements since then are added as they are found (see "Latest from Congress" above). All 100 senators were checked by name in press releases and news. Every senator's X account was searched for "permitting" or "BAAJA" since Sept. 29. Whip coverage came from Politico, Inside Climate News, Semafor, Hill Heat, and Roll Call, plus Extracted Daily's excerpts of paywalled Politico Pro and Inside EPA pieces. "No statement found" means a member said nothing we could find, not that we didn't look. Reporters say backers want 15 to 20 Democrats and expect "some losses on the Republican side," but no one has named those Republicans.</p>
     <h3 style="margin-top:12px">House members on record</h3>
     <p class="who">The House has its own process. Speaker Johnson backs the bill's thrust; Energy and Commerce chair Guthrie wants changes before a House vote. This lists every member found with a public statement.</p>
+    <div class="controls">
+      <div class="chips" id="houseChips" role="group" aria-label="Filter House members by party"></div>
+    </div>
     <div class="table-scroll">
       <table class="list-table">
         <thead><tr><th scope="col">Member</th><th scope="col">Party-District</th><th scope="col">Position</th><th scope="col">What they said</th></tr></thead>
@@ -1655,10 +1670,14 @@ function renderSenate() {
   }).join("");
 }
 
+const houseState = { p: "all" };
 function renderHouse() {
   const order = { support: 0, lean: 1, supchg: 2, conditional: 3, oppose: 4, cs: 5, co: 6 };
   const lab = { support: ["Supports", "s-support"], lean: ["Leans support", "s-support"], supchg: ["Supports, wants changes", "s-supchg"], conditional: ["Conditions / undecided", "s-changes"], oppose: ["Opposes", "s-oppose"], cs: ["Caucus endorsed; no member statement", "s-cs"], co: ["Caucus opposed; no member statement", "s-co"] };
-  const rows = [...HOUSE, ...CAUCUS_ROWS].sort((a, b) => order[a[2]] - order[b[2]]).map(([n, d, st, said, src]) =>
+  const ch = (v, l) => `<button class="chip" type="button" data-hp="${v}" aria-pressed="${houseState.p === v}">${l}</button>`;
+  document.getElementById("houseChips").innerHTML = ch("all", "All") + ch("D", "Democrats") + ch("R", "Republicans");
+  const pOf = (m) => (m[1].match(/^([DRI])-/) || [])[1];
+  const rows = [...HOUSE, ...CAUCUS_ROWS].filter(m => houseState.p === "all" || pOf(m) === houseState.p).sort((a, b) => order[a[2]] - order[b[2]] || (pOf(a) || "Z").localeCompare(pOf(b) || "Z")).map(([n, d, st, said, src]) =>
     `<tr><th scope="row">${n}</th><td>${d}</td><td><span class="pill ${lab[st][1]}">${lab[st][0]}</span></td><td class="said">${said} ${srcLinks(src)}</td></tr>`).join("");
   document.getElementById("houseBody").innerHTML = rows;
 }
@@ -1666,6 +1685,7 @@ function renderHouse() {
 document.addEventListener("click", (e) => {
   const o = e.target.closest("[data-off]"); if (o) { offState.f = o.dataset.off; renderOfficials(); }
   const s = e.target.closest("[data-sen]"); if (s) { senState.f = s.dataset.sen; renderSenate(); }
+  const hp = e.target.closest("[data-hp]"); if (hp) { houseState.p = hp.dataset.hp; renderHouse(); }
 });
 
 const state = { stance: "all", sector: "all", q: "", all: false };
@@ -1870,7 +1890,7 @@ function renderVotebar() {
 
 function renderHouseViz() {
   const members = HOUSE.filter(h => !/caucus/i.test(h[1]));
-  document.getElementById("houseHead").textContent = `House: ${members.length} of 435 on record`;
+  document.getElementById("houseHead").textContent = `House: ${members.length} of 435 on record (${members.filter(m => /^D-/.test(m[1])).length} Democrats, ${members.filter(m => /^R-/.test(m[1])).length} Republicans)`;
   document.getElementById("waffle").setAttribute("aria-label", `435 squares, ${members.length} colored for members with a public position`);
   const order = { support: 0, lean: 1, supchg: 2, conditional: 3, oppose: 4 };
   const sorted = [...members].sort((a, b) => order[a[2]] - order[b[2]]);
@@ -1882,11 +1902,19 @@ function renderHouseViz() {
   cells += co.map(m => `<i style="background:var(--co-stripe)" title="${m[0]} (${m[1]}): caucus opposed; no member statement"></i>`).join("");
   document.getElementById("waffle").innerHTML = cells;
   const lab = { support: "Supports", lean: "Leans support", supchg: "Supports, wants changes", conditional: "Conditions / undecided", oppose: "Opposes" };
-  document.getElementById("houseGroups").innerHTML = ["support", "lean", "supchg", "conditional", "oppose"].map(k => {
-    const ms = HOUSE.filter(h => h[2] === k);
-    if (!ms.length) return "";
-    return `<div class="row"><b>${lab[k]} (${ms.filter(m => !/caucus/i.test(m[1])).length})</b>${ms.map(m => `<span class="mchip" style="border-color:${k === "supchg" ? "var(--support)" : col[k]}">${m[0]} <span class="watch">${m[1].replace(/ \(.+\)/, "")}</span></span>`).join("")}</div>`;
-  }).join("") + (CAUCUS_ROWS.length ? `<div class="row"><b>Caucus endorsed, no member statement (${CAUCUS_ROWS.filter(r => r[2] === "cs").length}, not counted)</b>${CAUCUS_ROWS.map(m => `<span class="mchip" style="border-style:dashed;border-color:var(--support)">${m[0]} <span class="watch">${m[1]}</span></span>`).join("")}</div><p class="caucus-note">Light striped squares are members of a caucus that has endorsed the bill (the Blue Dog Coalition) who have not said anything themselves that we have found. They are not counted as supporters. A caucus position is not a binding vote, and a member's own statement always replaces the caucus shading.</p>` : "");
+  // Split by party so readers can see who is where on each side.
+  const partyOf = (m) => (m[1].match(/^([DRI])-/) || [])[1];
+  const KEYS = ["support", "lean", "supchg", "conditional", "oppose"];
+  const PARTIES = [["D", "Democrats"], ["R", "Republicans"]];
+  const cnt = (k, p) => members.filter(m => m[2] === k && partyOf(m) === p).length;
+  const rowsT = KEYS.filter(k => members.some(m => m[2] === k)).map(k => `<tr><th scope="row"><span class="pill ${HOUSE_POS[k][1]}">${lab[k]}</span></th><td>${cnt(k, "D")}</td><td>${cnt(k, "R")}</td><td>${members.filter(m => m[2] === k).length}</td></tr>`).join("");
+  const csD = CAUCUS_ROWS.filter(r => r[2] === "cs" && partyOf(r) === "D").length, csR = CAUCUS_ROWS.filter(r => r[2] === "cs" && partyOf(r) === "R").length;
+  const tally = `<table class="party-tally"><thead><tr><th scope="col">Position</th><th scope="col"><span class="lg">Democrats</span><span class="sm">Dem.</span></th><th scope="col"><span class="lg">Republicans</span><span class="sm">Rep.</span></th><th scope="col">Total</th></tr></thead><tbody>${rowsT}${CAUCUS_ROWS.length ? `<tr class="cs-row"><th scope="row"><span class="pill s-cs">Caucus endorsed (not counted)</span></th><td>${csD}</td><td>${csR}</td><td>${csD + csR}</td></tr>` : ""}</tbody></table>`;
+  const cols = PARTIES.map(([p, name]) => `<div class="pcol"><h4>${name}</h4>${KEYS.map(k => {
+    const ms = members.filter(m => m[2] === k && partyOf(m) === p);
+    return ms.length ? `<div class="row"><b>${lab[k]} (${ms.length})</b>${ms.map(m => `<span class="mchip" style="border-color:${k === "supchg" ? "var(--support)" : col[k]}">${m[0]} <span class="watch">${m[1].replace(/ \(.+\)/, "")}</span></span>`).join("")}</div>` : "";
+  }).join("") || `<p class="watch">No member on record.</p>`}${(() => { const cs = CAUCUS_ROWS.filter(r => r[2] === "cs" && partyOf(r) === p); return cs.length ? `<div class="row"><b>Caucus endorsed, no member statement (${cs.length}, not counted)</b>${cs.map(m => `<span class="mchip" style="border-style:dashed;border-color:var(--support)">${m[0]} <span class="watch">${m[1]}</span></span>`).join("")}</div>` : ""; })()}</div>`).join("");
+  document.getElementById("houseGroups").innerHTML = tally + `<div class="party-cols">${cols}</div>` + (CAUCUS_ROWS.length ? `<p class="caucus-note">Light striped squares are members of a caucus that has endorsed the bill (the Blue Dog Coalition) who have not said anything themselves that we have found. They are not counted as supporters. A caucus position is not a binding vote, and a member's own statement always replaces the caucus shading.</p>` : "");
 }
 
 // ---------- Delegation tile map ----------
