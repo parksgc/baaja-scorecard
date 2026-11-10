@@ -12,8 +12,16 @@ const js = html.split("<script>")[1].split("</script>")[0];
 const dataJs = js.split("function srcLinks")[0].replace(/^if \(SUBSTACK_URL\)[\s\S]*?\n\}\n/m, "");
 const ctx = {};
 vm.createContext(ctx);
-vm.runInContext(dataJs + "\nthis.d = { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS };", ctx);
-const { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS } = ctx.d;
+vm.runInContext(dataJs + "\nthis.d = { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS, VOTES };", ctx);
+const { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS, VOTES } = ctx.d;
+// Floor votes must name every senator on the page exactly once, by the page's own key, and nobody else.
+for (const v of VOTES) {
+  const keys = new Set(SENATE.map((s) => s.name));
+  const missing = [...keys].filter((k) => !(k in v.votes));
+  const extra = Object.keys(v.votes).filter((k) => !keys.has(k));
+  const bad = Object.entries(v.votes).filter(([, x]) => !(x === "Y" || x === "N" || x === null)).map(([k]) => k);
+  if (missing.length || extra.length || bad.length) throw new Error(`Vote ${v.id}: missing ${missing.join(", ") || "none"}; no such senator ${extra.join(", ") || "none"}; bad value ${bad.join(", ") || "none"}`);
+}
 // Same rule as the page: "Sec. 2301", "Secs. 1401–1402" link to BPC's section-by-section explainer.
 const linkSecs = (t) => String(t).replace(/\b(Secs?\.|Sections?)(\s+)(\d{4})((?:\([^)\s]*\))*)(\s*[–-]\s*\d{4})?/g, (m, _w, _s, num, _sub, range) =>
   BAAJA_SEC(+num) ? `<a href="${secHref(num + (range || ""))}" target="_blank">${m}</a>` : m);

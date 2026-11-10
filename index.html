@@ -199,6 +199,16 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 #hemi .seat:focus-visible, #hemi .seat.sel { stroke: var(--ink); stroke-width: 3; }
 #hemi text { fill: var(--ink); font-family: var(--font-display); }
 #hemi text.sub { fill: var(--muted); font-family: var(--font-body); font-size: 12px; font-weight: 400; }
+.vbadge { pointer-events: none; }
+.vote-key { flex-basis: 100%; display: flex; gap: 6px; align-items: flex-start; color: var(--muted); }
+.vote-key svg { flex: none; margin-top: 1px; }
+.vote-line { font-size: 13px; color: var(--muted); margin: 2px 0 0; }
+.chamber-side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.vote-note { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--ink); border-radius: 8px; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+.vote-note .stamp { font-size: 12px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; color: var(--muted); }
+.vote-note h4 { margin: 0; font-size: 16px; }
+.vote-note p { margin: 0; }
+.vote-note .src { font-size: 12px; color: var(--muted); }
 .seat-key { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; align-items: center; }
 .sw { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
 .sw-none { background: var(--silent-bg); border: 1.5px solid var(--silent); }
@@ -371,9 +381,19 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
           <span><i class="sw" style="background:var(--oppose)"></i>Opposes</span>
           <span><i class="sw sw-none"></i>No statement found</span>
           <span class="watch">Democrats left, independents center, Republicans right. Ring shows party.</span>
+          <span class="vote-key" data-votekey><svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="#fff" stroke="#5a6270" stroke-width=".8"></circle><path d="M4 7.1L6.3 9.5L10.1 4.6" fill="none" stroke="#1a7f37" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="25" cy="7" r="6" fill="#fff" stroke="#5a6270" stroke-width=".8"></circle><path d="M22.6 4.6L27.4 9.4M27.4 4.6L22.6 9.4" fill="none" stroke="#c62828" stroke-width="1.6" stroke-linecap="round"></path></svg><span></span></span>
         </div>
       </div>
-      <aside class="seat-panel" id="seatPanel" aria-live="polite"></aside>
+      <div class="chamber-side">
+        <div class="vote-note" id="voteNote">
+          <span class="stamp">Nov. 9, 2026 · about 5:30 PM ET</span>
+          <h4>Senate invokes cloture on the motion to proceed, 73 to 25</h4>
+          <p>The Senate voted to take up H.R. 2347, the House bill serving as the vehicle for BAAJA (S. 5653). Sixty votes were needed. Fifty-one Republicans and 22 Democrats and independents voted yes. Sen. Mike Rounds (R-SD) and 24 Democrats and independents voted no. Sens. Chris Murphy (D-CT) and Tim Sheehy (R-MT) show no vote.</p>
+          <p>This is a procedural vote, not a vote on passage. Reports say up to 30 hours of debate on the motion can follow, and the substitute amendment and the bill itself still need votes. Timing of a final vote has not been announced. The check and ex badges on the chart show each senator's vote; colors still show stated positions only.</p>
+          <p class="src">Count: <a href="https://www.ksnt.com/hill-politics/senate-advances-bipartisan-permitting-reform-bill-teeing-up-passage/" target="_blank" rel="noopener">The Hill</a>, <a href="https://www.washingtontimes.com/news/2026/nov/9/senate-permitting-overhaul-clears-procedural-hurdle-obstacles-remain/" target="_blank" rel="noopener">Washington Times</a>, <a href="https://nmpoliticalreport.com/2026/11/09/heinrichs-permit-reform-bill-clears-60-votes-in-senate-to-proceed-despite-opposition-from-tribes-enviro-groups/" target="_blank" rel="noopener">NM Political Report</a>. Names from a preliminary tally; the senate.gov roll call has not posted. Note added Nov. 9, 8:30 PM ET.</p>
+        </div>
+        <aside class="seat-panel" id="seatPanel" aria-live="polite"></aside>
+      </div>
     </div>
 
     <div class="votebar-wrap">
@@ -405,6 +425,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
           <span><i class="sw sw-none"></i>No statement found</span>
           <span><i class="sw sw-cs"></i>House: caucus endorsed, no member statement (not counted)</span>
           <span class="watch">Two circles = the state's senators (ring shows party). Small squares = House members on record.</span>
+          <span class="vote-key" data-votekey><svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="#fff" stroke="#5a6270" stroke-width=".8"></circle><path d="M4 7.1L6.3 9.5L10.1 4.6" fill="none" stroke="#1a7f37" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="25" cy="7" r="6" fill="#fff" stroke="#5a6270" stroke-width=".8"></circle><path d="M22.6 4.6L27.4 9.4M27.4 4.6L22.6 9.4" fill="none" stroke="#c62828" stroke-width="1.6" stroke-linecap="round"></path></svg><span></span></span>
         </div>
       </div>
       <aside class="seat-panel" id="statePanel" aria-live="polite"></aside>
@@ -423,7 +444,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     </div>
     <div class="table-scroll">
       <table class="list-table">
-        <thead><tr><th scope="col">Senator</th><th scope="col">Party-State</th><th scope="col">Position</th><th scope="col">On the record</th></tr></thead>
+        <thead><tr><th scope="col">Senator</th><th scope="col">Party-State</th><th scope="col">Position</th><th scope="col">Cloture vote, Nov. 9</th><th scope="col">On the record</th></tr></thead>
         <tbody id="senBody"></tbody>
       </table>
     </div>
@@ -1430,6 +1451,7 @@ const SENATE = "Alsobrooks D MD|Armstrong R OK|Baldwin D WI|Banks R IN|Barrasso 
 const DUCK_LETTER2 = [["Letter (DocumentCloud)", "https://www.documentcloud.org/documents/28835990-duckworth-wyden-merkley-markey-baaja/"], ["Inside Climate News, Oct. 29", "https://insideclimatenews.org/news/29102026/senate-debate-on-bipartisan-permitting-bill-approaches/"]];
 const LETTER_TXT = `The Oct. 27 letter says the signers are still deciding "whether to vote in favor of the motion to proceed." It says they "share the goals" of faster permitting and grid reform, but that BAAJA "will only succeed if President Trump takes care that it is faithfully executed." It asks for written confirmation, before the vote, that DOE is reinstating the canceled awards. It never says they will vote no.`;
 const SEN_NOTES = {
+  "Alsobrooks": ["oppose", `Nov. 9 post: "The damage from rolling back environmental protections will be felt for generations. We must restore these safeguards to protect the clean air, clean water, public lands, and wildlife that make our communities and country worth protecting." Post does not name the bill or the vote; classified as opposition by the editor's ruling.`, [["@Sen_Alsobrooks on X (profile; post of Nov. 9, 12:40 PM ET)", "https://x.com/Sen_Alsobrooks"]]],
   "Armstrong": ["support", `"Really, really meaningful permitting reform, all the way across the board." Agencies can't walk back permits "without being liable for the damages."`, [["News 9, Sept. 30", "https://www.news9.com/national-politics-oklahoma/senate-taking-important-step-toward-making-permitting-reform-a-reality"]]],
   "Hawley": ["none", `The lone ENR Republican to vote against EPRA in 2024, over FERC transmission siting and landowners. Nothing on BAAJA yet.`, [["E&E News (2024)", "https://www.eenews.net/articles/whats-next-for-the-permitting-bill/"]]],
   "King": ["none", `In May 2026 he told Interior there would be no votes for permitting reform without assurances on stalled renewable permits.`, [["Development Today, May 2026", "https://developmentstoday.com/energy/renewables-permit-fight-threatens-bipartisan-reform-push"]]],
@@ -1465,6 +1487,17 @@ const SEN_NOTES = {
   "Rounds": ["none", `South Dakota PUC commissioners urged him and Thune to oppose the FERC transmission siting provisions. No statement found.`, [["Dakota Free Press, Oct. 29", "https://dakotafreepress.com/2026/10/29/kloucek-warns-senate-permitting-reform-bill-threatens-sd-rights-nelson-kinda-agrees/"]]],
   "Cramer": ["none", `Sept. 29 (before the text): "time for Congress to pass a new highway bill and permitting reform." In 2024 he criticized EPRA's transmission provisions for "perverse incentives to overbuild."`, [["@SenKevinCramer, Sept. 29", "https://x.com/SenKevinCramer/status/2105044319384097177"]]]
 };
+// Floor votes, by senator key (the page's own names). Y = yes, N = no, null = no vote shown.
+// A procedural vote is not a stated position: votes draw badges and tooltip lines and never change a fill or a count.
+// status "preliminary" until the senate.gov roll call posts; then set status "roll call" and add the senate.gov link to src.
+const VOTES = [
+  { id: "cloture-mtp-hr2347", date: "2026-11-09", short: "Nov. 9 cloture vote, motion to proceed to H.R. 2347", label: "Cloture on the motion to proceed to H.R. 2347", status: "preliminary",
+    src: [["The Hill (via KSNT), Nov. 9", "https://www.ksnt.com/hill-politics/senate-advances-bipartisan-permitting-reform-bill-teeing-up-passage/"], ["Washington Times, Nov. 9", "https://www.washingtontimes.com/news/2026/nov/9/senate-permitting-overhaul-clears-procedural-hurdle-obstacles-remain/"], ["NM Political Report, Nov. 9", "https://nmpoliticalreport.com/2026/11/09/heinrichs-permit-reform-bill-clears-60-votes-in-senate-to-proceed-despite-opposition-from-tribes-enviro-groups/"]],
+    votes: {"Alsobrooks": "N", "Armstrong": "Y", "Baldwin": "N", "Banks": "Y", "Barrasso": "Y", "Bennet": "N", "Blackburn": "Y", "Blumenthal": "Y", "Blunt Rochester": "N", "Booker": "N", "Boozman": "Y", "Britt": "Y", "Budd": "Y", "Cantwell": "N", "Capito": "Y", "Cassidy": "Y", "Collins": "Y", "Coons": "Y", "Cornyn": "Y", "Cortez Masto": "Y", "Cotton": "Y", "Cramer": "Y", "Crapo": "Y", "Cruz": "Y", "Curtis": "Y", "Daines": "Y", "Duckworth": "N", "Durbin": "N", "Ernst": "Y", "Fetterman": "Y", "Fischer": "Y", "Gallego": "Y", "Gillibrand": "Y", "Graham": "Y", "Grassley": "Y", "Hagerty": "Y", "Hassan": "N", "Hawley": "Y", "Heinrich": "Y", "Hickenlooper": "Y", "Hirono": "N", "Hoeven": "Y", "Husted": "Y", "Hyde-Smith": "Y", "Johnson": "Y", "Justice": "Y", "Kaine": "N", "Kelly": "N", "Kennedy": "Y", "Kim": "Y", "King": "Y", "Klobuchar": "Y", "Lankford": "Y", "Lee": "Y", "Luján": "N", "Lummis": "Y", "Markey": "N", "Marshall": "Y", "McConnell": "Y", "McCormick": "Y", "Merkley": "N", "Moody": "Y", "Moran": "Y", "Moreno": "Y", "Murkowski": "Y", "Murphy": null, "Murray": "N", "Ossoff": "Y", "Padilla": "N", "Paul": "Y", "Peters": "Y", "Reed": "Y", "Ricketts": "Y", "Risch": "Y", "Rosen": "Y", "Rounds": "N", "Sanders": "N", "Schatz": "Y", "Schiff": "N", "Schmitt": "Y", "Schumer": "Y", "Scott (FL)": "Y", "Scott (SC)": "Y", "Shaheen": "Y", "Sheehy": null, "Slotkin": "Y", "Smith": "N", "Sullivan": "Y", "Thune": "Y", "Tillis": "Y", "Tuberville": "Y", "Van Hollen": "N", "Warner": "Y", "Warnock": "Y", "Warren": "N", "Welch": "N", "Whitehouse": "Y", "Wicker": "Y", "Wyden": "N", "Young": "Y"} }
+];
+const VOTE_NOW = VOTES[VOTES.length - 1];
+const voteOf = (name) => { const v = VOTE_NOW.votes[name]; return v === undefined ? undefined : v; };
+const voteLine = (name) => { const v = voteOf(name); const tail = VOTE_NOW.status === "preliminary" ? " (preliminary tally; senate.gov roll call pending)" : ""; return v === "Y" || v === "N" ? `${VOTE_NOW.short}: ${v === "Y" ? "Yes" : "No"}${tail}` : `${VOTE_NOW.short}: no vote shown on the preliminary tally.`; };
 const SUPCHG_WHY = { Schatz: "Our reading, not his words: Schatz has said he wants tribal changes and that waiting is unlikely to produce a better bill. He has not said he will vote yes." };
 const supchgNote = (name) => `<p class="disclaimer">${SUPCHG_WHY[name.replace(/ \(..\)$/, "")] || "Our reading of what the member has said, not a stated vote."} Not counted as a public yes vote.</p>`;
 const SEN_LABEL = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-support"], lean: ["Leans support", "s-support"], supchg: ["Supports, wants changes", "s-supchg"], conditional: ["Conditions / concerns", "s-changes"], oppose: ["Opposes", "s-oppose"], none: ["No statement found", "s-silent"] };
@@ -1615,7 +1648,8 @@ function renderSenate() {
   document.getElementById("senBody").innerHTML = shown.map(r => {
     const [lbl, cls] = SEN_LABEL[r.pos];
     const note = r.note ? `${r.note} ${srcLinks(r.src)}${r.pos === "supchg" ? supchgNote(r.name) : ""}` : `<span class="watch">Nothing found since Sept. 30.</span>`;
-    return `<tr><th scope="row">${r.name}</th><td><span class="party-${r.party}">${r.party}</span>-${r.state}</td><td><span class="pill ${cls}">${lbl}</span></td><td class="said">${note}</td></tr>`;
+    const v = voteOf(r.name);
+    return `<tr><th scope="row">${r.name}</th><td><span class="party-${r.party}">${r.party}</span>-${r.state}</td><td><span class="pill ${cls}">${lbl}</span></td><td>${v === "Y" ? "Yes" : v === "N" ? "No" : `<span class="watch">Not shown</span>`}</td><td class="said">${note}</td></tr>`;
   }).join("");
 }
 
@@ -1752,12 +1786,21 @@ document.getElementById("q").addEventListener("input", (e) => { state.q = e.targ
 const POS_FILL = { sponsor: "var(--support)", support: "var(--support)", lean: "var(--lean)", supchg: "url(#supchgPat)", conditional: "var(--changes)", oppose: "var(--oppose)", none: "var(--silent-bg)" };
 const STRIPE_DEF = '<defs><pattern id="csPat" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)"><rect width="5" height="5" fill="var(--surface)"></rect><rect width="2" height="5" fill="var(--lean)"></rect></pattern><pattern id="coPat" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)"><rect width="5" height="5" fill="var(--surface)"></rect><rect width="2" height="5" fill="var(--oppose-bg)"></rect></pattern><pattern id="supchgPat" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--surface)"></rect><rect width="3" height="6" fill="var(--support)"></rect></pattern></defs>';
 let selSeat = null;
+// Vote badge: white disc at the circle's lower right, green check (yes) or red ex (no). No badge when no vote is shown.
+function voteBadge(name, cx, cy, R, off) {
+  const v = voteOf(name);
+  if (v !== "Y" && v !== "N") return "";
+  const bx = cx + off, by = cy + off, k = (n) => n.toFixed(2);
+  const d = v === "Y" ? `M${k(bx - .5 * R)} ${k(by + .02 * R)}L${k(bx - .12 * R)} ${k(by + .42 * R)}L${k(bx + .52 * R)} ${k(by - .4 * R)}` : `M${k(bx - .38 * R)} ${k(by - .38 * R)}L${k(bx + .38 * R)} ${k(by + .38 * R)}M${k(bx + .38 * R)} ${k(by - .38 * R)}L${k(bx - .38 * R)} ${k(by + .38 * R)}`;
+  const lab = v === "Y" ? "Voted yes on cloture" : "Voted no on cloture";
+  return `<g class="vbadge" role="img" aria-label="${lab}"><title>${lab}</title><circle cx="${k(bx)}" cy="${k(by)}" r="${R}" fill="#fff" stroke="#5a6270" stroke-width=".8"></circle><path d="${d}" fill="none" stroke="${v === "Y" ? "#1a7f37" : "#c62828"}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></g>`;
+}
 
 function seatPanelDefault() {
   const rows = senRows();
   const n = (p) => rows.filter(r => r.pos === p).length;
   const rec = 100 - n("none");
-  const names = (p) => rows.filter(r => r.pos === p).map(r => r.name.replace(/ \(..\)$/, "")).join(", ");
+  const names = (p) => { const a = rows.filter(r => r.pos === p).map(r => r.name.replace(/ \(..\)$/, "")); return a.length < 3 ? a.join(" and ") : `${a.slice(0, -1).join(", ")}, and ${a[a.length - 1]}`; };
   document.getElementById("seatPanel").innerHTML = `<span class="eyebrow">Select a seat</span>
     <h4>${rec} of 100 senators on record</h4>
     <p class="who">${n("sponsor")} sponsors and ${n("support")} other senators back the bill publicly, and ${n("lean")} more lean toward it, including Majority Leader Thune. ${n("supchg") ? `${names("supchg")} ${n("supchg") === 1 ? "supports" : "support"} it but ${n("supchg") === 1 ? "wants" : "want"} changes. ` : ""}${n("conditional")} Democrats have conditions or concerns. ${n("oppose") ? `${names("oppose")} ${n("oppose") === 1 ? "opposes" : "oppose"} it.` : "No senator has come out against it."}</p>
@@ -1771,10 +1814,18 @@ function showSeat(r) {
     <h4>Sen. ${r.name.replace(/ \(..\)$/, "")}</h4>
     <span><span class="pill ${cls}">${lbl}</span></span>
     <p class="said">${note}</p>
-    <p class="said">${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}`;
+    <p class="said">${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}
+    <p class="vote-line">${voteLine(r.name)}</p>`;
+}
+
+function renderVoteKey() {
+  const vs = Object.values(VOTE_NOW.votes), y = vs.filter(v => v === "Y").length, n = vs.filter(v => v === "N").length, ns = vs.length - y - n;
+  const txt = `Check: voted yes. Ex: voted no. Cloture on the motion to proceed, Nov. 9 (60 needed; ${y} yes, ${n} no, ${ns} not shown${VOTE_NOW.status === "preliminary" ? "; preliminary tally" : ""}). A procedural vote: not a vote on passage, and not counted as a position.`;
+  document.querySelectorAll("[data-votekey] > span").forEach(el => { el.textContent = txt; });
 }
 
 function renderHemi() {
+  renderVoteKey();
   const rows = senRows();
   const byName = (a, b) => a.name.localeCompare(b.name);
   const D = rows.filter(r => r.party === "D"), I = rows.filter(r => r.party === "I"), R = rows.filter(r => r.party === "R");
@@ -1795,8 +1846,8 @@ function renderHemi() {
   const svg = document.getElementById("hemi");
   const circles = seats.map((s, k) => {
     const m = ordered[k];
-    return `<circle class="seat p-${m.party}" data-k="${k}" tabindex="0" role="button" aria-label="${m.name}, ${m.party}-${m.state}: ${SEN_LABEL[m.pos][0]}" cx="${s.x.toFixed(1)}" cy="${s.y.toFixed(1)}" r="10.5" fill="${POS_FILL[m.pos]}" stroke-width="2"></circle>`;
-  }).join("");
+    return `<circle class="seat p-${m.party}" data-k="${k}" tabindex="0" role="button" aria-label="${m.name}, ${m.party}-${m.state}: ${SEN_LABEL[m.pos][0]}. ${voteLine(m.name)}" cx="${s.x.toFixed(1)}" cy="${s.y.toFixed(1)}" r="10.5" fill="${POS_FILL[m.pos]}" stroke-width="2"></circle>`;
+  }).join("") + seats.map((s, k) => voteBadge(ordered[k].name, s.x, s.y, 5.5, 7.5)).join("");
   const yes = rows.filter(r => r.pos === "sponsor" || r.pos === "support").length;
   svg.innerHTML = `<title id="hemiTitle">Senate seat chart colored by public position on BAAJA</title>${STRIPE_DEF}${circles}
     <text x="${cx}" y="${cy - 46}" text-anchor="middle" font-size="44" font-weight="800">${yes}</text>
@@ -1871,9 +1922,9 @@ function renderStateMap() {
   const g = TILES.map(t => {
     const sens = rows.filter(r => r.state === t.st).sort((a, b) => a.name.localeCompare(b.name));
     const x = t.c * step, y = t.r * step;
-    const circles = sens.map((r, i) => `<circle class="p-${r.party}" cx="${x + 17 + i * 18}" cy="${y + 15}" r="7" fill="${POS_FILL[r.pos]}"></circle>`).join("");
+    const circles = sens.map((r, i) => `<circle class="p-${r.party}" cx="${x + 17 + i * 18}" cy="${y + 15}" r="7" fill="${POS_FILL[r.pos]}"></circle>`).join("") + sens.map((r, i) => voteBadge(r.name, x + 17 + i * 18, y + 15, 4.6, 5.6)).join("");
     const sq = (hs[t.st] || []).map((h, i) => `<rect x="${x + 7 + i * 7}" y="${y + 41}" width="5" height="5" rx="1" fill="${HOUSE_POS[h[2]][2]}"></rect>`).join("");
-    const label = `${STATE_NAME[t.st]}: ${sens.map(r => `${r.name}, ${SEN_LABEL[r.pos][0]}`).join("; ")}; ${(hs[t.st] || []).filter(h => !["cs", "co"].includes(h[2])).length} House members on record`;
+    const label = `${STATE_NAME[t.st]}: ${sens.map(r => `${r.name}, ${SEN_LABEL[r.pos][0]}, ${voteOf(r.name) === "Y" ? "voted yes on cloture" : voteOf(r.name) === "N" ? "voted no on cloture" : "no cloture vote shown"}`).join("; ")}; ${(hs[t.st] || []).filter(h => !["cs", "co"].includes(h[2])).length} House members on record`;
     return `<g class="tile" data-st="${t.st}" tabindex="0" role="button" aria-label="${label}"><rect class="bg" x="${x}" y="${y}" width="${size}" height="${size}" rx="6"></rect>${circles}<text x="${x + size / 2}" y="${y + 35}" text-anchor="middle">${t.st}</text>${sq}</g>`;
   }).join("");
   const svg = document.getElementById("tmap");
@@ -1895,7 +1946,7 @@ function showState() {
   const senHtml = sens.map(r => {
     const [lbl, cls] = SEN_LABEL[r.pos];
     return `<div class="who-row"><b>Sen. ${r.name}</b><span class="said">(${r.party})</span><span class="pill ${cls}">${lbl}</span></div>
-      <p>${r.note || "Nothing found since Sept. 30."}</p><p>${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}`;
+      <p>${r.note || "Nothing found since Sept. 30."}</p><p>${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}<p class="vote-line">${voteLine(r.name)}</p>`;
   }).join("");
   const memHtml = mem.map(h => {
     const [lbl, cls] = HOUSE_POS[h[2]];
@@ -1917,6 +1968,8 @@ function showState() {
 // ---------- Latest statements ----------
 // Newest first. d = date the statement was made or reported; k = Senate | House | Group.
 const LATEST = [
+  { d: "2026-11-09", k: "Senate", who: "Senate floor vote", pos: "vote", text: `About 5:30 PM ET: The Senate invoked cloture on the motion to proceed to H.R. 2347, the vehicle for S. 5653, 73 to 25. Sixty votes were needed. Fifty-one Republicans and 22 Democrats and independents voted yes. One Republican, Sen. Mike Rounds (R-SD), and 24 Democrats and independents voted no. Sen. Chris Murphy (D-CT) and Sen. Tim Sheehy (R-MT) show no vote on the preliminary tally. A procedural vote, not a vote on passage; timing of a final vote not yet announced. Names from a preliminary tally until the senate.gov roll call posts.`, src: [["The Hill (via KSNT), Nov. 9", "https://www.ksnt.com/hill-politics/senate-advances-bipartisan-permitting-reform-bill-teeing-up-passage/"], ["Washington Times, Nov. 9", "https://www.washingtontimes.com/news/2026/nov/9/senate-permitting-overhaul-clears-procedural-hurdle-obstacles-remain/"], ["NM Political Report, Nov. 9", "https://nmpoliticalreport.com/2026/11/09/heinrichs-permit-reform-bill-clears-60-votes-in-senate-to-proceed-despite-opposition-from-tribes-enviro-groups/"]] },
+  { d: "2026-11-09", k: "Senate", who: "Angela Alsobrooks (D-MD)", pos: "oppose", text: `"The damage from rolling back environmental protections will be felt for generations. We must restore these safeguards to protect the clean air, clean water, public lands, and wildlife that make our communities and country worth protecting." Post does not name the bill or the vote; classified as opposition by the editor's ruling. She voted no on cloture.`, src: [["@Sen_Alsobrooks on X (profile; post of Nov. 9, 12:40 PM ET)", "https://x.com/Sen_Alsobrooks"]] },
   { d: "2026-11-09", k: "House", who: "Blue Dog Coalition", pos: "support", text: `"The American people made clear that they expect action on lowering costs, not more delays. Failing to act now would be an act of disrespect to those who placed their trust in us." The coalition urged passage on Oct. 2.`, src: [["Blue Dog statement, Oct. 2", "https://bluedogs-gluesenkampperez.house.gov/media-center/press-releases/blue-dog-statement-bipartisan-permitting-reform-agreement"], ["Punchbowl, Nov. 9", "https://punchbowl.news/article/policy/utility-lobby-backs-permitting-before-vote/"], ["John Arnold relaying Punchbowl, Nov. 9", "https://x.com/johnarnold/status/2119791353735557589"]] },
   { d: "2026-11-09", k: "House", who: "House Freedom Caucus (Board letter)", pos: "support", text: `Lists "Pass a robust permitting bill to expand American energy dominance and drive down the price of fuel and electricity for families" among eight lame-duck priorities in a letter to Johnson and Thune. Does not name BAAJA.`, src: [["House Freedom Caucus Board letter, Nov. 9", "https://x.com/freedomcaucus/status/2119807275728502973"]] },
   { d: "2026-11-08", k: "Group", who: "President Trump", pos: "support", text: `"I am urging all Senators to vote for The American Affordability and Jobs Act (S. 5653)! This Bill is a BIG WIN for U.S. ENERGY INDEPENDENCE and DOMINANCE." Ends: "Call your Senator TODAY, and tell them to vote YES."`, src: [["Truth Social, Nov. 8", "https://truthsocial.com/@realDonaldTrump/posts/117583560661477967"]] },
@@ -1984,7 +2037,7 @@ const LATEST = [
 ];
 LATEST.push({ d: "2026-10-21", k: "Group", who: "Nine Democratic state attorneys general", pos: "changes", text: `Letter to Senate leaders and the sponsors: some provisions "could further national progress," but without amendment others would "unnecessarily intrude upon states' rights." Asks for a staff meeting; names no section.`, src: [["AGs' letter, Oct. 21", "https://oag.ca.gov/system/files/attachments/press-docs/261021-final-multistate-baaja-letter.pdf"]] });
 LATEST.sort((a, b) => b.d.localeCompare(a.d));
-const LATEST_POS = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-support"], supchg: ["Supports, wants changes", "s-supchg"], lean: ["Leans support", "s-support"], changes: ["Conditions", "s-changes"], conditional: ["Conditions", "s-changes"], oppose: ["Opposes", "s-oppose"] };
+const LATEST_POS = { sponsor: ["Sponsor", "s-support"], support: ["Supports", "s-support"], supchg: ["Supports, wants changes", "s-supchg"], lean: ["Leans support", "s-support"], changes: ["Conditions", "s-changes"], conditional: ["Conditions", "s-changes"], oppose: ["Opposes", "s-oppose"], vote: ["Floor vote", "s-silent"] };
 const LATEST_SHOW = 6;
 const MONTHS = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
 function fmtDay(d) { const [, m, dd] = d.split("-"); return `${MONTHS[+m - 1]} ${+dd}`; }
