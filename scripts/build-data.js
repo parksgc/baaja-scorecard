@@ -12,8 +12,14 @@ const js = html.split("<script>")[1].split("</script>")[0];
 const dataJs = js.split("function srcLinks")[0].replace(/^if \(SUBSTACK_URL\)[\s\S]*?\n\}\n/m, "");
 const ctx = {};
 vm.createContext(ctx);
-vm.runInContext(dataJs + "\nthis.d = { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS, VOTES };", ctx);
-const { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS, VOTES } = ctx.d;
+vm.runInContext(dataJs + "\nthis.d = { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS, VOTES, AMENDMENTS, DEMANDS };", ctx);
+const { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS, VOTES, AMENDMENTS, DEMANDS } = ctx.d;
+// Amendment tracker: every senator named as a sponsor or cosponsor must be a senator on the page.
+{
+  const keys = new Set(SENATE.map((s) => s.name));
+  const bad = [...AMENDMENTS.flatMap((a) => [...a.senators, ...a.cos]), ...DEMANDS.flatMap((d) => d.senators)].filter((n) => !keys.has(n));
+  if (bad.length) throw new Error(`Amendment tracker names no such senator: ${[...new Set(bad)].join(", ")}`);
+}
 // Floor votes must name every senator on the page exactly once, by the page's own key, and nobody else.
 for (const v of VOTES) {
   const keys = new Set(SENATE.map((s) => s.name));
@@ -201,5 +207,8 @@ fs.writeFileSync(path.join(root, "data", "senators-on-record.csv"), csv(table));
 fs.writeFileSync(path.join(root, "data", "house-seats.csv"), csv(houseSeatRows));
 fs.writeFileSync(path.join(root, "data", "path-to-218.csv"), csv(bar218));
 fs.writeFileSync(path.join(root, "data", "house-on-record.csv"), csv(houseRecord));
+const amendRows = [["Amendment", "Sponsor", "What it would do", "Status", "Cosponsors", "Evidence tier"],
+  ...AMENDMENTS.map((a) => [a.id, a.sponsor, plain(a.what), plain(a.status), a.cos.length ? `${a.cos.length}: ${a.cos.join(", ")}` : "", String(a.tier)])];
+fs.writeFileSync(path.join(root, "data", "amendments.csv"), csv(amendRows));
 fs.writeFileSync(path.join(root, "data", "polls.csv"), csv(pollRows));
 console.log(`Built data/ (updated ${updated}): ${senators.length - count("none")} senators on record, ${map.length - 1} states; House ${members.filter((m) => !["none", "vacant", "cs", "co"].includes(m.pos)).length} on record (+${hcount("cs")} caucus-shaded), ${hcount("vacant")} vacant.`);

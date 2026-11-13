@@ -165,6 +165,7 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 @media (max-width: 640px) { .fix { grid-template-columns: 1fr; } }
 [data-view][hidden] { display: none !important; }
 .views { display: flex; gap: 4px; border-bottom: 1px solid var(--rule); margin-top: 6px; }
+@media (max-width: 520px) { .views { gap: 0; flex-wrap: wrap; } .view-tab { padding: 8px 8px; font-size: 13px; } }
 .view-tab { padding: 8px 14px; font-weight: 700; font-size: 14px; color: var(--muted); text-decoration: none; border-bottom: 3px solid transparent; margin-bottom: -1px; }
 .view-tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
 /* Polling */
@@ -200,6 +201,20 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 #hemi text { fill: var(--ink); font-family: var(--font-display); }
 #hemi text.sub { fill: var(--muted); font-family: var(--font-body); font-size: 12px; font-weight: 400; }
 .vbadge { pointer-events: none; }
+.floor-tl { margin: 8px 0 0; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 14px; }
+.floor-tl li { display: grid; grid-template-columns: 8.5em 1fr; gap: 10px; }
+.floor-tl b { font-variant-numeric: tabular-nums; }
+@media (max-width: 640px) { .floor-tl li { grid-template-columns: 1fr; gap: 2px; } }
+.amend-table td, .amend-table th { vertical-align: top; }
+.list-table.amend-table td:nth-child(2), .list-table.amend-table td:nth-child(3) { white-space: normal; }
+.amend-table tbody th { min-width: 130px; width: 14%; }
+.amend-table td.said { min-width: 220px; }
+.amend-table td.said a { display: inline-block; }
+.amend-table details { margin-top: 6px; }
+.amend-table summary { cursor: pointer; color: var(--muted); font-size: 12px; }
+.sub-h { margin: 8px 0 0; font-size: 16px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.amd-tier { display: inline-block; font-size: 11px; color: var(--muted); border: 1px solid var(--rule); border-radius: 4px; padding: 0 4px; margin-left: 4px; white-space: nowrap; }
 .vote-key { flex-basis: 100%; display: flex; gap: 6px; align-items: flex-start; color: var(--muted); }
 .vote-key svg { flex: none; margin-top: 1px; }
 .vote-line { font-size: 13px; color: var(--muted); margin: 2px 0 0; }
@@ -364,10 +379,11 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     <h1>The BAAJA Scorecard</h1>
     <p class="lede">Most of the people fighting over BAAJA agree on more than they admit. This page tracks where Congress and the major stakeholders stand, which sections they praise or attack, and the fixes even the bill's supporters say it needs.</p>
     <p class="hlr" id="hlr" hidden>Analysis and updates at <a id="hlrHome" href="#">Hard Look Review</a><span aria-hidden="true"> · </span><a id="hlrSub" href="#">Subscribe</a></p>
-    <div class="meta"><span>Updated <strong>Nov. 11, 2026</strong></span><span>Senate motion to proceed <strong>Nov. 9</strong></span><span>Introduced <strong>Sept. 30</strong></span><span><a href="https://bipartisanpolicy.org/explainer/bipartisan-american-affordability-and-jobs-act-baaja-resource-hub/" target="_blank" rel="noopener">Guide to the bill (BPC)</a></span></div>
+    <div class="meta"><span>Updated <strong>Nov. 13, 2026</strong></span><span>Senate motion to proceed <strong>Nov. 9</strong></span><span>Introduced <strong>Sept. 30</strong></span><span><a href="https://bipartisanpolicy.org/explainer/bipartisan-american-affordability-and-jobs-act-baaja-resource-hub/" target="_blank" rel="noopener">Guide to the bill (BPC)</a></span></div>
     <div class="views" role="tablist" aria-label="Views">
       <a role="tab" href="#congress" id="tab-congress" class="view-tab">Whip tracker</a>
       <a role="tab" href="#groups" id="tab-groups" class="view-tab">Stakeholders</a>
+      <a role="tab" href="#amendments" id="tab-amendments" class="view-tab">Amendments</a>
       <a role="tab" href="#polls" id="tab-polls" class="view-tab">Polling</a>
     </div>
     <nav class="jump" aria-label="Sections" data-view="groups"><a href="#glance">At a glance</a><a href="#provisions">Provisions</a><a href="#stakeholders">Groups</a><a href="#officials">Former officials</a><a href="#fixes">Fixes</a></nav>
@@ -399,7 +415,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
           <span class="stamp">Nov. 9, 2026 · about 5:30 PM ET</span>
           <h4>Senate invokes cloture on the motion to proceed, 73 to 25</h4>
           <p>The Senate voted to take up H.R. 2347, the House bill serving as the vehicle for BAAJA (S. 5653). Sixty votes were needed. Fifty-one Republicans and 22 Democrats and independents voted yes. Sen. Mike Rounds (R-SD) and 24 Democrats and independents voted no. Sens. Chris Murphy (D-CT) and Tim Sheehy (R-MT) did not vote.</p>
-          <p>This is a procedural vote, not a vote on passage. Reports say up to 30 hours of debate on the motion can follow, and the substitute amendment and the bill itself still need votes. A final vote is expected the week of Nov. 16 (Reuters, White & Case, and Sen. Hickenlooper's office); no date has been set. Amendments are being filed, including a Democratic effort led by Sen. Schiff to strike the historic preservation title (Title III). Senators who voted yes without stating full support are now shaded light green, and a no vote now counts as opposition. Stated positions still outrank the vote.</p>
+          <p>This is a procedural vote, not a vote on passage. On Nov. 10 the Senate agreed to the motion to proceed, 62 to 21, and on Nov. 11 Thune filed cloture on the substitute (S.Amdt. 6883) and the bill. A final vote is expected the week of Nov. 16 (Reuters, White & Case, and Sen. Hickenlooper's office); no date has been set. Amendments have been filed, including Sen. Schiff's to strike the historic preservation title (Title III), with 22 Democratic cosponsors; see the <a href="#amendments">amendment tracker</a>. Senators who voted yes without stating full support are now shaded light green, and a no vote now counts as opposition. Stated positions still outrank the vote.</p>
           <p class="src">Count: <a href="https://www.ksnt.com/hill-politics/senate-advances-bipartisan-permitting-reform-bill-teeing-up-passage/" target="_blank" rel="noopener">The Hill</a>, <a href="https://www.washingtontimes.com/news/2026/nov/9/senate-permitting-overhaul-clears-procedural-hurdle-obstacles-remain/" target="_blank" rel="noopener">Washington Times</a>, <a href="https://nmpoliticalreport.com/2026/11/09/heinrichs-permit-reform-bill-clears-60-votes-in-senate-to-proceed-despite-opposition-from-tribes-enviro-groups/" target="_blank" rel="noopener">NM Political Report</a>. Names: <a href="https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00257.htm" target="_blank" rel="noopener">Senate Roll Call Vote 257</a> (posted Nov. 11; matches the preliminary tally used Nov. 9). Note added Nov. 9, 8:30 PM ET; updated Nov. 11; shading updated 8:56 PM ET.</p>
         </div>
         <aside class="seat-panel" id="seatPanel" aria-live="polite"></aside>
@@ -467,6 +483,30 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
       <table class="list-table">
         <thead><tr><th scope="col">Member</th><th scope="col">Party-District</th><th scope="col">Position</th><th scope="col">What they said</th></tr></thead>
         <tbody id="houseBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="amendments" data-view="amendments">
+    <div class="section-head">
+      <span class="eyebrow">Senate floor</span>
+      <h2>Proposed amendments</h2>
+      <p>Amendments filed or circulating since the Senate took up the bill, and changes senators and others say they want. Majority Leader Thune has filled the amendment tree, so no amendment gets a vote unless leaders agree to one by unanimous consent, usually as a negotiated package. "Filed" does not mean a vote is guaranteed. Tier 1 is the official record or the sponsor's own release; tier 2, a named reporter; tier 3, a paraphrase or news digest.</p>
+    </div>
+    <div class="panel"><h3>Floor timeline</h3><ol class="floor-tl" id="floorTl"></ol></div>
+    <div class="table-scroll">
+      <table class="list-table amend-table">
+        <caption class="visually-hidden">Amendments filed or circulating</caption>
+        <thead><tr><th scope="col">Amendment</th><th scope="col">Sponsor</th><th scope="col">What it would do</th><th scope="col">Status</th><th scope="col">Notes and sources</th></tr></thead>
+        <tbody id="amendBody"></tbody>
+      </table>
+    </div>
+    <h3 class="sub-h">Changes sought, no amendment text yet</h3>
+    <div class="table-scroll">
+      <table class="list-table amend-table">
+        <caption class="visually-hidden">Changes sought without amendment text</caption>
+        <thead><tr><th scope="col">Who</th><th scope="col">What they want</th><th scope="col">Source</th></tr></thead>
+        <tbody id="demandBody"></tbody>
       </table>
     </div>
   </section>
@@ -609,7 +649,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
   </section>
 
   <footer>
-    <p>Positions are moving. NRDC has promised a position before the floor vote, and a managers' amendment is in the works. Trade groups and advocacy groups are interested parties. Section numbers are checked against the introduced text (BILLS-119s5653is).</p>
+    <p>Positions are moving, and amendments are pending on the Senate floor. Trade groups and advocacy groups are interested parties. Section numbers are checked against the introduced text (BILLS-119s5653is).</p>
     <p>Compiled by Collin Parks<span id="hlrFoot" hidden> for <a id="hlrFootLink" href="#">Hard Look Review</a></span>.</p>
   </footer>
 </div>
@@ -1205,6 +1245,51 @@ const PEOPLE = [
     obj: [`On the manager's amendment: "This is lipstick on a pig." Calls for removing Title III ${S(2301)}`],
     likes: [`Credits the amendment with withdrawing "a few patently unconstitutional provisions," such as agency commandeering of tribal historic preservation offices`],
     src: [["Joint release, Nov. 7", "https://www.106strong.com/nov-7-press-release"]] },
+  { name: "Bay Mills Indian Community (Michigan)", sector: "Tribal / preservation", stance: "oppose", tier: 1,
+    who: `President Whitney Gravelle; Nov. 6 letter to Sen. Slotkin. The only Michigan tribal government on record on BAAJA`,
+    obj: [`Urges Slotkin to oppose the bill "as currently drafted," centering on the Section 106 (historic preservation) changes ${S(2301)}`],
+    likes: [],
+    src: [["Bay Mills letter, Nov. 6", "https://www.nathpo.org/slotkin-letter-re-sect-106-11-6-26/"]] },
+  { name: "United Tribes of Michigan", sector: "Tribal / preservation", stance: "changes", tier: 1,
+    who: `Resolution #098 (Oct. 16, adopted 9 to 0) and a Nov. 6 cover letter to Congress. Open to all 12 Michigan tribes; the resolution does not name which tribes voted`,
+    obj: [`Remove Title III, the historic preservation changes ${S(2301)}`],
+    likes: [],
+    src: [["UTM Resolution #098, Oct. 16", "https://www.nathpo.org/098-20261016-utm-res-s-5653/"], ["UTM cover letter, Nov. 6", "https://www.nathpo.org/20261106-cover-ltr-for-res-098-to-congress/"]] },
+  { name: "Midwest Alliance of Sovereign Tribes (MAST)", sector: "Tribal / preservation", stance: "oppose", tier: 1,
+    who: `Nov. 5 letter to Sen. Baldwin. Also signed the Oct. 9 joint tribal organization letter`,
+    obj: [`Urged a no vote on cloture`],
+    likes: [],
+    src: [["MAST letter, Nov. 5", "https://www.nathpo.org/mast-ltr-opposing-baaja/"]] },
+  { name: "Gila River Indian Community", sector: "Tribal / preservation", stance: "oppose", tier: 1,
+    who: `Gov. Stephen Roe Lewis; Nov. 5 letter`,
+    obj: [`Urged a no vote on cloture`, `Strike Title III ${S(2301)}`],
+    likes: [],
+    src: [["Gila River letter, Nov. 5", "https://www.nathpo.org/letter-urging-no-on-baaj-cloture-vote/"]] },
+  { name: "Rocky Mountain Tribal Leaders Council", sector: "Tribal / preservation", stance: "changes", tier: 1,
+    who: `Nov. 6 joint letter signed by leaders of the Chippewa Cree (Rocky Boy's), Shoshone-Bannock (Fort Hall), Northern Arapaho and Eastern Shoshone (Wind River) tribes`,
+    obj: [`Opposes Title III, the historic preservation changes ${S(2301)}; does not oppose the rest of the bill`],
+    likes: [],
+    src: [["RMTLC letter, Nov. 6", "https://www.nathpo.org/rmtlc-joint-letter-of-opposition-to-s5653_/"]] },
+  { name: "Crow Creek Sioux Tribe", sector: "Tribal / preservation", stance: "changes", tier: 1,
+    who: `Oct. 14 letter to Sen. Thune`,
+    obj: [`Opposes Title III ${S(2301)}`],
+    likes: [],
+    src: [["Crow Creek letter, Oct. 14", "https://www.nathpo.org/ccst-letter-to-sen-thune-s-5653/"]] },
+  { name: "Omaha Tribe of Nebraska", sector: "Tribal / preservation", stance: "changes", tier: 1,
+    who: `Oct. 14 letter to Sen. Fischer`,
+    obj: [`Opposes Title III ${S(2301)}`],
+    likes: [],
+    src: [["Omaha Tribe letter, Oct. 14", "https://www.nathpo.org/otn-letter_fischer-s-5653/"]] },
+  { name: "Sovereign Energy", sector: "Tribal / preservation", stance: "oppose", tier: 1,
+    who: `Oct. 23 letter`,
+    obj: [`Opposes the bill as introduced`],
+    likes: [],
+    src: [["Sovereign Energy letter, Oct. 23", "https://www.nathpo.org/sovereign-energy-letter_baaja-opposition/"]] },
+  { name: "All Pueblo Council of Governors", sector: "Tribal / preservation", stance: "oppose", tier: 1,
+    who: `Chairman Joey Sanchez (per Source NM); represents 19 New Mexico Pueblos`,
+    obj: [`Resolution 2026-15 (Oct. 16) opposes S. 5653 (resolution read by title only)`, `Nov. 10: condemned the Senate vote advancing the bill; delivered statements of opposition to senators before the vote`],
+    likes: [],
+    src: [["APCG Resolution 2026-15", "https://www.nathpo.org/apcg-resolution-2026-15-opposing-s-5653/"], ["Source NM, Nov. 10", "https://sourcenm.com/2026/11/10/all-pueblo-council-of-governors-condemns-us-senate-vote-advancing-permitting-reform-bill/"]] },
   { name: "Standing Rock Sioux Tribe", sector: "Tribal / preservation", stance: "oppose", tier: 1,
     who: `Chairman Steve Sitting Bear; statement Oct. 30, posted Nov. 3`,
     obj: [`BAAJA "would all but eliminate the United States Treaty and Trust responsibilities"`, `Says it weakens the NHPA, Clean Water Act, NEPA and ESA (no sections named)`],
@@ -1484,16 +1569,16 @@ const SEN_NOTES = {
   "Van Hollen": ["conditional", `Release on the motion to proceed (Nov. 9 or 10): voted no and cannot support the bill in its current form. Says it does not address the administration's block on Maryland's offshore wind project and undermines Chesapeake Bay protections: "I'm putting forward changes."`, [["Van Hollen statement", "https://www.vanhollen.senate.gov/news/press-releases/van-hollen-statement-on-current-opposition-to-moving-forward-with-permitting-reform-legislation"]]],
   "Bennet": ["conditional", `Nov. 10 release: voted against advancing the bill "at this time." Says it does not do enough for Tribal cultural resources, that its changes to public engagement need more vetting, and that not all perspectives were heard. Says he stands ready to work on a path forward.`, [["Bennet statement, Nov. 10", "https://www.bennet.senate.gov/2026/11/10/bennet-statement-on-permitting-reform-vote/"]]],
   "Slotkin": ["conditional", `Nov. 10 release: voted yes on the procedural vote so talks can continue. Says the bill will lower costs for Michiganders and calls it the first federal bill to put guardrails on data centers. Has "real issues" with the Clean Water Act changes and with Tribal sovereignty and Tribes' ability to engage on projects that may harm sacred places, and wants those fixed in the amendment process "before final passage." No commitment on final passage.`, [["Slotkin statement, Nov. 10", "https://www.slotkin.senate.gov/2026/11/10/slotkin-statement-on-bipartisan-american-affordability-and-jobs-act-procedural-vote/"]]],
-  "Cortez Masto": ["conditional", `Nov. 9 release: will vote to proceed, but wants Title III (the historic preservation changes) struck because Nevada Tribes were not consulted: "If Title III stays in this bill, I will not vote for final passage." Voted yes on cloture.`, [["Cortez Masto statement, Nov. 9", "https://www.cortezmasto.senate.gov/news/press-releases/cortez-masto-statement-on-permitting-reform-bill/"]]],
+  "Cortez Masto": ["conditional", `Nov. 9 release: will vote to proceed, but wants Title III (the historic preservation changes) struck because Nevada Tribes were not consulted: "If Title III stays in this bill, I will not vote for final passage." Voted yes on cloture. Nov. 11, to the Washington Sun: "They've got to remove the tribal piece."`, [["Washington Sun, Nov. 11", "https://www.washingtonsun.com/energy-environment/senate-democrats-tribal-concerns-permitting-deal"], ["Cortez Masto statement, Nov. 9", "https://www.cortezmasto.senate.gov/news/press-releases/cortez-masto-statement-on-permitting-reform-bill/"]]],
   "Kim": ["lean", `Release on the motion to proceed (Nov. 9 or 10): voted yes to consider the bill; says it "isn't perfect" and wants a robust amendment process before the final vote.`, [["Kim statement", "https://www.kim.senate.gov/press_release/senator-andy-kim-statement-on-senate-permitting-reform-agreement/"]]],
   "Hickenlooper": ["support", `Release on the motion to proceed (Nov. 9 or 10): voted to advance; calls the bill "not perfect" and a "golden opportunity," and says work with Tribal Nations and environmental groups should continue to strengthen it.`, [["Hickenlooper release", "https://www.hickenlooper.senate.gov/press_releases/hickenlooper-votes-to-advance-long-overdue-permitting-reform-bill/"]]],
   "Rosen": ["support", `Nov. 9 release: voted to advance the bill; says it will cut energy costs and create jobs, and that further improvements can and should be made.`, [["Rosen release, Nov. 9", "https://www.rosen.senate.gov/2026/11/09/rosen-votes-to-advance-bipartisan-bill-to-reform-permitting-processes-increase-clean-energy-projects-lower-energy-costs/"]]],
   "Coons": ["support", `Nov. 9 release: the bill "will have my support." Credits the four sponsors and expects amendments to improve it; names no concern. Voted yes on cloture. (Release read through a search extract.)`, [["Coons statement, Nov. 9", "https://www.coons.senate.gov/news/press-releases/senator-coons-statement-on-permitting-reform-bill/"]]],
   "Alsobrooks": ["oppose", `Nov. 9 release, "Alsobrooks Votes No on Bipartisan American Affordability and Jobs Act": supports smart permitting reform, but not at the expense of clean water and community engagement, and says the bill "as written" does not reflect the Nov. 3 election. Her Nov. 9 post on X: "The damage from rolling back environmental protections will be felt for generations."`, [["Alsobrooks release, Nov. 9", "https://www.alsobrooks.senate.gov/news/press-releases/alsobrooks-votes-no-on-bipartisan-american-affordability-and-jobs-act/"], ["@Sen_Alsobrooks on X (profile; post of Nov. 9, 12:40 PM ET)", "https://x.com/Sen_Alsobrooks"]]],
   "Armstrong": ["support", `"Really, really meaningful permitting reform, all the way across the board." Agencies can't walk back permits "without being liable for the damages."`, [["News 9, Sept. 30", "https://www.news9.com/national-politics-oklahoma/senate-taking-important-step-toward-making-permitting-reform-a-reality"]]],
-  "Hawley": ["none", `The lone ENR Republican to vote against EPRA in 2024, over FERC transmission siting and landowners. Nothing on BAAJA yet.`, [["E&E News (2024)", "https://www.eenews.net/articles/whats-next-for-the-permitting-bill/"]]],
+  "Hawley": ["none", `The lone ENR Republican to vote against EPRA in 2024, over FERC transmission siting and landowners. Reuters (Nov. 11) reports he has submitted amendments to protect farmers and landowners from eminent domain for transmission lines. Voted yes on cloture.`, [["Reuters, Nov. 11", "https://www.yahoo.com/news/articles/us-senate-energy-permitting-bill-202138041.html"], ["E&E News (2024)", "https://www.eenews.net/articles/whats-next-for-the-permitting-bill/"]]],
   "King": ["none", `In May 2026 he told Interior there would be no votes for permitting reform without assurances on stalled renewable permits.`, [["Development Today, May 2026", "https://developmentstoday.com/energy/renewables-permit-fight-threatens-bipartisan-reform-push"]]],
-  "Murkowski": ["none", `Her FLOWS Act hydropower language is in the bill; no statement of her own found.`, []],
+  "Murkowski": ["none", `Her FLOWS Act hydropower language is in the bill; no statement of her own found. Axios (via a news digest) calls her a tentative yes with a position similar to Cortez Masto's. Bloomberg (via a news digest) reports a bipartisan Murkowski and Schatz amendment on tribes' historic-preservation concerns.`, [["EXTRACTED news digest, Nov. 13 (Bloomberg)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111326"]]],
   "Blunt Rochester": ["oppose", `Nov. 9 release, "Senator Blunt Rochester Opposes Senate Permitting Reform Bill": cannot support "this iteration"; says its provisions weaken environmental protections; hopes for a more comprehensive package in the new Congress.`, [["Blunt Rochester statement, Nov. 9", "https://www.bluntrochester.senate.gov/news/press-releases/statement-senator-blunt-rochester-opposes-senate-permitting-reform-bill/"]]],
   "Baldwin": ["none", `No BAAJA statement in her releases or X posts (Sept. 29 to Oct. 29). On Sept. 30 she voted against Husted's Ratepayer Protection Act, a separate data center bill, because it only asks states to "consider" making data centers pay. She wants "a mandate, under law." BAAJA's Sec. 228 is that kind of mandate.`, [["Baldwin, Sept. 30", "https://www.baldwin.senate.gov/news/press-releases/baldwin-votes-against-voluntary-approach-to-data-centers-vows-to-push-real-reform-to-protect-wisconsin-ratepayers"]]],
   "Capito": ["sponsor", `Lead sponsor. Posts almost daily: "We need to pass this bill to get our country back to building." Promotes CEA and McKinsey savings estimates.`, [["Introduction release", "https://www.capito.senate.gov/news/press-releases/capito-lee-whitehouse-and-heinrich-introduce-bipartisan-american-affordability-and-jobs-act-of-2026"], ["@SenCapito, Oct. 23", "https://x.com/SenCapito/status/2113701126977835109"]]],
@@ -1507,7 +1592,7 @@ const SEN_NOTES = {
   "Thune": ["lean", `Majority Leader. "We need permitting reform... I think we can get the bill across the finish line." Calls state jurisdiction the hurdle and says the midterms have "some bearing." South Dakota PUC commissioners urged him and Rounds to oppose the transmission siting provisions.`, [["SDPB, Oct. 25", "https://www.sdpb.org/politics/2026-10-25/congressional-permitting-reform-bill-faces-jurisdictional-concerns-potential-midterm-election-hoops-thune-says"], ["Dakota Free Press, Oct. 29", "https://dakotafreepress.com/2026/10/29/kloucek-warns-senate-permitting-reform-bill-threatens-sd-rights-nelson-kinda-agrees/"]]],
   "Boozman": ["support", `"The bipartisan permitting bill will unlock critical infrastructure projects – from roads & bridges to energy." Commends Capito's leadership (EPW member).`, [["@JohnBoozman, Oct. 22", "https://x.com/JohnBoozman/status/2113355095714807933"]]],
   "Husted": ["support", `"To help make life more affordable, we need permitting reform... EPW's bipartisan bill cuts through the bureaucracy." Held a permitting roundtable with Barrasso. He also sponsored the separate Ratepayer Protection Act, which failed 57-43. Lost his Nov. 3 race to Sherrod Brown (AP); still a senator for the Nov. 9 vote.`, [["NPR, Nov. 3", "https://www.npr.org/2026/11/03/g-s1-148948/ohio-senate-race-sherrod-brown-jon-husted"], ["@SenJonHusted, Oct. 1", "https://x.com/SenJonHusted/status/2105804374664417696"], ["@SenJonHusted, Oct. 13", "https://x.com/SenJonHusted/status/2110149677815652727"]]],
-  "Kelly": ["conditional", `Politico's Nico Portuondo reports Kelly said Nov. 3 that Democrats should push for a "better deal" on bills in Congress, including permitting. Reporter's paraphrase; no direct statement on BAAJA found.`, [["Politico via Nico Portuondo, Nov. 4", "https://x.com/NicoPortuondo/status/2117982431244415131"]]],
+  "Kelly": ["conditional", `Politico's Nico Portuondo reports Kelly said Nov. 3 that Democrats should push for a "better deal" on bills in Congress, including permitting. Reporter's paraphrase; no direct statement on BAAJA found. Nov. 11, to the Washington Sun: the NHPA changes were "the biggest issue I had with it."`, [["Washington Sun, Nov. 11", "https://www.washingtonsun.com/energy-environment/senate-democrats-tribal-concerns-permitting-deal"], ["Politico via Nico Portuondo, Nov. 4", "https://x.com/NicoPortuondo/status/2117982431244415131"]]],
   "Gallego": ["support", `Says Democrats should pass BAAJA now rather than wait for a better deal: "Six months from now, after a [possible] impeachment, maybe [the White House] won't be willing to negotiate, or maybe we get too close to an election and Vance doesn't want to negotiate, right? So why not take this win now?" Quoted by a reporter; brackets are the reporter's.`, [["Igor Bobic, Nov. 5", "https://x.com/igorbobic/status/2118413049145278486"]]],
   "Cornyn": ["lean", `Criticized John Podesta for trying "to poison a bipartisan permitting reform"; shared the NAM-led business push for lame-duck passage.`, [["@JohnCornyn, Oct. 29", "https://x.com/JohnCornyn/status/2115786466903146536"], ["@JohnCornyn, Oct. 14", "https://x.com/JohnCornyn/status/2110445905560150369"]]],
   "Curtis": ["lean", `"I'm glad to see my bill to bring environmental reviews into the digital age be included" in BAAJA. Separately, data center transparency bills with Blunt Rochester.`, [["@SenJohnCurtis, Oct. 6", "https://x.com/SenJohnCurtis/status/2107561775017156622"]]],
@@ -1517,7 +1602,7 @@ const SEN_NOTES = {
   "Hirono": ["conditional", `Nov. 9 release: "I do not support the bill in its current form." Says it fails to stop the administration from favoring fossil fuels. Will evaluate any changes; her support depends on not weakening environmental protections or relationships with Indigenous communities. (Release read through a search extract.)`, [["Hirono statement, Nov. 9", "https://www.hirono.senate.gov/news/press-releases/hirono-statement-on-bipartisan-american-affordability-and-jobs-act"], ["Politico Pro, Oct. 23 (via Extracted)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-102626"]]],
   "Padilla": ["none", `Joined Wyden and Merkley's Oct. 29 letter to Interior on data centers on public lands (not about BAAJA). The Karuk Tribe is urging him and Schiff to oppose.`, [["Washington Sun, Oct. 29", "https://www.washingtonsun.com/congress/senate-democrats-demand-answers-public-land-use-data-centers"], ["Karuk Tribe, Oct. 28", "https://www.karuk.us/posts/karuk-tribe-condemns-senates-assault-on-tribal-sovereignty-and-sacred-places"]]],
   "Schiff": ["conditional", `Release on the motion to proceed (Nov. 9 or 10): voted no. Likes the transmission provisions, the data center cost provisions and the manager's amendment changes. Wants stronger guardrails against an administration using the bill to single out states, and fewer oil and gas giveaways. Reuters reports he leads a group of Democrats seeking to strike the historic preservation title. The Karuk Tribe had urged him and Padilla to oppose.`, [["Schiff statement", "https://www.schiff.senate.gov/news/press-releases/statement-sen-schiff-statement-on-permitting-reform-legislation/"], ["Karuk Tribe, Oct. 28", "https://www.karuk.us/posts/karuk-tribe-condemns-senates-assault-on-tribal-sovereignty-and-sacred-places"]]],
-  "Schumer": ["none", `Called Husted's separate data center bill "a fraud, plain and simple." He is an addressee of both the opposition and support letters, but has stated no BAAJA position.`, [["AP via KSAT, Sept. 30", "https://www.ksat.com/news/politics/2026/09/30/data-center-bill-falls-short-in-senate-as-lawmakers-take-final-votes-before-the-midterms/"]]],
+  "Schumer": ["none", `Called Husted's separate data center bill "a fraud, plain and simple." He is an addressee of both the opposition and support letters, but has stated no BAAJA position. Axios (via a news digest): has "outstanding concerns" he will "fight to address" through amendments. Voted yes on cloture.`, [["EXTRACTED news digest, Nov. 11 (Politico, Axios, Utility Dive)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111126"], ["AP via KSAT, Sept. 30", "https://www.ksat.com/news/politics/2026/09/30/data-center-bill-falls-short-in-senate-as-lawmakers-take-final-votes-before-the-midterms/"]]],
   "Warnock": ["none", `One of four Democrats who voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
   "Ossoff": ["none", `Voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
   "Hassan": ["none", `Voted for Husted's Ratepayer Protection Act on Sept. 30. No BAAJA statement.`, [["Washington Examiner", "https://www.washingtonexaminer.com/?p=4749078"]]],
@@ -1534,6 +1619,60 @@ const VOTES = [
     votes: {"Alsobrooks": "N", "Armstrong": "Y", "Baldwin": "N", "Banks": "Y", "Barrasso": "Y", "Bennet": "N", "Blackburn": "Y", "Blumenthal": "Y", "Blunt Rochester": "N", "Booker": "N", "Boozman": "Y", "Britt": "Y", "Budd": "Y", "Cantwell": "N", "Capito": "Y", "Cassidy": "Y", "Collins": "Y", "Coons": "Y", "Cornyn": "Y", "Cortez Masto": "Y", "Cotton": "Y", "Cramer": "Y", "Crapo": "Y", "Cruz": "Y", "Curtis": "Y", "Daines": "Y", "Duckworth": "N", "Durbin": "N", "Ernst": "Y", "Fetterman": "Y", "Fischer": "Y", "Gallego": "Y", "Gillibrand": "Y", "Graham": "Y", "Grassley": "Y", "Hagerty": "Y", "Hassan": "N", "Hawley": "Y", "Heinrich": "Y", "Hickenlooper": "Y", "Hirono": "N", "Hoeven": "Y", "Husted": "Y", "Hyde-Smith": "Y", "Johnson": "Y", "Justice": "Y", "Kaine": "N", "Kelly": "N", "Kennedy": "Y", "Kim": "Y", "King": "Y", "Klobuchar": "Y", "Lankford": "Y", "Lee": "Y", "Luján": "N", "Lummis": "Y", "Markey": "N", "Marshall": "Y", "McConnell": "Y", "McCormick": "Y", "Merkley": "N", "Moody": "Y", "Moran": "Y", "Moreno": "Y", "Murkowski": "Y", "Murphy": null, "Murray": "N", "Ossoff": "Y", "Padilla": "N", "Paul": "Y", "Peters": "Y", "Reed": "Y", "Ricketts": "Y", "Risch": "Y", "Rosen": "Y", "Rounds": "N", "Sanders": "N", "Schatz": "Y", "Schiff": "N", "Schmitt": "Y", "Schumer": "Y", "Scott (FL)": "Y", "Scott (SC)": "Y", "Shaheen": "Y", "Sheehy": null, "Slotkin": "Y", "Smith": "N", "Sullivan": "Y", "Thune": "Y", "Tillis": "Y", "Tuberville": "Y", "Van Hollen": "N", "Warner": "Y", "Warnock": "Y", "Warren": "N", "Welch": "N", "Whitehouse": "Y", "Wicker": "Y", "Wyden": "N", "Young": "Y"} }
 ];
 const VOTE_NOW = VOTES[VOTES.length - 1];
+
+// ---------- Amendment tracker (Nov. 13). Senator keys must match the page's senator names; build-data.js checks them.
+// tier: 1 = official record or own release; 2 = named reporter; 3 = paraphrase or news digest.
+const FLOOR = [
+  { d: "Nov. 9", what: `Cloture on the motion to proceed invoked, 73 to 25.`, src: [["Senate Roll Call Vote 257", "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00257.htm"]] },
+  { d: "Nov. 10", what: `Motion to proceed agreed to, 62 to 21, with 17 not voting. Thune offers the Capito substitute (S.Amdt. 6883) and fills the amendment tree with S.Amdt. 6884 to 6890.`, src: [["Senate floor activity, Nov. 10", "https://www.senate.gov/legislative/LIS/floor_activity/11_10_2026_Senate_Floor.htm"], ["Senate Roll Call Vote 258", "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00258.htm"]] },
+  { d: "Nov. 11", what: `Thune files cloture on the substitute (S.Amdt. 6883) and on the bill, H.R. 2347.`, src: [["Senate Periodical Press Gallery, Nov. 11", "https://www.periodicalpress.senate.gov/wednesday-november-11-2026/"]] },
+  { d: "Nov. 12", what: `1:00 PM deadline for first-degree amendments to the substitute and the bill. Second-degree amendments are due one hour before the cloture vote.`, src: [["Senate Democrats floor schedule, Nov. 12", "https://www.democrats.senate.gov/2026/11/11/schedule-for-thursday-november-12-2026"]] },
+  { d: "Week of Nov. 16", what: `Amendment votes and final passage expected (Whitehouse, via Reuters). No time set.`, src: [["Reuters, Nov. 11", "https://www.yahoo.com/news/articles/us-senate-energy-permitting-bill-202138041.html"]] },
+];
+const AMENDMENTS = [
+  { id: "S.Amdt. 6883", sponsor: "Capito (offered by Thune)", senators: ["Capito", "Thune"], cos: [], tier: 1,
+    what: `Substitute that replaces the bill's text. Presumably the Nov. 7 manager's amendment; not yet checked against the filed text.`,
+    status: `Pending. Cloture filed Nov. 11.`, note: ``, src: [["Senate floor activity, Nov. 10", "https://www.senate.gov/legislative/LIS/floor_activity/11_10_2026_Senate_Floor.htm"], ["Senate Periodical Press Gallery, Nov. 11", "https://www.periodicalpress.senate.gov/wednesday-november-11-2026/"]] },
+  { id: "S.Amdt. 6884 to 6890", sponsor: "Thune", senators: ["Thune"], cos: [], tier: 1,
+    what: `Second- and third-degree amendments, described only as "to improve the bill," plus a motion to send the bill to the Finance Committee with instructions (6888) and two amendments to that motion.`,
+    status: `Pending.`, note: `Standard tree-filling: while these occupy every slot, no other amendment can get a vote unless leaders agree by unanimous consent, usually as a negotiated package.`, src: [["Senate Democrats floor schedule, Nov. 12", "https://www.democrats.senate.gov/2026/11/11/schedule-for-thursday-november-12-2026"]] },
+  { id: "Number not found", sponsor: "Schiff", brief: "strike Title III, the NHPA changes", senators: ["Schiff"], cos: ["Alsobrooks", "Bennet", "Blumenthal", "Blunt Rochester", "Booker", "Cantwell", "Cortez Masto", "Duckworth", "Hirono", "Kaine", "Kelly", "Luján", "Markey", "Merkley", "Murray", "Padilla", "Rosen", "Schatz", "Slotkin", "Smith", "Warner", "Wyden"], tier: 2,
+    what: `Strike Division B, Title III, the historic preservation (NHPA) changes ${S(2301)}.`,
+    status: `Filed Nov. 10.`,
+    note: `Six cosponsors voted yes on cloture: Blumenthal, Cortez Masto, Rosen, Schatz, Slotkin and Warner. A White House official says it will not support the bill without the NHPA changes (Punchbowl). Heinrich: "I don't think we can land the bill with Republicans if we completely strip it out" (Punchbowl). Cosponsor names as reported by Politico's Nico Portuondo on X; the Washington Sun's count of 22 matches.`,
+    src: [["Washington Sun, Nov. 11", "https://www.washingtonsun.com/energy-environment/senate-democrats-tribal-concerns-permitting-deal"], ["Punchbowl News, Nov. 11", "https://punchbowl.news/article/policy/tribal-staredown-on-permitting/"]] },
+  { id: "Number not found", sponsor: "Murkowski and Schatz", brief: "strengthen the NHPA language on tribes' concerns (reported)", senators: ["Murkowski", "Schatz"], cos: [], tier: 3,
+    what: `Bipartisan amendment from the Indian Affairs Committee leaders to strengthen the bill's language on tribes' concerns over historic preservation and projects.`,
+    status: `Filed (reported). Text not seen.`, note: ``, src: [["EXTRACTED news digest, Nov. 13 (Bloomberg)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111326"]] },
+  { id: "Numbers not found", sponsor: "Democrats (not named)", senators: [], cos: [], tier: 3,
+    what: `Strike the bill's Clean Water Act changes ${S(1202)} and its Endangered Species Act changes.`,
+    status: `Filed (reported). Text not seen.`, note: ``, src: [["EXTRACTED news digest, Nov. 13 (Bloomberg)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111326"]] },
+  { id: "Number not found", sponsor: "Hawley", brief: "protect landowners from eminent domain for transmission lines", senators: ["Hawley"], cos: [], tier: 2,
+    what: `Protect farmers and landowners from eminent domain for new transmission lines.`,
+    status: `Submitted (Reuters). Text not seen.`, note: `Hawley was the one Energy Committee Republican to vote against the 2024 permitting bill, over the same issue.`, src: [["Reuters, Nov. 11", "https://www.yahoo.com/news/articles/us-senate-energy-permitting-bill-202138041.html"]] },
+  { id: "Not filed as far as known", sponsor: "Shaheen", brief: "change the Clean Water Act permit provisions (circulating, not confirmed filed)", senators: ["Shaheen"], cos: [], tier: 3,
+    what: `Bipartisan amendment to the Clean Water Act provisions: states' power to deny or condition water-quality permits ${S(1202)}.`,
+    status: `Circulating (Politico, anonymous source).`, note: `Shaheen is reported undecided.`, src: [["EXTRACTED news digest, Nov. 11 (Politico, Axios, Utility Dive)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111126"]] },
+];
+const DEMANDS = [
+  { who: "Cortez Masto (D-NV)", senators: ["Cortez Masto"], tier: 1, what: `Strike Title III before final passage or she votes no: "They've got to remove the tribal piece." Voted yes on cloture.`, src: [["Cortez Masto statement, Nov. 9", "https://www.cortezmasto.senate.gov/news/press-releases/cortez-masto-statement-on-permitting-reform-bill/"], ["Washington Sun, Nov. 11", "https://www.washingtonsun.com/energy-environment/senate-democrats-tribal-concerns-permitting-deal"]] },
+  { who: "Kelly (D-AZ)", senators: ["Kelly"], tier: 2, what: `The NHPA changes were "the biggest issue I had with it."`, src: [["Washington Sun, Nov. 11", "https://www.washingtonsun.com/energy-environment/senate-democrats-tribal-concerns-permitting-deal"]] },
+  { who: "Alsobrooks (D-MD)", senators: ["Alsobrooks"], tier: 2, what: `Clean Water Act concerns; says an amendment could make it possible to support the bill. Her card stays at Opposes on her Nov. 9 release.`, src: [["Washington Sun, Nov. 11", "https://www.washingtonsun.com/energy-environment/senate-democrats-tribal-concerns-permitting-deal"]] },
+  { who: "Rosen (D-NV)", senators: ["Rosen"], tier: 2, what: `Content with "tweaking and clarifications," though she cosponsors the Schiff amendment.`, src: [["Punchbowl News, Nov. 11", "https://punchbowl.news/article/policy/tribal-staredown-on-permitting/"]] },
+  { who: "Whitehouse (D-RI), co-author", senators: ["Whitehouse"], tier: 2, what: `Final passage depends on progress getting wind turbines "up and spinning"; promises a "very healthy" amendment process.`, src: [["Axios, Nov. 10", "https://axios.com/2026/11/10/baaja-permitting-bill-senate"]] },
+  { who: "Murkowski (R-AK)", senators: ["Murkowski"], tier: 3, what: `A tentative yes with a position similar to Cortez Masto's; demand not specified.`, src: [["EXTRACTED news digest, Nov. 11 (Politico, Axios, Utility Dive)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111126"]] },
+  { who: "Schumer (D-NY)", senators: ["Schumer"], tier: 3, what: `"Outstanding concerns" he will "fight to address" through amendments; none specified.`, src: [["EXTRACTED news digest, Nov. 11 (Politico, Axios, Utility Dive)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111126"]] },
+  { who: "Bill negotiators", senators: [], tier: 2, what: `Promise further NHPA changes during the amendment process; oppose striking Title III.`, src: [["Punchbowl News, Nov. 11", "https://punchbowl.news/article/policy/tribal-staredown-on-permitting/"]] },
+  { who: "White House", senators: [], tier: 2, what: `Will not support the bill without the NHPA changes.`, src: [["Punchbowl News, Nov. 11", "https://punchbowl.news/article/policy/tribal-staredown-on-permitting/"]] },
+  { who: "Rep. Brett Guthrie (R-KY), House Energy and Commerce chair", senators: [], tier: 3, what: `Wants changes to the grid reliability and other electricity provisions; concedes major transmission changes could upend the deal.`, src: [["EXTRACTED news digest, Nov. 11 (Politico, Axios, Utility Dive)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111126"]] },
+  { who: "17 state attorneys general, including Michigan's Dana Nessel", senators: [], tier: 1, what: `Delay the vote; revise the Clean Water Act Sec. 401, NHPA Sec. 106, NEPA remedy, ESA and project-certainty provisions.`, src: [["AGs' letter, Nov. 9", "https://oag.ca.gov/system/files/attachments/press-docs/final-second-ag-letter-re-baaja.pdf"]] },
+  { who: "Native American Rights Fund", senators: [], tier: 1, what: `Delay the whole bill, or at minimum remove Title III entirely.`, src: [["NARF", "https://narf.org/baaja-reform-bill/"]] },
+];
+const amendLine = (name) => {
+  const rows = AMENDMENTS.filter(a => a.brief && (a.senators.includes(name) || a.cos.includes(name)))
+    .map(a => `${a.senators.includes(name) ? "sponsors" : "cosponsors"} the ${a.sponsor} amendment to ${a.brief}`);
+  return rows.length ? `<p class="vote-line">Amendments: ${rows.join("; ")}. <a href="#amendments">See the tracker</a>.</p>` : "";
+};
 const voteOf = (name) => { const v = VOTE_NOW.votes[name]; return v === undefined ? undefined : v; };
 const voteLine = (name) => { const v = voteOf(name); const tail = VOTE_NOW.status === "preliminary" ? " (preliminary tally; senate.gov roll call pending)" : ""; return v === "Y" || v === "N" ? `${VOTE_NOW.short}: ${v === "Y" ? "Yes" : "No"}${tail}` : `${VOTE_NOW.short}: ${VOTE_NOW.status === "preliminary" ? "no vote shown on the preliminary tally" : "did not vote"}.`; };
 const SUPCHG_WHY = { Schatz: "Our reading, not his words: Schatz has said he wants tribal changes and that waiting is unlikely to produce a better bill. He has not said he will vote yes." };
@@ -1855,7 +1994,7 @@ function showSeat(r) {
     <span><span class="pill ${cls}">${lbl}</span></span>
     <p class="said">${note}</p>
     <p class="said">${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}
-    <p class="vote-line">${voteLine(r.name)}</p>`;
+    <p class="vote-line">${voteLine(r.name)}</p>${amendLine(r.name)}`;
 }
 
 function renderHemi() {
@@ -1987,7 +2126,7 @@ function showState() {
   const senHtml = sens.map(r => {
     const [lbl, cls] = SEN_LABEL[r.pos];
     return `<div class="who-row"><b>Sen. ${r.name}</b><span class="said">(${r.party})</span><span class="pill ${cls}">${lbl}</span></div>
-      <p>${r.note || (r.pos === "lean" ? "No statement on the bill found. Voted for cloture on the motion to proceed, Nov. 9." : r.pos === "oppose" ? "No statement on the bill found. Voted no on cloture on the motion to proceed, Nov. 9." : "Nothing found since Sept. 30.")}</p><p>${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}<p class="vote-line">${voteLine(r.name)}</p>`;
+      <p>${r.note || (r.pos === "lean" ? "No statement on the bill found. Voted for cloture on the motion to proceed, Nov. 9." : r.pos === "oppose" ? "No statement on the bill found. Voted no on cloture on the motion to proceed, Nov. 9." : "Nothing found since Sept. 30.")}</p><p>${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}<p class="vote-line">${voteLine(r.name)}</p>${amendLine(r.name)}`;
   }).join("");
   const memHtml = mem.map(h => {
     const [lbl, cls] = HOUSE_POS[h[2]];
@@ -2009,6 +2148,13 @@ function showState() {
 // ---------- Latest statements ----------
 // Newest first. d = date the statement was made or reported; k = Senate | House | Group.
 const LATEST = [
+  { d: "2026-11-13", k: "Senate", who: "Amendments filed", pos: "vote", text: `Bloomberg (via a news digest) reports mostly partisan amendments, including Democratic amendments to strip the NHPA, Clean Water Act and Endangered Species Act changes, and a bipartisan Murkowski and Schatz amendment on tribes' historic-preservation concerns. The first-degree filing deadline was 1:00 PM Nov. 12. See the amendment tracker.`, src: [["EXTRACTED news digest, Nov. 13 (Bloomberg)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111326"], ["Senate Democrats floor schedule, Nov. 12", "https://www.democrats.senate.gov/2026/11/11/schedule-for-thursday-november-12-2026"]] },
+  { d: "2026-11-11", k: "Senate", who: "Cloture filed on the substitute and the bill", pos: "vote", text: `Thune filed cloture on the Capito substitute (S.Amdt. 6883) and on H.R. 2347. Votes expected the week of Nov. 16.`, src: [["Senate Periodical Press Gallery, Nov. 11", "https://www.periodicalpress.senate.gov/wednesday-november-11-2026/"], ["Reuters, Nov. 11", "https://www.yahoo.com/news/articles/us-senate-energy-permitting-bill-202138041.html"]] },
+  { d: "2026-11-10", k: "Senate", who: "Adam Schiff (D-CA) and 22 cosponsors", pos: "changes", text: `Schiff filed an amendment to strike Title III, the NHPA changes. Six cosponsors voted yes on cloture: Blumenthal, Cortez Masto, Rosen, Schatz, Slotkin and Warner. The White House says it will not support the bill without the NHPA changes.`, src: [["Washington Sun, Nov. 11", "https://www.washingtonsun.com/energy-environment/senate-democrats-tribal-concerns-permitting-deal"], ["Punchbowl News, Nov. 11", "https://punchbowl.news/article/policy/tribal-staredown-on-permitting/"]] },
+  { d: "2026-11-10", k: "Senate", who: "Motion to proceed agreed to, 62 to 21", pos: "vote", text: `Seventeen senators did not vote. Thune then offered the Capito substitute (S.Amdt. 6883) and filled the amendment tree.`, src: [["Senate Roll Call Vote 258", "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00258.htm"], ["Senate floor activity, Nov. 10", "https://www.senate.gov/legislative/LIS/floor_activity/11_10_2026_Senate_Floor.htm"]] },
+  { d: "2026-11-10", k: "Group", who: "All Pueblo Council of Governors", pos: "oppose", text: `Condemned the Senate vote advancing the bill; says the Pueblos delivered statements of opposition to senators before the vote.`, src: [["Source NM, Nov. 10", "https://sourcenm.com/2026/11/10/all-pueblo-council-of-governors-condemns-us-senate-vote-advancing-permitting-reform-bill/"]] },
+  { d: "2026-11-06", k: "Group", who: "Bay Mills Indian Community (Michigan)", pos: "oppose", text: `President Whitney Gravelle's letter urges Sen. Slotkin to oppose the bill as currently drafted. The only Michigan tribal government on record on BAAJA.`, src: [["Bay Mills letter, Nov. 6", "https://www.nathpo.org/slotkin-letter-re-sect-106-11-6-26/"]] },
+  { d: "2026-11-06", k: "Group", who: "United Tribes of Michigan", pos: "changes", text: `Cover letter to Congress for Resolution #098 (Oct. 16), which asks Congress to remove Title III.`, src: [["UTM cover letter, Nov. 6", "https://www.nathpo.org/20261106-cover-ltr-for-res-098-to-congress/"]] },
   { d: "2026-11-11", k: "Senate", who: "Senate roll call posted", pos: "vote", text: `Senate Roll Call Vote 257 confirms the Nov. 9 cloture vote, 73 to 25, name for name; Murphy and Sheehy did not vote. A final vote is expected the week of Nov. 16 (Reuters, White & Case); no date set.`, src: [["Senate Roll Call Vote 257", "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00257.htm"]] },
   { d: "2026-11-10", k: "Senate", who: "Seventeen senators' own statements on the Nov. 9 vote", pos: "vote", text: `Support: Schatz ("I will vote to pass it"), Coons, Rosen, Hickenlooper. Voted yes and wants a robust amendment process: Kim. Want changes before final passage, voted yes: Cortez Masto (strike Title III or she votes no), Slotkin (Clean Water Act and Tribal concerns). Voted no but could back a fixed bill: Bennet, Schiff, Van Hollen, Kaine, Hirono, Luján. Oppose: Markey, Duckworth, Blunt Rochester, Alsobrooks, Merkley (separate entry).`, src: [["Schatz", "https://www.schatz.senate.gov/news/press-releases/schatz-statement-on-bipartisan-american-affordability-and-jobs-act"], ["Coons", "https://www.coons.senate.gov/news/press-releases/senator-coons-statement-on-permitting-reform-bill/"], ["Rosen", "https://www.rosen.senate.gov/2026/11/09/rosen-votes-to-advance-bipartisan-bill-to-reform-permitting-processes-increase-clean-energy-projects-lower-energy-costs/"], ["Hickenlooper", "https://www.hickenlooper.senate.gov/press_releases/hickenlooper-votes-to-advance-long-overdue-permitting-reform-bill/"], ["Kim", "https://www.kim.senate.gov/press_release/senator-andy-kim-statement-on-senate-permitting-reform-agreement/"], ["Cortez Masto", "https://www.cortezmasto.senate.gov/news/press-releases/cortez-masto-statement-on-permitting-reform-bill/"], ["Bennet", "https://www.bennet.senate.gov/2026/11/10/bennet-statement-on-permitting-reform-vote/"], ["Schiff", "https://www.schiff.senate.gov/news/press-releases/statement-sen-schiff-statement-on-permitting-reform-legislation/"], ["Van Hollen", "https://www.vanhollen.senate.gov/news/press-releases/van-hollen-statement-on-current-opposition-to-moving-forward-with-permitting-reform-legislation"], ["Kaine", "https://www.kaine.senate.gov/press-releases/kaine-statement-on-permitting-reform-legislation"], ["Hirono", "https://www.hirono.senate.gov/news/press-releases/hirono-statement-on-bipartisan-american-affordability-and-jobs-act"], ["Luján", "https://www.lujan.senate.gov/newsroom/press-releases/lujan-statement-on-vote-against-advancing-permitting-reform-legislation/"], ["Markey", "https://www.markey.senate.gov/news/press-releases/senator-markey-statement-on-permitting-reform-deal"], ["Duckworth", "https://www.duckworth.senate.gov/news/press-releases/duckworth-to-vote-against-permitting-reform-bill"], ["Blunt Rochester", "https://www.bluntrochester.senate.gov/news/press-releases/statement-senator-blunt-rochester-opposes-senate-permitting-reform-bill/"], ["Alsobrooks", "https://www.alsobrooks.senate.gov/news/press-releases/alsobrooks-votes-no-on-bipartisan-american-affordability-and-jobs-act/"]] },
   { d: "2026-11-10", k: "Senate", who: "Elissa Slotkin (D-MI)", pos: "changes", text: `Voted yes "so talks can continue." Has "real issues" with the Clean Water Act changes and with Tribal sovereignty, and wants them fixed in the amendment process "before final passage."`, src: [["Slotkin statement, Nov. 10", "https://www.slotkin.senate.gov/2026/11/10/slotkin-statement-on-bipartisan-american-affordability-and-jobs-act-procedural-vote/"]] },
@@ -2125,10 +2271,16 @@ document.addEventListener("click", (e) => {
 const GROUP_IDS = ["groups", "glance", "provisions", "stakeholders", "officials", "fixes"];
 function showView() {
   const h = location.hash.slice(1);
-  const view = GROUP_IDS.includes(h) ? "groups" : h === "polls" ? "polls" : "congress";
+  const view = GROUP_IDS.includes(h) ? "groups" : h === "polls" ? "polls" : h === "amendments" ? "amendments" : "congress";
   document.querySelectorAll("[data-view]").forEach(el => { el.hidden = el.dataset.view !== view; });
-  ["groups", "congress", "polls"].forEach(v => document.getElementById("tab-" + v).setAttribute("aria-selected", view === v));
-  if (h && h !== "groups" && h !== "congress" && h !== "polls") { const t = document.getElementById(h); if (t) t.scrollIntoView(); }
+  ["groups", "congress", "amendments", "polls"].forEach(v => document.getElementById("tab-" + v).setAttribute("aria-selected", view === v));
+  if (h && h !== "groups" && h !== "congress" && h !== "polls" && h !== "amendments") { const t = document.getElementById(h); if (t) t.scrollIntoView(); }
+}
+function renderAmendments() {
+  const tier = (t) => `<span class="amd-tier">tier ${t}</span>`;
+  document.getElementById("floorTl").innerHTML = FLOOR.map(f => `<li><b>${f.d}</b><span>${f.what} ${srcLinks(f.src)}</span></li>`).join("");
+  document.getElementById("amendBody").innerHTML = AMENDMENTS.map(a => `<tr><th scope="row">${a.id}${tier(a.tier)}</th><td>${a.sponsor}${a.cos.length ? `<details><summary>${a.cos.length} cosponsors</summary>${a.cos.join(", ")}</details>` : ""}</td><td>${a.what}</td><td>${a.status}</td><td class="said">${a.note ? a.note + " " : ""}${srcLinks(a.src)}</td></tr>`).join("");
+  document.getElementById("demandBody").innerHTML = DEMANDS.map(d => `<tr><th scope="row">${d.who}${tier(d.tier)}</th><td>${d.what}</td><td class="said">${srcLinks(d.src)}</td></tr>`).join("");
 }
 window.addEventListener("hashchange", showView);
 
@@ -2176,7 +2328,7 @@ function renderPolls() {
 }
 
 renderSummary(); renderMatrix(); renderChips(); renderRoster(); renderSearched(); renderFixes(); renderOfficials(); renderSenate(); renderHouse();
-renderHemi(); renderVotebar(); renderHouseViz(); renderStateMap(); renderGlance(); renderLatest("W"); renderLatest("G"); renderPolls(); showView();
+renderHemi(); renderVotebar(); renderHouseViz(); renderStateMap(); renderGlance(); renderLatest("W"); renderLatest("G"); renderPolls(); renderAmendments(); showView();
 linkifySections(document.body);
 new MutationObserver((muts) => muts.forEach((m) => m.addedNodes.forEach((n) => { if (n.nodeType === 1) linkifySections(n); else if (n.nodeType === 3 && n.parentElement) linkifySections(n.parentElement); }))).observe(document.body, { childList: true, subtree: true });
 </script>
