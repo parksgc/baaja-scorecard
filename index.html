@@ -214,42 +214,6 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .amend-table summary { cursor: pointer; color: var(--muted); font-size: 12px; }
 .sub-h { margin: 8px 0 0; font-size: 16px; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.amd-groups { display: flex; flex-direction: column; gap: 22px; }
-.amd-group { display: flex; flex-direction: column; gap: 12px; }
-.amd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; }
-.amd-group-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
-.amd-group-head h3 { margin: 0; font-size: 16px; }
-.amd-group-head .watch { font-size: 13px; }
-.amd-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.amd-card header { display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; gap: 10px; padding: 0; margin: 0; border: 0; background: none; text-align: left; }
-.amd-card h4 { margin: 0; font-size: 15px; line-height: 1.3; }
-.amd-card p { margin: 0; font-size: 14px; }
-.amd-who { color: var(--muted); }
-.amd-status { font-size: 13px; color: var(--ink); }
-.amd-note { font-size: 13px; color: var(--muted); }
-.amd-card footer { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; align-items: center; gap: 4px 10px; font-size: 12px; margin: auto 0 0; padding: 6px 0 0; border: 0; border-top: 1px dashed var(--rule); text-align: left; background: none; color: var(--muted); max-width: none; }
-.amd-cos { display: inline; }
-.amd-cos summary { display: inline; cursor: pointer; color: var(--accent); font-size: 13px; }
-.amd-cos[open] { display: block; margin-top: 4px; font-size: 13px; color: var(--ink); }
-.amd-num { flex: none; font: 600 11px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: .02em; padding: 2px 7px; border-radius: 999px; background: var(--ink); color: var(--surface); white-space: nowrap; }
-.amd-num-pending { background: transparent; color: var(--ink); border: 1px dashed var(--muted); }
-.amd-num-none { background: transparent; color: var(--muted); border: 1px dotted var(--rule); font-weight: 400; }
-.amd-track { list-style: none; margin: 2px 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); font-size: 11px; color: var(--muted); }
-.amd-track li { position: relative; padding-top: 14px; text-align: left; }
-.amd-track li::before { content: ""; position: absolute; top: 4px; left: 0; right: 0; height: 2px; background: var(--rule); }
-.amd-track li:first-child::before { left: 5px; }
-.amd-track .dot { position: absolute; top: 0; left: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--surface); border: 2px solid var(--rule); box-sizing: border-box; z-index: 1; }
-.amd-track li.done::before, .amd-track li.now::before { background: var(--accent); }
-.amd-track li.now::before { right: calc(100% - 6px); }
-.amd-track li.done .dot { background: var(--accent); border-color: var(--accent); }
-.amd-track li.now .dot { background: var(--surface); border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
-.amd-track li.now { color: var(--ink); font-weight: 700; }
-.ev { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 4px; border: 1px solid var(--rule); color: var(--muted); white-space: nowrap; }
-.ev-1 { border-color: var(--support); color: var(--support); }
-.ev-2 { border-color: var(--muted); color: var(--ink); }
-.ev-3 { border-style: dashed; }
-.amd-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--muted); align-items: center; }
-.amd-legend > span { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 .amd-tier { display: inline-block; font-size: 11px; color: var(--muted); border: 1px solid var(--rule); border-radius: 4px; padding: 0 4px; margin-left: 4px; white-space: nowrap; }
 .vote-key { flex-basis: 100%; display: flex; gap: 6px; align-items: flex-start; color: var(--muted); }
 .vote-key svg { flex: none; margin-top: 1px; }
@@ -527,11 +491,16 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     <div class="section-head">
       <span class="eyebrow">Senate floor</span>
       <h2>Proposed amendments</h2>
-      <p>Amendments filed or circulating since the Senate took up the bill, and changes senators and others say they want. Majority Leader Thune has filled the amendment tree, so no amendment gets a vote unless leaders agree to one by unanimous consent, usually as a negotiated package. "Filed" does not mean a vote is guaranteed.</p>
-      <p class="amd-legend"><span><span class="amd-num">S.Amdt. 6883</span> number in the Senate record</span><span><span class="amd-num amd-num-pending">No. pending</span> filed, number not yet published</span><span><span class="amd-num amd-num-none">Not filed</span> circulating only</span><span>Source: <span class="ev ev-1">Official record</span> <span class="ev ev-2">Named reporter</span> <span class="ev ev-3">News digest</span></span></p>
+      <p>Amendments filed or circulating since the Senate took up the bill, and changes senators and others say they want. Majority Leader Thune has filled the amendment tree, so no amendment gets a vote unless leaders agree to one by unanimous consent, usually as a negotiated package. "Filed" does not mean a vote is guaranteed. Tier 1 is the official record or the sponsor's own release; tier 2, a named reporter; tier 3, a paraphrase or news digest.</p>
     </div>
     <div class="panel"><h3>Floor timeline</h3><ol class="floor-tl" id="floorTl"></ol></div>
-    <div id="amendCards" class="amd-groups"></div>
+    <div class="table-scroll">
+      <table class="list-table amend-table">
+        <caption class="visually-hidden">Amendments filed or circulating</caption>
+        <thead><tr><th scope="col">Amendment</th><th scope="col">Sponsor</th><th scope="col">What it would do</th><th scope="col">Status</th><th scope="col">Notes and sources</th></tr></thead>
+        <tbody id="amendBody"></tbody>
+      </table>
+    </div>
     <h3 class="sub-h">Changes sought, no amendment text yet</h3>
     <div class="table-scroll">
       <table class="list-table amend-table">
@@ -1661,29 +1630,29 @@ const FLOOR = [
   { d: "Week of Nov. 16", what: `Amendment votes and final passage expected (Whitehouse, via Reuters). No time set.`, src: [["Reuters, Nov. 11", "https://www.yahoo.com/news/articles/us-senate-energy-permitting-bill-202138041.html"]] },
 ];
 const AMENDMENTS = [
-  { id: "S.Amdt. 6883", num: "S.Amdt. 6883", group: "vehicle", stage: 2, title: "The substitute", sponsor: "Capito (R-WV), offered by Thune (R-SD)", senators: ["Capito", "Thune"], cos: [], tier: 1,
+  { id: "S.Amdt. 6883", sponsor: "Capito (offered by Thune)", senators: ["Capito", "Thune"], cos: [], tier: 1,
     what: `Substitute that replaces the bill's text. Presumably the Nov. 7 manager's amendment; not yet checked against the filed text.`,
-    status: `Cloture filed Nov. 11; vote expected the week of Nov. 16.`, note: ``, src: [["Senate floor activity, Nov. 10", "https://www.senate.gov/legislative/LIS/floor_activity/11_10_2026_Senate_Floor.htm"], ["Senate Periodical Press Gallery, Nov. 11", "https://www.periodicalpress.senate.gov/wednesday-november-11-2026/"]] },
-  { id: "S.Amdt. 6884 to 6890", num: "S.Amdt. 6884–6890", group: "vehicle", stage: 1, title: "Tree-filling amendments", sponsor: "Thune (R-SD)", senators: ["Thune"], cos: [], tier: 1,
+    status: `Pending. Cloture filed Nov. 11.`, note: ``, src: [["Senate floor activity, Nov. 10", "https://www.senate.gov/legislative/LIS/floor_activity/11_10_2026_Senate_Floor.htm"], ["Senate Periodical Press Gallery, Nov. 11", "https://www.periodicalpress.senate.gov/wednesday-november-11-2026/"]] },
+  { id: "S.Amdt. 6884 to 6890", sponsor: "Thune", senators: ["Thune"], cos: [], tier: 1,
     what: `Second- and third-degree amendments, described only as "to improve the bill," plus a motion to send the bill to the Finance Committee with instructions (6888) and two amendments to that motion.`,
-    status: ``, note: `Standard tree-filling: while these occupy every slot, no other amendment can get a vote unless leaders agree by unanimous consent, usually as a negotiated package.`, src: [["Senate Democrats floor schedule, Nov. 12", "https://www.democrats.senate.gov/2026/11/11/schedule-for-thursday-november-12-2026"]] },
-  { id: "Number not found", num: null, group: "nhpa", stage: 1, title: "Strike Title III", sponsor: "Schiff (D-CA)", brief: "strike Title III, the NHPA changes", senators: ["Schiff"], cos: ["Alsobrooks", "Bennet", "Blumenthal", "Blunt Rochester", "Booker", "Cantwell", "Cortez Masto", "Duckworth", "Hirono", "Kaine", "Kelly", "Luján", "Markey", "Merkley", "Murray", "Padilla", "Rosen", "Schatz", "Slotkin", "Smith", "Warner", "Wyden"], tier: 2,
+    status: `Pending.`, note: `Standard tree-filling: while these occupy every slot, no other amendment can get a vote unless leaders agree by unanimous consent, usually as a negotiated package.`, src: [["Senate Democrats floor schedule, Nov. 12", "https://www.democrats.senate.gov/2026/11/11/schedule-for-thursday-november-12-2026"]] },
+  { id: "Number not found", sponsor: "Schiff", brief: "strike Title III, the NHPA changes", senators: ["Schiff"], cos: ["Alsobrooks", "Bennet", "Blumenthal", "Blunt Rochester", "Booker", "Cantwell", "Cortez Masto", "Duckworth", "Hirono", "Kaine", "Kelly", "Luján", "Markey", "Merkley", "Murray", "Padilla", "Rosen", "Schatz", "Slotkin", "Smith", "Warner", "Wyden"], tier: 2,
     what: `Strike Division B, Title III, the historic preservation (NHPA) changes ${S(2301)}.`,
     status: `Filed Nov. 10.`,
     note: `Six cosponsors voted yes on cloture: Blumenthal, Cortez Masto, Rosen, Schatz, Slotkin and Warner. A White House official says it will not support the bill without the NHPA changes (Punchbowl). Heinrich: "I don't think we can land the bill with Republicans if we completely strip it out" (Punchbowl). Cosponsor names as reported by Politico's Nico Portuondo on X; the Washington Sun's count of 22 matches.`,
     src: [["Washington Sun, Nov. 11", "https://www.washingtonsun.com/energy-environment/senate-democrats-tribal-concerns-permitting-deal"], ["Punchbowl News, Nov. 11", "https://punchbowl.news/article/policy/tribal-staredown-on-permitting/"]] },
-  { id: "Number not found", num: null, group: "nhpa", stage: 1, title: "Strengthen the tribal language", sponsor: "Murkowski (R-AK) and Schatz (D-HI)", brief: "strengthen the NHPA language on tribes' concerns (reported)", senators: ["Murkowski", "Schatz"], cos: [], tier: 3,
+  { id: "Number not found", sponsor: "Murkowski and Schatz", brief: "strengthen the NHPA language on tribes' concerns (reported)", senators: ["Murkowski", "Schatz"], cos: [], tier: 3,
     what: `Bipartisan amendment from the Indian Affairs Committee leaders to strengthen the bill's language on tribes' concerns over historic preservation and projects.`,
-    status: `Reported filed; text not seen.`, note: ``, src: [["EXTRACTED news digest, Nov. 13 (Bloomberg)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111326"]] },
-  { id: "Numbers not found", num: null, group: "water", stage: 1, title: "Strike the Clean Water Act and Endangered Species Act changes", sponsor: "Democrats (not named in reports)", senators: [], cos: [], tier: 3,
+    status: `Filed (reported). Text not seen.`, note: ``, src: [["EXTRACTED news digest, Nov. 13 (Bloomberg)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111326"]] },
+  { id: "Numbers not found", sponsor: "Democrats (not named)", senators: [], cos: [], tier: 3,
     what: `Strike the bill's Clean Water Act changes ${S(1202)} and its Endangered Species Act changes.`,
-    status: `Reported filed; text not seen.`, note: ``, src: [["EXTRACTED news digest, Nov. 13 (Bloomberg)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111326"]] },
-  { id: "Number not found", num: null, group: "lines", stage: 1, title: "Protect landowners from eminent domain", sponsor: "Hawley (R-MO)", brief: "protect landowners from eminent domain for transmission lines", senators: ["Hawley"], cos: [], tier: 2,
+    status: `Filed (reported). Text not seen.`, note: ``, src: [["EXTRACTED news digest, Nov. 13 (Bloomberg)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111326"]] },
+  { id: "Number not found", sponsor: "Hawley", brief: "protect landowners from eminent domain for transmission lines", senators: ["Hawley"], cos: [], tier: 2,
     what: `Protect farmers and landowners from eminent domain for new transmission lines.`,
-    status: `Reported submitted (Reuters); text not seen.`, note: `Hawley was the one Energy Committee Republican to vote against the 2024 permitting bill, over the same issue.`, src: [["Reuters, Nov. 11", "https://www.yahoo.com/news/articles/us-senate-energy-permitting-bill-202138041.html"]] },
-  { id: "Not filed as far as known", num: null, group: "water", stage: 0, title: "State power over water permits", sponsor: "Shaheen (D-NH), bipartisan", brief: "change the Clean Water Act permit provisions (circulating, not confirmed filed)", senators: ["Shaheen"], cos: [], tier: 3,
+    status: `Submitted (Reuters). Text not seen.`, note: `Hawley was the one Energy Committee Republican to vote against the 2024 permitting bill, over the same issue.`, src: [["Reuters, Nov. 11", "https://www.yahoo.com/news/articles/us-senate-energy-permitting-bill-202138041.html"]] },
+  { id: "Not filed as far as known", sponsor: "Shaheen", brief: "change the Clean Water Act permit provisions (circulating, not confirmed filed)", senators: ["Shaheen"], cos: [], tier: 3,
     what: `Bipartisan amendment to the Clean Water Act provisions: states' power to deny or condition water-quality permits ${S(1202)}.`,
-    status: `Circulating among senators (Politico, anonymous source); not confirmed filed.`, note: `Shaheen is reported undecided.`, src: [["EXTRACTED news digest, Nov. 11 (Politico, Axios, Utility Dive)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111126"]] },
+    status: `Circulating (Politico, anonymous source).`, note: `Shaheen is reported undecided.`, src: [["EXTRACTED news digest, Nov. 11 (Politico, Axios, Utility Dive)", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-111126"]] },
 ];
 const DEMANDS = [
   { who: "Cortez Masto (D-NV)", senators: ["Cortez Masto"], tier: 1, what: `Strike Title III before final passage or she votes no: "They've got to remove the tribal piece." Voted yes on cloture.`, src: [["Cortez Masto statement, Nov. 9", "https://www.cortezmasto.senate.gov/news/press-releases/cortez-masto-statement-on-permitting-reform-bill/"], ["Washington Sun, Nov. 11", "https://www.washingtonsun.com/energy-environment/senate-democrats-tribal-concerns-permitting-deal"]] },
@@ -2307,41 +2276,11 @@ function showView() {
   ["groups", "congress", "amendments", "polls"].forEach(v => document.getElementById("tab-" + v).setAttribute("aria-selected", view === v));
   if (h && h !== "groups" && h !== "congress" && h !== "polls" && h !== "amendments") { const t = document.getElementById(h); if (t) t.scrollIntoView(); }
 }
-const AMD_GROUPS = [
-  ["vehicle", "The vehicle and the amendment tree", "Leadership's own amendments. While these fill every slot, other amendments wait on a unanimous-consent deal."],
-  ["nhpa", "Historic preservation (Title III)", "The fight over tribal consultation and Section 106 review."],
-  ["water", "Clean Water Act and endangered species", "States' power over water-quality permits, and the ESA changes."],
-  ["lines", "Transmission and landowners", "Eminent domain for new interstate lines."],
-];
-const AMD_STAGES = ["Circulating", "Filed", "Cloture filed", "Voted"];
-const EVID = { 1: ["Official record", "ev-1"], 2: ["Named reporter", "ev-2"], 3: ["News digest", "ev-3"] };
-const evid = (t) => `<span class="ev ${EVID[t][1]}" title="Evidence tier ${t}">${EVID[t][0]}</span>`;
-function amdNum(a) {
-  if (a.num) return `<span class="amd-num">${a.num}</span>`;
-  if (a.stage >= 1) return `<span class="amd-num amd-num-pending" title="Filed, but its number has not appeared in the Congressional Record yet">No. pending</span>`;
-  return `<span class="amd-num amd-num-none" title="Not submitted, so it has no number">Not filed</span>`;
-}
-function amdTrack(a) {
-  return `<ol class="amd-track" aria-label="Stage: ${AMD_STAGES[a.stage]}">${AMD_STAGES.map((st, k) =>
-    `<li class="${k < a.stage ? "done" : k === a.stage ? "now" : ""}"${k === a.stage ? ' aria-current="step"' : ""}><span class="dot" aria-hidden="true"></span>${st}</li>`).join("")}</ol>`;
-}
 function renderAmendments() {
+  const tier = (t) => `<span class="amd-tier">tier ${t}</span>`;
   document.getElementById("floorTl").innerHTML = FLOOR.map(f => `<li><b>${f.d}</b><span>${f.what} ${srcLinks(f.src)}</span></li>`).join("");
-  document.getElementById("amendCards").innerHTML = AMD_GROUPS.map(([g, label, blurb]) => {
-    const rows = AMENDMENTS.filter(a => a.group === g);
-    if (!rows.length) return "";
-    return `<div class="amd-group"><div class="amd-group-head"><h3>${label}</h3><span class="watch">${blurb}</span></div><div class="amd-grid">${rows.map(a => `
-      <article class="amd-card">
-        <header><h4>${a.title}</h4>${amdNum(a)}</header>
-        <p class="amd-who">${a.sponsor}${a.cos.length ? ` <details class="amd-cos"><summary>+ ${a.cos.length} cosponsors</summary>${a.cos.join(", ")}</details>` : ""}</p>
-        ${amdTrack(a)}
-        <p class="amd-what">${a.what}</p>
-        ${a.status ? `<p class="amd-status">${a.status}</p>` : ""}
-        ${a.note ? `<p class="amd-note">${a.note}</p>` : ""}
-        <footer>${evid(a.tier)}${srcLinks(a.src)}</footer>
-      </article>`).join("")}</div></div>`;
-  }).join("");
-  document.getElementById("demandBody").innerHTML = DEMANDS.map(d => `<tr><th scope="row">${d.who}<br>${evid(d.tier)}</th><td>${d.what}</td><td class="said">${srcLinks(d.src)}</td></tr>`).join("");
+  document.getElementById("amendBody").innerHTML = AMENDMENTS.map(a => `<tr><th scope="row">${a.id}${tier(a.tier)}</th><td>${a.sponsor}${a.cos.length ? `<details><summary>${a.cos.length} cosponsors</summary>${a.cos.join(", ")}</details>` : ""}</td><td>${a.what}</td><td>${a.status}</td><td class="said">${a.note ? a.note + " " : ""}${srcLinks(a.src)}</td></tr>`).join("");
+  document.getElementById("demandBody").innerHTML = DEMANDS.map(d => `<tr><th scope="row">${d.who}${tier(d.tier)}</th><td>${d.what}</td><td class="said">${srcLinks(d.src)}</td></tr>`).join("");
 }
 window.addEventListener("hashchange", showView);
 

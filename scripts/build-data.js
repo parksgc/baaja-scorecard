@@ -207,9 +207,8 @@ fs.writeFileSync(path.join(root, "data", "senators-on-record.csv"), csv(table));
 fs.writeFileSync(path.join(root, "data", "house-seats.csv"), csv(houseSeatRows));
 fs.writeFileSync(path.join(root, "data", "path-to-218.csv"), csv(bar218));
 fs.writeFileSync(path.join(root, "data", "house-on-record.csv"), csv(houseRecord));
-const AMD_STAGES = ["Circulating", "Filed", "Cloture filed", "Voted"];
-const amendRows = [["Amendment", "Number", "Sponsor", "Stage", "What it would do", "Status", "Cosponsors", "Evidence tier"],
-  ...AMENDMENTS.map((a) => [a.title, a.num || (a.stage >= 1 ? "Pending" : "Not filed"), a.sponsor, AMD_STAGES[a.stage], plain(a.what), plain(a.status), a.cos.length ? `${a.cos.length}: ${a.cos.join(", ")}` : "", String(a.tier)])];
+const amendRows = [["Amendment", "Sponsor", "What it would do", "Status", "Cosponsors", "Evidence tier"],
+  ...AMENDMENTS.map((a) => [a.id, a.sponsor, plain(a.what), plain(a.status), a.cos.length ? `${a.cos.length}: ${a.cos.join(", ")}` : "", String(a.tier)])];
 fs.writeFileSync(path.join(root, "data", "amendments.csv"), csv(amendRows));
 fs.writeFileSync(path.join(root, "data", "polls.csv"), csv(pollRows));
 console.log(`Built data/ (updated ${updated}): ${senators.length - count("none")} senators on record, ${map.length - 1} states; House ${members.filter((m) => !["none", "vacant", "cs", "co"].includes(m.pos)).length} on record (+${hcount("cs")} caucus-shaded), ${hcount("vacant")} vacant.`);
