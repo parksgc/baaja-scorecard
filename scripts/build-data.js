@@ -42,9 +42,10 @@ const senators = SENATE.map((s) => {
   const n = SEN_NOTES[key];
   const pos0 = n ? n[0] : "none";
   // Same rule as the page: a cloture yes vote moves a senator with no stated position into the light-green tier.
-  const lastVote = VOTES[VOTES.length - 1].votes[s.name];
+  // Most recent cloture vote actually cast, as on the page.
+  let lastVote; for (let i = VOTES.length - 1; i >= 0; i--) { const x = VOTES[i].votes[s.name]; if (x === "Y" || x === "N") { lastVote = x; break; } }
   const pos = (pos0 === "none" || pos0 === "lean" || pos0 === "supchg") && lastVote === "Y" ? "lean" : (pos0 === "none" || pos0 === "conditional") && lastVote === "N" ? "oppose" : pos0;
-  return { ...s, key, pos, note: n ? plain(n[1]) : pos === "lean" ? "No statement on the bill found. Voted for cloture on the motion to proceed, Nov. 9." : pos === "oppose" ? "No statement on the bill found. Voted no on cloture on the motion to proceed, Nov. 9." : "" };
+  return { ...s, key, pos, note: n ? plain(n[1]) : pos === "lean" ? "No statement on the bill found. Voted for cloture." : pos === "oppose" ? "No statement on the bill found. Voted no on cloture." : "" };
 });
 
 // One vocabulary for every chart, so the bar, the seat chart and the map read alike.
