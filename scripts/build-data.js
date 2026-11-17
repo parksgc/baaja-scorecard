@@ -12,12 +12,12 @@ const js = html.split("<script>")[1].split("</script>")[0];
 const dataJs = js.split("function srcLinks")[0].replace(/^if \(SUBSTACK_URL\)[\s\S]*?\n\}\n/m, "");
 const ctx = {};
 vm.createContext(ctx);
-vm.runInContext(dataJs + "\nthis.d = { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS, VOTES, AMENDMENTS, DEMANDS };", ctx);
-const { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS, VOTES, AMENDMENTS, DEMANDS } = ctx.d;
+vm.runInContext(dataJs + "\nthis.d = { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS, VOTES, AMENDMENTS, DEMANDS, AMD_ALL, AMD_ISSUE };", ctx);
+const { SENATE, SEN_NOTES, HOUSE, CAUCUS_ROWS, secHref, BAAJA_SEC, POLLS, VOTES, AMENDMENTS, DEMANDS, AMD_ALL, AMD_ISSUE } = ctx.d;
 // Amendment tracker: every senator named as a sponsor or cosponsor must be a senator on the page.
 {
   const keys = new Set(SENATE.map((s) => s.name));
-  const bad = [...AMENDMENTS.flatMap((a) => [...a.senators, ...a.cos]), ...DEMANDS.flatMap((d) => d.senators)].filter((n) => !keys.has(n));
+  const bad = [...AMENDMENTS.flatMap((a) => [...a.senators, ...a.cos]), ...DEMANDS.flatMap((d) => d.senators), ...AMD_ALL.flatMap((a) => [a[3], ...a[4], ...a[5].map((x) => x[0])])].filter((n) => !keys.has(n));
   if (bad.length) throw new Error(`Amendment tracker names no such senator: ${[...new Set(bad)].join(", ")}`);
 }
 // Floor votes must name every senator on the page exactly once, by the page's own key, and nobody else.
@@ -211,5 +211,30 @@ fs.writeFileSync(path.join(root, "data", "house-on-record.csv"), csv(houseRecord
 const amendRows = [["Amendment", "Sponsor", "What it would do", "Status", "Cosponsors", "Evidence tier"],
   ...AMENDMENTS.map((a) => [a.id, a.sponsor, plain(a.what), plain(a.status), a.cos.length ? `${a.cos.length}: ${a.cos.join(", ")}` : "", String(a.tier)])];
 fs.writeFileSync(path.join(root, "data", "amendments.csv"), csv(amendRows));
+
+// Senator-by-issue grid: the same counts the page draws. Columns ordered by how many senators back at least one amendment on each issue.
+{
+  const back = {}, own = {}, all = {};
+  for (const [n, , , sp, cos, add, tags] of AMD_ALL) {
+    for (const [p, role] of [[sp, "s"], ...cos.map((c) => [c, "c"]), ...add.map((x) => [x[0], "c"])]) {
+      (all[p] = all[p] || new Set()).add(n);
+      if (role === "s") (own[p] = own[p] || new Set()).add(n);
+      for (const t of tags.split(" ")) { back[p] = back[p] || {}; (back[p][t] = back[p][t] || new Set()).add(n); }
+    }
+  }
+  const issues = Object.keys(AMD_ISSUE).map((k) => [k, Object.values(back).filter((b) => b[k]).length]).sort((x, y) => y[1] - x[1] || AMD_ISSUE[x[0]].localeCompare(AMD_ISSUE[y[0]]));
+  const groupOf = { sponsor: "Sponsors and supporters", support: "Sponsors and supporters", lean: "Voted for cloture", conditional: "Want changes", supchg: "Want changes", oppose: "Oppose or voted no", none: "No statement found" };
+  const gOrder = ["Sponsors and supporters", "Voted for cloture", "Want changes", "Oppose or voted no", "No statement found"];
+  const rowsG = senators.filter((s) => all[s.key] || all[s.name.replace(/^Sen\. /, "")]).map((s) => {
+    const k = all[s.key] ? s.key : s.name.replace(/^Sen\. /, "");
+    return { k, s, g: groupOf[s.pos], n: all[k].size };
+  }).sort((a, b) => gOrder.indexOf(a.g) - gOrder.indexOf(b.g) || b.n - a.n || a.k.localeCompare(b.k));
+  const gridRows = [["Senator", "Position on the Scorecard", ...issues.map(([k]) => AMD_ISSUE[k]), "Amendments backed", "Sponsored"],
+    ...rowsG.map(({ k, s, g, n }) => [`${k.replace(/ \(..\)$/, "")} (${s.party}-${s.state})`, g, ...issues.map(([t]) => (back[k][t] ? String(back[k][t].size) : "")), String(n), String(own[k] ? own[k].size : 0)])];
+  fs.writeFileSync(path.join(root, "data", "amendments-by-senator.csv"), csv(gridRows));
+  const allRows = [["Amendment", "Filed", "Sponsor", "Cosponsors", "Issues", "What it does", "Congressional Record"],
+    ...AMD_ALL.map((a) => [`S.Amdt. ${a[0]}`, `2026-${a[1]}`, a[3], [...a[4], ...a[5].map((x) => x[0])].join("; "), a[6].split(" ").map((t) => AMD_ISSUE[t]).join("; "), a[8], `https://www.govinfo.gov/content/pkg/CREC-2026-${a[1]}/html/CREC-2026-${a[1]}-pt1-Pg${a[7]}.htm`])];
+  fs.writeFileSync(path.join(root, "data", "amendments-all.csv"), csv(allRows));
+}
 fs.writeFileSync(path.join(root, "data", "polls.csv"), csv(pollRows));
 console.log(`Built data/ (updated ${updated}): ${senators.length - count("none")} senators on record, ${map.length - 1} states; House ${members.filter((m) => !["none", "vacant", "cs", "co"].includes(m.pos)).length} on record (+${hcount("cs")} caucus-shaded), ${hcount("vacant")} vacant.`);

@@ -214,6 +214,31 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .amend-table summary { cursor: pointer; color: var(--muted); font-size: 12px; }
 .sub-h { margin: 8px 0 0; font-size: 16px; }
 .amend-count { margin: 12px 0 4px; font-size: 14px; }
+.amd-grid-panel { margin: 14px 0 18px; }
+.amd-grid-intro { font-size: 14px; color: var(--muted); max-width: 72ch; }
+.amd-key { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); margin: 8px 0; flex-wrap: wrap; }
+.amd-key i { font-style: normal; display: inline-block; min-width: 34px; text-align: center; padding: 2px 4px; border-radius: 3px; }
+.amd-grid { border-collapse: separate; border-spacing: 2px; font-size: 13px; }
+.amd-grid th, .amd-grid td { padding: 0; }
+.amd-grid thead th { font-weight: 600; font-size: 11.5px; line-height: 1.2; vertical-align: bottom; text-align: center; width: 76px; min-width: 64px; padding: 0 2px 6px; color: var(--ink); }
+.amd-grid thead th small { display: block; font-weight: 400; color: var(--muted); margin-top: 2px; }
+.amd-grid tbody th { text-align: left; font-weight: 400; white-space: nowrap; padding-right: 8px; position: sticky; left: 0; background: var(--surface); z-index: 1; }
+.amd-grid tbody th .p { color: var(--muted); font-size: 11.5px; margin-left: 4px; }
+.amd-grid tr.amd-group th { position: static; padding: 10px 0 2px; font-family: var(--font-display); font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); border-bottom: 1px solid var(--rule); }
+.amd-grid tr.amd-group th .sw { margin-right: 6px; vertical-align: -1px; }
+.amd-grid td.c { text-align: center; height: 26px; border-radius: 3px; background: var(--silent-bg); cursor: default; }
+.amd-grid td.c[tabindex] { cursor: pointer; }
+.amd-grid td.c:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
+.amd-grid td.tot { text-align: right; padding-left: 8px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.amd-c1 { background: color-mix(in srgb, var(--accent) 18%, var(--surface)) !important; color: var(--ink); }
+.amd-c2 { background: color-mix(in srgb, var(--accent) 34%, var(--surface)) !important; color: var(--ink); }
+.amd-c3 { background: color-mix(in srgb, var(--accent) 52%, var(--surface)) !important; color: var(--ink); }
+.amd-c4 { background: color-mix(in srgb, var(--accent) 72%, var(--surface)) !important; color: var(--surface); }
+.amd-c5 { background: color-mix(in srgb, var(--accent) 92%, var(--surface)) !important; color: var(--surface); }
+.amd-cell-note { min-height: 1.4em; font-size: 13px; margin: 8px 0 0; position: sticky; bottom: 0; background: var(--surface); padding: 6px 0; z-index: 2; }
+.amd-all { margin-top: 10px; }
+.amd-all summary { cursor: pointer; font-weight: 600; }
+.amd-all-table td { white-space: normal !important; vertical-align: top; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .amd-tier { display: inline-block; font-size: 11px; color: var(--muted); border: 1px solid var(--rule); border-radius: 4px; padding: 0 4px; margin-left: 4px; white-space: nowrap; }
 .vote-key { flex-basis: 100%; display: flex; gap: 6px; align-items: flex-start; color: var(--muted); }
@@ -496,7 +521,16 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
       <p>Amendments filed or circulating since the Senate took up the bill, and changes senators and others say they want. Majority Leader Thune has filled the amendment tree, so no amendment gets a vote unless leaders agree to one by unanimous consent, usually as a negotiated package. "Filed" does not mean a vote is guaranteed. Tier 1 is the official record or the sponsor's own release; tier 2, a named reporter; tier 3, a paraphrase or news digest.</p>
     </div>
     <div class="panel"><h3>Floor timeline</h3><ol class="floor-tl" id="floorTl"></ol></div>
-    <p class="amend-count"><b>151 amendments filed through the Nov. 12 deadline; none has a vote scheduled.</b> The table lists the most discussed. The rest are in the Congressional Record.</p>
+    <p class="amend-count"><b>163 amendments filed through Nov. 16 (151 by the Nov. 12 deadline, 12 more on Nov. 16); none has had a vote.</b> The grid below covers all of them; the table after it lists the most discussed.</p>
+    <div class="panel amd-grid-panel">
+      <h3>Who filed amendments on what</h3>
+      <p class="amd-grid-intro">Each row is a senator who sponsored or cosponsored at least one amendment. Each cell counts the amendments that senator backs on that issue. Issues run left to right by how many senators back at least one amendment on them, so the order updates as cosponsors are added. Rows are grouped by the senator's position on the Scorecard. Hover or tap a cell for the amendment numbers.</p>
+      <div class="amd-key" aria-hidden="true"><span>Amendments backed:</span><i class="amd-c1">1</i><i class="amd-c2">2</i><i class="amd-c3">3-4</i><i class="amd-c4">5-9</i><i class="amd-c5">10+</i></div>
+      <div class="table-scroll amd-grid-scroll"><table class="amd-grid" id="amdGrid"><caption class="visually-hidden">Number of amendments each senator sponsors or cosponsors, by issue</caption></table></div>
+      <p class="amd-cell-note" id="amdCellNote" aria-live="polite"></p>
+      <p class="src">Source: Congressional Record, Nov. 10, 11, 12 and 16 (text of amendments and additional cosponsors). Excludes the substitute (S.Amdt. 6883), Majority Leader Thune's seven placeholder amendments (6884 to 6890) and amendments filed to other bills. Issue tags are the Scorecard's reading of each amendment's text; an amendment can touch more than one issue, so a row's cells can add up to more than its total. "Backs" means sponsors or cosponsors.</p>
+      <details class="amd-all"><summary>All 163 amendments</summary><div class="table-scroll"><table class="list-table amd-all-table"><thead><tr><th scope="col">Amendment</th><th scope="col">Filed</th><th scope="col">Sponsor and cosponsors</th><th scope="col">What it does</th><th scope="col">Issues</th></tr></thead><tbody id="amdAllBody"></tbody></table></div></details>
+    </div>
     <div class="table-scroll">
       <table class="list-table amend-table">
         <caption class="visually-hidden">Amendments filed or circulating</caption>
@@ -1745,6 +1779,177 @@ const FLOOR = [
   { d: "Next", what: `Floor staff are trying to work out an agreement on amendments (Whitehouse, to The Hill). Cloture on H.R. 2347 itself is still pending. Final passage is expected before Thanksgiving. H.Con.Res. 93 must come up by Fri. Nov. 20 and will compete for floor time.`, src: [["The Hill, Nov. 16", "https://thehill.com/homenews/senate/6223468-senate-advances-baja-permitting-reform/"]] },
   { d: "Planned for Nov. 16 (Nov. 12 order)", what: `Senate convenes at 3 PM and votes at 5:30 PM on the Domenico nomination to the 10th Circuit. If Domenico is confirmed, it then votes on cloture on the substitute (S.Amdt. 6883). Cloture on H.R. 2347 itself ripens once the substitute is disposed of. Whitehouse expects amendment votes and final passage that week (Reuters).`, src: [["Congressional Record, Nov. 12 (Senate), S5670", "https://www.govinfo.gov/content/pkg/CREC-2026-11-12/pdf/CREC-2026-11-12-senate.pdf"], ["Reuters, Nov. 11", "https://www.yahoo.com/news/articles/us-senate-energy-permitting-bill-202138041.html"]] },
 ];
+// Every amendment filed to H.R. 2347 or the substitute through Nov. 16, read from the Congressional Record.
+// [number, date (2026), target (B = H.R. 2347, S = SA 6883, else the SA amended), sponsor, original cosponsors, cosponsors added [name, date], issue tags, Record page id, short description]
+// Excludes SA 6881 (weather bill), SA 6883 (the substitute), SA 6884-6890 (Thune's placeholders) and SA 7021 (filed to another bill).
+// Issue tags are the Scorecard's reading of each amendment's text.
+const AMD_ALL = [
+  [6849, "11-10", "B", "Cruz", ["Fetterman"], [], "LANDS", "S5417-2", "Bars certain exports (Strategic Petroleum Reserve)"],
+  [6850, "11-10", "B", "Cruz", [], [], "NEPA", "S5417-3", "Permitting for international bridges and land ports of entry"],
+  [6851, "11-10", "B", "Cruz", [], [], "LANDS", "S5417-4", "Study on recycling spent nuclear fuel"],
+  [6852, "11-10", "B", "Cruz", [], [], "OTHER", "S5418", "Bars state and local climate suits (\"climate shakedowns\")"],
+  [6853, "11-10", "B", "Cruz", [], [], "LANDS", "S5419", "Natural gas exports"],
+  [6854, "11-10", "B", "Murkowski", ["Schatz"], [["Gallego", "11-12"], ["Cantwell", "11-12"], ["Luján", "11-12"], ["Padilla", "11-16"]], "TRIBAL", "S5419-2", "Rewrites NHPA undertaking exclusions; projects affecting tribal religious and cultural sites are undertakings"],
+  [6855, "11-10", "B", "Schatz", [], [["Bennet", "11-16"], ["Booker", "11-16"], ["Cortez Masto", "11-16"], ["Fetterman", "11-16"], ["Luján", "11-16"], ["Schiff", "11-16"]], "OTHER", "S5420", "Native American housing (NAHASDA) reauthorization"],
+  [6856, "11-10", "B", "Schatz", [], [], "OTHER", "S5428", "Reaffirms the Indian Reorganization Act definition of Indian"],
+  [6857, "11-10", "B", "Hawley", [], [], "TX", "S5428-2", "State siting clock from one year to two"],
+  [6858, "11-10", "B", "Hawley", [], [], "TX", "S5428-3", "Just compensation and cost allocation, FPA 216(f)"],
+  [6859, "11-10", "B", "Hawley", [], [], "TX", "S5428-4", "Backstop threshold from 230 kV to 765 kV"],
+  [6860, "11-10", "B", "Hawley", [], [], "TX", "S5428-5", "\"Shall\" to \"may\" in the federal siting backstop"],
+  [6861, "11-10", "B", "Merkley", [], [], "CWA", "S5429", "Section 401 certification with conditions"],
+  [6862, "11-10", "B", "Merkley", [], [], "CWA", "S5429-2", "Strike the Clean Water Act title"],
+  [6863, "11-10", "B", "Merkley", [], [], "CWA", "S5429-3", "Section 401: missing application information"],
+  [6864, "11-10", "B", "Merkley", [], [], "CWA", "S5429-4", "Section 401 for linear and transmission projects"],
+  [6865, "11-10", "B", "Merkley", [], [["Cantwell", "11-12"], ["Wyden", "11-12"]], "CWA", "S5429-5", "Section 401 denial standard"],
+  [6866, "11-10", "B", "Merkley", [], [], "CWA", "S5429-6", "Definition of water quality requirements"],
+  [6867, "11-10", "B", "Merkley", [], [], "NEPA", "S5429-7", "\"A similar\" to \"an identical\" (NEPA)"],
+  [6868, "11-10", "B", "Merkley", [], [], "COURTS", "S5429-8", "Filing deadline and standing for NEPA suits"],
+  [6869, "11-10", "B", "Merkley", [], [], "NEPA COURTS", "S5430", "Strike the NEPA title"],
+  [6870, "11-10", "B", "Merkley", [], [], "CWA", "S5430-2", "Clean Water Act permit considerations"],
+  [6871, "11-10", "B", "Merkley", [], [["Cantwell", "11-12"], ["Wyden", "11-12"]], "CWA", "S5430-3", "Section 401: certifying authority review of materials"],
+  [6872, "11-10", "B", "Merkley", [], [], "ESA", "S5430-4", "Strike Sec. 1305 (ESA)"],
+  [6873, "11-10", "B", "Merkley", [], [], "ESA", "S5430-5", "Best available science (ESA)"],
+  [6874, "11-10", "B", "Merkley", [], [], "ESA", "S5430-6", "Limits on state assumption of ESA consultation"],
+  [6875, "11-10", "B", "Merkley", [], [], "ESA", "S5431", "Strike the Endangered Species Act title"],
+  [6876, "11-10", "B", "Merkley", [], [], "TRIBAL COURTS", "S5431-2", "Strike pages 486-487 (NHPA review in court)"],
+  [6877, "11-10", "B", "Merkley", [], [], "TRIBAL", "S5431-3", "Rewrites NHPA review steps"],
+  [6878, "11-10", "B", "Merkley", [], [], "ESA TRIBAL", "S5431-4", "ESA state assumption; tribal trust resources"],
+  [6879, "11-10", "B", "Merkley", [], [], "ESA TRIBAL", "S5432", "Defines tribal trust resources (ESA)"],
+  [6880, "11-10", "B", "Merkley", [], [], "ESA", "S5432-2", "ESA: as of the date of enactment"],
+  [6882, "11-10", "B", "Schiff", ["Cortez Masto", "Merkley", "Luján", "Blumenthal", "Markey", "Alsobrooks", "Wyden", "Kaine", "Blunt Rochester", "Rosen", "Bennet", "Schatz", "Warner", "Smith", "Booker", "Duckworth", "Padilla", "Kelly", "Cantwell", "Hirono", "Murray", "Slotkin", "Peters"], [["Gallego", "11-12"], ["Van Hollen", "11-12"], ["Gillibrand", "11-12"], ["Shaheen", "11-12"], ["Warren", "11-12"], ["Kim", "11-16"], ["Hickenlooper", "11-16"], ["Welch", "11-16"], ["Coons", "11-16"], ["Klobuchar", "11-16"], ["Fetterman", "11-16"]], "TRIBAL", "S5471", "Strike Title III, the NHPA changes"],
+  [6891, "11-11", "B", "Johnson", [], [], "OTHER", "S5576-4", "Guidance Out Of Darkness (GOOD) Act"],
+  [6892, "11-11", "B", "Kennedy", ["Cassidy"], [], "LANDS", "S5577", "Gulf offshore revenue sharing (GOMESA)"],
+  [6893, "11-11", "B", "Smith", ["Klobuchar"], [], "TX", "S5577-2", "Eminent domain for backstop lines, FPA 216(e)"],
+  [6894, "11-11", "B", "Smith", [], [], "TX", "S5577-3", "State clock starts when the application is complete"],
+  [6895, "11-11", "B", "Shaheen", [], [["Luján", "11-12"], ["Slotkin", "11-12"]], "CWA", "S5577-4", "Rewrites Sec. 1202 (Section 401)"],
+  [6896, "11-11", "S", "Alsobrooks", ["Schiff", "Padilla", "Gillibrand", "Kim", "Duckworth", "Merkley", "Luján", "Blunt Rochester", "Blumenthal", "Smith", "Cantwell"], [["Klobuchar", "11-16"]], "CWA", "S5579", "Section 401 scope and denial standards"],
+  [6897, "11-11", "S", "Alsobrooks", ["Duckworth", "Merkley", "Luján", "Blunt Rochester", "Blumenthal", "Bennet", "Kim", "Kelly"], [], "COURTS", "S5581", "Injunctions pending remand (NEPA remedy)"],
+  [6898, "11-11", "S", "Blunt Rochester", [], [], "NEPA", "S5582", "Mortgage insurance as federal assistance (NEPA)"],
+  [6899, "11-11", "S", "Blunt Rochester", [], [], "CWA", "S5582-2", "Section 401 for linear projects"],
+  [6900, "11-11", "S", "Blunt Rochester", ["Alsobrooks", "Duckworth", "Merkley", "Luján", "Blumenthal", "Kim", "Kelly"], [], "COURTS", "S5582-3", "Strike \"without vacatur or issuance of an injunction\""],
+  [6901, "11-12", "B", "Duckworth", [], [], "CWA", "S5595-2", "Section 401 procedures"],
+  [6902, "11-12", "S", "Budd", ["Rounds", "Cramer", "Graham"], [["Hoeven", "11-16"]], "TX", "S5596", "Backstop threshold of 345 kV"],
+  [6903, "11-12", "S", "Schmitt", [], [], "TX", "S5596-2", "Impact on farm operations in siting"],
+  [6904, "11-12", "S", "Schmitt", [], [], "TX", "S5597", "Landowner input in siting"],
+  [6905, "11-12", "S", "Marshall", [], [], "OTHER", "S5597-2", "Medicare Advantage prior authorization"],
+  [6906, "11-12", "S", "Marshall", ["Hickenlooper"], [], "OTHER", "S5598", "Hospital and insurer price transparency"],
+  [6907, "11-12", "B", "Marshall", ["Durbin", "Welch"], [], "OTHER", "S5608", "Credit Card Competition Act"],
+  [6908, "11-12", "S", "Hagerty", [], [], "TX", "S5609", "ERCOT and TVA carve-outs"],
+  [6909, "11-12", "S", "Cornyn", ["Padilla"], [], "TX", "S5609-2", "Reauthorizes IIJA grid resilience grants (Sec. 40101)"],
+  [6910, "11-12", "S", "Murkowski", [], [], "LANDS", "S5609-3", "Alaska preferred routes (Sec. 2252)"],
+  [6911, "11-12", "S", "Paul", [], [], "CWA", "S5610", "Defines waters of the United States"],
+  [6912, "11-12", "S", "Kim", [], [], "CERT", "S5611", "Ownership disclosure before damages"],
+  [6913, "11-12", "S", "Kim", ["Booker", "Alsobrooks"], [], "COURTS", "S5611-2", "Definition of claims covered by the new filing deadline"],
+  [6914, "11-12", "S", "Kim", [], [], "DC", "S5611-3", "Electric bill transparency (Sec. 2107)"],
+  [6915, "11-12", "S", "Kim", ["Booker", "Alsobrooks"], [], "NEPA", "S5611-4", "Detention facilities are major federal actions"],
+  [6916, "11-12", "S", "Merkley", ["Markey", "Schiff", "Duckworth", "Wyden"], [], "OTHER", "S5611-5", "Bars authorization for the East Wing, Triumphal Arch and East Potomac Golf Links"],
+  [6917, "11-12", "S", "Merkley", ["Murray", "Duckworth"], [], "CERT", "S5611-6", "Terminated federal awards"],
+  [6918, "11-12", "S", "Merkley", [], [], "LANDS", "S5611-7", "Bars tariffs on wind turbines"],
+  [6919, "11-12", "S", "Merkley", [], [], "CERT", "S5612", "Strike the project certainty title"],
+  [6920, "11-12", "S", "Merkley", [], [], "CERT", "S5612-2", "Project certainty definitions"],
+  [6921, "11-12", "S", "Merkley", [], [], "DC NEPA", "S5612-3", "Excludes data centers from NEPA streamlining"],
+  [6922, "11-12", "S", "Merkley", [], [], "CERT LANDS", "S5612-4", "Bars and repeals executive actions against energy projects"],
+  [6923, "11-12", "S", "Luján", ["Bennet"], [["Hickenlooper", "11-16"], ["Kelly", "11-16"]], "CERT", "S5613", "Excludes leases from project certainty"],
+  [6924, "11-12", "S", "Luján", ["Bennet"], [["Hickenlooper", "11-16"], ["Coons", "11-16"]], "TRIBAL", "S5613-2", "NHPA consultation timing"],
+  [6925, "11-12", "S", "Luján", ["Bennet"], [["Hickenlooper", "11-16"]], "TRIBAL COURTS", "S5613-3", "Who may sue under the NHPA"],
+  [6926, "11-12", "S", "Luján", ["Bennet"], [["Hickenlooper", "11-16"], ["Padilla", "11-16"]], "TRIBAL", "S5613-4", "Visual, atmospheric and audible effects"],
+  [6927, "11-12", "S", "Luján", ["Bennet"], [["Hickenlooper", "11-16"], ["Kelly", "11-16"], ["Padilla", "11-16"]], "TRIBAL", "S5613-5", "Rewrites the NHPA determination and mitigation step"],
+  [6928, "11-12", "S", "Luján", ["Bennet"], [], "LANDS", "S5614", "Mining plan of operations"],
+  [6929, "11-12", "S", "Luján", ["Bennet"], [], "LANDS", "S5614-2", "Abandoned hardrock mine fund"],
+  [6930, "11-12", "S", "Luján", ["Bennet"], [], "LANDS", "S5614-3", "Caps mill sites"],
+  [6931, "11-12", "S", "Booker", [], [], "CERT", "S5614-4", "Judgment Fund limits"],
+  [6932, "11-12", "S", "Booker", ["Alsobrooks"], [["Kim", "11-16"]], "CERT", "S5614-5", "No certainty for unlawfully issued permits"],
+  [6933, "11-12", "S", "Van Hollen", ["Alsobrooks", "Coons", "Blunt Rochester"], [], "CERT", "S5614-6", "Voluntary remands"],
+  [6934, "11-12", "S", "Van Hollen", [], [], "DC", "S5614-7", "Curtailment of computational loads"],
+  [6935, "11-12", "S", "Van Hollen", [], [], "CWA", "S5615", "Rewrites the Clean Water Act title"],
+  [6936, "11-12", "S", "Padilla", ["Gallego", "Markey", "Alsobrooks", "Schiff", "Kelly"], [], "CERT", "S5617", "Enforcement of existing law is not a new action"],
+  [6937, "11-12", "S", "Schiff", [], [], "ESA TRIBAL", "S5617-2", "Best available science includes tribal ecological knowledge"],
+  [6938, "11-12", "S", "Schiff", [], [], "CERT", "S5617-3", "No certainty where a court found the government broke the law (Sec. 1401)"],
+  [6939, "11-12", "S", "Schiff", [], [], "CERT", "S5617-4", "Same, for Sec. 1402"],
+  [6940, "11-12", "S", "Schiff", [], [], "LANDS", "S5618", "Rewrites the offshore energy section"],
+  [6941, "11-12", "S", "Schiff", [], [], "CERT", "S5618-2", "Terminated federal awards"],
+  [6942, "11-12", "S", "Padilla", ["Gallego", "Luján", "Hickenlooper", "Rosen"], [["Schatz", "11-16"]], "TRIBAL COURTS", "S5618-3", "Tribal claims exempt from NHPA remedy limits"],
+  [6943, "11-12", "S", "Padilla", [], [], "NEPA", "S5619", "Anti-circumvention rule for immigration enforcement"],
+  [6944, "11-12", "S", "Padilla", ["Schiff"], [], "CERT", "S5619-2", "Actions under existing law are not new actions"],
+  [6945, "11-12", "S", "Padilla", [], [], "CERT", "S5619-3", "Payment limit applies to all claims"],
+  [6946, "11-12", "S", "Padilla", [], [], "LANDS", "S5619-4", "Bars Pacific offshore drilling"],
+  [6947, "11-12", "S", "Bennet", [], [], "LANDS", "S5620", "Strike Sec. 2211 (non-federal land)"],
+  [6948, "11-12", "S", "Bennet", ["Luján"], [], "LANDS", "S5620-2", "Strike Sec. 2215 (mill sites)"],
+  [6949, "11-12", "S", "Bennet", [], [], "LANDS", "S5620-3", "Mill sites"],
+  [6950, "11-12", "S", "Bennet", [], [], "LANDS", "S5620-4", "Hardrock mining reform title"],
+  [6951, "11-12", "S", "Bennet", [], [], "TX", "S5627", "Distributed energy resource definition"],
+  [6952, "11-12", "S", "Bennet", [], [], "LANDS", "S5627-2", "Mill sites"],
+  [6953, "11-12", "S", "Bennet", [], [], "COURTS TRIBAL", "S5628", "Discretionary remand or injunction (NEPA and NHPA)"],
+  [6954, "11-12", "S", "Bennet", ["Schiff", "Luján"], [], "COURTS", "S5628-2", "Limitations clock runs from close of comment"],
+  [6955, "11-12", "S", "Bennet", ["Cantwell", "Luján"], [["Schiff", "11-16"]], "ESA", "S5628-3", "State assumption of ESA consultation"],
+  [6956, "11-12", "S", "Bennet", ["Schiff", "Luján"], [], "NEPA", "S5629", "Rewrites NEPA public review"],
+  [6957, "11-12", "S", "Bennet", ["Schiff", "Luján"], [["Coons", "11-16"]], "TRIBAL", "S5632", "Rewrites the NHPA title; tribal consent before THPO takeover"],
+  [6958, "11-12", "S", "Cortez Masto", [], [], "OTHER", "S5635", "Wagering losses (tax)"],
+  [6959, "11-12", "S", "Cortez Masto", [], [], "LANDS", "S5635-2", "Southern Nevada lands bill"],
+  [6960, "11-12", "S", "King", [], [], "NEPA", "S5641", "Agency CERPO definition"],
+  [6961, "11-12", "S", "King", [], [["Tillis", "11-16"]], "LANDS", "S5641-2", "Expedited low-conflict wind on private land"],
+  [6962, "11-12", "S", "King", [], [], "LANDS", "S5646", "Congressional waiver for certain wind projects"],
+  [6963, "11-12", "S", "King", [], [], "LANDS", "S5647", "Congressional waiver for certain wind projects"],
+  [6964, "11-12", "S", "King", [], [], "LANDS", "S5648", "Military aviation clearinghouse for energy projects"],
+  [6965, "11-12", "S", "Markey", [], [], "NEPA", "S5649", "Office of public engagement"],
+  [6966, "11-12", "S", "Markey", [], [], "NEPA", "S5650", "Limits the CEQ chair's dispute authority"],
+  [6967, "11-12", "S", "Markey", [], [], "DC", "S5650-2", "Data center environmental impacts"],
+  [6968, "11-12", "S", "Markey", [], [], "DC", "S5652", "Data center community toolkit"],
+  [6969, "11-12", "S", "Markey", [], [], "DC", "S5652-2", "Data center community toolkit"],
+  [6970, "11-12", "S", "Wyden", [], [], "OTHER", "S5652-3", "Section 232 reports"],
+  [6971, "11-12", "S", "Wyden", ["Merkley", "Cantwell"], [], "DC LANDS", "S5652-4", "Bars data centers on federal land"],
+  [6972, "11-12", "S", "Scott (FL)", [], [], "TX", "S5652-5", "Cost allocation savings clause"],
+  [6973, "11-12", "S", "Scott (FL)", ["Moody"], [], "CWA ESA", "S5652-6", "Florida dredge-and-fill program"],
+  [6974, "11-12", "S", "Kelly", ["Schiff", "Padilla", "Gallego"], [], "CERT", "S5653", "Water rights savings clause"],
+  [6975, "11-12", "S", "Welch", [], [], "TRIBAL COURTS", "S5653-2", "Preliminary injunctions in NHPA cases"],
+  [6976, "11-12", "S", "Welch", [], [], "CWA", "S5653-3", "Section 401 scope"],
+  [6977, "11-12", "S", "Welch", [], [], "CWA", "S5653-4", "Burden of proof on 401 denials"],
+  [6978, "11-12", "S", "Welch", [], [], "CERT", "S5654", "Damages limits"],
+  [6979, "11-12", "S", "Welch", [], [], "CERT", "S5654-2", "Damages limits"],
+  [6980, "11-12", "S", "Welch", [], [], "ESA", "S5654-3", "ESA consultation"],
+  [6981, "11-12", "S", "Welch", [], [], "COURTS", "S5655", "Preliminary injunctions in NEPA cases"],
+  [6982, "11-12", "S", "Welch", [], [], "CWA", "S5655-2", "Section 404 verifications"],
+  [6983, "11-12", "S", "Welch", [], [], "CWA", "S5655-3", "Section 404 general permits"],
+  [6984, "11-12", "S", "Moran", ["Grassley", "Schmitt"], [], "TX", "S5655-4", "Land restoration plans"],
+  [6985, "11-12", "S", "Curtis", ["Hickenlooper"], [], "LANDS", "S5656", "Mining claims acreage"],
+  [6986, "11-12", "S", "Cantwell", ["Wyden", "Murray"], [], "CWA TRIBAL", "S5656-2", "Saves tribal water quality authority"],
+  [6987, "11-12", "S", "Cantwell", ["Wyden", "Murray"], [], "CWA TRIBAL", "S5656-3", "Saves tribal water quality authority"],
+  [6988, "11-12", "S", "Cantwell", ["Wyden", "Merkley", "Murray"], [], "LANDS", "S5656-4", "Hydropower license conditions (Sec. 2232)"],
+  [6989, "11-12", "S", "Merkley", [], [], "CWA", "S5656-5", "Section 401 certification actions"],
+  [6990, "11-12", "S", "Durbin", [], [], "COURTS", "S5656-6", "Strike the remedy limits"],
+  [6991, "11-12", "S", "Gallego", ["Kelly"], [], "LANDS", "S5656-7", "Strike Sec. 2215 (mill sites)"],
+  [6992, "11-12", "S", "Cantwell", ["Murkowski"], [], "CWA", "S5656-8", "EPA 404(c) determinations become law"],
+  [6993, "11-12", "S", "Cantwell", ["Wyden", "Merkley", "Murray"], [], "LANDS", "S5656-9", "Hydropower license conditions (Sec. 2232)"],
+  [6994, "11-12", "S", "Cantwell", ["Wyden", "Murray"], [], "ESA", "S5656-10", "State assumption of ESA consultation"],
+  [6995, "11-12", "S", "Cantwell", ["Wyden"], [], "CERT LANDS", "S5657", "Excludes ANWR and NPR-A from project certainty"],
+  [6996, "11-12", "S", "Duckworth", ["Grassley"], [], "TX", "S5657-2", "Rewrites the federal siting backstop"],
+  [6997, "11-12", "S", "Duckworth", [], [], "TX", "S5660", "Land restoration"],
+  [6998, "11-12", "S", "Duckworth", [], [], "COURTS", "S5662", "150-day deadlines to sue become 4 years"],
+  [6999, "11-12", "S", "Murkowski", ["Schatz", "Cantwell", "Gallego", "Luján", "Hickenlooper"], [["Klobuchar", "11-16"]], "TRIBAL", "S5662-2", "Tribal undertaking rule and consultation (to the substitute)"],
+  [7000, "11-12", "S", "Murkowski", ["Schatz", "Cantwell", "Gallego", "Luján"], [["Klobuchar", "11-16"]], "TRIBAL", "S5663", "Historic Preservation Fund at $400 million a year"],
+  [7001, "11-12", "S", "Booker", ["Durbin"], [], "COURTS", "S5663-2", "Supplemental environmental documents in court"],
+  [7002, "11-12", "S", "Markey", [], [], "CWA", "S5663-3", "Section 401"],
+  [7003, "11-12", "S", "Britt", [], [], "DC", "S5665", "Cross-reference to Sec. 2107 (ratepayer protection)"],
+  [7004, "11-12", "S", "Smith", [], [], "CERT", "S5665-2", "Covered project definition"],
+  [7005, "11-12", "S", "Ossoff", ["Warnock"], [], "LANDS", "S5666", "Permitting process for renewable projects (Sec. 2213)"],
+  [7006, "11-12", "S", "Moran", ["Grassley", "Schmitt"], [], "TX", "S5666-2", "Land restoration"],
+  [7007, "11-12", "S", "Warnock", ["Ossoff"], [], "CWA", "S5666-3", "Permitting process (Sec. 1205)"],
+  [7008, "11-12", "S", "Merkley", [], [], "ESA TRIBAL", "S5666-4", "Best available science, with traditional ecological knowledge"],
+  [7009, "11-16", "S", "Moran", ["Schmitt", "Grassley", "Young"], [], "TX", "S5685-3", "Land restoration conditions on permits"],
+  [7010, "11-16", "S", "Paul", [], [], "TX", "S5685-4", "Strike Sec. 2116 (transmission organization governance)"],
+  [7011, "11-16", "S", "Alsobrooks", ["Shaheen"], [], "CWA", "S5686", "Rewrites the Clean Water Act title"],
+  [7012, "11-16", "7005", "Ossoff", ["Warnock"], [], "LANDS", "S5689", "Faster permitting for projects using domestic content"],
+  [7013, "11-16", "S", "Welch", [], [], "CERT", "S5690", "Covered project definition"],
+  [7014, "11-16", "S", "Welch", [], [], "CERT DC", "S5690-2", "Data centers in the project certainty title"],
+  [7015, "11-16", "6957", "Bennet", [], [], "TRIBAL", "S5691", "Revises his NHPA rewrite (SA 6957)"],
+  [7016, "11-16", "S", "Welch", [], [], "TX", "S5694", "Rewrites Sec. 2108 (dispatchable energy market access)"],
+  [7017, "11-16", "S", "Welch", [], [], "TX", "S5696", "Community benefits for grid loans"],
+  [7018, "11-16", "S", "Welch", [], [], "TX", "S5697", "Rewards for grid efficiency"],
+  [7019, "11-16", "6999", "Murkowski", ["Schatz"], [], "TRIBAL", "S5700", "Revises SA 6999"],
+  [7020, "11-16", "7000", "Schatz", ["Murkowski"], [], "TRIBAL", "S5701", "Historic Preservation Fund at $300 million"]
+];
+const AMD_ISSUE = { CWA: "Clean Water Act", TRIBAL: "Tribal and historic preservation", CERT: "Project certainty", TX: "Transmission", NEPA: "NEPA and federal review", COURTS: "Limits on courts", ESA: "Endangered Species Act", DC: "Data centers and ratepayers", LANDS: "Energy development and public lands", OTHER: "Not about permitting" };
+const amdUrl = (a) => `https://www.govinfo.gov/content/pkg/CREC-2026-${a[1]}/html/CREC-2026-${a[1]}-pt1-Pg${a[7]}.htm`;
 const AMENDMENTS = [
   { id: "S.Amdt. 6883", sponsor: "Capito (offered by Thune)", senators: ["Capito", "Thune"], cos: [], tier: 1,
     what: `Substitute that replaces the bill's text. Presumably the Nov. 7 manager's amendment; not yet checked against the filed text.`,
@@ -1752,9 +1957,9 @@ const AMENDMENTS = [
   { id: "S.Amdt. 6884 to 6890", sponsor: "Thune", senators: ["Thune"], cos: [], tier: 1,
     what: `Second- and third-degree amendments, described only as "to improve the bill," plus a motion to send the bill to the Finance Committee with instructions (6888) and two amendments to that motion.`,
     status: `Pending.`, note: `Standard tree-filling: while these occupy every slot, no other amendment can get a vote unless leaders agree by unanimous consent, usually as a negotiated package.`, src: [["Senate Democrats floor schedule, Nov. 12", "https://www.democrats.senate.gov/2026/11/11/schedule-for-thursday-november-12-2026"]] },
-  { id: "S.Amdt. 6882", sponsor: "Schiff", brief: "strike Title III, the NHPA changes", senators: ["Schiff"], cos: ["Alsobrooks", "Bennet", "Blumenthal", "Blunt Rochester", "Booker", "Cantwell", "Cortez Masto", "Duckworth", "Hirono", "Kaine", "Kelly", "Luján", "Markey", "Merkley", "Murray", "Padilla", "Peters", "Rosen", "Schatz", "Slotkin", "Smith", "Warner", "Wyden"], tier: 1,
+  { id: "S.Amdt. 6882", sponsor: "Schiff", brief: "strike Title III, the NHPA changes", senators: ["Schiff"], cos: ["Alsobrooks", "Bennet", "Blumenthal", "Blunt Rochester", "Booker", "Cantwell", "Coons", "Cortez Masto", "Duckworth", "Fetterman", "Gallego", "Gillibrand", "Hickenlooper", "Hirono", "Kaine", "Kelly", "Kim", "Klobuchar", "Luján", "Markey", "Merkley", "Murray", "Padilla", "Peters", "Rosen", "Schatz", "Shaheen", "Slotkin", "Smith", "Van Hollen", "Warner", "Warren", "Welch", "Wyden"], tier: 1,
     what: `Strike Division B, Title III, the historic preservation (NHPA) changes ${S(2301)}. Full text: "Strike title III of division B."`,
-    status: `Filed Nov. 10, to H.R. 2347 itself, not to the substitute.`,
+    status: `Filed Nov. 10, to H.R. 2347 itself, not to the substitute. 23 original cosponsors; Gallego, Van Hollen, Gillibrand, Shaheen and Warren added Nov. 12; Kim, Hickenlooper, Welch, Coons, Klobuchar and Fetterman added Nov. 16.`,
     note: `Seven cosponsors voted yes on cloture Nov. 9: Blumenthal, Cortez Masto, Peters, Rosen, Schatz, Slotkin and Warner. All but Cortez Masto voted yes again Nov. 16. A White House official says it will not support the bill without the NHPA changes (Punchbowl). Heinrich: "I don't think we can land the bill with Republicans if we completely strip it out" (Punchbowl). Cosponsors as listed in the Record.`,
     src: [["Congressional Record, Nov. 10, S5471", "https://www.govinfo.gov/content/pkg/CREC-2026-11-10/html/CREC-2026-11-10-pt1-PgS5471.htm"], ["Punchbowl News, Nov. 11", "https://punchbowl.news/article/policy/tribal-staredown-on-permitting/"]] },
   { id: "S.Amdt. 6854", sponsor: "Murkowski", brief: "make projects affecting tribal religious and cultural sites NHPA undertakings", senators: ["Murkowski"], cos: ["Schatz", "Gallego", "Cantwell", "Luján"], tier: 1,
@@ -2424,7 +2629,59 @@ function showView() {
   ["groups", "congress", "amendments", "polls"].forEach(v => document.getElementById("tab-" + v).setAttribute("aria-selected", view === v));
   if (h && h !== "groups" && h !== "congress" && h !== "polls" && h !== "amendments") { const t = document.getElementById(h); if (t) t.scrollIntoView(); }
 }
+function renderAmdGrid() {
+  const back = {};   // senator -> issue -> { s: [], c: [] }
+  const tot = {};    // senator -> { s: Set, c: Set }
+  for (const a of AMD_ALL) {
+    const [n, , , sp, cos, add, tags] = a;
+    const people = [[sp, "s"], ...cos.map(c => [c, "c"]), ...add.map(x => [x[0], "c"])];
+    for (const [p, role] of people) {
+      tot[p] = tot[p] || { s: new Set(), c: new Set() };
+      tot[p][role].add(n);
+      for (const t of tags.split(" ")) {
+        back[p] = back[p] || {};
+        back[p][t] = back[p][t] || { s: [], c: [] };
+        if (!back[p][t][role].includes(n)) back[p][t][role].push(n);
+      }
+    }
+  }
+  // Columns: issues ordered by how many senators back at least one amendment on them.
+  const issues = Object.keys(AMD_ISSUE).map(k => [k, Object.values(back).filter(b => b[k]).length]).sort((x, y) => y[1] - x[1] || AMD_ISSUE[x[0]].localeCompare(AMD_ISSUE[y[0]]));
+  const rows = senRows().filter(r => tot[r.name]);
+  const groups = [["Sponsors and supporters", ["sponsor", "support"], "var(--support)"], ["Voted for cloture", ["lean"], "var(--lean)"], ["Want changes", ["conditional", "supchg"], "var(--changes)"], ["Oppose or voted no", ["oppose"], "var(--oppose)"], ["No statement found", ["none"], "var(--silent-bg)"]];
+  const shade = (k) => k >= 10 ? 5 : k >= 5 ? 4 : k >= 3 ? 3 : k;
+  const backed = (p) => tot[p].s.size + [...tot[p].c].filter(n => !tot[p].s.has(n)).length;
+  const list = (arr) => arr.map(n => n).join(", ");
+  let html = `<thead><tr><th scope="col"><span class="visually-hidden">Senator</span></th>${issues.map(([k, c]) => `<th scope="col">${AMD_ISSUE[k]}<small>${c} senators</small></th>`).join("")}<th scope="col" class="tot">Total</th></tr></thead><tbody>`;
+  for (const [label, keys, color] of groups) {
+    const g = rows.filter(r => keys.includes(r.pos)).sort((a, b) => backed(b.name) - backed(a.name) || a.name.localeCompare(b.name));
+    if (!g.length) continue;
+    html += `<tr class="amd-group"><th colspan="${issues.length + 2}" scope="colgroup"><i class="sw" style="background:${color}"></i>${label} (${g.length})</th></tr>`;
+    for (const r of g) {
+      const b = back[r.name];
+      html += `<tr><th scope="row">${r.name}<span class="p">${r.party}-${r.state}</span></th>` + issues.map(([k]) => {
+        const x = b[k];
+        if (!x) return `<td class="c"></td>`;
+        const k2 = new Set([...x.s, ...x.c]).size;
+        const msg = `${r.name}, ${AMD_ISSUE[k]}: ${x.s.length ? `sponsors S.Amdt. ${list(x.s)}` : ""}${x.s.length && x.c.length ? "; " : ""}${x.c.length ? `cosponsors S.Amdt. ${list(x.c)}` : ""}.`;
+        return `<td class="c amd-c${shade(k2)}" tabindex="0" title="${msg}" aria-label="${msg}" data-msg="${msg}">${k2}</td>`;
+      }).join("") + `<td class="tot">${backed(r.name)}${tot[r.name].s.size ? ` <span class="p">(${tot[r.name].s.size} own)</span>` : ""}</td></tr>`;
+    }
+  }
+  const grid = document.getElementById("amdGrid");
+  grid.innerHTML = grid.querySelector("caption").outerHTML + html + "</tbody>";
+  const note = document.getElementById("amdCellNote");
+  const show = (e) => { const td = e.target.closest("td.c[data-msg]"); if (td) note.textContent = td.dataset.msg; };
+  grid.addEventListener("click", show); grid.addEventListener("focusin", show); grid.addEventListener("mouseover", show);
+  document.getElementById("amdAllBody").innerHTML = AMD_ALL.map(a => {
+    const [n, d, t, sp, cos, add, tags, , what] = a;
+    const c = [...cos, ...add.map(x => `${x[0]} (added ${x[1].replace("11-", "Nov. ")})`)];
+    return `<tr><th scope="row"><a href="${amdUrl(a)}" target="_blank" rel="noopener">S.Amdt. ${n}</a>${t !== "B" && t !== "S" ? `<br><span class="said">to S.Amdt. ${t}</span>` : ""}</th><td>${d.replace("11-", "Nov. ")}</td><td>${sp}${c.length ? `<span class="said">, with ${c.join(", ")}</span>` : ""}</td><td>${what}</td><td class="said">${tags.split(" ").map(k => AMD_ISSUE[k]).join("; ")}</td></tr>`;
+  }).join("");
+}
+
 function renderAmendments() {
+  renderAmdGrid();
   const tier = (t) => `<span class="amd-tier">tier ${t}</span>`;
   document.getElementById("floorTl").innerHTML = FLOOR.map(f => `<li><b>${f.d}</b><span>${f.what} ${srcLinks(f.src)}</span></li>`).join("");
   document.getElementById("amendBody").innerHTML = AMENDMENTS.map(a => `<tr><th scope="row">${a.id}${tier(a.tier)}</th><td>${a.sponsor}${a.cos.length ? `<details><summary>${a.cos.length} cosponsors</summary>${a.cos.join(", ")}</details>` : ""}</td><td>${a.what}</td><td>${a.status}</td><td class="said">${a.note ? a.note + " " : ""}${srcLinks(a.src)}</td></tr>`).join("");
