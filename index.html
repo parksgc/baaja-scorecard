@@ -409,7 +409,6 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     <div class="views" role="tablist" aria-label="Views">
       <a role="tab" href="#congress" id="tab-congress" class="view-tab">Whip tracker</a>
       <a role="tab" href="#groups" id="tab-groups" class="view-tab">Stakeholders</a>
-      <a role="tab" href="#amendments" id="tab-amendments" class="view-tab">Amendments</a>
       <a role="tab" href="#polls" id="tab-polls" class="view-tab">Polling</a>
     </div>
     <nav class="jump" aria-label="Sections" data-view="groups"><a href="#glance">At a glance</a><a href="#provisions">Provisions</a><a href="#stakeholders">Groups</a><a href="#officials">Former officials</a><a href="#fixes">Fixes</a></nav>
@@ -442,7 +441,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
           <h4>Senate invokes cloture on the substitute, 70 to 27</h4>
           <p>The Senate voted to end debate on the Capito substitute (S.Amdt. 6883), the current text of BAAJA. Sixty votes were needed. Forty-nine Republicans and 21 Democrats and independents voted yes; Sens. Josh Hawley (R-MO) and Mike Rounds (R-SD) and 25 Democrats and independents voted no. Sens. Ashley Moody (R-FL), Jim Risch (R-ID) and Chris Murphy (D-CT) did not vote. Michigan's Peters and Slotkin voted yes, as they did Nov. 9.</p>
           <p>Compared with the Nov. 9 vote (73 to 25): Sen. Catherine Cortez Masto (D-NV), who has said she will vote against final passage if Title III stays, and Hawley, whose four landowner amendments have not had votes, switched from yes to no. Sen. Tim Sheehy (R-MT), absent Nov. 9, voted yes. Moody and Risch voted yes Nov. 9 and missed this vote.</p>
-          <p>Next: cloture on the bill itself (H.R. 2347, filed Nov. 11), then final passage, which The Hill expects before Thanksgiving. No amendment has had a vote, and there is no agreement yet on which will; see the <a href="#amendments">amendment tracker</a>. Shading now uses each senator's most recent cloture vote, so missing one vote does not undo the other.</p>
+          <p>Next: cloture on the bill itself (H.R. 2347, filed Nov. 11), then final passage, which The Hill expects before Thanksgiving. No amendment has had a vote, and there is no agreement yet on which will. Shading now uses each senator's most recent cloture vote, so missing one vote does not undo the other.</p>
           <p class="src">Names: <a href="https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00264.htm" target="_blank" rel="noopener">Senate Roll Call Vote 264</a>; earlier, <a href="https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00257.htm" target="_blank" rel="noopener">Vote 257</a>. Report: <a href="https://thehill.com/homenews/senate/6223468-senate-advances-baja-permitting-reform/" target="_blank" rel="noopener">The Hill</a>. Note added Nov. 17, 1:30 AM ET.</p>
         </div>
         <aside class="seat-panel" id="seatPanel" aria-live="polite"></aside>
@@ -514,39 +513,6 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     </div>
   </section>
 
-  <section id="amendments" data-view="amendments">
-    <div class="section-head">
-      <span class="eyebrow">Senate floor</span>
-      <h2>Proposed amendments</h2>
-      <p>Amendments filed or circulating since the Senate took up the bill, and changes senators and others say they want. Majority Leader Thune has filled the amendment tree, so no amendment gets a vote unless leaders agree to one by unanimous consent, usually as a negotiated package. "Filed" does not mean a vote is guaranteed. Tier 1 is the official record or the sponsor's own release; tier 2, a named reporter; tier 3, a paraphrase or news digest.</p>
-    </div>
-    <div class="panel"><h3>Floor timeline</h3><ol class="floor-tl" id="floorTl"></ol></div>
-    <p class="amend-count"><b>163 amendments filed through Nov. 16 (151 by the Nov. 12 deadline, 12 more on Nov. 16); none has had a vote.</b> The grid below covers all of them; the table after it lists the most discussed.</p>
-    <div class="panel amd-grid-panel">
-      <h3>Who filed amendments on what</h3>
-      <p class="amd-grid-intro">Each row is a senator who sponsored or cosponsored at least one amendment. Each cell counts the amendments that senator backs on that issue. Issues run left to right by how many senators back at least one amendment on them, so the order updates as cosponsors are added. Rows are grouped by the senator's position on the Scorecard. Hover or tap a cell for the amendment numbers.</p>
-      <div class="amd-key" aria-hidden="true"><span>Amendments backed:</span><i class="amd-c1">1</i><i class="amd-c2">2</i><i class="amd-c3">3-4</i><i class="amd-c4">5-9</i><i class="amd-c5">10+</i></div>
-      <div class="table-scroll amd-grid-scroll"><table class="amd-grid" id="amdGrid"><caption class="visually-hidden">Number of amendments each senator sponsors or cosponsors, by issue</caption></table></div>
-      <p class="amd-cell-note" id="amdCellNote" aria-live="polite"></p>
-      <p class="src">Source: Congressional Record, Nov. 10, 11, 12 and 16 (text of amendments and additional cosponsors). Excludes the substitute (S.Amdt. 6883), Majority Leader Thune's seven placeholder amendments (6884 to 6890) and amendments filed to other bills. Issue tags are the Scorecard's reading of each amendment's text; an amendment can touch more than one issue, so a row's cells can add up to more than its total. "Backs" means sponsors or cosponsors.</p>
-      <details class="amd-all"><summary>All 163 amendments</summary><div class="table-scroll"><table class="list-table amd-all-table"><thead><tr><th scope="col">Amendment</th><th scope="col">Filed</th><th scope="col">Sponsor and cosponsors</th><th scope="col">What it does</th><th scope="col">Issues</th></tr></thead><tbody id="amdAllBody"></tbody></table></div></details>
-    </div>
-    <div class="table-scroll">
-      <table class="list-table amend-table">
-        <caption class="visually-hidden">Amendments filed or circulating</caption>
-        <thead><tr><th scope="col">Amendment</th><th scope="col">Sponsor</th><th scope="col">What it would do</th><th scope="col">Status</th><th scope="col">Notes and sources</th></tr></thead>
-        <tbody id="amendBody"></tbody>
-      </table>
-    </div>
-    <h3 class="sub-h">Changes sought, no amendment text yet</h3>
-    <div class="table-scroll">
-      <table class="list-table amend-table">
-        <caption class="visually-hidden">Changes sought without amendment text</caption>
-        <thead><tr><th scope="col">Who</th><th scope="col">What they want</th><th scope="col">Source</th></tr></thead>
-        <tbody id="demandBody"></tbody>
-      </table>
-    </div>
-  </section>
 
   <section id="polls" data-view="polls">
     <div class="section-head">
@@ -2327,7 +2293,7 @@ function showSeat(r) {
     <span><span class="pill ${cls}">${lbl}</span></span>
     <p class="said">${note}</p>
     <p class="said">${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}
-    <p class="vote-line">${voteLine(r.name)}</p>${amendLine(r.name)}`;
+    <p class="vote-line">${voteLine(r.name)}</p>`;
 }
 
 function renderHemi() {
@@ -2459,7 +2425,7 @@ function showState() {
   const senHtml = sens.map(r => {
     const [lbl, cls] = SEN_LABEL[r.pos];
     return `<div class="who-row"><b>Sen. ${r.name}</b><span class="said">(${r.party})</span><span class="pill ${cls}">${lbl}</span></div>
-      <p>${r.note || (r.pos === "lean" ? "No statement on the bill found. Voted for cloture." : r.pos === "oppose" ? "No statement on the bill found. Voted no on cloture." : "Nothing found since Sept. 30.")}</p><p>${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}<p class="vote-line">${voteLine(r.name)}</p>${amendLine(r.name)}`;
+      <p>${r.note || (r.pos === "lean" ? "No statement on the bill found. Voted for cloture." : r.pos === "oppose" ? "No statement on the bill found. Voted no on cloture." : "Nothing found since Sept. 30.")}</p><p>${srcLinks(r.src)}</p>${r.pos === "supchg" ? supchgNote(r.name) : ""}<p class="vote-line">${voteLine(r.name)}</p>`;
   }).join("");
   const memHtml = mem.map(h => {
     const [lbl, cls] = HOUSE_POS[h[2]];
@@ -2624,10 +2590,10 @@ document.addEventListener("click", (e) => {
 const GROUP_IDS = ["groups", "glance", "provisions", "stakeholders", "officials", "fixes"];
 function showView() {
   const h = location.hash.slice(1);
-  const view = GROUP_IDS.includes(h) ? "groups" : h === "polls" ? "polls" : h === "amendments" ? "amendments" : "congress";
+  const view = GROUP_IDS.includes(h) ? "groups" : h === "polls" ? "polls" : "congress";
   document.querySelectorAll("[data-view]").forEach(el => { el.hidden = el.dataset.view !== view; });
-  ["groups", "congress", "amendments", "polls"].forEach(v => document.getElementById("tab-" + v).setAttribute("aria-selected", view === v));
-  if (h && h !== "groups" && h !== "congress" && h !== "polls" && h !== "amendments") { const t = document.getElementById(h); if (t) t.scrollIntoView(); }
+  ["groups", "congress", "polls"].forEach(v => document.getElementById("tab-" + v).setAttribute("aria-selected", view === v));
+  if (h && h !== "groups" && h !== "congress" && h !== "polls") { const t = document.getElementById(h); if (t) t.scrollIntoView(); }
 }
 function renderAmdGrid() {
   const back = {};   // senator -> issue -> { s: [], c: [] }
@@ -2733,7 +2699,7 @@ function renderPolls() {
 }
 
 renderSummary(); renderMatrix(); renderChips(); renderRoster(); renderSearched(); renderFixes(); renderOfficials(); renderSenate(); renderHouse();
-renderHemi(); renderVotebar(); renderHouseViz(); renderStateMap(); renderGlance(); renderLatest("W"); renderLatest("G"); renderPolls(); renderAmendments(); showView();
+renderHemi(); renderVotebar(); renderHouseViz(); renderStateMap(); renderGlance(); renderLatest("W"); renderLatest("G"); renderPolls(); showView();
 linkifySections(document.body);
 new MutationObserver((muts) => muts.forEach((m) => m.addedNodes.forEach((n) => { if (n.nodeType === 1) linkifySections(n); else if (n.nodeType === 3 && n.parentElement) linkifySections(n.parentElement); }))).observe(document.body, { childList: true, subtree: true });
 </script>
