@@ -115,7 +115,13 @@ const GROUP_POS = { support: ["Supports", "#3a9a74"], supchg: ["Supports, wants 
 const MONTHS = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
 const day = (d) => { const [, m, dd] = d.split("-"); return `${MONTHS[+m - 1]} ${+dd}`; };
 // First sentence only: the table is a pointer to the page, which has the full entry.
-const firstSentence = (t) => { const m = t.match(/^.*?[a-z0-9)\]][.!?]["\u201d]?(?=\s+[A-Z])/); return m ? m[0] : t; };
+const ABBR = /(?:^|[\s(])(?:Sen|Sens|Rep|Reps|Gov|Lt|Dept|Mr|Mrs|Ms|Dr|St|No|Nos|Jan|Feb|Mar|Apr|Aug|Sept|Oct|Nov|Dec|Inc|Co|Corp|Jr|Sr|U\.S|D\.C|vs|Sec|Secs|Amdt|S\.Amdt)\.$/;
+const firstSentence = (t) => {
+  const re = /[A-Za-z0-9)\]][.!?]["\u201d]?(?=\s+[A-Z])/g;
+  let m;
+  while ((m = re.exec(t))) { const cut = t.slice(0, m.index + m[0].length); if (!ABBR.test(cut.replace(/["\u201d]$/, ""))) return cut; }
+  return t;
+};
 const latestRows = [["Date", "Group", "What they said"]];
 ctx.LATEST.filter((x) => x.k === "Group").sort((a, b) => b.d.localeCompare(a.d)).slice(0, 10).forEach((x) => {
   const [lab, col] = GROUP_POS[x.pos] || ["See page", "#5a6578"];
