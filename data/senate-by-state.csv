@@ -1,51 +1,51 @@
 State,Code,Map category,Senator 1,Senator 1 position,Senator 2,Senator 2 position
-Alabama,AL,Both support or voted for cloture,Britt (R),Voted for cloture,Tuberville (R),Voted for cloture
-Alaska,AK,Both support or voted for cloture,Murkowski (R),Voted for cloture,Sullivan (R),Voted for cloture
+Alabama,AL,Both support or voted for the bill,Britt (R),Voted for the bill,Tuberville (R),Voted for the bill
+Alaska,AK,Both support or voted for the bill,Murkowski (R),Voted for the bill,Sullivan (R),Voted for the bill
 Arizona,AZ,At least one opposes,Gallego (D),Supports,Kelly (D),Opposes or voted no
-Arkansas,AR,Both support or voted for cloture,Boozman (R),Supports,Cotton (R),Voted for cloture
+Arkansas,AR,Both support or voted for the bill,Boozman (R),Supports,Cotton (R),Voted for the bill
 California,CA,At least one opposes,Padilla (D),Opposes or voted no,Schiff (D),Opposes or voted no
 Colorado,CO,At least one opposes,Bennet (D),Opposes or voted no,Hickenlooper (D),Supports
-Connecticut,CT,One supports or voted for cloture,Blumenthal (D),Voted for cloture,Murphy (D),No statement found
+Connecticut,CT,At least one opposes,Blumenthal (D),Opposes or voted no,Murphy (D),No statement found
 Delaware,DE,At least one opposes,Blunt Rochester (D),Opposes or voted no,Coons (D),Supports
-Florida,FL,Both support or voted for cloture,Moody (R),Voted for cloture,Scott (R),Voted for cloture
-Georgia,GA,Both support or voted for cloture,Ossoff (D),Voted for cloture,Warnock (D),Voted for cloture
+Florida,FL,Both support or voted for the bill,Moody (R),Voted for the bill,Scott (R),Voted for the bill
+Georgia,GA,At least one opposes,Ossoff (D),Opposes or voted no,Warnock (D),Opposes or voted no
 Hawaii,HI,At least one opposes,Hirono (D),Opposes or voted no,Schatz (D),Supports
-Idaho,ID,Both support or voted for cloture,Crapo (R),Voted for cloture,Risch (R),Voted for cloture
+Idaho,ID,Both support or voted for the bill,Crapo (R),Voted for the bill,Risch (R),Voted for the bill
 Illinois,IL,At least one opposes,Duckworth (D),Opposes or voted no,Durbin (D),Opposes or voted no
-Indiana,IN,Both support or voted for cloture,Banks (R),Voted for cloture,Young (R),Voted for cloture
-Iowa,IA,Both support or voted for cloture,Ernst (R),Voted for cloture,Grassley (R),Voted for cloture
-Kansas,KS,Both support or voted for cloture,Marshall (R),Voted for cloture,Moran (R),Voted for cloture
-Kentucky,KY,Both support or voted for cloture,McConnell (R),Voted for cloture,Paul (R),Voted for cloture
-Louisiana,LA,Both support or voted for cloture,Cassidy (R),Voted for cloture,Kennedy (R),Voted for cloture
-Maine,ME,Wants changes,Collins (R),Voted for cloture,King (I),Wants changes
+Indiana,IN,Both support or voted for the bill,Banks (R),Voted for the bill,Young (R),Voted for the bill
+Iowa,IA,Both support or voted for the bill,Ernst (R),Voted for the bill,Grassley (R),Voted for the bill
+Kansas,KS,Both support or voted for the bill,Marshall (R),Voted for the bill,Moran (R),Voted for the bill
+Kentucky,KY,Both support or voted for the bill,McConnell (R),Voted for the bill,Paul (R),Voted for the bill
+Louisiana,LA,Both support or voted for the bill,Cassidy (R),Voted for the bill,Kennedy (R),Voted for the bill
+Maine,ME,Wants changes,Collins (R),Voted for the bill,King (I),Wants changes
 Maryland,MD,At least one opposes,Alsobrooks (D),Opposes or voted no,Van Hollen (D),Opposes or voted no
 Massachusetts,MA,At least one opposes,Markey (D),Opposes or voted no,Warren (D),Opposes or voted no
-Michigan,MI,Wants changes,Peters (D),Voted for cloture,Slotkin (D),Wants changes
-Minnesota,MN,At least one opposes,Klobuchar (D),Voted for cloture,Smith (D),Opposes or voted no
-Mississippi,MS,Both support or voted for cloture,Hyde-Smith (R),Voted for cloture,Wicker (R),Voted for cloture
-Missouri,MO,At least one opposes,Hawley (R),Opposes or voted no,Schmitt (R),Voted for cloture
-Montana,MT,Both support or voted for cloture,Daines (R),Voted for cloture,Sheehy (R),Voted for cloture
-Nebraska,NE,Both support or voted for cloture,Fischer (R),Voted for cloture,Ricketts (R),Voted for cloture
+Michigan,MI,Wants changes,Peters (D),Voted for the bill,Slotkin (D),Wants changes
+Minnesota,MN,At least one opposes,Klobuchar (D),Voted for the bill,Smith (D),Opposes or voted no
+Mississippi,MS,Both support or voted for the bill,Hyde-Smith (R),Voted for the bill,Wicker (R),Voted for the bill
+Missouri,MO,At least one opposes,Hawley (R),Opposes or voted no,Schmitt (R),Voted for the bill
+Montana,MT,Both support or voted for the bill,Daines (R),Voted for the bill,Sheehy (R),Voted for the bill
+Nebraska,NE,Both support or voted for the bill,Fischer (R),Voted for the bill,Ricketts (R),Voted for the bill
 Nevada,NV,At least one opposes,Cortez Masto (D),Opposes or voted no,Rosen (D),Supports
-New Hampshire,NH,At least one opposes,Hassan (D),Opposes or voted no,Shaheen (D),Voted for cloture
-New Jersey,NJ,At least one opposes,Booker (D),Opposes or voted no,Kim (D),Voted for cloture
+New Hampshire,NH,At least one opposes,Hassan (D),Opposes or voted no,Shaheen (D),Opposes or voted no
+New Jersey,NJ,At least one opposes,Booker (D),Opposes or voted no,Kim (D),Opposes or voted no
 New Mexico,NM,At least one opposes,Heinrich (D),Sponsor,Luján (D),Opposes or voted no
-New York,NY,Wants changes,Gillibrand (D),Voted for cloture,Schumer (D),Wants changes
-North Carolina,NC,Both support or voted for cloture,Budd (R),Voted for cloture,Tillis (R),Voted for cloture
-North Dakota,ND,Both support or voted for cloture,Cramer (R),Voted for cloture,Hoeven (R),Voted for cloture
-Ohio,OH,Both support or voted for cloture,Husted (R),Supports,Moreno (R),Voted for cloture
-Oklahoma,OK,Both support or voted for cloture,Armstrong (R),Supports,Lankford (R),Voted for cloture
+New York,NY,At least one opposes,Gillibrand (D),Opposes or voted no,Schumer (D),Wants changes
+North Carolina,NC,Both support or voted for the bill,Budd (R),Voted for the bill,Tillis (R),Voted for the bill
+North Dakota,ND,Both support or voted for the bill,Cramer (R),Voted for the bill,Hoeven (R),Voted for the bill
+Ohio,OH,Both support or voted for the bill,Husted (R),Supports,Moreno (R),Voted for the bill
+Oklahoma,OK,Both support or voted for the bill,Armstrong (R),Supports,Lankford (R),Voted for the bill
 Oregon,OR,At least one opposes,Merkley (D),Opposes or voted no,Wyden (D),Opposes or voted no
-Pennsylvania,PA,Both support or voted for cloture,Fetterman (D),Voted for cloture,McCormick (R),Supports
-Rhode Island,RI,Both support or voted for cloture,Reed (D),Voted for cloture,Whitehouse (D),Sponsor
-South Carolina,SC,Both support or voted for cloture,Graham (R),Voted for cloture,Scott (R),Voted for cloture
-South Dakota,SD,At least one opposes,Rounds (R),Opposes or voted no,Thune (R),Voted for cloture
-Tennessee,TN,Both support or voted for cloture,Blackburn (R),Voted for cloture,Hagerty (R),Voted for cloture
-Texas,TX,Both support or voted for cloture,Cornyn (R),Voted for cloture,Cruz (R),Voted for cloture
-Utah,UT,Both support or voted for cloture,Curtis (R),Voted for cloture,Lee (R),Sponsor
+Pennsylvania,PA,Both support or voted for the bill,Fetterman (D),Voted for the bill,McCormick (R),Supports
+Rhode Island,RI,Both support or voted for the bill,Reed (D),Voted for the bill,Whitehouse (D),Sponsor
+South Carolina,SC,Both support or voted for the bill,Graham (R),Voted for the bill,Scott (R),Voted for the bill
+South Dakota,SD,At least one opposes,Rounds (R),Opposes or voted no,Thune (R),Voted for the bill
+Tennessee,TN,Both support or voted for the bill,Blackburn (R),Voted for the bill,Hagerty (R),Voted for the bill
+Texas,TX,Both support or voted for the bill,Cornyn (R),Voted for the bill,Cruz (R),Voted for the bill
+Utah,UT,Both support or voted for the bill,Curtis (R),Voted for the bill,Lee (R),Sponsor
 Vermont,VT,At least one opposes,Sanders (I),Opposes or voted no,Welch (D),Opposes or voted no
-Virginia,VA,At least one opposes,Kaine (D),Opposes or voted no,Warner (D),Voted for cloture
+Virginia,VA,At least one opposes,Kaine (D),Opposes or voted no,Warner (D),Voted for the bill
 Washington,WA,At least one opposes,Cantwell (D),Opposes or voted no,Murray (D),Opposes or voted no
-West Virginia,WV,Both support or voted for cloture,Capito (R),Sponsor,Justice (R),Voted for cloture
-Wisconsin,WI,At least one opposes,Baldwin (D),Opposes or voted no,Johnson (R),Voted for cloture
-Wyoming,WY,Both support or voted for cloture,Barrasso (R),Voted for cloture,Lummis (R),Voted for cloture
+West Virginia,WV,Both support or voted for the bill,Capito (R),Sponsor,Justice (R),Voted for the bill
+Wisconsin,WI,At least one opposes,Baldwin (D),Opposes or voted no,Johnson (R),Voted for the bill
+Wyoming,WY,Both support or voted for the bill,Barrasso (R),Voted for the bill,Lummis (R),Voted for the bill

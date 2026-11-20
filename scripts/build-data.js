@@ -41,11 +41,11 @@ const senators = SENATE.map((s) => {
   const key = s.name.replace(/ \(..\)$/, "");
   const n = SEN_NOTES[key];
   const pos0 = n ? n[0] : "none";
-  // Same rule as the page: a cloture yes vote moves a senator with no stated position into the light-green tier.
-  // Most recent cloture vote actually cast, as on the page.
+  // Same rule as the page: a yes vote moves a senator with no stated position into the light-green tier.
+  // Most recent floor vote actually cast, as on the page.
   let lastVote; for (let i = VOTES.length - 1; i >= 0; i--) { const x = VOTES[i].votes[s.name]; if (x === "Y" || x === "N") { lastVote = x; break; } }
-  const pos = (pos0 === "none" || pos0 === "lean" || pos0 === "supchg") && lastVote === "Y" ? "lean" : (pos0 === "none" || pos0 === "conditional") && lastVote === "N" ? "oppose" : pos0;
-  return { ...s, key, pos, note: n ? plain(n[1]) : pos === "lean" ? "No statement on the bill found. Voted for cloture." : pos === "oppose" ? "No statement on the bill found. Voted no on cloture." : "" };
+  const pos = (pos0 === "none" || pos0 === "lean" || pos0 === "supchg") && lastVote === "Y" ? "lean" : (pos0 === "none" || pos0 === "lean" || pos0 === "conditional") && lastVote === "N" ? "oppose" : pos0;
+  return { ...s, key, pos, note: n ? plain(n[1]) : pos === "lean" ? "No statement on the bill found. Voted for the bill." : pos === "oppose" ? "No statement on the bill found. Voted no." : "" };
 });
 
 // One vocabulary for every chart, so the bar, the seat chart and the map read alike.
@@ -53,7 +53,7 @@ const senators = SENATE.map((s) => {
 // The seat chart's legend order follows Datawrapper's stored color map, which sorts keys by length and then
 // alphabetically, so these lengths are chosen to keep the legend running from Sponsor to No statement found.
 // "Supports, wants changes" (supchg) sorts after "No statement found" by length; the charts set categoryOrder to place it after "Leans support".
-const LABEL = { sponsor: "Sponsor", support: "Supports", lean: "Voted for cloture", supchg: "Supports, wants changes", conditional: "Wants changes", oppose: "Opposes or voted no", none: "No statement found" };
+const LABEL = { sponsor: "Sponsor", support: "Supports", lean: "Voted for the bill", supchg: "Supports, wants changes", conditional: "Wants changes", oppose: "Opposes or voted no", none: "No statement found" };
 
 // 1. Path to 60: one stacked bar
 const order = ["sponsor", "support", "lean", "supchg", "conditional", "oppose", "none"].map((k) => [k, LABEL[k]]);
@@ -72,8 +72,8 @@ for (const code of Object.keys(NAMES)) {
   const p = [a.pos, b.pos];
   const cat = p.includes("oppose") ? "At least one opposes"
     : p.includes("conditional") || p.includes("supchg") ? "Wants changes"
-    : p.every((x) => yes.has(x)) ? "Both support or voted for cloture"
-    : p.some((x) => yes.has(x)) ? "One supports or voted for cloture"
+    : p.every((x) => yes.has(x)) ? "Both support or voted for the bill"
+    : p.some((x) => yes.has(x)) ? "One supports or voted for the bill"
     : "No statement found";
   map.push([NAMES[code], code, cat, `${a.key} (${a.party})`, label(a), `${b.key} (${b.party})`, label(b)]);
 }
@@ -229,8 +229,8 @@ fs.writeFileSync(path.join(root, "data", "amendments.csv"), csv(amendRows));
     }
   }
   const issues = Object.keys(AMD_ISSUE).map((k) => [k, Object.values(back).filter((b) => b[k]).length]).sort((x, y) => y[1] - x[1] || AMD_ISSUE[x[0]].localeCompare(AMD_ISSUE[y[0]]));
-  const groupOf = { sponsor: "Sponsors and supporters", support: "Sponsors and supporters", lean: "Voted for cloture", conditional: "Want changes", supchg: "Want changes", oppose: "Oppose or voted no", none: "No statement found" };
-  const gOrder = ["Sponsors and supporters", "Voted for cloture", "Want changes", "Oppose or voted no", "No statement found"];
+  const groupOf = { sponsor: "Sponsors and supporters", support: "Sponsors and supporters", lean: "Voted for the bill", conditional: "Want changes", supchg: "Want changes", oppose: "Oppose or voted no", none: "No statement found" };
+  const gOrder = ["Sponsors and supporters", "Voted for the bill", "Want changes", "Oppose or voted no", "No statement found"];
   const rowsG = senators.filter((s) => all[s.key] || all[s.name.replace(/^Sen\. /, "")]).map((s) => {
     const k = all[s.key] ? s.key : s.name.replace(/^Sen\. /, "");
     return { k, s, g: groupOf[s.pos], n: all[k].size };
@@ -239,7 +239,7 @@ fs.writeFileSync(path.join(root, "data", "amendments.csv"), csv(amendRows));
     ...rowsG.map(({ k, s, g, n }) => [`${k.replace(/ \(..\)$/, "")} (${s.party}-${s.state})`, g, ...issues.map(([t]) => (back[k][t] ? String(back[k][t].size) : "")), String(n), String(own[k] ? own[k].size : 0)])];
   fs.writeFileSync(path.join(root, "data", "amendments-by-senator.csv"), csv(gridRows));
   const allRows = [["Amendment", "Filed", "Sponsor", "Cosponsors", "Issues", "What it does", "Congressional Record"],
-    ...AMD_ALL.map((a) => [`S.Amdt. ${a[0]}`, `2026-${a[1]}`, a[3], [...a[4], ...a[5].map((x) => x[0])].join("; "), a[6].split(" ").map((t) => AMD_ISSUE[t]).join("; "), a[8], `https://www.govinfo.gov/content/pkg/CREC-2026-${a[1]}/html/CREC-2026-${a[1]}-pt1-Pg${a[7]}.htm`])];
+    ...AMD_ALL.map((a) => [`S.Amdt. ${a[0]}`, `2026-${a[1]}`, a[3], [...a[4], ...a[5].map((x) => x[0])].join("; "), a[6].split(" ").map((t) => AMD_ISSUE[t]).join("; "), a[8], a[7] ? `https://www.govinfo.gov/content/pkg/CREC-2026-${a[1]}/html/CREC-2026-${a[1]}-pt1-Pg${a[7]}.htm` : `https://www.govinfo.gov/app/details/CREC-2026-${a[1]}`])];
   fs.writeFileSync(path.join(root, "data", "amendments-all.csv"), csv(allRows));
 }
 fs.writeFileSync(path.join(root, "data", "polls.csv"), csv(pollRows));
