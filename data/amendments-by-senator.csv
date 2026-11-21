@@ -1,15 +1,15 @@
-Senator,Position on the Scorecard,Tribal and historic preservation,Clean Water Act,Transmission,Energy development and public lands,Project certainty,Not about permitting,Limits on courts,NEPA and federal review,Data centers and ratepayers,Endangered Species Act,Amendments backed,Sponsored
-Hickenlooper (D-CO),Sponsors and supporters,8,,,3,2,1,2,,1,,14,0
+Senator,Position on the Scorecard,Tribal and historic preservation,Clean Water Act,Transmission,Energy development and public lands,Project certainty,Not about permitting,Limits on courts,Data centers and ratepayers,NEPA and federal review,Endangered Species Act,Amendments backed,Sponsored
+Hickenlooper (D-CO),Sponsors and supporters,8,,,3,2,1,2,1,,,14,0
 Gallego (D-AZ),Sponsors and supporters,5,,,1,2,1,1,,,,9,1
 Schatz (D-HI),Sponsors and supporters,7,,,,,2,1,,,,9,3
 Coons (D-DE),Sponsors and supporters,3,,,,1,,,,,,4,0
+Capito (R-WV),Sponsors and supporters,2,,2,,,,,1,,,2,0
+Heinrich (D-NM),Sponsors and supporters,2,,2,,,,,1,,,2,0
+Lee (R-UT),Sponsors and supporters,2,,2,,,,,1,,,2,2
 Rosen (D-NV),Sponsors and supporters,2,,,,,,1,,,,2,0
-Capito (R-WV),Sponsors and supporters,1,,1,,,,,,,,1,0
-Heinrich (D-NM),Sponsors and supporters,1,,1,,,,,,,,1,0
-Lee (R-UT),Sponsors and supporters,1,,1,,,,,,,,1,1
-Whitehouse (D-RI),Sponsors and supporters,1,,1,,,,,,,,1,0
+Whitehouse (D-RI),Sponsors and supporters,2,,2,,,,,1,,,2,0
 Murkowski (R-AK),Voted for the bill,5,1,,1,,,,,,,7,5
-Cruz (R-TX),Voted for the bill,,,,3,,1,,1,,,5,5
+Cruz (R-TX),Voted for the bill,,,,3,,1,,,1,,5,5
 Grassley (R-IA),Voted for the bill,,,4,1,,,,,,,5,0
 Klobuchar (D-MN),Voted for the bill,3,1,1,,,,,,,,5,0
 Schmitt (R-MO),Voted for the bill,,,5,,,,,,,,5,2
@@ -19,7 +19,7 @@ Moran (R-KS),Voted for the bill,,,3,,,,,,,,3,3
 Hoeven (R-ND),Voted for the bill,,,2,,,,,,,,2,0
 Paul (R-KY),Voted for the bill,,1,1,,,,,,,,2,2
 Scott (R-FL),Voted for the bill,,1,1,,,,,,,1,2,2
-Britt (R-AL),Voted for the bill,,,,,,,,,1,,1,1
+Britt (R-AL),Voted for the bill,,,,,,,,1,,,1,1
 Budd (R-NC),Voted for the bill,,,1,,,,,,,,1,1
 Cassidy (R-LA),Voted for the bill,,,,1,,,,,,,1,0
 Cornyn (R-TX),Voted for the bill,,,1,,,,,,,,1,1
@@ -34,33 +34,33 @@ Peters (D-MI),Voted for the bill,1,,,,,,,,,,1,0
 Tillis (R-NC),Voted for the bill,,,,1,,,,,,,1,0
 Warner (D-VA),Voted for the bill,1,,,,,,,,,,1,0
 Young (R-IN),Voted for the bill,,,1,,,,,,,,1,0
-King (I-ME),Want changes,,,,4,,,,1,,,5,5
+King (I-ME),Want changes,,,,4,,,,,1,,5,5
 Slotkin (D-MI),Want changes,1,1,,,,,,,,,2,0
-Merkley (D-OR),Oppose or voted no,6,10,,5,4,1,6,5,2,8,39,30
-Bennet (D-CO),Oppose or voted no,8,,1,8,1,1,4,1,,1,23,12
-Luján (D-NM),Oppose or voted no,10,2,,4,1,1,5,1,,1,23,8
-Cantwell (D-WA),Oppose or voted no,6,6,,4,1,,,,1,2,16,7
-Schiff (D-CA),Oppose or voted no,3,1,,1,6,2,1,1,,2,16,6
-Welch (D-VT),Oppose or voted no,2,4,3,,4,1,2,,1,1,16,14
-Padilla (D-CA),Oppose or voted no,5,1,1,1,4,,1,1,,,13,6
-Wyden (D-OR),Oppose or voted no,3,4,,4,1,2,,,1,1,12,2
-Alsobrooks (D-MD),Oppose or voted no,1,2,,,3,,3,1,,,10,3
+Merkley (D-OR),Oppose or voted no,6,10,,5,4,1,6,2,5,8,39,30
+Bennet (D-CO),Oppose or voted no,9,,1,8,1,1,4,,1,1,24,13
+Luján (D-NM),Oppose or voted no,10,2,,4,1,1,5,,1,1,23,8
+Cantwell (D-WA),Oppose or voted no,6,6,,4,1,,,1,,2,16,7
+Schiff (D-CA),Oppose or voted no,3,1,,1,6,2,1,,1,2,16,6
+Welch (D-VT),Oppose or voted no,2,4,3,,4,1,2,1,,1,16,14
+Padilla (D-CA),Oppose or voted no,5,1,1,1,4,,1,,1,,13,6
+Wyden (D-OR),Oppose or voted no,3,4,,4,1,2,,1,,1,12,2
+Alsobrooks (D-MD),Oppose or voted no,1,2,,,3,,3,,1,,10,3
 Duckworth (D-IL),Oppose or voted no,1,2,2,,1,1,3,,,,10,4
 Kim (D-NJ),Oppose or voted no,1,1,,,2,,3,1,1,,9,4
-Markey (D-MA),Oppose or voted no,1,1,,,1,1,,2,3,,9,6
-Blunt Rochester (D-DE),Oppose or voted no,1,3,,,1,,2,1,,,8,3
+Markey (D-MA),Oppose or voted no,1,1,,,1,1,,3,2,,9,6
+Blunt Rochester (D-DE),Oppose or voted no,1,3,,,1,,2,,1,,8,3
 Kelly (D-AZ),Oppose or voted no,2,,,1,3,,2,,,,8,1
-Murray (D-WA),Oppose or voted no,3,2,,3,1,,,,1,1,8,0
-Booker (D-NJ),Oppose or voted no,1,,,,2,1,2,1,,,7,3
+Murray (D-WA),Oppose or voted no,3,2,,3,1,,,1,,1,8,0
+Booker (D-NJ),Oppose or voted no,1,,,,2,1,2,,1,,7,3
+Van Hollen (D-MD),Oppose or voted no,1,1,,,3,,,1,,,6,5
 Durbin (D-IL),Oppose or voted no,,,1,,,1,3,,,,5,1
 Smith (D-MN),Oppose or voted no,1,1,2,,1,,,,,,5,3
+Warnock (D-GA),Oppose or voted no,1,1,,3,,,,,,,5,1
 Blumenthal (D-CT),Oppose or voted no,1,1,,,,,2,,,,4,0
 Cortez Masto (D-NV),Oppose or voted no,1,,,1,,2,,,,,4,2
 Hawley (R-MO),Oppose or voted no,,,4,,,,,,,,4,4
-Van Hollen (D-MD),Oppose or voted no,1,1,,,1,,,,1,,4,3
-Warnock (D-GA),Oppose or voted no,1,1,,2,,,,,,,4,1
+Ossoff (D-GA),Oppose or voted no,,1,,3,,,,,,,4,3
 Gillibrand (D-NY),Oppose or voted no,1,2,,,,,,,,,3,0
-Ossoff (D-GA),Oppose or voted no,,1,,2,,,,,,,3,2
 Shaheen (D-NH),Oppose or voted no,1,2,,,,,,,,,3,1
 Hirono (D-HI),Oppose or voted no,1,,,,,1,,,,,2,0
 Kaine (D-VA),Oppose or voted no,1,,,,,,,,,,1,0
