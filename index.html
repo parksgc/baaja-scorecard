@@ -266,6 +266,8 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .votebar-axis span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
 .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 16px; align-items: start; }
 .waffle { display: grid; grid-template-columns: repeat(29, 1fr); gap: 2px; }
+.proj-toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; margin: 0 0 8px; cursor: pointer; }
+.proj-note { font-size: 13px; margin: 0 0 8px; }
 .waffle i { aspect-ratio: 1; border-radius: 2px; background: var(--silent-bg); display: block; }
 .house-groups { display: flex; flex-direction: column; gap: 12px; }
 .party-tally { border-collapse: collapse; font-size: 14px; width: 100%; max-width: 560px; min-width: 0; }
@@ -405,7 +407,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     <h1>The BAAJA Scorecard</h1>
     <p class="lede">Most of the people fighting over BAAJA agree on more than they admit. This page tracks where Congress and the major stakeholders stand, which sections they praise or attack, and the fixes even the bill's supporters say it needs.</p>
     <p class="hlr" id="hlr" hidden>Analysis and updates at <a id="hlrHome" href="#">Hard Look Review</a><span aria-hidden="true"> · </span><a id="hlrSub" href="#">Subscribe</a></p>
-    <div class="meta"><span>Updated <strong>Nov. 25, 2026</strong></span><span>Passed the Senate <strong>Nov. 19 (62-33)</strong>; pending in the House</span><span>Introduced <strong>Sept. 30</strong></span><span><a href="https://bipartisanpolicy.org/explainer/bipartisan-american-affordability-and-jobs-act-baaja-resource-hub/" target="_blank" rel="noopener">Guide to the bill (BPC)</a></span></div>
+    <div class="meta"><span>Updated <strong>Nov. 27, 2026</strong></span><span>Passed the Senate <strong>Nov. 19 (62-33)</strong>; pending in the House</span><span>Introduced <strong>Sept. 30</strong></span><span><a href="https://bipartisanpolicy.org/explainer/bipartisan-american-affordability-and-jobs-act-baaja-resource-hub/" target="_blank" rel="noopener">Guide to the bill (BPC)</a></span></div>
     <div class="views" role="tablist" aria-label="Views">
       <a role="tab" href="#congress" id="tab-congress" class="view-tab">Whip tracker</a>
       <a role="tab" href="#groups" id="tab-groups" class="view-tab">Stakeholders</a>
@@ -419,12 +421,14 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
     <div class="section-head">
       <span class="eyebrow">Vote watch</span>
       <h2>Congress</h2>
-      <p>The Senate passed BAAJA on Nov. 19, 62 to 33, as H.R. 2347 amended by the Capito substitute. It now goes to the House, which returns Nov. 30. Republican leaders plan a vote next week under a rule, which needs a simple majority, rather than suspension (Politico, as reported Nov. 24); no date has been noticed. Backers had aimed for about 70 Senate votes to pressure the House (Politico, Oct. 29). Most members have said nothing in public since introduction, so "No statement found" is the default, not a position.</p>
+      <p>The Senate passed BAAJA on Nov. 19, 62 to 33, as H.R. 2347 amended by the Capito substitute. It now goes to the House. The Rules Committee meets Monday, Nov. 30, at 4 p.m. on the Senate amendment; a closed rule (no amendments) is expected, and the vote to concur needs a simple majority. A floor vote could come as soon as Dec. 1. Backers had aimed for about 70 Senate votes to pressure the House (Politico, Oct. 29). Most members have said nothing in public since introduction, so "No statement found" is the default, not a position.</p>
       <p><strong>After the midterms:</strong> Democrats won control of the Senate and the House on Nov. 3 (AP; PBS NewsHour). The new Congress is not seated until January, so the Senate votes and the count below are the current Senate. One supporter, Sen. Husted (R-OH), lost his seat to Sherrod Brown.</p>
     </div>
 
     <div class="panel">
       <h3 id="houseHead">House members on record</h3>
+      <label class="proj-toggle"><input type="checkbox" id="projToggle"> Show projected votes on a closed rule (our reading)</label>
+      <p class="proj-note watch" id="projNote" hidden></p>
       <div class="waffle" id="waffle" role="img" aria-label="435 squares, 11 colored for members with a public position"></div>
       <div class="house-groups" id="houseGroups"></div>
     </div>
@@ -487,7 +491,7 @@ footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--rule)
           <h4>Senate passes BAAJA, 62 to 33</h4>
           <p>The Senate passed H.R. 2347 as amended by the Capito substitute (S.Amdt. 6883). Forty-seven Republicans and 15 Democrats and independents voted yes; Sens. Josh Hawley (R-MO) and Mike Rounds (R-SD) and 31 Democrats voted no. Sens. Bill Cassidy (R-LA), John Cornyn (R-TX), Mitch McConnell (R-KY), Chris Murphy (D-CT) and Tommy Tuberville (R-AL) did not vote. Michigan's Peters and Slotkin voted yes.</p>
           <p>Compared with cloture on the bill Nov. 18 (65 to 31): Sen. Gary Peters (D-MI) switched from no to yes, and Sens. Kirsten Gillibrand (D-NY) and Raphael Warnock (D-GA) from yes to no. Sens. Amy Klobuchar (D-MN) and Ron Johnson (R-WI) voted yes and Sen. Adam Schiff (D-CA) no after missing Nov. 18. Sens. Jon Ossoff (D-GA) and Jeanne Shaheen (D-NH) voted yes through adoption of the substitute, then no on cloture and passage.</p>
-          <p>No amendment got a vote. Sen. Jeff Merkley (D-OR) objected to the managers' amendment (S.Amdt. 7030) and to a list of 19 amendment votes, so the bill passed as amended by the substitute only. After the vote, Sen. Brian Schatz (D-HI) asked to add the managers' amendment as an enrollment correction; Merkley objected again. Next: the House, where Republican leaders plan a vote the week of Nov. 30 under a rule (simple majority), Politico reports; Johnson had first floated suspension (two-thirds).</p>
+          <p>No amendment got a vote. Sen. Jeff Merkley (D-OR) objected to the managers' amendment (S.Amdt. 7030) and to a list of 19 amendment votes, so the bill passed as amended by the substitute only. After the vote, Sen. Brian Schatz (D-HI) asked to add the managers' amendment as an enrollment correction; Merkley objected again. Next: the House. The <a href="https://democrats-rules.house.gov/news/announcement/meeting-announcement-november-30-2026" target="_blank" rel="noopener">Rules Committee meets Nov. 30</a> on the Senate amendment; a closed rule and a simple-majority vote to concur are expected, possibly as soon as Dec. 1.</p>
           <p class="src">Passage: <a href="https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00270.htm" target="_blank" rel="noopener">Senate Roll Call Vote 270</a>; <a href="https://www.dailypress.senate.gov/thursday-november-19-2026/" target="_blank" rel="noopener">Senate Daily Press Gallery, Nov. 19</a>; <a href="https://www.govinfo.gov/content/pkg/CREC-2026-11-19/pdf/CREC-2026-11-19-senate.pdf" target="_blank" rel="noopener">Congressional Record, Nov. 19</a>. Earlier, Votes <a href="https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00257.htm" target="_blank" rel="noopener">257</a>, <a href="https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00264.htm" target="_blank" rel="noopener">264</a>, <a href="https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00266.htm" target="_blank" rel="noopener">266</a>, <a href="https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00267.htm" target="_blank" rel="noopener">267</a> and <a href="https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00268.htm" target="_blank" rel="noopener">268</a>. Note updated Nov. 21.</p>
         </div>
         <aside class="seat-panel" id="seatPanel" aria-live="polite"></aside>
@@ -1240,6 +1244,12 @@ const PEOPLE = [
     likes: [`"This legislation is key to making critical investments in building out and modernizing our grid"`],
     note: `Says the Chamber "will continue to encourage Michigan's Congressional delegation to support this effort as it comes before them for a vote." Also a signer of the Nov. 6 U.S. Chamber coalition letter.`,
     src: [["Michigan Chamber, Nov. 20", "https://www.michamber.com/news/senate-moves-on-federal-permit-reform-details-emerge/"]] },
+  { name: "American Sustainable Business Network", sector: "Business", stance: "oppose", tier: 1,
+    who: `Camilla Taylor, executive director; statement Nov. 25`,
+    obj: [`Says the Senate-passed bill would weaken water protections, state and Tribal authority, and public participation in project decisions`],
+    likes: [],
+    note: `Urges the House to reject the bill.`,
+    src: [["ASBN statement, Nov. 25", "https://www.einpresswire.com/article/958850320/statement-asbn-urges-house-to-reject-permitting-bill-that-undermines-protections-businesses-and-communities-depend-on"]] },
   { name: "Lansing Regional Chamber of Commerce (Michigan)", sector: "Business", stance: "support", tier: 1,
     who: `Steve Japinga, senior vice president of public affairs; release Nov. 10`,
     obj: [],
@@ -1853,7 +1863,7 @@ const FLOOR = [
   { d: "Nov. 17", what: `St. John confirmed, 52 to 46 (Vote 265). Unanimous consent: post-cloture time on the substitute expires at 11:45 AM Nov. 18. The four sponsors file S.Amdt. 7022, a package of 14 changes; Merkley files S.Amdt. 7023. 165 amendments filed in all.`, src: [["Congressional Record, Nov. 17", "https://www.govinfo.gov/app/details/CREC-2026-11-17"]] },
   { d: "Nov. 18", what: `Budget Act point of order against the substitute (Merkley) waived, 70 to 26 (Vote 266). Substitute (S.Amdt. 6883) adopted, 69 to 27 (Vote 267). Cloture on H.R. 2347 as amended invoked, 65 to 31 (Vote 268); Peters, Ossoff and Shaheen switched to no. No amendment votes.`, src: [["Senate Roll Call Vote 266", "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00266.htm"], ["Vote 267", "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00267.htm"], ["Vote 268", "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00268.htm"]] },
   { d: "Nov. 19", what: `Capito asks unanimous consent for votes on 19 amendments, including Schiff's strike of Title III; Merkley objects. Capito calls up a managers' amendment (S.Amdt. 7030); Merkley objects. The Senate passes H.R. 2347 as amended by the substitute, 62 to 33, at 10:02 PM (Vote 270). Schatz then asks to add the managers' amendment as an enrollment correction; Lee backs it; Merkley objects twice and reads an Affiliated Tribes of Northwest Indians statement into the Record.`, src: [["Senate Roll Call Vote 270", "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00270.htm"], ["Senate Daily Press Gallery, Nov. 19", "https://www.dailypress.senate.gov/thursday-november-19-2026/"], ["Congressional Record, Nov. 19", "https://www.govinfo.gov/content/pkg/CREC-2026-11-19/pdf/CREC-2026-11-19-senate.pdf"]] },
-  { d: "Next", what: `The House returns Nov. 30. Republican leaders now plan a vote next week under a rule (simple majority), Politico reports, after Johnson first floated suspension (two-thirds, no amendments). No date noticed. The House receives the bill as amended by the substitute alone.`, src: [["TAG24, Nov. 25 (citing Politico)", "https://www.tag24.com/en/news/politics/us-politics/key-house-democrats-urge-colleagues-to-oppose-baaja-permitting-reform-bill-in-new-letter-3552333"], ["Heatmap, \"The Permitting Bill's Next Battleground\"", "https://heatmap.news/politics/baaja-house"]] },
+  { d: "Next", what: `Rules Committee meets Mon., Nov. 30, 4 PM (H-313), on the Senate amendment to H.R. 2347; a closed rule (no amendments) is expected. The floor question is a motion to concur, which needs a simple majority; a vote could come as soon as Dec. 1. If it passes, the bill goes to the President.`, src: [["Rules Committee announcement", "https://democrats-rules.house.gov/news/announcement/meeting-announcement-november-30-2026"], ["Rules Committee bill page", "https://rules.house.gov/bill/119/hr-2347"]] },
 ];
 // Every amendment filed to H.R. 2347 or the substitute through Nov. 19, read from the Congressional Record.
 // [number, date (2026), target (B = H.R. 2347, S = SA 6883, else the SA amended), sponsor, original cosponsors, cosponsors added [name, date], issue tags, Record page id, short description]
@@ -2127,7 +2137,7 @@ const HOUSE = [
   ["Gabe Evans", "R-CO-8 (vulnerable moderate; Problem Solvers permitting co-lead)", "support", `Held a district event with the National Association of Manufacturers on Nov. 2 to tout the Senate's bipartisan permitting bill (Punchbowl preview; full text paywalled).`, [["Punchbowl, Nov. 2", "https://punchbowl.news/article/energy/senate-permitting-bill-2/"]]],
   ["Tom Cole", "R-OK-4 (senior Republican; Chickasaw citizen)", "conditional", `Joining Democrats on tribal concerns: "That's going to be an issue for me." Says he will push for changes to the NHPA provisions in the Senate and House if the bill passes.`, [["James Bikales, Oct. 30", "https://x.com/jamepdx/status/2116258382051160078"]]],
   ["Brett Guthrie", "R-KY-2 (Energy & Commerce chair)", "conditional", `Wants changes before a House vote (unspecified); Grist reports he opposes forcing new transmission lines. The Hill (Nov. 16) says he has called for changes to address grid reliability. No statement in his own words found.`, [["The Hill, Nov. 16", "https://thehill.com/homenews/senate/6223468-senate-advances-baja-permitting-reform/"], ["Roll Call, Oct. 27", "https://rollcall.com/2026/10/27/transmission-overhaul-threads-careful-needle-in-permitting-bill/"]]],
-  ["Sean Casten", "D-IL-6", "conditional", `Has not endorsed: "I think there are modest changes we could make to it to make sure it works." Axios's headline frames his worry as a "gold rush for gas." Negotiating with Senate Democrats.`, [["Axios, Oct. 30", "https://www.axios.com/2026/10/30/key-house-democrat-permitting-bill-gold-rush-gas"], ["Extracted clips, Oct. 30", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-103026"]]],
+  ["Sean Casten", "D-IL-6", "conditional", `Has not endorsed: "I think there are modest changes we could make to it to make sure it works." Axios's headline frames his worry as a "gold rush for gas." Negotiating with Senate Democrats. Nov. 23 statement: "I cannot support BAAJA in its current form. The House must be given the opportunity to improve the legislation."`, [["Casten statement, Nov. 23", "https://casten.house.gov/media/press-releases/casten-statement-on-senate-permitting-reform"], ["Axios, Oct. 30", "https://www.axios.com/2026/10/30/key-house-democrat-permitting-bill-gold-rush-gas"], ["Extracted clips, Oct. 30", "https://extracteddaily.substack.com/p/extracted-daily-news-clips-103026"]]],
   ["Josh Harder", "D-CA-9", "support", `As Build America Caucus co-chair: "make passing this deal priority number one in November." Nov. 4: "Passing permitting reform should be our top priority when Congress returns next week."`, [["Punchbowl via Joshua Siegel, Nov. 4", "https://x.com/SiegelScribe/status/2118122235148050605"], ["Build America Caucus, Sept. 30", "https://buildamericacaucus-harder.house.gov/media/press-releases/permitting-build-america-caucus-chairs-call-on-congress-to-pass-senate-permitting-deal"]]],
   ["Nikki Budzinski", "D-IL-13 (incoming New Democrat Coalition chair)", "support", `Urges acting in the lame duck: moving now shows voters "we'll immediately get to work to lower costs." "Suggesting that the margin of victory last night means we need to start from scratch means you're not fully assessing our political realities. We still need 60 votes in the Senate and President Trump's signature to get this done."`, [["Punchbowl via Joshua Siegel, Nov. 4", "https://x.com/SiegelScribe/status/2118121655260049668"]]],
   ["Celeste Maloy", "R-UT-2", "support", `Build America Caucus co-chair; joint statement urging Congress to "quickly pass the reforms into law."`, [["Build America Caucus, Sept. 30", "https://buildamericacaucus-harder.house.gov/media/press-releases/permitting-build-america-caucus-chairs-call-on-congress-to-pass-senate-permitting-deal"]]],
@@ -2150,8 +2160,10 @@ const HOUSE = [
   ["Betty McCollum", "D-MN-4", "oppose", `Nov. 24: signed the seven-member letter urging colleagues to vote no on the "fatally flawed" bill. A Nov. 20 statement reportedly cites tribal sovereignty, Section 106 and the Boundary Waters (not read).`, [["TAG24, Nov. 25 (lists the seven signers)", "https://www.tag24.com/en/news/politics/us-politics/key-house-democrats-urge-colleagues-to-oppose-baaja-permitting-reform-bill-in-new-letter-3552333"]]],
   ["Chellie Pingree", "D-ME-1", "oppose", `Nov. 24: signed the seven-member letter urging colleagues to vote no on the "fatally flawed" bill.`, [["TAG24, Nov. 25 (lists the seven signers)", "https://www.tag24.com/en/news/politics/us-politics/key-house-democrats-urge-colleagues-to-oppose-baaja-permitting-reform-bill-in-new-letter-3552333"]]],
   ["Maxine Dexter", "D-OR-3", "oppose", `Nov. 24: signed the seven-member letter urging colleagues to vote no on the "fatally flawed" bill.`, [["TAG24, Nov. 25 (lists the seven signers)", "https://www.tag24.com/en/news/politics/us-politics/key-house-democrats-urge-colleagues-to-oppose-baaja-permitting-reform-bill-in-new-letter-3552333"]]],
-  ["Pramila Jayapal", "D-WA-7", "oppose", `Nov. 24: "I am a strong NO on the Bipartisan American Affordability and Jobs Act when it comes to the House." (Bluesky, as quoted by the More Than Just Parks tracker.)`, [["More Than Just Parks tracker", "https://morethanjustparks.com/bill-tracker/baaja"]]],
+  ["Pramila Jayapal", "D-WA-7", "oppose", `Nov. 24: "I am a strong NO on the Bipartisan American Affordability and Jobs Act when it comes to the House." `, [["Jayapal statement, Nov. 24", "https://jayapal.house.gov/2026/11/24/jayapal-statement-on-the-bipartisan-american-affordability-and-jobs-act/"]]],
   ["Harriet Hageman", "R-WY-AL", "support", `Nov. 17, at a Bipartisan Blueprint event urging passage before the new Congress: "You don't have affordability unless you have reliable and affordable energy."`, [["Political.org, Nov. 17", "https://political.org/2026/11/17/the-time-to-get-it-done-is-now-lawmakers-press-congress-to-pass-bipartisan-permitting-reform-bill-before-democrats-take-control/"]]],
+  ["Steve Scalise", "R-LA-1 (Majority Leader)", "support", `Nov. 20: "It is more important now than ever that the House passes this permitting reform bill to the President."`, [["Craig Caplan (C-SPAN), quoting Scalise's post, Nov. 20", "https://x.com/CraigCaplan/status/2123811900685189446"]]],
+  ["Vicente Gonzalez", "D-TX-34", "support", `Nov. 17, at The Hill's Bipartisan Blueprint event: "This is not a bad deal, and the time to get it done is now."`, [["The Hill, Nov. 17", "https://thehill.com/policy/energy-environment/6225607-congress-pushes-baaja-permit-reform/"]]],
   ["Problem Solvers Caucus", "Bipartisan caucus", "lean", `Nov. 11 release: after Sens. Lee, Heinrich, Capito and Whitehouse met the caucus on Nov. 10 seeking its support, the caucus welcomed the Senate's consideration and the votes advancing the bill toward a House vote, and committed to "meaningful permitting reform before the end of the year." It does not say it will pass the bill as written. Reps. Scott Peters and Gabe Evans lead its permitting working group. A caucus position is not counted as member support.`, [["Problem Solvers Caucus, Nov. 11", "https://problemsolverscaucus.house.gov/news/documentsingle.aspx?DocumentID=926"], ["Bloomberg Law, Oct. 27", "https://news.bloomberglaw.com/health-law-and-business/bipartisan-house-caucus-weighs-senate-permitting-bill-support"]]]
 ];
 const houseKey = (d) => { const m = /^[RDI]-([A-Z]{2})-(\d+|AL)\b/.exec(d); return m ? `${m[1]}-${m[2]}` : null; };
@@ -2481,6 +2493,12 @@ function renderVotebar() {
   document.getElementById("votecap").textContent = `${yes} stated supporters, ${lean} more who voted for the bill, ${sc ? `${sc} supporting but wanting changes, ` : ""}${cond ? `${cond} with conditions, ` : ""}${opp} opposed or voting no, ${none} with no statement found. Solid line: 60 votes for cloture (passage needed a simple majority). Dashed: backers' target of about 70.`;
 }
 
+// Projection for a closed-rule vote to concur (no amendments possible). Our reading, not a member's statement:
+// a "conditional" member whose condition is a change to the text counts as a likely no; these three stay unclear.
+const PROJ_UNCLEAR = new Set(["Tom Cole", "Brett Guthrie", "Sharice Davids"]);
+const projOf = (m) => m[2] === "oppose" ? "no" : m[2] === "conditional" ? (PROJ_UNCLEAR.has(m[0]) ? "unclear" : "no") : "yes";
+let PROJ = false;
+
 function renderHouseViz() {
   const members = HOUSE.filter(h => !/caucus/i.test(h[1]));
   document.getElementById("houseHead").textContent = `House: ${members.length} of 435 on record (${members.filter(m => /^D-/.test(m[1])).length} Democrats, ${members.filter(m => /^R-/.test(m[1])).length} Republicans)`;
@@ -2488,7 +2506,19 @@ function renderHouseViz() {
   const order = { support: 0, lean: 1, supchg: 2, conditional: 3, oppose: 4 };
   const sorted = [...members].sort((a, b) => order[a[2]] - order[b[2]]);
   const col = { support: "var(--support)", lean: "var(--lean)", supchg: "var(--stripe)", conditional: "var(--changes)", oppose: "var(--oppose)" };
-  let cells = sorted.map(m => `<i style="background:${col[m[2]]}" title="${m[0]} (${m[1]})"></i>`).join("");
+  let cells;
+  const note = document.getElementById("projNote");
+  if (PROJ) {
+    const pOrder = { yes: 0, unclear: 1, no: 2 }, pCol = { yes: "var(--support)", unclear: "var(--changes)", no: "var(--oppose)" };
+    const ps = [...members].sort((a, b) => pOrder[projOf(a)] - pOrder[projOf(b)]);
+    cells = ps.map(m => `<i style="background:${pCol[projOf(m)]}" title="${m[0]} (${m[1]}): projected ${projOf(m)}"></i>`).join("");
+    const k = (v) => members.filter(m => projOf(m) === v).length;
+    note.innerHTML = `<b>Projected on a closed rule (our reading):</b> ${k("yes")} likely yes, ${k("no")} likely no, ${k("unclear")} unclear, of the ${members.length} members on record. A closed rule allows no amendments, so members whose condition is a change to the text are counted as likely no. Tom Cole and Brett Guthrie (want changes but have not said they would vote no) and Sharice Davids (wants to move the bill now) are left unclear. Members with no statement and caucus-endorsed members are not projected. The positions below are unchanged: they record what members said.`;
+    note.hidden = false;
+  } else {
+    cells = sorted.map(m => `<i style="background:${col[m[2]]}" title="${m[0]} (${m[1]})"></i>`).join("");
+    note.hidden = true;
+  }
   const cs = CAUCUS_ROWS.filter(r => r[2] === "cs"), co = CAUCUS_ROWS.filter(r => r[2] === "co");
   cells += cs.map(m => `<i style="background:var(--cs-stripe)" title="${m[0]} (${m[1]}): caucus endorsed; no member statement"></i>`).join("");
   cells += "<i></i>".repeat(435 - sorted.length - cs.length - co.length);
@@ -2575,6 +2605,10 @@ function showState() {
 // ---------- Latest statements ----------
 // Newest first. d = date the statement was made or reported; k = Senate | House | Group.
 const LATEST = [
+  { d: "2026-11-25", k: "House", who: "Rules Committee sets BAAJA meeting for Nov. 30", pos: "vote", text: `The House Rules Committee will meet Monday, Nov. 30, at 4 p.m. on the Senate amendment to H.R. 2347, setting up a rule and a simple-majority vote to concur, possibly as soon as Dec. 1.`, src: [["Rules Committee announcement", "https://democrats-rules.house.gov/news/announcement/meeting-announcement-november-30-2026"]] },
+  { d: "2026-11-25", k: "Group", who: "American Sustainable Business Network", pos: "oppose", text: `Urges the House to reject the bill, saying it would weaken water protections, state and Tribal authority, and public participation.`, src: [["ASBN statement, Nov. 25", "https://www.einpresswire.com/article/958850320/statement-asbn-urges-house-to-reject-permitting-bill-that-undermines-protections-businesses-and-communities-depend-on"]] },
+  { d: "2026-11-23", k: "House", who: "Rep. Sean Casten (D-IL-6)", pos: "conditional", text: `"I cannot support BAAJA in its current form. The House must be given the opportunity to improve the legislation."`, src: [["Casten statement, Nov. 23", "https://casten.house.gov/media/press-releases/casten-statement-on-senate-permitting-reform"]] },
+  { d: "2026-11-20", k: "House", who: "Rep. Steve Scalise (R-LA-1), Majority Leader", pos: "support", text: `"It is more important now than ever that the House passes this permitting reform bill to the President."`, src: [["Craig Caplan, Nov. 20", "https://x.com/CraigCaplan/status/2123811900685189446"]] },
   { d: "2026-11-24", k: "House", who: "Seven House Democrats urge a no vote", pos: "oppose", text: `Reps. Leger Fernández, Huffman, McCollum, Pingree, Stansbury, Vasquez and Dexter told colleagues BAAJA is "fatally flawed" and asked for hearings, markups and amendments in the House.`, src: [["Common Dreams, Nov. 25", "https://www.commondreams.org/news/house-democrats-permitting-reform"], ["TAG24, Nov. 25", "https://www.tag24.com/en/news/politics/us-politics/key-house-democrats-urge-colleagues-to-oppose-baaja-permitting-reform-bill-in-new-letter-3552333"]] },
   { d: "2026-11-24", k: "House", who: "Rep. Pramila Jayapal (D-WA-7)", pos: "oppose", text: `"I am a strong NO on the Bipartisan American Affordability and Jobs Act when it comes to the House."`, src: [["More Than Just Parks tracker", "https://morethanjustparks.com/bill-tracker/baaja"]] },
   { d: "2026-11-24", k: "Group", who: "Center for Progressive Reform", pos: "oppose", text: `The bill "remains a bad deal as it heads to the House."`, src: [["CPR, Nov. 24", "https://progressivereform.org/cpr-blog/from-data-centers-to-silencing-community-voices-permitting-bill-remains-a-bad-deal/"]] },
@@ -2859,6 +2893,7 @@ function renderPolls() {
 }
 
 renderSummary(); renderMatrix(); renderChips(); renderRoster(); renderSearched(); renderFixes(); renderOfficials(); renderSenate(); renderHouse();
+document.getElementById("projToggle").addEventListener("change", (e) => { PROJ = e.target.checked; renderHouseViz(); });
 renderHemi(); renderVotebar(); renderHouseViz(); renderStateMap(); renderGlance(); renderLatest("W"); renderLatest("G"); renderPolls(); renderAmendments(); showView();
 linkifySections(document.body);
 new MutationObserver((muts) => muts.forEach((m) => m.addedNodes.forEach((n) => { if (n.nodeType === 1) linkifySections(n); else if (n.nodeType === 3 && n.parentElement) linkifySections(n.parentElement); }))).observe(document.body, { childList: true, subtree: true });
